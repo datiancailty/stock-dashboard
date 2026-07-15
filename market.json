@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-07-16T02:31:39+08:00",
+  "updatedAt": "2026-07-16T02:36:53+08:00",
   "source": "东方财富妙想",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
   "stocks": [
     {
       "code": "600036",
       "name": "招商银行",
-      "price": 37.76,
+      "price": 39.947,
       "fiscalYear": 2025,
       "annualDividend": 1.003,
       "interimDividend": 1.0130000000000001,
@@ -15,7 +15,7 @@
     {
       "code": "000538",
       "name": "云南白药",
-      "price": 50.8,
+      "price": 55.1184,
       "fiscalYear": 2025,
       "annualDividend": 1.583,
       "interimDividend": 0,
@@ -24,18 +24,27 @@
     {
       "code": "600795",
       "name": "国电电力",
-      "price": 4.74,
+      "price": 4.8918,
       "fiscalYear": 2025,
       "annualDividend": 0.141,
-      "interimDividend": 0,
+      "interimDividend": 0.1,
       "source": "mx-data"
     },
     {
       "code": "003816",
       "name": "中国广核",
-      "price": 3.94,
+      "price": 3.6737,
       "fiscalYear": 2025,
       "annualDividend": 0.086,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "300157",
+      "name": "新锦动力",
+      "price": 4.54,
+      "fiscalYear": 2025,
+      "annualDividend": 0,
       "interimDividend": 0,
       "source": "mx-data"
     }
@@ -112,6 +121,78 @@
       "type": "派息日",
       "amount": null,
       "description": "2025年度分配 · 每股税前 1.583元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.141元"
+    },
+    {
+      "date": "2026-07-13",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.141元"
+    },
+    {
+      "date": "2026-07-13",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.141元"
+    },
+    {
+      "date": "2025-10-28",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.1元"
+    },
+    {
+      "date": "2025-10-29",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.1元"
+    },
+    {
+      "date": "2025-10-29",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.1元"
+    },
+    {
+      "date": "2026-07-09",
+      "code": "003816",
+      "name": "中国广核",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.086元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "003816",
+      "name": "中国广核",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.086元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "003816",
+      "name": "中国广核",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.086元"
     }
   ]
 }

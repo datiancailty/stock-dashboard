@@ -1,0 +1,76 @@
+name: 东方财富交易时段数据更新
+
+on:
+  schedule:
+    # GitHub Actions 使用 UTC：北京时间工作日 09:30 与 13:00
+    - cron: '30 1 * * 1-5'
+    - cron: '0 5 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      calls:
+        description: '测试调用次数（建议1）'
+        required: false
+        default: '1'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 190
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: 计算本时段调用计划
+        id: plan
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "calls=${{ inputs.calls }}" >> "$GITHUB_OUTPUT"
+            echo "interval=0" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "30 1 * * 1-5" ]; then
+            echo "calls=60" >> "$GITHUB_OUTPUT"
+            echo "interval=120" >> "$GITHUB_OUTPUT"
+          else
+            echo "calls=70" >> "$GITHUB_OUTPUT"
+            echo "interval=129" >> "$GITHUB_OUTPUT"
+          fi
+      - name: 确保 live 数据分支存在
+        run: |
+          git fetch origin live || true
+          if ! git ls-remote --exit-code --heads origin live >/dev/null 2>&1; then
+            git push origin HEAD:refs/heads/live
+          fi
+      - name: 按交易时段平均更新（每日共130次）
+        env:
+          MX_APIKEY: ${{ secrets.MX_APIKEY }}
+          GH_TOKEN: ${{ github.token }}
+          CALLS: ${{ steps.plan.outputs.calls }}
+          INTERVAL: ${{ steps.plan.outputs.interval }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for ((i=1; i<=CALLS; i++)); do
+            python scripts/update_market.py
+            CONTENT=$(base64 -w 0 data/market.json)
+            SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/market.json?ref=live" --jq .sha 2>/dev/null || true)
+            if [ -n "$SHA" ]; then
+              gh api --method PUT "repos/${GITHUB_REPOSITORY}/contents/market.json" \
+                -f message="data: update ${i}/${CALLS}" -f content="$CONTENT" -f branch=live -f sha="$SHA" >/dev/null
+            else
+              gh api --method PUT "repos/${GITHUB_REPOSITORY}/contents/market.json" \
+                -f message="data: initialize live market data" -f content="$CONTENT" -f branch=live >/dev/null
+            fi
+            echo "完成 ${i}/${CALLS}"
+            if [ "$i" -lt "$CALLS" ] && [ "$INTERVAL" -gt 0 ]; then sleep "$INTERVAL"; fi
+          done

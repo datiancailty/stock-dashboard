@@ -1,25 +1,33 @@
-# 股票数据监控面板
+# 我的分红工具
 
-这是一个可直接部署到 GitHub Pages 的纯静态股票监控网页。
+GitHub Pages 地址：https://datiancailty.github.io/stock-dashboard/
 
 ## 功能
 
-- TradingView 行情滚动条
-- TradingView 技术 K 线图
-- 市场概览组件
-- 自选股展示区
-- 响应式暗色 UI
+- Part 1：自选股持仓，可添加、删除并维护持仓数量和成本
+- Part 2：股息率价格网格，展示 5%、5.5%、6%、6.5%、7% 对应股价
+- Part 3：分红日历，展示登记日、除息日和派息日
+- 支持手动覆盖年报分红、中报分红和当前股价
 
-## 部署到 GitHub Pages
+## 股息率策略
 
-1. 新建一个 GitHub 仓库，例如 `stock-dashboard`
-2. 上传本目录中的 `index.html` 和 `README.md`
-3. 进入仓库 `Settings` → `Pages`
-4. Source 选择 `Deploy from a branch`
-5. Branch 选择 `main` / `/root`
-6. 保存后等待 1-2 分钟，访问 GitHub 给出的 Pages 地址
+1. 选取上一完整财务年度。
+2. 读取该年度已实施的现金分红。
+3. 只有年报时使用年报每股税前股利；年报和中报都有时二者相加。
+4. 过滤“不分配不转增”。
+5. `股息率 = 年度每股分红 / 当前股价 × 100%`。
+6. `目标股价 = 年度每股分红 / 目标股息率`。
 
-## 修改股票
+## 数据更新
 
-在 `index.html` 中搜索股票代码，例如 `NASDAQ:NVDA`、`NASDAQ:AAPL`，替换为你想看的股票即可。
+A 股数据通过东方财富妙想 API 获取。API Key 保存在 GitHub Actions Secret `MX_APIKEY`，不会暴露在网页代码中。
 
+工作日北京时间：
+
+- 09:30—11:30：60 次，约每 120 秒一次
+- 13:00—15:30：70 次，约每 129 秒一次
+- 每日计划合计：130 次，预留 20 次额度
+
+实时 JSON 写入 `live` 分支，不触发 GitHub Pages 每次重新部署。网页加载时读取最新数据；失败时回退到 `main/data/market.json`。
+
+> 本项目仅用于数据展示与个人研究，不构成投资建议。

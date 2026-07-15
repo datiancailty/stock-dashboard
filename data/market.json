@@ -1,0 +1,117 @@
+{
+  "updatedAt": "2026-07-16T01:22:20+08:00",
+  "source": "东方财富妙想",
+  "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
+  "stocks": [
+    {
+      "code": "600036",
+      "name": "招商银行",
+      "price": 37.76,
+      "fiscalYear": 2025,
+      "annualDividend": 1.003,
+      "interimDividend": 1.0130000000000001,
+      "source": "mx-data"
+    },
+    {
+      "code": "000538",
+      "name": "云南白药",
+      "price": 50.8,
+      "fiscalYear": 2025,
+      "annualDividend": 1.583,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "600795",
+      "name": "国电电力",
+      "price": 4.74,
+      "fiscalYear": 2025,
+      "annualDividend": 0.141,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "003816",
+      "name": "中国广核",
+      "price": 3.94,
+      "fiscalYear": 2025,
+      "annualDividend": 0.086,
+      "interimDividend": 0,
+      "source": "mx-data"
+    }
+  ],
+  "events": [
+    {
+      "date": "2026-07-09",
+      "code": "600036",
+      "name": "招商银行",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.003元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "600036",
+      "name": "招商银行",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.003元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "600036",
+      "name": "招商银行",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.003元"
+    },
+    {
+      "date": "2026-01-15",
+      "code": "600036",
+      "name": "招商银行",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 1.013元"
+    },
+    {
+      "date": "2026-01-16",
+      "code": "600036",
+      "name": "招商银行",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 1.013元"
+    },
+    {
+      "date": "2026-01-16",
+      "code": "600036",
+      "name": "招商银行",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 1.013元"
+    },
+    {
+      "date": "2026-04-29",
+      "code": "000538",
+      "name": "云南白药",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.583元"
+    },
+    {
+      "date": "2026-04-30",
+      "code": "000538",
+      "name": "云南白药",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.583元"
+    },
+    {
+      "date": "2026-04-30",
+      "code": "000538",
+      "name": "云南白药",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.583元"
+    }
+  ]
+}

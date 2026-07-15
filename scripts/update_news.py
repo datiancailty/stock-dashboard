@@ -149,7 +149,13 @@ def main() -> None:
     if not os.getenv("MX_APIKEY"):
         raise SystemExit("缺少 MX_APIKEY")
     stocks = json.loads((ROOT / "data/stocks.json").read_text())
-    old = json.loads(MEMORY_PATH.read_text()) if MEMORY_PATH.exists() else {"items": []}
+    if MEMORY_PATH.exists() and MEMORY_PATH.stat().st_size:
+        try:
+            old = json.loads(MEMORY_PATH.read_text())
+        except json.JSONDecodeError:
+            old = {"items": []}
+    else:
+        old = {"items": []}
     known = {item["id"] for item in old.get("items", [])}
     now = datetime.now(BJ)
     since = old.get("lastScanAt", f"{now.year - 1}-01-01")[:10]

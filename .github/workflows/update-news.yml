@@ -33,7 +33,11 @@ jobs:
         run: |
           git fetch origin live || true
           mkdir -p data
-          git show origin/live:news-memory.json > data/news-memory.json 2>/dev/null || true
+          if git show origin/live:news-memory.json > /tmp/news-memory.json 2>/dev/null; then
+            mv /tmp/news-memory.json data/news-memory.json
+          else
+            rm -f /tmp/news-memory.json
+          fi
       - name: 增量检查公告并保存AI结构化结果
         env:
           MX_APIKEY: ${{ secrets.MX_APIKEY }}

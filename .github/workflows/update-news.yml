@@ -1,0 +1,55 @@
+name: 分红公告增量记忆与AI预估
+
+on:
+  schedule:
+    # UTC 00:30 = 北京时间每天 08:30；每天只消耗 1 次妙想资讯调用
+    - cron: '30 0 * * *'
+  push:
+    paths:
+      - 'data/stocks.json'
+      - 'data/news-refresh-request.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dividend-news-memory
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: 读取 live 分支已有公告记忆
+        run: |
+          git fetch origin live || true
+          mkdir -p data
+          git show origin/live:news-memory.json > data/news-memory.json 2>/dev/null || true
+      - name: 增量检查公告并保存AI结构化结果
+        env:
+          MX_APIKEY: ${{ secrets.MX_APIKEY }}
+        run: python scripts/update_news.py
+      - name: 写入 live 分支
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          CONTENT=$(base64 -w 0 data/news-memory.json)
+          SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/news-memory.json?ref=live" --jq .sha 2>/dev/null || true)
+          if [ -n "$SHA" ]; then
+            gh api --method PUT "repos/${GITHUB_REPOSITORY}/contents/news-memory.json" \
+              -f message="news: incremental dividend scan" -f content="$CONTENT" -f branch=live -f sha="$SHA" >/dev/null
+          else
+            gh api --method PUT "repos/${GITHUB_REPOSITORY}/contents/news-memory.json" \
+              -f message="news: initialize dividend memory" -f content="$CONTENT" -f branch=live >/dev/null
+          fi

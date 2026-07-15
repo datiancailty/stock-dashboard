@@ -5,6 +5,9 @@ on:
     # GitHub Actions 使用 UTC：北京时间工作日 09:30 与 13:00
     - cron: '30 1 * * 1-5'
     - cron: '0 5 * * 1-5'
+  push:
+    paths:
+      - 'data/stocks.json'
   workflow_dispatch:
     inputs:
       calls:
@@ -38,6 +41,9 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "calls=${{ inputs.calls }}" >> "$GITHUB_OUTPUT"
             echo "interval=0" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            echo "calls=1" >> "$GITHUB_OUTPUT"
+            echo "interval=0" >> "$GITHUB_OUTPUT"
           elif [ "${{ github.event.schedule }}" = "30 1 * * 1-5" ]; then
             echo "calls=60" >> "$GITHUB_OUTPUT"
             echo "interval=120" >> "$GITHUB_OUTPUT"
@@ -51,7 +57,7 @@ jobs:
           if ! git ls-remote --exit-code --heads origin live >/dev/null 2>&1; then
             git push origin HEAD:refs/heads/live
           fi
-      - name: 按交易时段平均更新（每日共130次）
+      - name: 按交易时段平均更新（计划内每日共130次）
         env:
           MX_APIKEY: ${{ secrets.MX_APIKEY }}
           GH_TOKEN: ${{ github.token }}

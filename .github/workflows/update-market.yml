@@ -24,6 +24,9 @@ concurrency:
 
 jobs:
   update:
+    # 自动任务采用静默容错，避免 GitHub 对偶发平台故障发送失败邮件；
+    # workflow_dispatch 手动测试仍保持严格失败。
+    continue-on-error: ${{ github.event_name != 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     timeout-minutes: 190
     steps:

@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-07-16T18:04:10+08:00",
-  "source": "东方财富妙想",
+  "updatedAt": "2026-07-16T18:04:41+08:00",
+  "source": "东方财富公开批量行情 + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
+  "dividendCursor": 5,
+  "dividendBatch": [
+    "600036",
+    "601985",
+    "300157",
+    "000423",
+    "600690"
+  ],
   "stocks": [
     {
       "code": "600036",
@@ -10,16 +18,16 @@
       "fiscalYear": 2025,
       "annualDividend": 1.003,
       "interimDividend": 1.0130000000000001,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "601985",
       "name": "中国核电",
       "price": 8.87,
       "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "mx-data"
+      "annualDividend": 0.16,
+      "interimDividend": 0.02,
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "300157",
@@ -28,16 +36,16 @@
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "000423",
       "name": "东阿阿胶",
       "price": 51.4,
       "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "mx-data"
+      "annualDividend": 1.4354904,
+      "interimDividend": 1.2700919000000002,
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "600690",
@@ -45,98 +53,98 @@
       "price": 21.11,
       "fiscalYear": 2025,
       "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "mx-data"
+      "interimDividend": 0.2692,
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "601919",
       "name": "中远海控",
-      "price": 0,
+      "price": 14.55,
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "600887",
       "name": "伊利股份",
-      "price": 0,
+      "price": 26.03,
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "600795",
       "name": "国电电力",
-      "price": 4.74,
+      "price": 4.67,
       "fiscalYear": 2025,
       "annualDividend": 0.141,
       "interimDividend": 0,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "003816",
       "name": "中国广核",
-      "price": 3.94,
+      "price": 3.88,
       "fiscalYear": 2025,
       "annualDividend": 0.086,
       "interimDividend": 0,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "600028",
       "name": "中国石化",
-      "price": 0,
+      "price": 4.99,
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "600938",
       "name": "中国海油",
-      "price": 0,
+      "price": 28.96,
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "000538",
       "name": "云南白药",
-      "price": 50.8,
+      "price": 52.11,
       "fiscalYear": 2025,
       "annualDividend": 1.583,
       "interimDividend": 0,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "600863",
       "name": "华能蒙电",
-      "price": 0,
+      "price": 4.62,
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "600011",
       "name": "华能国际",
-      "price": 0,
+      "price": 6.75,
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     },
     {
       "code": "601318",
       "name": "中国平安",
-      "price": 0,
+      "price": 50.67,
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "mx-data"
+      "source": "东方财富公开行情 + mx-data"
     }
   ],
   "events": [
@@ -211,6 +219,126 @@
       "type": "派息日",
       "amount": null,
       "description": "2025年度分配 · 每股税前 1.583元"
+    },
+    {
+      "date": "2026-07-16",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.16元"
+    },
+    {
+      "date": "2026-07-17",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.16元"
+    },
+    {
+      "date": "2026-07-17",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.16元"
+    },
+    {
+      "date": "2026-01-12",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.02元"
+    },
+    {
+      "date": "2026-01-13",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.02元"
+    },
+    {
+      "date": "2026-01-13",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.02元"
+    },
+    {
+      "date": "2026-05-22",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.43549元"
+    },
+    {
+      "date": "2026-05-25",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.43549元"
+    },
+    {
+      "date": "2026-05-25",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.43549元"
+    },
+    {
+      "date": "2025-09-02",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 1.27009元"
+    },
+    {
+      "date": "2025-09-03",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 1.27009元"
+    },
+    {
+      "date": "2025-09-03",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 1.27009元"
+    },
+    {
+      "date": "2025-11-06",
+      "code": "600690",
+      "name": "海尔智家",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.2692元"
+    },
+    {
+      "date": "2025-11-07",
+      "code": "600690",
+      "name": "海尔智家",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.2692元"
+    },
+    {
+      "date": "2025-11-07",
+      "code": "600690",
+      "name": "海尔智家",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.2692元"
     }
   ]
 }

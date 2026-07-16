@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """用东方财富妙想一次批量更新 A 股价格、上一完整年度分红和分红事件。"""
 import json, os, re, sys
-from datetime import datetime
+from datetime import datetime, date
 from pathlib import Path
 from zoneinfo import ZoneInfo
 import requests
@@ -10,6 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 API='https://mkapi2.dfcfs.com/finskillshub/api/claw/query'
 BJ=ZoneInfo('Asia/Shanghai')
 DIVIDEND_BATCH_SIZE=5
+KLINE_API='https://push2his.eastmoney.com/api/qt/stock/kline/get'
 
 def number(v):
     if v in (None,'','-'): return 0.0
@@ -59,6 +60,58 @@ def fetch_prices(stocks):
     if not prices: raise RuntimeError('东方财富公开行情接口未返回任何有效价格')
     return prices
 
+def position_item(current, rows):
+    """计算当前价在给定K线集合最高/最低价中的百分位与上中下分区。"""
+    if not rows: return None
+    low=min(row['low'] for row in rows); high=max(row['high'] for row in rows)
+    if high<=low: percent=50.0
+    else: percent=max(0.0,min(100.0,(current-low)/(high-low)*100))
+    zone='下部' if percent<100/3 else ('中部' if percent<200/3 else '上部')
+    return {'zone':zone,'percent':round(percent,1),'low':round(low,3),'high':round(high,3)}
+
+def fetch_positions(stocks, prices, previous):
+    """并发读取日K，计算最近交易日、当前交易周、当前交易月的位置。"""
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    headers={'User-Agent':'Mozilla/5.0','Referer':'https://quote.eastmoney.com/'}
+    old={s.get('code'):s.get('positions') for s in previous.get('stocks',[])}
+    def one(stock):
+        code=stock['code']; market_prefix='sh' if code.startswith(('5','6','9')) else 'sz'; secid=('1.' if market_prefix=='sh' else '0.')+code
+        lines=[]
+        try:
+            r=requests.get(KLINE_API,params={'secid':secid,'klt':'101','fqt':'0','lmt':'45','end':'20500101','fields1':'f1,f2,f3,f4,f5,f6','fields2':'f51,f52,f53,f54,f55,f56','ut':'fa5fd1943c7b386f172d6893dbfba10b'},headers=headers,timeout=18)
+            r.raise_for_status(); lines=(r.json().get('data') or {}).get('klines') or []
+        except (requests.RequestException,ValueError,TypeError):
+            pass
+        # 东方财富历史接口偶发限流时，使用腾讯公开不复权日K补齐，字段口径一致。
+        if not lines:
+            try:
+                symbol=market_prefix+code
+                r=requests.get('https://web.ifzq.gtimg.cn/appstock/app/fqkline/get',params={'param':f'{symbol},day,,,45,'},headers=headers,timeout=18)
+                r.raise_for_status(); data=(r.json().get('data') or {}).get(symbol) or {}; raw=data.get('day') or []
+                lines=[','.join(map(str,row[:6])) for row in raw]
+            except (requests.RequestException,ValueError,TypeError):
+                return code,old.get(code)
+        try:
+            rows=[]
+            for line in lines:
+                cells=line.split(',')
+                if len(cells)<5: continue
+                rows.append({'date':date.fromisoformat(cells[0]),'high':number(cells[3]),'low':number(cells[4])})
+            rows=[row for row in rows if row['high']>0 and row['low']>0]
+            if not rows: return code,old.get(code)
+            latest=rows[-1]['date']; iso=latest.isocalendar(); current=prices.get(code) or number(lines[-1].split(',')[2])
+            week=[row for row in rows if row['date'].isocalendar()[:2]==iso[:2]]
+            month=[row for row in rows if (row['date'].year,row['date'].month)==(latest.year,latest.month)]
+            return code,{'asOf':latest.isoformat(),'day':position_item(current,[rows[-1]]),'week':position_item(current,week),'month':position_item(current,month)}
+        except (ValueError,TypeError,IndexError):
+            return code,old.get(code)
+    result={}
+    with ThreadPoolExecutor(max_workers=5) as pool:
+        for future in as_completed(pool.submit(one,stock) for stock in stocks):
+            code,value=future.result()
+            if value: result[code]=value
+    return result
+
 def dividend_batch(stocks, previous):
     """优先补新股票，其余按游标轮转；每次仍只消耗一次妙想调用。"""
     old_codes={s.get('code') for s in previous.get('stocks',[])}
@@ -80,9 +133,9 @@ def code_from_label(label, stocks):
         if s['name'] in str(label) or s['code'] in str(label): return s['code']
     return None
 
-def parse(payload, stocks, year, previous, prices):
+def parse(payload, stocks, year, previous, prices, positions):
     old={s['code']:s for s in previous.get('stocks',[])}
-    by={s['code']:{**s,'price':prices.get(s['code'],old.get(s['code'],{}).get('price',0)),'fiscalYear':year,'annualDividend':old.get(s['code'],{}).get('annualDividend',0),'interimDividend':old.get(s['code'],{}).get('interimDividend',0),'source':'东方财富公开行情 + mx-data'} for s in stocks}
+    by={s['code']:{**s,'price':prices.get(s['code'],old.get(s['code'],{}).get('price',0)),'positions':positions.get(s['code'],old.get(s['code'],{}).get('positions')),'fiscalYear':year,'annualDividend':old.get(s['code'],{}).get('annualDividend',0),'interimDividend':old.get(s['code'],{}).get('interimDividend',0),'source':'东方财富公开行情/日K + mx-data'} for s in stocks}
     events=[]
     for dto in result_dtos(payload):
         table=dto.get('table') or {}; field=(dto.get('field') or {}).get('returnName',''); title=dto.get('title') or ''
@@ -120,11 +173,12 @@ def main():
     out=ROOT/'data/market.json'; previous=json.loads(out.read_text()) if out.exists() else {}
     now=datetime.now(BJ); year=now.year-1
     prices=fetch_prices(stocks)
+    positions=fetch_positions(stocks,prices,previous)
     batch,next_cursor=dividend_batch(stocks,previous)
     payload=api_query('、'.join(s['name'] for s in batch),year)
-    parsed,events=parse(payload,stocks,year,previous,prices)
-    result={'updatedAt':now.isoformat(timespec='seconds'),'source':'东方财富公开批量行情 + 妙想分红明细','strategy':'上一完整年度已实施的年报与中报税前每股股利之和','dividendCursor':next_cursor,'dividendBatch':[s['code'] for s in batch],'stocks':parsed,'events':events}
+    parsed,events=parse(payload,stocks,year,previous,prices,positions)
+    result={'updatedAt':now.isoformat(timespec='seconds'),'source':'东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细','strategy':'上一完整年度已实施的年报与中报税前每股股利之和','positionStrategy':'当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部','dividendCursor':next_cursor,'dividendBatch':[s['code'] for s in batch],'stocks':parsed,'events':events}
     out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps({'ok':True,'updatedAt':result['updatedAt'],'stocks':len(parsed),'prices':len(prices),'dividendBatch':result['dividendBatch'],'events':len(events)},ensure_ascii=False))
+    print(json.dumps({'ok':True,'updatedAt':result['updatedAt'],'stocks':len(parsed),'prices':len(prices),'positions':len(positions),'dividendBatch':result['dividendBatch'],'events':len(events)},ensure_ascii=False))
 
 if __name__=='__main__': main()

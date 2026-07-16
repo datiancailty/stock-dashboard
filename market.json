@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-07-16T14:49:01+08:00",
+  "updatedAt": "2026-07-16T17:34:12+08:00",
   "source": "东方财富妙想",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
   "stocks": [
     {
       "code": "600036",
       "name": "招商银行",
-      "price": 37.76,
+      "price": 37.67,
       "fiscalYear": 2025,
       "annualDividend": 1.003,
       "interimDividend": 1.0130000000000001,
@@ -15,7 +15,7 @@
     {
       "code": "601985",
       "name": "中国核电",
-      "price": 8.96,
+      "price": 8.87,
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
@@ -24,7 +24,7 @@
     {
       "code": "300157",
       "name": "新锦动力",
-      "price": 4.0,
+      "price": 3.69,
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
@@ -33,7 +33,7 @@
     {
       "code": "000423",
       "name": "东阿阿胶",
-      "price": 50.05,
+      "price": 51.4,
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
@@ -42,7 +42,7 @@
     {
       "code": "600690",
       "name": "海尔智家",
-      "price": 21.02,
+      "price": 21.11,
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,

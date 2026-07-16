@@ -6,7 +6,7 @@
   <meta name="description" content="A股持仓、股息率价格网格、分红日历与公告AI预估" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <title>我的分红工具</title>
-  <link rel="stylesheet" href="assets/app.css?v=20260716-portfolio-import-3" />
+  <link rel="stylesheet" href="assets/app.css?v=20260716-portfolio-import-4" />
 </head>
 <body>
   <main class="shell">
@@ -71,6 +71,6 @@
   <dialog id="editDialog"><form method="dialog" id="editForm"><h3>手动修改分红数据</h3><input type="hidden" id="editCode" /><label>年报每股分红（税前）<input id="editAnnual" type="number" min="0" step="0.0001" /></label><label>中报每股分红（税前）<input id="editInterim" type="number" min="0" step="0.0001" /></label><label>当前股价<input id="editPrice" type="number" min="0" step="0.001" /></label><p class="muted">手动值仅保存在当前浏览器；点击“恢复自动”可重新使用东方财富数据。</p><div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button type="button" id="resetAuto" class="ghost danger">恢复自动</button><button value="save" class="primary" id="saveEdit">保存</button></div></form></dialog>
   <dialog id="ruleDialog"><form method="dialog"><h3>自动计算规则</h3><ol><li>选择上一完整财务年度。</li><li>读取该年度所有已实施现金分红。</li><li>年报与中报税前每股分红相加。</li><li>过滤“不分配不转增”。</li><li>正式股息率 = 正式年度每股分红 ÷ 当前股价 × 100%。</li><li>公告AI预估独立保存，并展示来源、公式和可信度，不覆盖正式数据。</li></ol><button class="primary">知道了</button></form></dialog>
   <dialog id="messageDialog"><form method="dialog"><h3 id="messageTitle">提示</h3><p id="messageText"></p><button class="primary">知道了</button></form></dialog>
-  <script src="assets/app.js?v=20260716-portfolio-import-3"></script>
+  <script src="assets/app.js?v=20260716-portfolio-import-4"></script>
 </body>
 </html>

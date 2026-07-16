@@ -8,6 +8,7 @@ on:
   push:
     paths:
       - 'data/stocks.json'
+      - 'data/market-refresh-request.json'
   workflow_dispatch:
     inputs:
       calls:
@@ -19,8 +20,9 @@ permissions:
   contents: write
 
 concurrency:
-  group: market-data-update
-  cancel-in-progress: false
+  # 定时刷新和网页手动刷新使用不同队列，双线并行；连续手动点击只保留最新一次。
+  group: market-data-update-${{ github.event_name }}
+  cancel-in-progress: ${{ github.event_name == 'push' }}
 
 jobs:
   update:

@@ -6,7 +6,7 @@
   <meta name="description" content="A股持仓、股息率价格网格、分红日历与公告AI预估" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <title>我的分红工具</title>
-  <link rel="stylesheet" href="assets/app.css?v=20260716-portfolio-import-5" />
+  <link rel="stylesheet" href="assets/app.css?v=20260716-market-sort-refresh-1" />
 </head>
 <body>
   <main class="shell">
@@ -14,6 +14,7 @@
       <div><h1>我的分红工具</h1><p>正式分红、AI公告预估与云端自选股</p></div>
       <div class="top-actions">
         <div class="update"><span class="live-dot"></span><span id="updateText">正在读取数据…</span></div>
+        <button class="ghost" id="refreshMarket">↻ 手动刷新行情</button>
         <button class="ghost" id="loginButton">管理员登录</button>
       </div>
     </header>
@@ -31,7 +32,7 @@
     </nav>
 
     <section id="holdings" class="page active">
-      <div class="page-head"><div><h2>自选股持仓</h2><p>自选股票保存在 GitHub；持仓股数和成本只保存在当前浏览器。</p></div><button class="primary protected" id="showAdd">＋ 搜索添加股票</button></div>
+      <div class="page-head"><div><h2>自选股持仓</h2><p>按照当前持仓市值从高到低排列；持仓股数和成本只保存在当前浏览器。</p></div><button class="primary protected" id="showAdd">＋ 搜索添加股票</button></div>
       <div class="summary" id="summaryCards"></div>
       <form class="add-form hidden" id="addForm">
         <div class="search-box">
@@ -48,7 +49,7 @@
     </section>
 
     <section id="grid" class="page">
-      <div class="page-head"><div><h2>股息率价格网格</h2><p>正式口径仍为上一完整年度“年报 + 中报”已实施税前现金分红。</p></div><button class="ghost" id="openRule">计算规则</button></div>
+      <div class="page-head"><div><h2>股息率价格网格</h2><p>与 Part 1 使用相同的持仓市值降序；正式口径仍为上一完整年度已实施税前现金分红。</p></div><button class="ghost" id="openRule">计算规则</button></div>
       <div class="formula">AI新闻预估单独展示，不会覆盖正式分红；目标价仍按正式年度每股分红计算。</div>
       <div class="table-scroll"><table><thead><tr><th>股票</th><th>正式分红构成</th><th>正式每股分红</th><th>AI最新预估</th><th>当前价 / 股息率</th><th>5.0%</th><th>5.5%</th><th>6.0%</th><th>6.5%</th><th>7.0%</th><th>操作</th></tr></thead><tbody id="gridBody"></tbody></table></div>
     </section>
@@ -71,6 +72,6 @@
   <dialog id="editDialog"><form method="dialog" id="editForm"><h3>手动修改分红数据</h3><input type="hidden" id="editCode" /><label>年报每股分红（税前）<input id="editAnnual" type="number" min="0" step="0.0001" /></label><label>中报每股分红（税前）<input id="editInterim" type="number" min="0" step="0.0001" /></label><label>当前股价<input id="editPrice" type="number" min="0" step="0.001" /></label><p class="muted">手动值仅保存在当前浏览器；点击“恢复自动”可重新使用东方财富数据。</p><div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button type="button" id="resetAuto" class="ghost danger">恢复自动</button><button value="save" class="primary" id="saveEdit">保存</button></div></form></dialog>
   <dialog id="ruleDialog"><form method="dialog"><h3>自动计算规则</h3><ol><li>选择上一完整财务年度。</li><li>读取该年度所有已实施现金分红。</li><li>年报与中报税前每股分红相加。</li><li>过滤“不分配不转增”。</li><li>正式股息率 = 正式年度每股分红 ÷ 当前股价 × 100%。</li><li>公告AI预估独立保存，并展示来源、公式和可信度，不覆盖正式数据。</li></ol><button class="primary">知道了</button></form></dialog>
   <dialog id="messageDialog"><form method="dialog"><h3 id="messageTitle">提示</h3><p id="messageText"></p><button class="primary">知道了</button></form></dialog>
-  <script src="assets/app.js?v=20260716-remember-login-1"></script>
+  <script src="assets/app.js?v=20260716-market-sort-refresh-1"></script>
 </body>
 </html>

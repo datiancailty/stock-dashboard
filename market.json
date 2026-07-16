@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-07-16T18:04:41+08:00",
+  "updatedAt": "2026-07-16T18:04:51+08:00",
   "source": "东方财富公开批量行情 + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
-  "dividendCursor": 5,
+  "dividendCursor": 10,
   "dividendBatch": [
-    "600036",
-    "601985",
-    "300157",
-    "000423",
-    "600690"
+    "601919",
+    "600887",
+    "600795",
+    "003816",
+    "600028"
   ],
   "stocks": [
     {
@@ -61,8 +61,8 @@
       "name": "中远海控",
       "price": 14.55,
       "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
+      "annualDividend": 0.44000000000000006,
+      "interimDividend": 0.5599999999999999,
       "source": "东方财富公开行情 + mx-data"
     },
     {
@@ -70,7 +70,7 @@
       "name": "伊利股份",
       "price": 26.03,
       "fiscalYear": 2025,
-      "annualDividend": 0,
+      "annualDividend": 0.9,
       "interimDividend": 0,
       "source": "东方财富公开行情 + mx-data"
     },
@@ -80,7 +80,7 @@
       "price": 4.67,
       "fiscalYear": 2025,
       "annualDividend": 0.141,
-      "interimDividend": 0,
+      "interimDividend": 0.1,
       "source": "东方财富公开行情 + mx-data"
     },
     {
@@ -97,8 +97,8 @@
       "name": "中国石化",
       "price": 4.99,
       "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
+      "annualDividend": 0.11200000000000002,
+      "interimDividend": 0.088,
       "source": "东方财富公开行情 + mx-data"
     },
     {
@@ -339,6 +339,198 @@
       "type": "派息日",
       "amount": null,
       "description": "2025中期分配 · 每股税前 0.2692元"
+    },
+    {
+      "date": "2026-06-25",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.44元"
+    },
+    {
+      "date": "2026-06-26",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.44元"
+    },
+    {
+      "date": "2026-06-26",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.44元"
+    },
+    {
+      "date": "2025-10-23",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.56元"
+    },
+    {
+      "date": "2025-10-24",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.56元"
+    },
+    {
+      "date": "2025-10-24",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.56元"
+    },
+    {
+      "date": "2026-06-04",
+      "code": "600887",
+      "name": "伊利股份",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.9元"
+    },
+    {
+      "date": "2026-06-05",
+      "code": "600887",
+      "name": "伊利股份",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.9元"
+    },
+    {
+      "date": "2026-06-05",
+      "code": "600887",
+      "name": "伊利股份",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.9元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.141元"
+    },
+    {
+      "date": "2026-07-13",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.141元"
+    },
+    {
+      "date": "2026-07-13",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.141元"
+    },
+    {
+      "date": "2025-10-28",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.1元"
+    },
+    {
+      "date": "2025-10-29",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.1元"
+    },
+    {
+      "date": "2025-10-29",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.1元"
+    },
+    {
+      "date": "2026-07-09",
+      "code": "003816",
+      "name": "中国广核",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.086元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "003816",
+      "name": "中国广核",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.086元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "003816",
+      "name": "中国广核",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.086元"
+    },
+    {
+      "date": "2026-06-16",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.112元"
+    },
+    {
+      "date": "2026-06-17",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.112元"
+    },
+    {
+      "date": "2026-06-17",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.112元"
+    },
+    {
+      "date": "2025-09-11",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.088元"
+    },
+    {
+      "date": "2025-09-12",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.088元"
+    },
+    {
+      "date": "2025-09-12",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.088元"
     }
   ]
 }

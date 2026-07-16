@@ -12,12 +12,13 @@ from pathlib import Path
 import requests
 
 
-def request(session: requests.Session, method: str, url: str, **kwargs) -> requests.Response:
+def request(session: requests.Session, method: str, url: str, retry_conflicts: bool = True, **kwargs) -> requests.Response:
     last_error: Exception | None = None
     for attempt in range(1, 5):
         try:
             response = session.request(method, url, timeout=45, **kwargs)
-            if response.status_code not in (409, 422, 429) and response.status_code < 500:
+            retryable = response.status_code == 429 or response.status_code >= 500 or (retry_conflicts and response.status_code in (409, 422))
+            if not retryable:
                 return response
             last_error = RuntimeError(f"GitHub HTTP {response.status_code}: {response.text[:300]}")
         except requests.RequestException as error:
@@ -70,7 +71,8 @@ def main() -> None:
         }
         if sha:
             payload["sha"] = sha
-        result = request(session, "PUT", api, json=payload)
+        # 409/422 必须回到外层重新读取最新 SHA，不能用旧 SHA 原样重试。
+        result = request(session, "PUT", api, retry_conflicts=False, json=payload)
         if result.status_code in (200, 201):
             body = result.json()
             print(json.dumps({

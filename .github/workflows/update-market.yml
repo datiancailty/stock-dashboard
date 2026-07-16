@@ -62,6 +62,9 @@ jobs:
           if ! git ls-remote --exit-code --heads origin live >/dev/null 2>&1; then
             git push origin HEAD:refs/heads/live
           fi
+      - name: 读取 live 上一次成功数据
+        run: |
+          git show origin/live:market.json > data/market.json || true
       - name: 按交易时段平均更新（计划内每日共130次）
         id: update_market
         continue-on-error: ${{ github.event_name != 'workflow_dispatch' }}

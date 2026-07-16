@@ -1,150 +1,466 @@
 {
-  "updatedAt": "2026-07-16T22:02:53+08:00",
-  "source": "东方财富公开批量行情 + 妙想分红明细",
+  "updatedAt": "2026-07-17T01:15:49+08:00",
+  "source": "东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
-  "dividendCursor": 10,
+  "positionStrategy": "当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部",
+  "dividendCursor": 0,
   "dividendBatch": [
-    "601919",
-    "600887",
-    "600795",
-    "003816",
-    "600028"
+    "600938",
+    "000538",
+    "600863",
+    "600011",
+    "601318"
   ],
   "stocks": [
     {
       "code": "600036",
       "name": "招商银行",
       "price": 37.67,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "下部",
+          "percent": 27.4,
+          "low": 37.5,
+          "high": 38.12
+        },
+        "week": {
+          "zone": "上部",
+          "percent": 68.1,
+          "low": 36.71,
+          "high": 38.12
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 84.2,
+          "low": 35.28,
+          "high": 38.12
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 1.003,
       "interimDividend": 1.0130000000000001,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "601985",
       "name": "中国核电",
       "price": 8.87,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "下部",
+          "percent": 15.4,
+          "low": 8.85,
+          "high": 8.98
+        },
+        "week": {
+          "zone": "中部",
+          "percent": 50.0,
+          "low": 8.76,
+          "high": 8.98
+        },
+        "month": {
+          "zone": "中部",
+          "percent": 60.7,
+          "low": 8.7,
+          "high": 8.98
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 0.16,
       "interimDividend": 0.02,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "300157",
       "name": "新锦动力",
       "price": 3.69,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "下部",
+          "percent": 0.0,
+          "low": 3.69,
+          "high": 3.93
+        },
+        "week": {
+          "zone": "下部",
+          "percent": 0.0,
+          "low": 3.69,
+          "high": 4.31
+        },
+        "month": {
+          "zone": "下部",
+          "percent": 13.9,
+          "low": 3.59,
+          "high": 4.31
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "000423",
       "name": "东阿阿胶",
       "price": 51.4,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "上部",
+          "percent": 82.8,
+          "low": 49.52,
+          "high": 51.79
+        },
+        "week": {
+          "zone": "上部",
+          "percent": 92.3,
+          "low": 46.7,
+          "high": 51.79
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 94.7,
+          "low": 44.44,
+          "high": 51.79
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 1.4354904,
       "interimDividend": 1.2700919000000002,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600690",
       "name": "海尔智家",
       "price": 21.11,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "中部",
+          "percent": 48.9,
+          "low": 20.89,
+          "high": 21.34
+        },
+        "week": {
+          "zone": "上部",
+          "percent": 82.6,
+          "low": 20.02,
+          "high": 21.34
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 86.3,
+          "low": 19.66,
+          "high": 21.34
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0.2692,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "601919",
       "name": "中远海控",
       "price": 14.55,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "下部",
+          "percent": 19.2,
+          "low": 14.5,
+          "high": 14.76
+        },
+        "week": {
+          "zone": "上部",
+          "percent": 75.3,
+          "low": 13.91,
+          "high": 14.76
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 87.5,
+          "low": 13.08,
+          "high": 14.76
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 0.44000000000000006,
       "interimDividend": 0.5599999999999999,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600887",
       "name": "伊利股份",
       "price": 26.03,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "中部",
+          "percent": 55.1,
+          "low": 25.76,
+          "high": 26.25
+        },
+        "week": {
+          "zone": "上部",
+          "percent": 87.3,
+          "low": 24.52,
+          "high": 26.25
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 91.2,
+          "low": 23.76,
+          "high": 26.25
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 0.9,
       "interimDividend": 0,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600795",
       "name": "国电电力",
       "price": 4.67,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "下部",
+          "percent": 20.0,
+          "low": 4.65,
+          "high": 4.75
+        },
+        "week": {
+          "zone": "中部",
+          "percent": 35.7,
+          "low": 4.62,
+          "high": 4.76
+        },
+        "month": {
+          "zone": "中部",
+          "percent": 35.3,
+          "low": 4.61,
+          "high": 4.78
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 0.141,
       "interimDividend": 0.1,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "003816",
       "name": "中国广核",
       "price": 3.88,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "下部",
+          "percent": 12.5,
+          "low": 3.87,
+          "high": 3.95
+        },
+        "week": {
+          "zone": "中部",
+          "percent": 41.7,
+          "low": 3.83,
+          "high": 3.95
+        },
+        "month": {
+          "zone": "中部",
+          "percent": 58.8,
+          "low": 3.78,
+          "high": 3.95
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 0.086,
       "interimDividend": 0,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600028",
       "name": "中国石化",
       "price": 4.99,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "下部",
+          "percent": 33.3,
+          "low": 4.95,
+          "high": 5.07
+        },
+        "week": {
+          "zone": "上部",
+          "percent": 72.4,
+          "low": 4.78,
+          "high": 5.07
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 87.5,
+          "low": 4.43,
+          "high": 5.07
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 0.11200000000000002,
       "interimDividend": 0.088,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600938",
       "name": "中国海油",
       "price": 28.96,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "下部",
+          "percent": 7.5,
+          "low": 28.88,
+          "high": 29.94
+        },
+        "week": {
+          "zone": "中部",
+          "percent": 44.1,
+          "low": 28.18,
+          "high": 29.95
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 72.1,
+          "low": 26.4,
+          "high": 29.95
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 0.47881,
       "interimDividend": 0.66612,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "000538",
       "name": "云南白药",
       "price": 52.11,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "上部",
+          "percent": 91.8,
+          "low": 50.43,
+          "high": 52.26
+        },
+        "week": {
+          "zone": "上部",
+          "percent": 95.7,
+          "low": 48.78,
+          "high": 52.26
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 97.2,
+          "low": 46.93,
+          "high": 52.26
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 1.583,
       "interimDividend": 0,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600863",
       "name": "华能蒙电",
       "price": 4.62,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "下部",
+          "percent": 10.5,
+          "low": 4.6,
+          "high": 4.79
+        },
+        "week": {
+          "zone": "下部",
+          "percent": 6.7,
+          "low": 4.6,
+          "high": 4.9
+        },
+        "month": {
+          "zone": "中部",
+          "percent": 52.2,
+          "low": 4.26,
+          "high": 4.95
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600011",
       "name": "华能国际",
       "price": 6.75,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "下部",
+          "percent": 13.3,
+          "low": 6.73,
+          "high": 6.88
+        },
+        "week": {
+          "zone": "下部",
+          "percent": 15.0,
+          "low": 6.72,
+          "high": 6.92
+        },
+        "month": {
+          "zone": "下部",
+          "percent": 11.0,
+          "low": 6.62,
+          "high": 7.8
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 0.4,
       "interimDividend": 0,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "601318",
       "name": "中国平安",
       "price": 50.67,
+      "positions": {
+        "asOf": "2026-07-16",
+        "day": {
+          "zone": "中部",
+          "percent": 41.0,
+          "low": 50.24,
+          "high": 51.29
+        },
+        "week": {
+          "zone": "上部",
+          "percent": 77.8,
+          "low": 48.5,
+          "high": 51.29
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 84.9,
+          "low": 47.19,
+          "high": 51.29
+        }
+      },
       "fiscalYear": 2025,
       "annualDividend": 1.75,
       "interimDividend": 0.95,
-      "source": "东方财富公开行情 + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     }
   ],
   "events": [

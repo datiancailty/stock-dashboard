@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-16T13:41:03+08:00",
+  "updatedAt": "2026-07-16T13:50:38+08:00",
   "source": "东方财富妙想",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
   "stocks": [
@@ -13,29 +13,11 @@
       "source": "mx-data"
     },
     {
-      "code": "000538",
-      "name": "云南白药",
-      "price": 50.8,
+      "code": "601985",
+      "name": "中国核电",
+      "price": 8.96,
       "fiscalYear": 2025,
-      "annualDividend": 1.583,
-      "interimDividend": 0,
-      "source": "mx-data"
-    },
-    {
-      "code": "600795",
-      "name": "国电电力",
-      "price": 4.74,
-      "fiscalYear": 2025,
-      "annualDividend": 0.141,
-      "interimDividend": 0,
-      "source": "mx-data"
-    },
-    {
-      "code": "003816",
-      "name": "中国广核",
-      "price": 3.93,
-      "fiscalYear": 2025,
-      "annualDividend": 0.086,
+      "annualDividend": 0,
       "interimDividend": 0,
       "source": "mx-data"
     },
@@ -51,6 +33,24 @@
     {
       "code": "000423",
       "name": "东阿阿胶",
+      "price": 50.05,
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "600690",
+      "name": "海尔智家",
+      "price": 21.02,
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "601919",
+      "name": "中远海控",
       "price": 0,
       "fiscalYear": 2025,
       "annualDividend": 0,
@@ -58,8 +58,71 @@
       "source": "mx-data"
     },
     {
-      "code": "601985",
-      "name": "中国核电",
+      "code": "600887",
+      "name": "伊利股份",
+      "price": 0,
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "600795",
+      "name": "国电电力",
+      "price": 4.74,
+      "fiscalYear": 2025,
+      "annualDividend": 0.141,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "003816",
+      "name": "中国广核",
+      "price": 3.94,
+      "fiscalYear": 2025,
+      "annualDividend": 0.086,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "600028",
+      "name": "中国石化",
+      "price": 0,
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "600938",
+      "name": "中国海油",
+      "price": 0,
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "000538",
+      "name": "云南白药",
+      "price": 50.8,
+      "fiscalYear": 2025,
+      "annualDividend": 1.583,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "600863",
+      "name": "华能蒙电",
+      "price": 0,
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
+      "source": "mx-data"
+    },
+    {
+      "code": "600011",
+      "name": "华能国际",
       "price": 0,
       "fiscalYear": 2025,
       "annualDividend": 0,

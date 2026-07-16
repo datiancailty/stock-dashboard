@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-07-16T18:04:51+08:00",
+  "updatedAt": "2026-07-16T18:05:00+08:00",
   "source": "东方财富公开批量行情 + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
-  "dividendCursor": 10,
+  "dividendCursor": 0,
   "dividendBatch": [
-    "601919",
-    "600887",
-    "600795",
-    "003816",
-    "600028"
+    "600938",
+    "000538",
+    "600863",
+    "600011",
+    "601318"
   ],
   "stocks": [
     {
@@ -106,8 +106,8 @@
       "name": "中国海油",
       "price": 28.96,
       "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
+      "annualDividend": 0.47881,
+      "interimDividend": 0.66612,
       "source": "东方财富公开行情 + mx-data"
     },
     {
@@ -133,7 +133,7 @@
       "name": "华能国际",
       "price": 6.75,
       "fiscalYear": 2025,
-      "annualDividend": 0,
+      "annualDividend": 0.4,
       "interimDividend": 0,
       "source": "东方财富公开行情 + mx-data"
     },
@@ -142,8 +142,8 @@
       "name": "中国平安",
       "price": 50.67,
       "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
+      "annualDividend": 1.75,
+      "interimDividend": 0.95,
       "source": "东方财富公开行情 + mx-data"
     }
   ],
@@ -531,6 +531,126 @@
       "type": "派息日",
       "amount": null,
       "description": "2025中期分配 · 每股税前 0.088元"
+    },
+    {
+      "date": "2026-07-09",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.47881元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.47881元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.47881元"
+    },
+    {
+      "date": "2025-10-16",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.66612元"
+    },
+    {
+      "date": "2025-10-17",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.66612元"
+    },
+    {
+      "date": "2025-10-17",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.66612元"
+    },
+    {
+      "date": "2026-07-02",
+      "code": "600011",
+      "name": "华能国际",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.4元"
+    },
+    {
+      "date": "2026-07-03",
+      "code": "600011",
+      "name": "华能国际",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.4元"
+    },
+    {
+      "date": "2026-07-03",
+      "code": "600011",
+      "name": "华能国际",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.4元"
+    },
+    {
+      "date": "2026-06-09",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.75元"
+    },
+    {
+      "date": "2026-06-10",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.75元"
+    },
+    {
+      "date": "2026-06-10",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.75元"
+    },
+    {
+      "date": "2025-10-23",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.95元"
+    },
+    {
+      "date": "2025-10-24",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.95元"
+    },
+    {
+      "date": "2025-10-24",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.95元"
     }
   ]
 }

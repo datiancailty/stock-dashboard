@@ -6,7 +6,7 @@
   <meta name="description" content="A股持仓、多周期位置、股息率价格网格、分红日历与公告AI预估" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <title>我的分红工具</title>
-  <link rel="stylesheet" href="assets/app.css?v=20260716-period-position-1" />
+  <link rel="stylesheet" href="assets/app.css?v=20260717-position-yield-1" />
 </head>
 <body>
   <main class="shell">
@@ -52,7 +52,7 @@
     <section id="positions" class="page">
       <div class="page-head"><div><h2>多周期位置表</h2><p>查看当前价在最近交易日、当前交易周和当前交易月高低区间中的位置。</p></div><span class="position-sort">⇅ 与 Part 1、Part 3 保持同一市值顺序</span></div>
       <div class="position-summary" id="positionSummary"></div>
-      <div class="table-scroll position-table-wrap"><table class="position-table"><thead><tr><th>股票</th><th>当前价 / 持仓市值</th><th>日线位置</th><th>周线位置</th><th>月线位置</th><th>综合观察</th></tr></thead><tbody id="positionBody"></tbody></table></div>
+      <div class="table-scroll position-table-wrap"><table class="position-table"><thead><tr><th>股票</th><th>当前价 / 持仓市值</th><th>日线位置</th><th>周线位置</th><th>月线位置</th><th>综合观察</th><th>当前股息率</th></tr></thead><tbody id="positionBody"></tbody></table></div>
       <div class="position-legend"><span><b class="legend-high">● 上部</b>接近周期高位</span><span><b class="legend-mid">● 中部</b>处于区间中段</span><span><b class="legend-low">● 下部</b>接近周期低位</span></div>
       <div class="position-note"><b>计算口径：</b>（当前价－周期最低价）÷（周期最高价－周期最低价）。0%～33.33% 为下部，33.33%～66.67% 为中部，66.67%～100% 为上部；休市时使用最近交易日。</div>
     </section>
@@ -81,6 +81,6 @@
   <dialog id="editDialog"><form method="dialog" id="editForm"><h3>手动修改分红数据</h3><input type="hidden" id="editCode" /><label>年报每股分红（税前）<input id="editAnnual" type="number" min="0" step="0.0001" /></label><label>中报每股分红（税前）<input id="editInterim" type="number" min="0" step="0.0001" /></label><label>当前股价<input id="editPrice" type="number" min="0" step="0.001" /></label><p class="muted">手动值仅保存在当前浏览器；点击“恢复自动”可重新使用东方财富数据。</p><div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button type="button" id="resetAuto" class="ghost danger">恢复自动</button><button value="save" class="primary" id="saveEdit">保存</button></div></form></dialog>
   <dialog id="ruleDialog"><form method="dialog"><h3>自动计算规则</h3><ol><li>选择上一完整财务年度。</li><li>读取该年度所有已实施现金分红。</li><li>年报与中报税前每股分红相加。</li><li>过滤“不分配不转增”。</li><li>正式股息率 = 正式年度每股分红 ÷ 当前股价 × 100%。</li><li>公告AI预估独立保存，并展示来源、公式和可信度，不覆盖正式数据。</li></ol><button class="primary">知道了</button></form></dialog>
   <dialog id="messageDialog"><form method="dialog"><h3 id="messageTitle">提示</h3><p id="messageText"></p><button class="primary">知道了</button></form></dialog>
-  <script src="assets/app.js?v=20260716-period-position-1"></script>
+  <script src="assets/app.js?v=20260717-position-yield-1"></script>
 </body>
 </html>

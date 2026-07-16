@@ -58,6 +58,8 @@ jobs:
             git push origin HEAD:refs/heads/live
           fi
       - name: 按交易时段平均更新（计划内每日共130次）
+        id: update_market
+        continue-on-error: ${{ github.event_name != 'workflow_dispatch' }}
         env:
           MX_APIKEY: ${{ secrets.MX_APIKEY }}
           GH_TOKEN: ${{ github.token }}
@@ -68,15 +70,11 @@ jobs:
           set -euo pipefail
           for ((i=1; i<=CALLS; i++)); do
             python scripts/update_market.py
-            CONTENT=$(base64 -w 0 data/market.json)
-            SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/market.json?ref=live" --jq .sha 2>/dev/null || true)
-            if [ -n "$SHA" ]; then
-              gh api --method PUT "repos/${GITHUB_REPOSITORY}/contents/market.json" \
-                -f message="data: update ${i}/${CALLS}" -f content="$CONTENT" -f branch=live -f sha="$SHA" >/dev/null
-            else
-              gh api --method PUT "repos/${GITHUB_REPOSITORY}/contents/market.json" \
-                -f message="data: initialize live market data" -f content="$CONTENT" -f branch=live >/dev/null
-            fi
+            python scripts/publish_live.py data/market.json market.json "data: update ${i}/${CALLS}"
             echo "完成 ${i}/${CALLS}"
             if [ "$i" -lt "$CALLS" ] && [ "$INTERVAL" -gt 0 ]; then sleep "$INTERVAL"; fi
           done
+      - name: 自动任务异常仅记录警告（避免高频失败邮件）
+        if: always() && github.event_name != 'workflow_dispatch' && steps.update_market.outcome == 'failure'
+        run: |
+          echo "::warning::行情自动更新本次提前结束；已保留 live 分支最近成功数据，将在下个时段重试。"

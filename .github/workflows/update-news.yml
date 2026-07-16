@@ -39,21 +39,20 @@ jobs:
             rm -f /tmp/news-memory.json
           fi
       - name: 增量检查公告并保存AI结构化结果
+        id: scan_news
+        continue-on-error: ${{ github.event_name != 'workflow_dispatch' }}
         env:
           MX_APIKEY: ${{ secrets.MX_APIKEY }}
         run: python scripts/update_news.py
       - name: 写入 live 分支
+        id: publish_news
+        if: steps.scan_news.outcome == 'success'
+        continue-on-error: ${{ github.event_name != 'workflow_dispatch' }}
         env:
           GH_TOKEN: ${{ github.token }}
-        shell: bash
+        run: >-
+          python scripts/publish_live.py data/news-memory.json news-memory.json "news: incremental dividend scan"
+      - name: 自动任务异常仅记录警告（避免高频失败邮件）
+        if: always() && github.event_name != 'workflow_dispatch' && (steps.scan_news.outcome == 'failure' || steps.publish_news.outcome == 'failure')
         run: |
-          set -euo pipefail
-          CONTENT=$(base64 -w 0 data/news-memory.json)
-          SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/news-memory.json?ref=live" --jq .sha 2>/dev/null || true)
-          if [ -n "$SHA" ]; then
-            gh api --method PUT "repos/${GITHUB_REPOSITORY}/contents/news-memory.json" \
-              -f message="news: incremental dividend scan" -f content="$CONTENT" -f branch=live -f sha="$SHA" >/dev/null
-          else
-            gh api --method PUT "repos/${GITHUB_REPOSITORY}/contents/news-memory.json" \
-              -f message="news: initialize dividend memory" -f content="$CONTENT" -f branch=live >/dev/null
-          fi
+          echo "::warning::公告自动更新本次未完成；已保留 live 分支上一版数据，将在下次定时任务重试。"

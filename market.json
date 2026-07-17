@@ -3,14 +3,13 @@
   "source": "东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
   "positionStrategy": "当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部",
-  "weeklyBollStrategy": "前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)",
-  "dividendCursor": 6,
+  "dividendCursor": 5,
   "dividendBatch": [
+    "600036",
     "601985",
     "300157",
     "000423",
-    "600690",
-    "601919"
+    "600690"
   ],
   "stocks": [
     {
@@ -38,6 +37,10 @@
           "high": 38.2
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 1.003,
+      "interimDividend": 1.0130000000000001,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -48,11 +51,7 @@
         "upper": 39.676,
         "middle": 37.47,
         "lower": 35.265
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 1.003,
-      "interimDividend": 1.0130000000000001,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "601985",
@@ -79,6 +78,10 @@
           "high": 8.98
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 0.16,
+      "interimDividend": 0.02,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -89,11 +92,7 @@
         "upper": 9.145,
         "middle": 8.806,
         "lower": 8.467
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "300157",
@@ -120,6 +119,10 @@
           "high": 4.4
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -130,11 +133,7 @@
         "upper": 8.053,
         "middle": 5.44,
         "lower": 2.827
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "000423",
@@ -161,6 +160,10 @@
           "high": 51.79
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 1.4354904,
+      "interimDividend": 1.2700919000000002,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -171,11 +174,7 @@
         "upper": 56.655,
         "middle": 50.498,
         "lower": 44.342
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "600690",
@@ -202,6 +201,10 @@
           "high": 21.34
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0.2692,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -212,11 +215,7 @@
         "upper": 24.602,
         "middle": 21.405,
         "lower": 18.209
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "601919",
@@ -243,6 +242,10 @@
           "high": 14.76
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 0.44000000000000006,
+      "interimDividend": 0.5599999999999999,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -253,11 +256,7 @@
         "upper": 15.531,
         "middle": 14.248,
         "lower": 12.965
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "600887",
@@ -284,6 +283,10 @@
           "high": 26.44
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 0.9,
+      "interimDividend": 0,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -294,11 +297,7 @@
         "upper": 26.943,
         "middle": 25.404,
         "lower": 23.864
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "600795",
@@ -325,6 +324,10 @@
           "high": 4.8
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 0.141,
+      "interimDividend": 0.1,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -335,11 +338,7 @@
         "upper": 5.037,
         "middle": 4.756,
         "lower": 4.475
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0.141,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "003816",
@@ -366,6 +365,10 @@
           "high": 3.99
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 0.086,
+      "interimDividend": 0,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -376,11 +379,7 @@
         "upper": 4.815,
         "middle": 4.261,
         "lower": 3.708
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0.086,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "600028",
@@ -407,6 +406,10 @@
           "high": 5.07
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 0.11200000000000002,
+      "interimDividend": 0.088,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -417,11 +420,7 @@
         "upper": 6.462,
         "middle": 5.261,
         "lower": 4.061
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "600938",
@@ -448,6 +447,10 @@
           "high": 29.95
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 0.47881,
+      "interimDividend": 0.66612,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -458,11 +461,7 @@
         "upper": 44.758,
         "middle": 35.217,
         "lower": 25.677
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "000538",
@@ -489,6 +488,10 @@
           "high": 52.62
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 1.583,
+      "interimDividend": 0,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -499,11 +502,7 @@
         "upper": 56.583,
         "middle": 51.614,
         "lower": 46.645
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 1.583,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "600863",
@@ -530,6 +529,10 @@
           "high": 4.95
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -540,11 +543,7 @@
         "upper": 6.469,
         "middle": 5.173,
         "lower": 3.878
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "600011",
@@ -571,6 +570,10 @@
           "high": 7.8
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 0.4,
+      "interimDividend": 0,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -581,11 +584,7 @@
         "upper": 8.104,
         "middle": 7.078,
         "lower": 6.052
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     },
     {
       "code": "601318",
@@ -612,6 +611,10 @@
           "high": 51.45
         }
       },
+      "fiscalYear": 2025,
+      "annualDividend": 1.75,
+      "interimDividend": 0.95,
+      "source": "东方财富公开行情/日K + mx-data",
       "weeklyBoll": {
         "asOf": "2026-07-17",
         "basis": "前复权周K",
@@ -622,11 +625,7 @@
         "upper": 61.895,
         "middle": 54.166,
         "lower": 46.436
-      },
-      "fiscalYear": 2025,
-      "annualDividend": 0,
-      "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      }
     }
   ],
   "events": [
@@ -701,6 +700,439 @@
       "type": "派息日",
       "amount": null,
       "description": "2025年度分配 · 每股税前 1.583元"
+    },
+    {
+      "date": "2026-07-16",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.16元"
+    },
+    {
+      "date": "2026-07-17",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.16元"
+    },
+    {
+      "date": "2026-07-17",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.16元"
+    },
+    {
+      "date": "2026-01-12",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.02元"
+    },
+    {
+      "date": "2026-01-13",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.02元"
+    },
+    {
+      "date": "2026-01-13",
+      "code": "601985",
+      "name": "中国核电",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.02元"
+    },
+    {
+      "date": "2026-05-22",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.43549元"
+    },
+    {
+      "date": "2026-05-25",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.43549元"
+    },
+    {
+      "date": "2026-05-25",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.43549元"
+    },
+    {
+      "date": "2025-09-02",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 1.27009元"
+    },
+    {
+      "date": "2025-09-03",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 1.27009元"
+    },
+    {
+      "date": "2025-09-03",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 1.27009元"
+    },
+    {
+      "date": "2025-11-06",
+      "code": "600690",
+      "name": "海尔智家",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.2692元"
+    },
+    {
+      "date": "2025-11-07",
+      "code": "600690",
+      "name": "海尔智家",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.2692元"
+    },
+    {
+      "date": "2025-11-07",
+      "code": "600690",
+      "name": "海尔智家",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.2692元"
+    },
+    {
+      "date": "2026-06-25",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.44元"
+    },
+    {
+      "date": "2026-06-26",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.44元"
+    },
+    {
+      "date": "2026-06-26",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.44元"
+    },
+    {
+      "date": "2025-10-23",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.56元"
+    },
+    {
+      "date": "2025-10-24",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.56元"
+    },
+    {
+      "date": "2025-10-24",
+      "code": "601919",
+      "name": "中远海控",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.56元"
+    },
+    {
+      "date": "2026-06-04",
+      "code": "600887",
+      "name": "伊利股份",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.9元"
+    },
+    {
+      "date": "2026-06-05",
+      "code": "600887",
+      "name": "伊利股份",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.9元"
+    },
+    {
+      "date": "2026-06-05",
+      "code": "600887",
+      "name": "伊利股份",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.9元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.141元"
+    },
+    {
+      "date": "2026-07-13",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.141元"
+    },
+    {
+      "date": "2026-07-13",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.141元"
+    },
+    {
+      "date": "2025-10-28",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.1元"
+    },
+    {
+      "date": "2025-10-29",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.1元"
+    },
+    {
+      "date": "2025-10-29",
+      "code": "600795",
+      "name": "国电电力",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.1元"
+    },
+    {
+      "date": "2026-07-09",
+      "code": "003816",
+      "name": "中国广核",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.086元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "003816",
+      "name": "中国广核",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.086元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "003816",
+      "name": "中国广核",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.086元"
+    },
+    {
+      "date": "2026-06-16",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.112元"
+    },
+    {
+      "date": "2026-06-17",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.112元"
+    },
+    {
+      "date": "2026-06-17",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.112元"
+    },
+    {
+      "date": "2025-09-11",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.088元"
+    },
+    {
+      "date": "2025-09-12",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.088元"
+    },
+    {
+      "date": "2025-09-12",
+      "code": "600028",
+      "name": "中国石化",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.088元"
+    },
+    {
+      "date": "2026-07-09",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.47881元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.47881元"
+    },
+    {
+      "date": "2026-07-10",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.47881元"
+    },
+    {
+      "date": "2025-10-16",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.66612元"
+    },
+    {
+      "date": "2025-10-17",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.66612元"
+    },
+    {
+      "date": "2025-10-17",
+      "code": "600938",
+      "name": "中国海油",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.66612元"
+    },
+    {
+      "date": "2026-07-02",
+      "code": "600011",
+      "name": "华能国际",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.4元"
+    },
+    {
+      "date": "2026-07-03",
+      "code": "600011",
+      "name": "华能国际",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.4元"
+    },
+    {
+      "date": "2026-07-03",
+      "code": "600011",
+      "name": "华能国际",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.4元"
+    },
+    {
+      "date": "2026-06-09",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.75元"
+    },
+    {
+      "date": "2026-06-10",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.75元"
+    },
+    {
+      "date": "2026-06-10",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 1.75元"
+    },
+    {
+      "date": "2025-10-23",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.95元"
+    },
+    {
+      "date": "2025-10-24",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.95元"
+    },
+    {
+      "date": "2025-10-24",
+      "code": "601318",
+      "name": "中国平安",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025中期分配 · 每股税前 0.95元"
     }
-  ]
+  ],
+  "weeklyBollStrategy": "前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)"
 }

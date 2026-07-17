@@ -1,5 +1,21 @@
 {
   "version": 1,
-  "updatedAt": null,
-  "records": []
+  "updatedAt": "2026-07-17T00:00:00Z",
+  "records": [
+    {
+      "id": "hermes-verification-historical-20260710",
+      "date": "2026-07-10",
+      "code": "600036",
+      "name": "招商银行",
+      "action": "做T卖出",
+      "price": 38.2,
+      "shares": 300,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T00:00:00Z",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-10"
+      }
+    }
+  ]
 }

@@ -1,0 +1,61 @@
+name: 操作记录历史补全与策略学习
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/trade-records.json'
+  schedule:
+    # 北京时间每天 08:45，使用最新行情重新生成个人策略建议
+    - cron: '45 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: personal-trade-strategy
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    # 工作流自己补全历史记录产生的提交不再次分析，避免循环和重复模型调用。
+    if: github.event_name != 'push' || github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: 读取 live 分支最新行情
+        run: |
+          git fetch origin live || true
+          if git show origin/live:market.json > /tmp/market.json 2>/dev/null; then
+            mv /tmp/market.json data/market.json
+          else
+            rm -f /tmp/market.json
+          fi
+      - name: 补全历史位置并调用服务端模型学习
+        env:
+          STRATEGY_MODEL_API_KEY: ${{ secrets.STRATEGY_MODEL_API_KEY }}
+        run: python scripts/process_trade_records.py
+      - name: 把补全后的操作记录同步回 GitHub
+        run: |
+          if git diff --quiet -- data/trade-records.json; then
+            echo "没有待补全的操作记录"
+            exit 0
+          fi
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/trade-records.json
+          git commit -m "strategy: enrich trade records"
+          git push origin HEAD:main
+      - name: 发布最新AI策略画像到 live 分支
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          python scripts/publish_live.py data/strategy-analysis.json strategy-analysis.json "strategy: update personal analysis"

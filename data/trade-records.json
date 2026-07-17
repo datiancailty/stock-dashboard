@@ -1,7 +1,22 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-17T14:42:12+08:00",
+  "updatedAt": "2026-07-17T06:43:59.581Z",
   "records": [
+    {
+      "id": "29d18745-8159-42a4-89c4-40c22d41f413",
+      "date": "2026-07-09",
+      "code": "600863",
+      "name": "华能蒙电",
+      "action": "买入",
+      "price": 4.42,
+      "shares": 500,
+      "dividendPerShare": 0,
+      "createdAt": "2026-07-17T06:43:58.955Z",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-09"
+      }
+    },
     {
       "id": "415d6696-50b2-4ca1-9382-135c438f4dbb",
       "date": "2026-07-15",

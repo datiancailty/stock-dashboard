@@ -1,9 +1,8 @@
 {
-  "updatedAt": "2026-07-17T22:06:51+08:00",
+  "updatedAt": "2026-07-17T22:08:03+08:00",
   "source": "东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
   "positionStrategy": "当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部",
-  "weeklyBollStrategy": "前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)",
   "dividendCursor": 0,
   "dividendBatch": [
     "600938",
@@ -38,21 +37,10 @@
           "high": 38.2
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 39.676,
-        "middle": 37.47,
-        "lower": 35.265
-      },
       "fiscalYear": 2025,
       "annualDividend": 1.003,
       "interimDividend": 1.0130000000000001,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "601985",
@@ -79,21 +67,10 @@
           "high": 8.98
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 9.145,
-        "middle": 8.806,
-        "lower": 8.467
-      },
       "fiscalYear": 2025,
       "annualDividend": 0.16,
       "interimDividend": 0.02,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "300157",
@@ -120,21 +97,10 @@
           "high": 4.4
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 8.053,
-        "middle": 5.44,
-        "lower": 2.827
-      },
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "000423",
@@ -161,21 +127,10 @@
           "high": 51.79
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 56.655,
-        "middle": 50.498,
-        "lower": 44.342
-      },
       "fiscalYear": 2025,
       "annualDividend": 1.4354904,
       "interimDividend": 1.2700919000000002,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600690",
@@ -202,21 +157,10 @@
           "high": 21.34
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 24.602,
-        "middle": 21.405,
-        "lower": 18.209
-      },
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0.2692,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "601919",
@@ -243,21 +187,10 @@
           "high": 14.76
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 15.531,
-        "middle": 14.248,
-        "lower": 12.965
-      },
       "fiscalYear": 2025,
       "annualDividend": 0.44000000000000006,
       "interimDividend": 0.5599999999999999,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600887",
@@ -284,21 +217,10 @@
           "high": 26.44
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 26.943,
-        "middle": 25.404,
-        "lower": 23.864
-      },
       "fiscalYear": 2025,
       "annualDividend": 0.9,
       "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600795",
@@ -325,21 +247,10 @@
           "high": 4.8
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 5.037,
-        "middle": 4.756,
-        "lower": 4.475
-      },
       "fiscalYear": 2025,
       "annualDividend": 0.141,
       "interimDividend": 0.1,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "003816",
@@ -366,21 +277,10 @@
           "high": 3.99
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 4.815,
-        "middle": 4.261,
-        "lower": 3.708
-      },
       "fiscalYear": 2025,
       "annualDividend": 0.086,
       "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600028",
@@ -407,21 +307,10 @@
           "high": 5.07
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 6.462,
-        "middle": 5.261,
-        "lower": 4.061
-      },
       "fiscalYear": 2025,
       "annualDividend": 0.11200000000000002,
       "interimDividend": 0.088,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600938",
@@ -448,21 +337,10 @@
           "high": 29.95
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 44.758,
-        "middle": 35.217,
-        "lower": 25.677
-      },
       "fiscalYear": 2025,
       "annualDividend": 0.47881,
       "interimDividend": 0.66612,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "000538",
@@ -489,21 +367,10 @@
           "high": 52.62
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 56.583,
-        "middle": 51.614,
-        "lower": 46.645
-      },
       "fiscalYear": 2025,
       "annualDividend": 1.583,
       "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600863",
@@ -530,21 +397,10 @@
           "high": 4.95
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 6.469,
-        "middle": 5.173,
-        "lower": 3.878
-      },
       "fiscalYear": 2025,
       "annualDividend": 0,
       "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "600011",
@@ -571,21 +427,10 @@
           "high": 7.8
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 8.104,
-        "middle": 7.078,
-        "lower": 6.052
-      },
       "fiscalYear": 2025,
       "annualDividend": 0.4,
       "interimDividend": 0,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     },
     {
       "code": "601318",
@@ -612,21 +457,10 @@
           "high": 51.45
         }
       },
-      "weeklyBoll": {
-        "asOf": "2026-07-17",
-        "basis": "前复权周K",
-        "period": 20,
-        "multiplier": 2,
-        "stddev": "sample",
-        "sampleCount": 20,
-        "upper": 61.895,
-        "middle": 54.166,
-        "lower": 46.436
-      },
       "fiscalYear": 2025,
       "annualDividend": 1.75,
       "interimDividend": 0.95,
-      "source": "东方财富公开行情/前复权日K + mx-data"
+      "source": "东方财富公开行情/日K + mx-data"
     }
   ],
   "events": [

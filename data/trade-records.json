@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-17T06:41:58.943Z",
+  "updatedAt": "2026-07-17T14:42:12+08:00",
   "records": [
     {
       "id": "415d6696-50b2-4ca1-9382-135c438f4dbb",
@@ -13,9 +13,39 @@
       "dividendPerShare": 0.9,
       "createdAt": "2026-07-17T06:41:58.108Z",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-15"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-15",
+        "asOf": "2026-07-15",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 25.96,
+        "historicalClose": 25.93,
+        "totalDividend": 0.9,
+        "yield": 3.466872,
+        "positions": {
+          "asOf": "2026-07-15",
+          "day": {
+            "zone": "上部",
+            "percent": 97.8,
+            "low": 25.05,
+            "high": 25.98
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 98.6,
+            "low": 24.52,
+            "high": 25.98
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 99.1,
+            "low": 23.76,
+            "high": 25.98
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-07-17T14:42:12+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
       "id": "ff1e5c03-7c24-4e7d-979a-2846335cf4d6",

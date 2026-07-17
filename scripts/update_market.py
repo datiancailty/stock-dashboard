@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """用东方财富妙想一次批量更新 A 股价格、上一完整年度分红和分红事件。"""
-import json, os, re, sys
+import json, os, re, statistics, sys
 from datetime import datetime, date
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -60,6 +60,35 @@ def fetch_prices(stocks):
     if not prices: raise RuntimeError('东方财富公开行情接口未返回任何有效价格')
     return prices
 
+def load_part2_config():
+    path=ROOT/'data/part2-config.json'
+    if not path.exists(): return {'groups':[],'extraStocks':[]}
+    try:
+        value=json.loads(path.read_text())
+        return value if isinstance(value,dict) else {'groups':[],'extraStocks':[]}
+    except (OSError,json.JSONDecodeError):
+        return {'groups':[],'extraStocks':[]}
+
+def merge_market_stocks(holdings, config):
+    """Part 1 标的单向进入 Part 2；Part 2 独立标的不反写 Part 1。"""
+    result=[]; seen=set()
+    for item in [*holdings,*(config.get('extraStocks') or [])]:
+        code=str(item.get('code','')); name=str(item.get('name','')).strip()
+        if re.fullmatch(r'\d{6}',code) and name and code not in seen:
+            result.append({'code':code,'name':name}); seen.add(code)
+    return result
+
+def weekly_boll_from_daily(rows, sample_count=20):
+    """用前复权日K按ISO周锚定周收盘，计算BOLL(20,2)样本标准差。"""
+    by_week={}
+    for row in rows:
+        d=row['date']; by_week[d.isocalendar()[:2]]=row
+    weekly=[by_week[key] for key in sorted(by_week)]
+    if len(weekly)<sample_count: return None
+    sample=weekly[-sample_count:]; closes=[row['close'] for row in sample]
+    middle=statistics.mean(closes); stddev=statistics.stdev(closes)
+    return {'asOf':sample[-1]['date'].isoformat(),'basis':'前复权周K','period':20,'multiplier':2,'stddev':'sample','sampleCount':sample_count,'upper':round(middle+2*stddev,3),'middle':round(middle,3),'lower':round(middle-2*stddev,3)}
+
 def position_item(current, rows):
     """计算当前价在给定K线集合最高/最低价中的百分位与上中下分区。"""
     if not rows: return None
@@ -112,6 +141,49 @@ def fetch_positions(stocks, prices, previous):
             if value: result[code]=value
     return result
 
+def fetch_weekly_boll(stocks, previous):
+    """并发读取前复权日K并聚合周收盘；失败时保留最近一次有效BOLL。"""
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    headers={'User-Agent':'Mozilla/5.0','Referer':'https://quote.eastmoney.com/'}
+    old={s.get('code'):s.get('weeklyBoll') for s in previous.get('stocks',[])}
+    def one(stock):
+        code=stock['code']; secid=('1.' if code.startswith(('5','6','9')) else '0.')+code
+        try:
+            r=requests.get(KLINE_API,params={'secid':secid,'klt':'101','fqt':'1','lmt':'180','end':'20500101','fields1':'f1,f2,f3,f4,f5,f6','fields2':'f51,f52,f53,f54,f55,f56','ut':'fa5fd1943c7b386f172d6893dbfba10b'},headers=headers,timeout=20)
+            r.raise_for_status(); lines=(r.json().get('data') or {}).get('klines') or []
+        except (requests.RequestException,ValueError,TypeError):
+            lines=[]
+        # 东方财富前复权K线偶发断连时，用腾讯前复权周K补齐。
+        if not lines:
+            try:
+                market_prefix='sh' if code.startswith(('5','6','9')) else 'sz'; symbol=market_prefix+code
+                r=requests.get('https://web.ifzq.gtimg.cn/appstock/app/fqkline/get',params={'param':f'{symbol},week,,,40,qfq'},headers=headers,timeout=20)
+                r.raise_for_status(); data=(r.json().get('data') or {}).get(symbol) or {}; raw=data.get('qfqweek') or []
+                rows=[]
+                for values in raw:
+                    if len(values)<3: continue
+                    d=date.fromisoformat(str(values[0])); close=number(values[2])
+                    if close>0: rows.append({'date':d,'close':close})
+                return code,weekly_boll_from_daily(rows) or old.get(code)
+            except (requests.RequestException,ValueError,TypeError,statistics.StatisticsError):
+                return code,old.get(code)
+        try:
+            rows=[]
+            for line in lines:
+                cells=line.split(',')
+                if len(cells)<5: continue
+                d=date.fromisoformat(cells[0]); close=number(cells[2])
+                if close>0: rows.append({'date':d,'close':close})
+            return code,weekly_boll_from_daily(rows) or old.get(code)
+        except (ValueError,TypeError,statistics.StatisticsError):
+            return code,old.get(code)
+    result={}
+    with ThreadPoolExecutor(max_workers=5) as pool:
+        for future in as_completed(pool.submit(one,stock) for stock in stocks):
+            code,value=future.result()
+            if value: result[code]=value
+    return result
+
 def dividend_batch(stocks, previous):
     """优先补新股票，其余按游标轮转；每次仍只消耗一次妙想调用。"""
     old_codes={s.get('code') for s in previous.get('stocks',[])}
@@ -133,9 +205,9 @@ def code_from_label(label, stocks):
         if s['name'] in str(label) or s['code'] in str(label): return s['code']
     return None
 
-def parse(payload, stocks, year, previous, prices, positions):
+def parse(payload, stocks, year, previous, prices, positions, weekly_boll):
     old={s['code']:s for s in previous.get('stocks',[])}
-    by={s['code']:{**s,'price':prices.get(s['code'],old.get(s['code'],{}).get('price',0)),'positions':positions.get(s['code'],old.get(s['code'],{}).get('positions')),'fiscalYear':year,'annualDividend':old.get(s['code'],{}).get('annualDividend',0),'interimDividend':old.get(s['code'],{}).get('interimDividend',0),'source':'东方财富公开行情/日K + mx-data'} for s in stocks}
+    by={s['code']:{**s,'price':prices.get(s['code'],old.get(s['code'],{}).get('price',0)),'positions':positions.get(s['code'],old.get(s['code'],{}).get('positions')),'weeklyBoll':weekly_boll.get(s['code'],old.get(s['code'],{}).get('weeklyBoll')),'fiscalYear':year,'annualDividend':old.get(s['code'],{}).get('annualDividend',0),'interimDividend':old.get(s['code'],{}).get('interimDividend',0),'source':'东方财富公开行情/前复权日K + mx-data'} for s in stocks}
     events=[]
     for dto in result_dtos(payload):
         table=dto.get('table') or {}; field=(dto.get('field') or {}).get('returnName',''); title=dto.get('title') or ''
@@ -169,16 +241,18 @@ def parse(payload, stocks, year, previous, prices, positions):
 def main():
     key=os.getenv('MX_APIKEY');
     if not key: raise SystemExit('缺少 MX_APIKEY')
-    stocks=json.loads((ROOT/'data/stocks.json').read_text())
+    holdings=json.loads((ROOT/'data/stocks.json').read_text())
+    part2_config=load_part2_config(); stocks=merge_market_stocks(holdings,part2_config)
     out=ROOT/'data/market.json'; previous=json.loads(out.read_text()) if out.exists() else {}
     now=datetime.now(BJ); year=now.year-1
     prices=fetch_prices(stocks)
     positions=fetch_positions(stocks,prices,previous)
+    weekly_boll=fetch_weekly_boll(stocks,previous)
     batch,next_cursor=dividend_batch(stocks,previous)
     payload=api_query('、'.join(s['name'] for s in batch),year)
-    parsed,events=parse(payload,stocks,year,previous,prices,positions)
-    result={'updatedAt':now.isoformat(timespec='seconds'),'source':'东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细','strategy':'上一完整年度已实施的年报与中报税前每股股利之和','positionStrategy':'当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部','dividendCursor':next_cursor,'dividendBatch':[s['code'] for s in batch],'stocks':parsed,'events':events}
+    parsed,events=parse(payload,stocks,year,previous,prices,positions,weekly_boll)
+    result={'updatedAt':now.isoformat(timespec='seconds'),'source':'东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细','strategy':'上一完整年度已实施的年报与中报税前每股股利之和','positionStrategy':'当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部','weeklyBollStrategy':'前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)','dividendCursor':next_cursor,'dividendBatch':[s['code'] for s in batch],'stocks':parsed,'events':events}
     out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps({'ok':True,'updatedAt':result['updatedAt'],'stocks':len(parsed),'prices':len(prices),'positions':len(positions),'dividendBatch':result['dividendBatch'],'events':len(events)},ensure_ascii=False))
+    print(json.dumps({'ok':True,'updatedAt':result['updatedAt'],'stocks':len(parsed),'prices':len(prices),'positions':len(positions),'weeklyBoll':len(weekly_boll),'dividendBatch':result['dividendBatch'],'events':len(events)},ensure_ascii=False))
 
 if __name__=='__main__': main()

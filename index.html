@@ -6,7 +6,7 @@
   <meta name="description" content="A股持仓、多周期位置、股息率价格网格、分红日历、公告AI预估与个人操作策略" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <title>我的分红工具</title>
-  <link rel="stylesheet" href="assets/app.css?v=20260717-strategy-learning-2" />
+  <link rel="stylesheet" href="assets/app.css?v=20260717-boll-grid-1" />
 </head>
 <body>
   <main class="shell">
@@ -26,7 +26,7 @@
 
     <nav class="tabs" aria-label="功能切换">
       <button class="tab active" data-tab="holdings"><b>1</b><span><strong>自选股持仓</strong><small>云端添加与维护</small></span></button>
-      <button class="tab" data-tab="positions"><b>2</b><span><strong>多周期位置表</strong><small>日 · 周 · 月位置</small></span></button>
+      <button class="tab" data-tab="positions"><b>2</b><span><strong>周BOLL股息网格</strong><small>买入 · 卖出信号</small></span></button>
       <button class="tab" data-tab="grid"><b>3</b><span><strong>股息率价格网格</strong><small>正式分红目标价</small></span></button>
       <button class="tab" data-tab="calendar"><b>4</b><span><strong>分红日历</strong><small>登记、除息、派息</small></span></button>
       <button class="tab" data-tab="news"><b>5</b><span><strong>公告AI预估</strong><small>增量记忆与来源</small></span></button>
@@ -50,12 +50,11 @@
       <div class="holding-list" id="holdingList"></div>
     </section>
 
-    <section id="positions" class="page">
-      <div class="page-head"><div><h2>多周期位置表</h2><p>查看当前价在最近交易日、当前交易周和当前交易月高低区间中的位置。</p></div><span class="position-sort">⇅ 与 Part 1、Part 3 保持同一市值顺序</span></div>
-      <div class="position-summary" id="positionSummary"></div>
-      <div class="table-scroll position-table-wrap"><table class="position-table"><thead><tr><th>股票</th><th>当前价 / 持仓市值</th><th>日线位置</th><th>周线位置</th><th>月线位置</th><th>综合观察</th><th>当前股息率</th></tr></thead><tbody id="positionBody"></tbody></table></div>
-      <div class="position-legend"><span><b class="legend-high">● 上部</b>接近周期高位</span><span><b class="legend-mid">● 中部</b>处于区间中段</span><span><b class="legend-low">● 下部</b>接近周期低位</span></div>
-      <div class="position-note"><b>计算口径：</b>（当前价－周期最低价）÷（周期最高价－周期最低价）。0%～33.33% 为下部，33.33%～66.67% 为中部，66.67%～100% 为上部；休市时使用最近交易日。</div>
+    <section id="positions" class="page boll-page">
+      <div class="page-head"><div><h2>周BOLL股息网格</h2><p>橙色买入网格（普通 ≥5%，水电 ≥4%）｜绿色卖出网格（普通 ≤4%，水电 ≤3%）</p></div><button class="ghost" id="openBollSettings">⚙ 网格设置</button></div>
+      <div class="boll-chips" id="bollChips"></div>
+      <div class="boll-sortbar"><span>排序</span><button class="boll-sort active" data-boll-sort="yield">现股息率 ↓</button><button class="boll-sort" data-boll-sort="price">现价</button><button class="ghost boll-collapse-all" id="collapseBollAll">全部折叠</button></div>
+      <div id="bollGroups"></div>
     </section>
 
     <section id="grid" class="page">
@@ -93,7 +92,9 @@
   <dialog id="editDialog"><form method="dialog" id="editForm"><h3>手动修改分红数据</h3><input type="hidden" id="editCode" /><label>年报每股分红（税前）<input id="editAnnual" type="number" min="0" step="0.0001" /></label><label>中报每股分红（税前）<input id="editInterim" type="number" min="0" step="0.0001" /></label><label>当前股价<input id="editPrice" type="number" min="0" step="0.001" /></label><p class="muted">手动值仅保存在当前浏览器；点击“恢复自动”可重新使用东方财富数据。</p><div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button type="button" id="resetAuto" class="ghost danger">恢复自动</button><button value="save" class="primary" id="saveEdit">保存</button></div></form></dialog>
   <dialog id="ruleDialog"><form method="dialog"><h3>自动计算规则</h3><ol><li>选择上一完整财务年度。</li><li>读取该年度所有已实施现金分红。</li><li>年报与中报税前每股分红相加。</li><li>过滤“不分配不转增”。</li><li>正式股息率 = 正式年度每股分红 ÷ 当前股价 × 100%。</li><li>公告AI预估独立保存，并展示来源、公式和可信度，不覆盖正式数据。</li></ol><button class="primary">知道了</button></form></dialog>
   <dialog id="messageDialog"><form method="dialog"><h3 id="messageTitle">提示</h3><p id="messageText"></p><button class="primary">知道了</button></form></dialog>
+  <dialog id="bollSettingsDialog"><form id="bollSettingsForm"><div class="dialog-title"><h3>网格设置</h3><button type="button" class="dialog-x" data-close-dialog="bollSettingsDialog">×</button></div><div class="boll-setting buy"><h4>买入网格</h4><label>步长<select id="bollBuyStep"><option value="0.25">0.25%</option><option value="0.5">0.5%</option></select></label><label>档数<select id="bollBuyCount"><option>2</option><option>4</option><option>6</option><option>8</option></select></label></div><div class="boll-setting sell"><h4>卖出网格</h4><label>步长<select id="bollSellStep"><option value="0.25">0.25%</option><option value="0.5">0.5%</option></select></label><label>档数<select id="bollSellCount"><option>2</option><option>4</option><option>6</option><option>8</option></select></label></div><div class="boll-setting"><h4>周轨附近偏差</h4><label>下轨偏差（±%）<input id="bollLowDev" type="number" min="0" step="0.1"></label><label>上轨偏差（±%）<input id="bollHighDev" type="number" min="0" step="0.1"></label></div><div class="boll-setting"><h4>买卖点股息率浮动</h4><label>上下浮动（±百分点）<input id="bollYieldDev" type="number" min="0" step="0.05"></label></div><p class="muted">浮动仅用于信号筛选，不改变正式网格目标价。</p><div class="dialog-actions"><button type="button" class="ghost" data-close-dialog="bollSettingsDialog">取消</button><button type="submit" class="primary">保存设置</button></div></form></dialog>
+  <dialog id="bollManageDialog"><form id="bollManageForm"><div class="dialog-title"><h3>编辑大板块与标的</h3><button type="button" class="dialog-x" data-close-dialog="bollManageDialog">×</button></div><p class="muted">Part 1持仓会自动出现在Part 2；Part 2额外标的不会自动加入Part 1。</p><label>新板块名称<input id="bollNewGroup" placeholder="例如：水电"></label><label class="check-label"><input id="bollNewHydro" type="checkbox"> 该板块使用水电阈值</label><button type="button" class="ghost" id="bollAddGroup">添加板块</button><hr><label>搜索并添加Part 2标的<input id="bollStockSearch" list="bollStockOptions" placeholder="输入股票代码或名称"><datalist id="bollStockOptions"></datalist></label><label>放入板块<select id="bollGroupSelect"></select></label><button type="button" class="primary" id="bollAddStock">添加标的</button><div class="boll-manage-list" id="bollManageList"></div><div class="dialog-actions"><button type="button" class="primary" data-close-dialog="bollManageDialog">完成</button></div></form></dialog>
   <dialog id="tradeRecordDialog"><form id="tradeRecordForm"><h3>记录一笔真实操作</h3><p class="muted">只需填写成交信息；正式股息率、日/周/月位置和持仓状态由系统自动保存。</p><div class="trade-form-grid"><label>日期<input id="tradeDate" type="date" required /></label><label>股票<select id="tradeStock" required></select></label><label>操作<select id="tradeAction" required><option>买入</option><option>卖出</option><option>做T买入</option><option>做T卖出</option></select></label><label>成交价格<input id="tradePrice" type="number" min="0.001" step="0.001" inputmode="decimal" required /></label><label>成交股数<input id="tradeShares" type="number" min="1" step="1" inputmode="numeric" required /></label><div class="trade-auto-note"><b>系统自动补充：</b>当时正式股息率、日线位置、周线位置、月线位置、操作前后持仓和行情更新时间。</div></div><div class="dialog-actions"><button type="button" class="ghost" id="cancelTradeRecord">取消</button><button type="submit" class="primary">保存操作</button></div></form></dialog>
-  <script src="assets/app.js?v=20260717-strategy-learning-2"></script>
+  <script src="assets/app.js?v=20260717-boll-grid-1"></script>
 </body>
 </html>

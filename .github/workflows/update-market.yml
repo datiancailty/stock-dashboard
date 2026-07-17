@@ -8,6 +8,7 @@ on:
   push:
     paths:
       - 'data/stocks.json'
+      - 'data/part2-config.json'
       - 'data/market-refresh-request.json'
   workflow_dispatch:
     inputs:

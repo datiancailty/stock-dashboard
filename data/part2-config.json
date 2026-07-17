@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "groups": [
+    {
+      "name": "电力",
+      "hydropower": false,
+      "codes": ["601985", "600795", "003816", "600863", "600011"]
+    },
+    {
+      "name": "水电",
+      "hydropower": true,
+      "codes": []
+    },
+    {
+      "name": "银行",
+      "hydropower": false,
+      "codes": ["600036"]
+    },
+    {
+      "name": "保险",
+      "hydropower": false,
+      "codes": ["601318"]
+    },
+    {
+      "name": "能源",
+      "hydropower": false,
+      "codes": ["600028", "600938", "601919"]
+    },
+    {
+      "name": "消费与医药",
+      "hydropower": false,
+      "codes": ["000423", "600690", "600887", "000538"]
+    },
+    {
+      "name": "其他",
+      "hydropower": false,
+      "codes": ["300157"]
+    }
+  ],
+  "extraStocks": []
+}

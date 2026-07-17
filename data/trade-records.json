@@ -1,7 +1,22 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-17T14:40:57+08:00",
+  "updatedAt": "2026-07-17T06:41:58.943Z",
   "records": [
+    {
+      "id": "415d6696-50b2-4ca1-9382-135c438f4dbb",
+      "date": "2026-07-15",
+      "code": "600887",
+      "name": "伊利股份",
+      "action": "卖出",
+      "price": 25.96,
+      "shares": 100,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T06:41:58.108Z",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-15"
+      }
+    },
     {
       "id": "ff1e5c03-7c24-4e7d-979a-2846335cf4d6",
       "date": "2026-07-17",

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-17T06:40:42.851Z",
+  "updatedAt": "2026-07-17T14:40:57+08:00",
   "records": [
     {
       "id": "ff1e5c03-7c24-4e7d-979a-2846335cf4d6",
@@ -13,9 +13,39 @@
       "dividendPerShare": 2.7055823,
       "createdAt": "2026-07-17T06:40:41.739Z",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-17"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-17",
+        "asOf": "2026-07-17",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 50.85,
+        "historicalClose": 50.51,
+        "totalDividend": 2.7055823,
+        "yield": 5.320712,
+        "positions": {
+          "asOf": "2026-07-17",
+          "day": {
+            "zone": "中部",
+            "percent": 43.4,
+            "low": 50.13,
+            "high": 51.79
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 81.5,
+            "low": 46.7,
+            "high": 51.79
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 87.2,
+            "low": 44.44,
+            "high": 51.79
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-07-17T14:40:57+08:00"
+      },
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     }
   ]
 }

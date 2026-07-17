@@ -1,5 +1,21 @@
 {
   "version": 1,
-  "updatedAt": null,
-  "records": []
+  "updatedAt": "2026-07-17T06:40:42.851Z",
+  "records": [
+    {
+      "id": "ff1e5c03-7c24-4e7d-979a-2846335cf4d6",
+      "date": "2026-07-17",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "action": "卖出",
+      "price": 50.85,
+      "shares": 100,
+      "dividendPerShare": 2.7055823,
+      "createdAt": "2026-07-17T06:40:41.739Z",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-17"
+      }
+    }
+  ]
 }

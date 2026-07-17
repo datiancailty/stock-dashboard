@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="A股持仓、多周期位置、股息率价格网格、分红日历与公告AI预估" />
+  <meta name="description" content="A股持仓、多周期位置、股息率价格网格、分红日历、公告AI预估与个人操作策略" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <title>我的分红工具</title>
-  <link rel="stylesheet" href="assets/app.css?v=20260717-grid-yield-1" />
+  <link rel="stylesheet" href="assets/app.css?v=20260717-part6-strategy-1" />
 </head>
 <body>
   <main class="shell">
@@ -30,6 +30,7 @@
       <button class="tab" data-tab="grid"><b>3</b><span><strong>股息率价格网格</strong><small>正式分红目标价</small></span></button>
       <button class="tab" data-tab="calendar"><b>4</b><span><strong>分红日历</strong><small>登记、除息、派息</small></span></button>
       <button class="tab" data-tab="news"><b>5</b><span><strong>公告AI预估</strong><small>增量记忆与来源</small></span></button>
+      <button class="tab" data-tab="strategy"><b>6</b><span><strong>操作与策略</strong><small>记录 · 学习 · 建议</small></span></button>
     </nav>
 
     <section id="holdings" class="page active">
@@ -74,6 +75,17 @@
       <div class="news-toolbar"><select id="newsStockFilter"><option value="">全部自选股</option></select><span id="newsUpdateText" class="muted"></span></div>
       <div class="news-list" id="newsList"></div>
     </section>
+
+    <section id="strategy" class="page">
+      <div class="page-head"><div><h2>我的操作与策略学习</h2><p>记录真实成交，系统自动保存当时的正式股息率和日、周、月位置，并持续形成你的个人策略画像。</p></div><button class="primary" id="showTradeRecord">＋ 记录一笔操作</button></div>
+      <div class="notice"><b>你的基础框架：</b>正式股息率约 5% 开始分批买入，持有期间结合日/周/月位置做T；接近 7% 时性价比较高；股息率降至 4%～4.5% 时倾向全部卖出。你只填写日期、股票、操作、成交价格和成交股数，其他环境由系统自动补充。</div>
+      <div class="strategy-layout">
+        <section class="strategy-panel strategy-learning"><div class="strategy-head"><div><h3>个人策略画像</h3><small>根据当前浏览器保存的操作持续更新</small></div><strong id="strategyStage">等待第一笔操作</strong></div><div class="strategy-progress"><i id="strategyProgress"></i></div><div class="strategy-stats" id="strategyStats"></div><div class="strategy-rules" id="learnedRules"></div></section>
+        <section class="strategy-panel"><h3>固定策略底线</h3><small>学习归纳不会覆盖这些由你确认的原则</small><div class="strategy-rules fixed-rules"><div><b>①</b><span>5%左右开始分批买入</span></div><div><b>②</b><span>接近7%进入高性价比区</span></div><div><b>③</b><span>结合日、周、月位置做T</span></div><div><b>④</b><span>4%～4.5%进入全部卖出区</span></div></div></section>
+        <section class="strategy-panel strategy-advice"><div class="strategy-head"><div><h3>今日策略建议</h3><small>读取最新正式股息率、周期位置和你的历史操作</small></div><span class="strategy-engine">个人策略引擎</span></div><div class="strategy-advice-grid" id="strategyAdvice"></div><p class="strategy-risk">仅用于个人研究和复盘，不构成收益保证或自动交易指令。每条建议都显示命中规则与置信度，最终操作由你决定。</p></section>
+        <section class="strategy-panel strategy-history"><div class="strategy-head"><div><h3>我的操作历史</h3><small>原始记录只保存在当前浏览器，不会公开上传到 GitHub</small></div><strong id="tradeRecordCount">0条</strong></div><div class="strategy-filters"><button class="strategy-filter active" data-trade-filter="all">全部</button><button class="strategy-filter" data-trade-filter="买入">买入</button><button class="strategy-filter" data-trade-filter="卖出">卖出</button><button class="strategy-filter" data-trade-filter="做T">做T</button></div><div class="table-scroll"><table class="strategy-table"><thead><tr><th>日期</th><th>股票</th><th>操作</th><th>价格 / 股数</th><th>自动记录的股息率</th><th>自动记录的周期位置</th><th>策略学习结果</th><th>操作</th></tr></thead><tbody id="tradeHistoryBody"></tbody></table></div></section>
+      </div>
+    </section>
   </main>
 
   <dialog id="loginDialog"><form method="dialog" id="loginForm"><h3>管理员登录</h3><p class="muted">只有知道用户名和密码的人才能修改 GitHub 云端自选股。登录成功后，这个浏览器会记住管理员权限7天；点击“退出登录”可立即清除。</p><label>用户名<input id="loginUsername" autocomplete="username" required /></label><label>密码<input id="loginPassword" type="password" autocomplete="current-password" required /></label><p class="form-error" id="loginError"></p><div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button type="submit" class="primary">登录并保持7天</button></div></form></dialog>
@@ -81,6 +93,7 @@
   <dialog id="editDialog"><form method="dialog" id="editForm"><h3>手动修改分红数据</h3><input type="hidden" id="editCode" /><label>年报每股分红（税前）<input id="editAnnual" type="number" min="0" step="0.0001" /></label><label>中报每股分红（税前）<input id="editInterim" type="number" min="0" step="0.0001" /></label><label>当前股价<input id="editPrice" type="number" min="0" step="0.001" /></label><p class="muted">手动值仅保存在当前浏览器；点击“恢复自动”可重新使用东方财富数据。</p><div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button type="button" id="resetAuto" class="ghost danger">恢复自动</button><button value="save" class="primary" id="saveEdit">保存</button></div></form></dialog>
   <dialog id="ruleDialog"><form method="dialog"><h3>自动计算规则</h3><ol><li>选择上一完整财务年度。</li><li>读取该年度所有已实施现金分红。</li><li>年报与中报税前每股分红相加。</li><li>过滤“不分配不转增”。</li><li>正式股息率 = 正式年度每股分红 ÷ 当前股价 × 100%。</li><li>公告AI预估独立保存，并展示来源、公式和可信度，不覆盖正式数据。</li></ol><button class="primary">知道了</button></form></dialog>
   <dialog id="messageDialog"><form method="dialog"><h3 id="messageTitle">提示</h3><p id="messageText"></p><button class="primary">知道了</button></form></dialog>
-  <script src="assets/app.js?v=20260717-grid-yield-1"></script>
+  <dialog id="tradeRecordDialog"><form id="tradeRecordForm"><h3>记录一笔真实操作</h3><p class="muted">只需填写成交信息；正式股息率、日/周/月位置和持仓状态由系统自动保存。</p><div class="trade-form-grid"><label>日期<input id="tradeDate" type="date" required /></label><label>股票<select id="tradeStock" required></select></label><label>操作<select id="tradeAction" required><option>买入</option><option>卖出</option><option>做T买入</option><option>做T卖出</option></select></label><label>成交价格<input id="tradePrice" type="number" min="0.001" step="0.001" inputmode="decimal" required /></label><label>成交股数<input id="tradeShares" type="number" min="1" step="1" inputmode="numeric" required /></label><div class="trade-auto-note"><b>系统自动补充：</b>当时正式股息率、日线位置、周线位置、月线位置、操作前后持仓和行情更新时间。</div></div><div class="dialog-actions"><button type="button" class="ghost" id="cancelTradeRecord">取消</button><button type="submit" class="primary">保存操作</button></div></form></dialog>
+  <script src="assets/app.js?v=20260717-part6-strategy-1"></script>
 </body>
 </html>

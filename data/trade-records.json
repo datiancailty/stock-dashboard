@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-17T17:45:57+08:00",
+  "updatedAt": "2026-07-17T19:06:32+08:00",
   "records": [
     {
       "id": "29d18745-8159-42a4-89c4-40c22d41f413",
@@ -2063,6 +2063,1094 @@
         "enrichedAt": "2026-07-17T17:45:57+08:00"
       },
       "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
+    },
+    {
+      "id": "broker2-30ab663fc1c665ca95ef",
+      "date": "2026-03-31",
+      "time": "14:06",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 76.8,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-31"
+      }
+    },
+    {
+      "id": "broker2-0c5393ee1ddd58f73940",
+      "date": "2026-03-31",
+      "time": "10:49",
+      "name": "盛龙股份",
+      "code": "001257",
+      "action": "卖出",
+      "price": 26.94,
+      "shares": 500,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-31"
+      }
+    },
+    {
+      "id": "broker2-0ad32ae2caa0875c6cc2",
+      "date": "2026-03-30",
+      "time": "10:41",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "买入",
+      "price": 4.6,
+      "shares": 700,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-30"
+      }
+    },
+    {
+      "id": "broker2-9d7d7148bcb0131dd3ce",
+      "date": "2026-03-30",
+      "time": "10:40",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.59,
+      "shares": 2400,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-30"
+      }
+    },
+    {
+      "id": "broker2-86441db56a44204a8cd4",
+      "date": "2026-03-26",
+      "time": "14:46",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "买入",
+      "price": 9.26,
+      "shares": 700,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-26"
+      }
+    },
+    {
+      "id": "broker2-f565d3d2b2f4294e7185",
+      "date": "2026-03-26",
+      "time": "14:45",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "买入",
+      "price": 9.26,
+      "shares": 1100,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-26"
+      }
+    },
+    {
+      "id": "broker2-3e08c690ce2d76a840f7",
+      "date": "2026-03-26",
+      "time": "14:44",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "买入",
+      "price": 4.62,
+      "shares": 300,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-26"
+      }
+    },
+    {
+      "id": "broker2-bb5367f3b9ecd709baf3",
+      "date": "2026-03-26",
+      "time": "14:42",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "买入",
+      "price": 4.61,
+      "shares": 800,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-26"
+      }
+    },
+    {
+      "id": "broker2-49d1c6f391f221722237",
+      "date": "2026-03-26",
+      "time": "14:42",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.6,
+      "shares": 1600,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-26"
+      }
+    },
+    {
+      "id": "broker2-4b97f6076fec98f06608",
+      "date": "2026-03-26",
+      "time": "10:50",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.57,
+      "shares": 2600,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-26"
+      }
+    },
+    {
+      "id": "broker2-985ed259c4fb22890e44",
+      "date": "2026-03-26",
+      "time": "10:50",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.57,
+      "shares": 2600,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-26"
+      }
+    },
+    {
+      "id": "broker2-25e7cb717690ccf93b23",
+      "date": "2026-03-26",
+      "time": "10:49",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.57,
+      "shares": 3400,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-26"
+      }
+    },
+    {
+      "id": "broker2-eaf052893911a35dfb36",
+      "date": "2026-03-26",
+      "time": "10:40",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.6,
+      "shares": 2200,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-26"
+      }
+    },
+    {
+      "id": "broker2-b0e8dfbdc17a191a779f",
+      "date": "2026-03-26",
+      "time": "10:39",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "买入",
+      "price": 9.27,
+      "shares": 1100,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-26"
+      }
+    },
+    {
+      "id": "broker2-9c6a1c89906d79ff740c",
+      "date": "2026-03-25",
+      "time": "11:25",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "卖出",
+      "price": 9.41,
+      "shares": 1000,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-25"
+      }
+    },
+    {
+      "id": "broker2-2adab0aaa9bfaf1a5876",
+      "date": "2026-03-25",
+      "time": "11:16",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "卖出",
+      "price": 9.31,
+      "shares": 1200,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-25"
+      }
+    },
+    {
+      "id": "broker2-4142c3071b9513d2e3ee",
+      "date": "2026-03-25",
+      "time": "11:09",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "卖出",
+      "price": 9.27,
+      "shares": 2400,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-25"
+      }
+    },
+    {
+      "id": "broker2-6e9bfa26023e1af000d2",
+      "date": "2026-03-25",
+      "time": "10:49",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.47,
+      "shares": 3000,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-25"
+      }
+    },
+    {
+      "id": "broker2-e63826ac0aafe68303d5",
+      "date": "2026-03-23",
+      "time": "14:34",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 57.43,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-23"
+      }
+    },
+    {
+      "id": "broker2-7bdc40adce30a3b88ebb",
+      "date": "2026-03-20",
+      "time": "11:24",
+      "name": "东阿阿胶",
+      "code": "000423",
+      "action": "卖出",
+      "price": 56.74,
+      "shares": 200,
+      "dividendPerShare": 2.7055823,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-20"
+      }
+    },
+    {
+      "id": "broker2-4214903763ac26ae248f",
+      "date": "2026-03-18",
+      "time": "14:41",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "买入",
+      "price": 4.15,
+      "shares": 3300,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-18"
+      }
+    },
+    {
+      "id": "broker2-2cb9cd1f1cd63db04ca2",
+      "date": "2026-03-18",
+      "time": "10:40",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "买入",
+      "price": 8.88,
+      "shares": 2400,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-18"
+      }
+    },
+    {
+      "id": "broker2-5d27ee3e2c119e56dcde",
+      "date": "2026-03-17",
+      "time": "14:45",
+      "name": "东阿阿胶",
+      "code": "000423",
+      "action": "买入",
+      "price": 52.83,
+      "shares": 200,
+      "dividendPerShare": 2.7055823,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-17"
+      }
+    },
+    {
+      "id": "broker2-9f4082e0a993047e33fd",
+      "date": "2026-03-13",
+      "time": "11:10",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "买入",
+      "price": 9.22,
+      "shares": 2800,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-13"
+      }
+    },
+    {
+      "id": "broker2-34c984300560b5c00e34",
+      "date": "2026-03-12",
+      "time": "11:04",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 77.14,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-12"
+      }
+    },
+    {
+      "id": "broker2-623d62550d717f450218",
+      "date": "2026-03-12",
+      "time": "11:03",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 77.15,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-12"
+      }
+    },
+    {
+      "id": "broker2-b3a95346472c47e69bb2",
+      "date": "2026-03-12",
+      "time": "11:00",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "卖出",
+      "price": 56.29,
+      "shares": 600,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-12"
+      }
+    },
+    {
+      "id": "broker2-ef066567c3279326546d",
+      "date": "2026-03-12",
+      "time": "10:58",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.34,
+      "shares": 900,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-12"
+      }
+    },
+    {
+      "id": "broker2-17fe3a2b8b0773f09264",
+      "date": "2026-03-09",
+      "time": "13:11",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "卖出",
+      "price": 56.45,
+      "shares": 500,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-09"
+      }
+    },
+    {
+      "id": "broker2-53869d5c5cfb60d821b8",
+      "date": "2026-03-09",
+      "time": "13:10",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.19,
+      "shares": 2400,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-09"
+      }
+    },
+    {
+      "id": "broker2-6564bb89fe97ed0c9a54",
+      "date": "2026-03-09",
+      "time": "11:25",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "卖出",
+      "price": 8.97,
+      "shares": 1200,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-09"
+      }
+    },
+    {
+      "id": "broker2-db9796ea812aab5bd41e",
+      "date": "2026-03-03",
+      "time": "13:18",
+      "name": "中信证券",
+      "code": "600030",
+      "action": "买入",
+      "price": 27.23,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-03"
+      }
+    },
+    {
+      "id": "broker2-e94daef5020856538ee3",
+      "date": "2026-03-03",
+      "time": "13:18",
+      "name": "海尔智家",
+      "code": "600690",
+      "action": "买入",
+      "price": 25.32,
+      "shares": 200,
+      "dividendPerShare": 0.2692,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-03"
+      }
+    },
+    {
+      "id": "broker2-1f5933dcb200db017089",
+      "date": "2026-03-03",
+      "time": "13:12",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.09,
+      "shares": 500,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-03"
+      }
+    },
+    {
+      "id": "broker2-ca48ae101e1849ddb5de",
+      "date": "2026-03-03",
+      "time": "13:12",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.09,
+      "shares": 500,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-03"
+      }
+    },
+    {
+      "id": "broker2-8b39251d14bc8c104164",
+      "date": "2026-03-03",
+      "time": "13:12",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.09,
+      "shares": 300,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-03"
+      }
+    },
+    {
+      "id": "broker2-8637f934646d284b8e43",
+      "date": "2026-03-03",
+      "time": "13:11",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.09,
+      "shares": 700,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-03"
+      }
+    },
+    {
+      "id": "broker2-d133186b7a2a93990c9f",
+      "date": "2026-03-03",
+      "time": "13:11",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.09,
+      "shares": 1200,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-03"
+      }
+    },
+    {
+      "id": "broker2-e1fb5cc8038bf6924166",
+      "date": "2026-03-03",
+      "time": "13:11",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.08,
+      "shares": 1200,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-03-03"
+      }
+    },
+    {
+      "id": "broker2-1c8ecf186a0c517a61ff",
+      "date": "2026-02-27",
+      "time": "13:21",
+      "name": "中信证券",
+      "code": "600030",
+      "action": "买入",
+      "price": 27.48,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-02-27"
+      }
+    },
+    {
+      "id": "broker2-026d1a71d2f944800ffe",
+      "date": "2026-02-27",
+      "time": "13:20",
+      "name": "海尔智家",
+      "code": "600690",
+      "action": "买入",
+      "price": 25.85,
+      "shares": 200,
+      "dividendPerShare": 0.2692,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-02-27"
+      }
+    },
+    {
+      "id": "broker2-16315d72a13e9aaf6004",
+      "date": "2026-02-25",
+      "time": "10:22",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "卖出",
+      "price": 26.56,
+      "shares": 100,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-02-25"
+      }
+    },
+    {
+      "id": "broker2-e191f51d9670dd81646e",
+      "date": "2026-02-25",
+      "time": "10:17",
+      "name": "国电电力",
+      "code": "600795",
+      "action": "买入",
+      "price": 4.82,
+      "shares": 1000,
+      "dividendPerShare": 0.241,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-02-25"
+      }
+    },
+    {
+      "id": "broker2-ca8dd4cfda10a064df1b",
+      "date": "2026-02-24",
+      "time": "13:57",
+      "name": "国电电力",
+      "code": "600795",
+      "action": "买入",
+      "price": 4.75,
+      "shares": 700,
+      "dividendPerShare": 0.241,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-02-24"
+      }
+    },
+    {
+      "id": "broker2-59176232acf1cc6a0e35",
+      "date": "2026-02-06",
+      "time": "14:32",
+      "name": "中信建投",
+      "code": "601066",
+      "action": "买入",
+      "price": 24.34,
+      "shares": 400,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-02-06"
+      }
+    },
+    {
+      "id": "broker2-357803359e646d54d269",
+      "date": "2026-02-05",
+      "time": "10:29",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "买入",
+      "price": 8.62,
+      "shares": 1200,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-02-05"
+      }
+    },
+    {
+      "id": "broker2-5b2e325284c3ae11c257",
+      "date": "2026-02-03",
+      "time": "14:06",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "买入",
+      "price": 3.84,
+      "shares": 2600,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-02-03"
+      }
+    },
+    {
+      "id": "broker2-56c9f64dcd1813233d3a",
+      "date": "2026-02-02",
+      "time": "10:02",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "买入",
+      "price": 3.92,
+      "shares": 5100,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-02-02"
+      }
+    },
+    {
+      "id": "broker2-9b1a0361c487718995a7",
+      "date": "2026-01-27",
+      "time": "10:09",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "买入",
+      "price": 3.84,
+      "shares": 1000,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-27"
+      }
+    },
+    {
+      "id": "broker2-938684ada7e2b2d38390",
+      "date": "2026-01-23",
+      "time": "09:31",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 37.97,
+      "shares": 300,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-23"
+      }
+    },
+    {
+      "id": "broker2-8e8c2ef3985cdcb297af",
+      "date": "2026-01-22",
+      "time": "14:50",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 37.88,
+      "shares": 300,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-22"
+      }
+    },
+    {
+      "id": "broker2-f262f4536bcad8ac9790",
+      "date": "2026-01-20",
+      "time": "14:39",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 79.05,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-20"
+      }
+    },
+    {
+      "id": "broker2-c8db77c5e8a4c80def71",
+      "date": "2026-01-19",
+      "time": "09:58",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 3.89,
+      "shares": 1000,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-19"
+      }
+    },
+    {
+      "id": "broker2-07bbf88187102a5d8d15",
+      "date": "2026-01-19",
+      "time": "09:58",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "卖出",
+      "price": 9.04,
+      "shares": 400,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-19"
+      }
+    },
+    {
+      "id": "broker2-00723987b7c4e8cab196",
+      "date": "2026-01-16",
+      "time": "10:50",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 39.06,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-16"
+      }
+    },
+    {
+      "id": "broker2-edb91d932ec101b8ef9d",
+      "date": "2026-01-16",
+      "time": "10:22",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 38.97,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-16"
+      }
+    },
+    {
+      "id": "broker2-b724bb3bbf99d602e558",
+      "date": "2026-01-14",
+      "time": "13:46",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "卖出",
+      "price": 14.75,
+      "shares": 100,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-14"
+      }
+    },
+    {
+      "id": "broker2-f4e515f0f95405463a9b",
+      "date": "2026-01-09",
+      "time": "14:36",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 41.29,
+      "shares": 300,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-09"
+      }
+    },
+    {
+      "id": "broker2-b9d2a76defad42ef2d8f",
+      "date": "2026-01-09",
+      "time": "10:12",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "卖出",
+      "price": 57.18,
+      "shares": 500,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-09"
+      }
+    },
+    {
+      "id": "broker2-3664b10b5d0bc8b7c623",
+      "date": "2026-01-09",
+      "time": "09:31",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "卖出",
+      "price": 9.02,
+      "shares": 500,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-09"
+      }
+    },
+    {
+      "id": "broker2-374b9c775ed0185d3392",
+      "date": "2026-01-08",
+      "time": "13:52",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 41.31,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-08"
+      }
+    },
+    {
+      "id": "broker2-36a2a743b97c6828436a",
+      "date": "2026-01-08",
+      "time": "13:52",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 78.84,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-08"
+      }
+    },
+    {
+      "id": "broker2-eb101a56396c280681c5",
+      "date": "2026-01-08",
+      "time": "13:49",
+      "name": "海尔智家",
+      "code": "600690",
+      "action": "买入",
+      "price": 26.1,
+      "shares": 400,
+      "dividendPerShare": 0.2692,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-08"
+      }
+    },
+    {
+      "id": "broker2-2f57776bb22c8ab1887b",
+      "date": "2026-01-06",
+      "time": "10:31",
+      "name": "中信证券",
+      "code": "600030",
+      "action": "卖出",
+      "price": 30.1,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-01-06"
+      }
     }
   ]
 }

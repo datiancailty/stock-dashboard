@@ -1,51 +1,5 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-17T14:27:24+08:00",
-  "records": [
-    {
-      "id": "hermes-verification-historical-20260710",
-      "date": "2026-07-10",
-      "code": "600036",
-      "name": "招商银行",
-      "action": "做T卖出",
-      "price": 38.2,
-      "shares": 300,
-      "dividendPerShare": 2.016,
-      "createdAt": "2026-07-17T00:00:00Z",
-      "context": {
-        "status": "complete",
-        "requestedDate": "2026-07-10",
-        "asOf": "2026-07-10",
-        "isExactTradingDate": true,
-        "marketPriceAtRecord": 38.2,
-        "historicalClose": 36.88,
-        "totalDividend": 2.016,
-        "yield": 5.277487,
-        "positions": {
-          "asOf": "2026-07-10",
-          "day": {
-            "zone": "上部",
-            "percent": 100,
-            "low": 36.33,
-            "high": 36.92
-          },
-          "week": {
-            "zone": "上部",
-            "percent": 100,
-            "low": 36.33,
-            "high": 37.97
-          },
-          "month": {
-            "zone": "上部",
-            "percent": 100,
-            "low": 35.28,
-            "high": 37.97
-          }
-        },
-        "source": "东方财富/腾讯公开不复权日K",
-        "enrichedAt": "2026-07-17T14:27:24+08:00"
-      },
-      "learning": "日线上部做T卖出：强化高位减仓习惯"
-    }
-  ]
+  "updatedAt": null,
+  "records": []
 }

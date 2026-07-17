@@ -1,49 +1,49 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-17T19:08:39+08:00",
+  "updatedAt": "2026-07-17T19:49:24+08:00",
   "records": [
     {
-      "id": "29d18745-8159-42a4-89c4-40c22d41f413",
-      "date": "2026-07-09",
-      "code": "600863",
-      "name": "华能蒙电",
-      "action": "买入",
-      "price": 4.42,
-      "shares": 500,
-      "dividendPerShare": 0,
-      "createdAt": "2026-07-17T06:43:58.955Z",
+      "id": "ff1e5c03-7c24-4e7d-979a-2846335cf4d6",
+      "date": "2026-07-17",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "action": "卖出",
+      "price": 50.85,
+      "shares": 100,
+      "dividendPerShare": 2.7055823,
+      "createdAt": "2026-07-17T06:40:41.739Z",
       "context": {
         "status": "complete",
-        "requestedDate": "2026-07-09",
-        "asOf": "2026-07-09",
+        "requestedDate": "2026-07-17",
+        "asOf": "2026-07-17",
         "isExactTradingDate": true,
-        "marketPriceAtRecord": 4.42,
-        "historicalClose": 4.49,
-        "totalDividend": 0.0,
-        "yield": 0.0,
+        "marketPriceAtRecord": 50.85,
+        "historicalClose": 50.51,
+        "totalDividend": 2.7055823,
+        "yield": 5.320712,
         "positions": {
-          "asOf": "2026-07-09",
+          "asOf": "2026-07-17",
           "day": {
             "zone": "中部",
-            "percent": 40.0,
-            "low": 4.32,
-            "high": 4.57
+            "percent": 43.4,
+            "low": 50.13,
+            "high": 51.79
           },
           "week": {
-            "zone": "中部",
-            "percent": 44.4,
-            "low": 4.26,
-            "high": 4.62
+            "zone": "上部",
+            "percent": 81.5,
+            "low": 46.7,
+            "high": 51.79
           },
           "month": {
-            "zone": "下部",
-            "percent": 23.2,
-            "low": 4.26,
-            "high": 4.95
+            "zone": "上部",
+            "percent": 87.2,
+            "low": 44.44,
+            "high": 51.79
           }
         },
         "source": "东方财富/腾讯公开不复权日K",
-        "enrichedAt": "2026-07-17T14:44:11+08:00"
+        "enrichedAt": "2026-07-17T14:40:57+08:00"
       },
       "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
@@ -91,51 +91,6 @@
         "enrichedAt": "2026-07-17T14:42:12+08:00"
       },
       "learning": "4%～4.5%卖出：强化清仓底线"
-    },
-    {
-      "id": "ff1e5c03-7c24-4e7d-979a-2846335cf4d6",
-      "date": "2026-07-17",
-      "code": "000423",
-      "name": "东阿阿胶",
-      "action": "卖出",
-      "price": 50.85,
-      "shares": 100,
-      "dividendPerShare": 2.7055823,
-      "createdAt": "2026-07-17T06:40:41.739Z",
-      "context": {
-        "status": "complete",
-        "requestedDate": "2026-07-17",
-        "asOf": "2026-07-17",
-        "isExactTradingDate": true,
-        "marketPriceAtRecord": 50.85,
-        "historicalClose": 50.51,
-        "totalDividend": 2.7055823,
-        "yield": 5.320712,
-        "positions": {
-          "asOf": "2026-07-17",
-          "day": {
-            "zone": "中部",
-            "percent": 43.4,
-            "low": 50.13,
-            "high": 51.79
-          },
-          "week": {
-            "zone": "上部",
-            "percent": 81.5,
-            "low": 46.7,
-            "high": 51.79
-          },
-          "month": {
-            "zone": "上部",
-            "percent": 87.2,
-            "low": 44.44,
-            "high": 51.79
-          }
-        },
-        "source": "东方财富/腾讯公开不复权日K",
-        "enrichedAt": "2026-07-17T14:40:57+08:00"
-      },
-      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
       "date": "2026-07-09",
@@ -369,6 +324,51 @@
         },
         "source": "东方财富/腾讯公开不复权日K",
         "enrichedAt": "2026-07-17T17:44:55+08:00"
+      },
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
+    },
+    {
+      "id": "29d18745-8159-42a4-89c4-40c22d41f413",
+      "date": "2026-07-09",
+      "code": "600863",
+      "name": "华能蒙电",
+      "action": "买入",
+      "price": 4.42,
+      "shares": 500,
+      "dividendPerShare": 0,
+      "createdAt": "2026-07-17T06:43:58.955Z",
+      "context": {
+        "status": "complete",
+        "requestedDate": "2026-07-09",
+        "asOf": "2026-07-09",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 4.42,
+        "historicalClose": 4.49,
+        "totalDividend": 0.0,
+        "yield": 0.0,
+        "positions": {
+          "asOf": "2026-07-09",
+          "day": {
+            "zone": "中部",
+            "percent": 40.0,
+            "low": 4.32,
+            "high": 4.57
+          },
+          "week": {
+            "zone": "中部",
+            "percent": 44.4,
+            "low": 4.26,
+            "high": 4.62
+          },
+          "month": {
+            "zone": "下部",
+            "percent": 23.2,
+            "low": 4.26,
+            "high": 4.95
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-07-17T14:44:11+08:00"
       },
       "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
@@ -2488,53 +2488,6 @@
       "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
-      "id": "broker2-4b97f6076fec98f06608",
-      "date": "2026-03-26",
-      "time": "10:50",
-      "name": "中国广核",
-      "code": "003816",
-      "action": "卖出",
-      "price": 4.57,
-      "shares": 2600,
-      "dividendPerShare": 0.086,
-      "createdAt": "2026-07-17T18:30:00+08:00",
-      "source": "用户确认的券商成交截图（第二批）",
-      "context": {
-        "status": "complete",
-        "requestedDate": "2026-03-26",
-        "asOf": "2026-03-26",
-        "isExactTradingDate": true,
-        "marketPriceAtRecord": 4.57,
-        "historicalClose": 4.6,
-        "totalDividend": 0.086,
-        "yield": 1.881838,
-        "positions": {
-          "asOf": "2026-03-26",
-          "day": {
-            "zone": "上部",
-            "percent": 68.4,
-            "low": 4.44,
-            "high": 4.63
-          },
-          "week": {
-            "zone": "上部",
-            "percent": 88.9,
-            "low": 4.09,
-            "high": 4.63
-          },
-          "month": {
-            "zone": "上部",
-            "percent": 91.3,
-            "low": 3.94,
-            "high": 4.63
-          }
-        },
-        "source": "东方财富/腾讯公开不复权日K",
-        "enrichedAt": "2026-07-17T19:07:30+08:00"
-      },
-      "learning": "4%～4.5%卖出：强化清仓底线"
-    },
-    {
       "id": "broker2-985ed259c4fb22890e44",
       "date": "2026-03-26",
       "time": "10:50",
@@ -2578,6 +2531,53 @@
         },
         "source": "东方财富/腾讯公开不复权日K",
         "enrichedAt": "2026-07-17T19:07:32+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
+    },
+    {
+      "id": "broker2-4b97f6076fec98f06608",
+      "date": "2026-03-26",
+      "time": "10:50",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.57,
+      "shares": 2600,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "complete",
+        "requestedDate": "2026-03-26",
+        "asOf": "2026-03-26",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 4.57,
+        "historicalClose": 4.6,
+        "totalDividend": 0.086,
+        "yield": 1.881838,
+        "positions": {
+          "asOf": "2026-03-26",
+          "day": {
+            "zone": "上部",
+            "percent": 68.4,
+            "low": 4.44,
+            "high": 4.63
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 88.9,
+            "low": 4.09,
+            "high": 4.63
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 91.3,
+            "low": 3.94,
+            "high": 4.63
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-07-17T19:07:30+08:00"
       },
       "learning": "4%～4.5%卖出：强化清仓底线"
     },
@@ -3522,53 +3522,6 @@
       "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
-      "id": "broker2-db9796ea812aab5bd41e",
-      "date": "2026-03-03",
-      "time": "13:18",
-      "name": "中信证券",
-      "code": "600030",
-      "action": "买入",
-      "price": 27.23,
-      "shares": 200,
-      "dividendPerShare": 0.0,
-      "createdAt": "2026-07-17T18:30:00+08:00",
-      "source": "用户确认的券商成交截图（第二批）",
-      "context": {
-        "status": "complete",
-        "requestedDate": "2026-03-03",
-        "asOf": "2026-03-03",
-        "isExactTradingDate": true,
-        "marketPriceAtRecord": 27.23,
-        "historicalClose": 26.8,
-        "totalDividend": 0.0,
-        "yield": 0.0,
-        "positions": {
-          "asOf": "2026-03-03",
-          "day": {
-            "zone": "上部",
-            "percent": 76.2,
-            "low": 26.75,
-            "high": 27.38
-          },
-          "week": {
-            "zone": "上部",
-            "percent": 76.2,
-            "low": 26.75,
-            "high": 27.38
-          },
-          "month": {
-            "zone": "上部",
-            "percent": 76.2,
-            "low": 26.75,
-            "high": 27.38
-          }
-        },
-        "source": "东方财富/腾讯公开不复权日K",
-        "enrichedAt": "2026-07-17T19:07:59+08:00"
-      },
-      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
-    },
-    {
       "id": "broker2-e94daef5020856538ee3",
       "date": "2026-03-03",
       "time": "13:18",
@@ -3616,15 +3569,15 @@
       "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
-      "id": "broker2-1f5933dcb200db017089",
+      "id": "broker2-db9796ea812aab5bd41e",
       "date": "2026-03-03",
-      "time": "13:12",
-      "name": "中国广核",
-      "code": "003816",
-      "action": "卖出",
-      "price": 4.09,
-      "shares": 500,
-      "dividendPerShare": 0.086,
+      "time": "13:18",
+      "name": "中信证券",
+      "code": "600030",
+      "action": "买入",
+      "price": 27.23,
+      "shares": 200,
+      "dividendPerShare": 0.0,
       "createdAt": "2026-07-17T18:30:00+08:00",
       "source": "用户确认的券商成交截图（第二批）",
       "context": {
@@ -3632,35 +3585,35 @@
         "requestedDate": "2026-03-03",
         "asOf": "2026-03-03",
         "isExactTradingDate": true,
-        "marketPriceAtRecord": 4.09,
-        "historicalClose": 4.02,
-        "totalDividend": 0.086,
-        "yield": 2.102689,
+        "marketPriceAtRecord": 27.23,
+        "historicalClose": 26.8,
+        "totalDividend": 0.0,
+        "yield": 0.0,
         "positions": {
           "asOf": "2026-03-03",
           "day": {
             "zone": "上部",
-            "percent": 88.9,
-            "low": 4.01,
-            "high": 4.1
+            "percent": 76.2,
+            "low": 26.75,
+            "high": 27.38
           },
           "week": {
             "zone": "上部",
-            "percent": 93.8,
-            "low": 3.94,
-            "high": 4.1
+            "percent": 76.2,
+            "low": 26.75,
+            "high": 27.38
           },
           "month": {
             "zone": "上部",
-            "percent": 93.8,
-            "low": 3.94,
-            "high": 4.1
+            "percent": 76.2,
+            "low": 26.75,
+            "high": 27.38
           }
         },
         "source": "东方财富/腾讯公开不复权日K",
-        "enrichedAt": "2026-07-17T19:08:01+08:00"
+        "enrichedAt": "2026-07-17T19:07:59+08:00"
       },
-      "learning": "4%～4.5%卖出：强化清仓底线"
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
       "id": "broker2-ca48ae101e1849ddb5de",
@@ -3757,14 +3710,14 @@
       "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
-      "id": "broker2-8637f934646d284b8e43",
+      "id": "broker2-1f5933dcb200db017089",
       "date": "2026-03-03",
-      "time": "13:11",
+      "time": "13:12",
       "name": "中国广核",
       "code": "003816",
       "action": "卖出",
       "price": 4.09,
-      "shares": 700,
+      "shares": 500,
       "dividendPerShare": 0.086,
       "createdAt": "2026-07-17T18:30:00+08:00",
       "source": "用户确认的券商成交截图（第二批）",
@@ -3799,7 +3752,54 @@
           }
         },
         "source": "东方财富/腾讯公开不复权日K",
-        "enrichedAt": "2026-07-17T19:08:05+08:00"
+        "enrichedAt": "2026-07-17T19:08:01+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
+    },
+    {
+      "id": "broker2-e1fb5cc8038bf6924166",
+      "date": "2026-03-03",
+      "time": "13:11",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 4.08,
+      "shares": 1200,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T18:30:00+08:00",
+      "source": "用户确认的券商成交截图（第二批）",
+      "context": {
+        "status": "complete",
+        "requestedDate": "2026-03-03",
+        "asOf": "2026-03-03",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 4.08,
+        "historicalClose": 4.02,
+        "totalDividend": 0.086,
+        "yield": 2.107843,
+        "positions": {
+          "asOf": "2026-03-03",
+          "day": {
+            "zone": "上部",
+            "percent": 77.8,
+            "low": 4.01,
+            "high": 4.1
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 87.5,
+            "low": 3.94,
+            "high": 4.1
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 87.5,
+            "low": 3.94,
+            "high": 4.1
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-07-17T19:08:07+08:00"
       },
       "learning": "4%～4.5%卖出：强化清仓底线"
     },
@@ -3851,14 +3851,14 @@
       "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
-      "id": "broker2-e1fb5cc8038bf6924166",
+      "id": "broker2-8637f934646d284b8e43",
       "date": "2026-03-03",
       "time": "13:11",
       "name": "中国广核",
       "code": "003816",
       "action": "卖出",
-      "price": 4.08,
-      "shares": 1200,
+      "price": 4.09,
+      "shares": 700,
       "dividendPerShare": 0.086,
       "createdAt": "2026-07-17T18:30:00+08:00",
       "source": "用户确认的券商成交截图（第二批）",
@@ -3867,33 +3867,33 @@
         "requestedDate": "2026-03-03",
         "asOf": "2026-03-03",
         "isExactTradingDate": true,
-        "marketPriceAtRecord": 4.08,
+        "marketPriceAtRecord": 4.09,
         "historicalClose": 4.02,
         "totalDividend": 0.086,
-        "yield": 2.107843,
+        "yield": 2.102689,
         "positions": {
           "asOf": "2026-03-03",
           "day": {
             "zone": "上部",
-            "percent": 77.8,
+            "percent": 88.9,
             "low": 4.01,
             "high": 4.1
           },
           "week": {
             "zone": "上部",
-            "percent": 87.5,
+            "percent": 93.8,
             "low": 3.94,
             "high": 4.1
           },
           "month": {
             "zone": "上部",
-            "percent": 87.5,
+            "percent": 93.8,
             "low": 3.94,
             "high": 4.1
           }
         },
         "source": "东方财富/腾讯公开不复权日K",
-        "enrichedAt": "2026-07-17T19:08:07+08:00"
+        "enrichedAt": "2026-07-17T19:08:05+08:00"
       },
       "learning": "4%～4.5%卖出：强化清仓底线"
     },
@@ -5071,6 +5071,4358 @@
         "enrichedAt": "2026-07-17T19:08:39+08:00"
       },
       "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
+    },
+    {
+      "id": "broker2025-1369d85ff816721f8bd5",
+      "date": "2025-12-31",
+      "time": "14:55",
+      "name": "海尔智家",
+      "code": "600690",
+      "action": "卖出",
+      "price": 26.09,
+      "shares": 100,
+      "dividendPerShare": 0.2692,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-31"
+      }
+    },
+    {
+      "id": "broker2025-6b8651fe66460cfb4ad9",
+      "date": "2025-12-30",
+      "time": "13:34",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 42.35,
+      "shares": 300,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-30"
+      }
+    },
+    {
+      "id": "broker2025-750711fe7f5111c7ec2f",
+      "date": "2025-12-29",
+      "time": "14:27",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 41.88,
+      "shares": 300,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-29"
+      }
+    },
+    {
+      "id": "broker2025-dcb10d8a72f095052762",
+      "date": "2025-12-29",
+      "time": "13:34",
+      "name": "中信证券",
+      "code": "600030",
+      "action": "买入",
+      "price": 29.01,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-29"
+      }
+    },
+    {
+      "id": "broker2025-407a2f738af70871df0a",
+      "date": "2025-12-29",
+      "time": "13:17",
+      "name": "中信证券",
+      "code": "600030",
+      "action": "买入",
+      "price": 28.96,
+      "shares": 400,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-29"
+      }
+    },
+    {
+      "id": "broker2025-f5f7945128d603f3a148",
+      "date": "2025-12-29",
+      "time": "09:33",
+      "name": "宁波银行",
+      "code": "002142",
+      "action": "卖出",
+      "price": 27.76,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-29"
+      }
+    },
+    {
+      "id": "broker2025-1315ae3b8526d1d1c99d",
+      "date": "2025-12-29",
+      "time": "09:30",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 41.6,
+      "shares": 1200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-29"
+      }
+    },
+    {
+      "id": "broker2025-1545d41ac993adbec8ae",
+      "date": "2025-12-25",
+      "time": "10:57",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 41.99,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-25"
+      }
+    },
+    {
+      "id": "broker2025-496fb5e0880eaad5346d",
+      "date": "2025-12-25",
+      "time": "10:56",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 41.98,
+      "shares": 500,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-25"
+      }
+    },
+    {
+      "id": "broker2025-4d141d2c56df31291c89",
+      "date": "2025-12-25",
+      "time": "10:10",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "卖出",
+      "price": 15.27,
+      "shares": 500,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-25"
+      }
+    },
+    {
+      "id": "broker2025-959caa5b56772045bc86",
+      "date": "2025-12-25",
+      "time": "10:01",
+      "name": "中国石油",
+      "code": "601857",
+      "action": "卖出",
+      "price": 9.88,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-25"
+      }
+    },
+    {
+      "id": "broker2025-e7917f1589213af610a0",
+      "date": "2025-12-25",
+      "time": "10:00",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 78.25,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-25"
+      }
+    },
+    {
+      "id": "broker2025-020243a5d3f28f46e936",
+      "date": "2025-12-24",
+      "time": "14:56",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "买入",
+      "price": 8.73,
+      "shares": 5700,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-24"
+      }
+    },
+    {
+      "id": "broker2025-42cdbb0c6ee8871fcac4",
+      "date": "2025-12-24",
+      "time": "09:43",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "买入",
+      "price": 3.83,
+      "shares": 5300,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-24"
+      }
+    },
+    {
+      "id": "broker2025-ffe83688a9a04fcc3c0e",
+      "date": "2025-12-24",
+      "time": "09:42",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 56.39,
+      "shares": 400,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-24"
+      }
+    },
+    {
+      "id": "broker2025-45d6aaded9416c099b6b",
+      "date": "2025-12-23",
+      "time": "11:19",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 42.0,
+      "shares": 500,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-23"
+      }
+    },
+    {
+      "id": "broker2025-bc906a8405cb42c8a460",
+      "date": "2025-12-23",
+      "time": "11:18",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 69.93,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-23"
+      }
+    },
+    {
+      "id": "broker2025-edc294a3e130fe313420",
+      "date": "2025-12-23",
+      "time": "09:31",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 56.6,
+      "shares": 200,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-23"
+      }
+    },
+    {
+      "id": "broker2025-c084afb0e420764c6a48",
+      "date": "2025-12-22",
+      "time": "14:51",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "卖出",
+      "price": 56.54,
+      "shares": 200,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-22"
+      }
+    },
+    {
+      "id": "broker2025-71be1388f2d39e91a67a",
+      "date": "2025-12-22",
+      "time": "14:46",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "卖出",
+      "price": 8.71,
+      "shares": 2400,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-22"
+      }
+    },
+    {
+      "id": "broker2025-fb54c9375a440aaec7be",
+      "date": "2025-12-19",
+      "time": "10:52",
+      "name": "宁波银行",
+      "code": "002142",
+      "action": "卖出",
+      "price": 28.98,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-19"
+      }
+    },
+    {
+      "id": "broker2025-bd441a3b4f2b8236a51c",
+      "date": "2025-12-19",
+      "time": "09:30",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 68.05,
+      "shares": 200,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-19"
+      }
+    },
+    {
+      "id": "broker2025-8f4b14dc0ed8e4fd2017",
+      "date": "2025-12-18",
+      "time": "14:51",
+      "name": "工商银行",
+      "code": "601398",
+      "action": "卖出",
+      "price": 7.97,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-18"
+      }
+    },
+    {
+      "id": "broker2025-e6276eb2b2ccb976766d",
+      "date": "2025-12-18",
+      "time": "14:50",
+      "name": "工商银行",
+      "code": "601398",
+      "action": "卖出",
+      "price": 7.98,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-18"
+      }
+    },
+    {
+      "id": "broker2025-1477c7eb0cc08b8738e3",
+      "date": "2025-12-18",
+      "time": "14:50",
+      "name": "工商银行",
+      "code": "601398",
+      "action": "卖出",
+      "price": 7.98,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-18"
+      }
+    },
+    {
+      "id": "broker2025-0df03691aae8c4d1199b",
+      "date": "2025-12-18",
+      "time": "14:50",
+      "name": "工商银行",
+      "code": "601398",
+      "action": "卖出",
+      "price": 7.98,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-18"
+      }
+    },
+    {
+      "id": "broker2025-d0f751269b1aa08a4ca2",
+      "date": "2025-12-18",
+      "time": "14:47",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 79.74,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-18"
+      }
+    },
+    {
+      "id": "broker2025-1bca9992526d4aaff800",
+      "date": "2025-12-18",
+      "time": "14:47",
+      "name": "海尔智家",
+      "code": "600690",
+      "action": "卖出",
+      "price": 27.34,
+      "shares": 100,
+      "dividendPerShare": 0.2692,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-18"
+      }
+    },
+    {
+      "id": "broker2025-a2bb27a4ad7abf806c38",
+      "date": "2025-12-18",
+      "time": "14:46",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 42.3,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-18"
+      }
+    },
+    {
+      "id": "broker2025-2eedefac0dc14759b8db",
+      "date": "2025-12-18",
+      "time": "09:44",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 41.51,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-18"
+      }
+    },
+    {
+      "id": "broker2025-907e52639e72e4f69f0e",
+      "date": "2025-12-17",
+      "time": "14:17",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 41.66,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-17"
+      }
+    },
+    {
+      "id": "broker2025-75a1ef746e30d55a1193",
+      "date": "2025-12-17",
+      "time": "13:46",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 41.55,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-17"
+      }
+    },
+    {
+      "id": "broker2025-fd982eddad4a13fd6a1d",
+      "date": "2025-12-16",
+      "time": "11:07",
+      "name": "中信建投",
+      "code": "601066",
+      "action": "卖出",
+      "price": 26.86,
+      "shares": 500,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-16"
+      }
+    },
+    {
+      "id": "broker2025-77573aebeb560c81f816",
+      "date": "2025-12-16",
+      "time": "11:07",
+      "name": "中信建投",
+      "code": "601066",
+      "action": "卖出",
+      "price": 26.86,
+      "shares": 1000,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-16"
+      }
+    },
+    {
+      "id": "broker2025-ca423dc0db6f75dcf1f1",
+      "date": "2025-12-15",
+      "time": "09:34",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "卖出",
+      "price": 14.97,
+      "shares": 600,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-15"
+      }
+    },
+    {
+      "id": "broker2025-6f2db20f1937d9146512",
+      "date": "2025-12-10",
+      "time": "14:41",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 41.77,
+      "shares": 400,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-10"
+      }
+    },
+    {
+      "id": "broker2025-3ef1856edf79c9a73b3c",
+      "date": "2025-12-10",
+      "time": "10:09",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 42.155,
+      "shares": 400,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-10"
+      }
+    },
+    {
+      "id": "broker2025-32092bfa8d166d452b4a",
+      "date": "2025-12-10",
+      "time": "09:51",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "买入",
+      "price": 8.69,
+      "shares": 3300,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-10"
+      }
+    },
+    {
+      "id": "broker2025-e2cfd6ad4b6cb49d6acd",
+      "date": "2025-12-10",
+      "time": "09:50",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "卖出",
+      "price": 3.8,
+      "shares": 2400,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-10"
+      }
+    },
+    {
+      "id": "broker2025-3099de02cd163b8f4e69",
+      "date": "2025-12-10",
+      "time": "09:49",
+      "name": "中信建投",
+      "code": "601066",
+      "action": "卖出",
+      "price": 26.02,
+      "shares": 1500,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-10"
+      }
+    },
+    {
+      "id": "broker2025-f9ad64885f750244a428",
+      "date": "2025-12-10",
+      "time": "09:38",
+      "name": "中国核电",
+      "code": "601985",
+      "action": "买入",
+      "price": 8.68,
+      "shares": 1600,
+      "dividendPerShare": 0.18,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-10"
+      }
+    },
+    {
+      "id": "broker2025-2543657723847a31b4cb",
+      "date": "2025-12-09",
+      "time": "09:34",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "买入",
+      "price": 3.84,
+      "shares": 2600,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-09"
+      }
+    },
+    {
+      "id": "broker2025-f6d37e85edecfc708e4e",
+      "date": "2025-12-08",
+      "time": "10:27",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 43.23,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-08"
+      }
+    },
+    {
+      "id": "broker2025-329cbf7fae776d21fd6e",
+      "date": "2025-12-08",
+      "time": "09:33",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "卖出",
+      "price": 14.98,
+      "shares": 600,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-08"
+      }
+    },
+    {
+      "id": "broker2025-0ef2c740e780debc280b",
+      "date": "2025-12-08",
+      "time": "09:32",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "买入",
+      "price": 3.87,
+      "shares": 5300,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-08"
+      }
+    },
+    {
+      "id": "broker2025-f579a83fa8ef02558777",
+      "date": "2025-12-05",
+      "time": "14:30",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 43.43,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-05"
+      }
+    },
+    {
+      "id": "broker2025-aead7f84752df27259bb",
+      "date": "2025-12-05",
+      "time": "10:49",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 43.02,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-05"
+      }
+    },
+    {
+      "id": "broker2025-e9a33ccc96d7b107af9d",
+      "date": "2025-12-05",
+      "time": "10:34",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 43.04,
+      "shares": 100,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-05"
+      }
+    },
+    {
+      "id": "broker2025-bdfa7baf93753bbdc6c9",
+      "date": "2025-12-04",
+      "time": "14:31",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 43.18,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-04"
+      }
+    },
+    {
+      "id": "broker2025-084f19672f4ea4121ff3",
+      "date": "2025-12-04",
+      "time": "09:34",
+      "name": "中国广核",
+      "code": "003816",
+      "action": "买入",
+      "price": 3.85,
+      "shares": 5000,
+      "dividendPerShare": 0.086,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-04"
+      }
+    },
+    {
+      "id": "broker2025-3355ce4b59b55e5e8b31",
+      "date": "2025-12-03",
+      "time": "13:28",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 82.73,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-12-03"
+      }
+    },
+    {
+      "id": "broker2025-d7adbb8e4abc8dcaaff4",
+      "date": "2025-11-28",
+      "time": "13:56",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 43.0,
+      "shares": 300,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-28"
+      }
+    },
+    {
+      "id": "broker2025-f4d866637f4f19de9e22",
+      "date": "2025-11-28",
+      "time": "13:47",
+      "name": "宁波银行",
+      "code": "002142",
+      "action": "买入",
+      "price": 28.51,
+      "shares": 400,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-28"
+      }
+    },
+    {
+      "id": "broker2025-888b3a4f0c40838a3658",
+      "date": "2025-11-28",
+      "time": "13:45",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "卖出",
+      "price": 107.91,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-28"
+      }
+    },
+    {
+      "id": "broker2025-e95584b5b448e0a9a859",
+      "date": "2025-11-28",
+      "time": "10:06",
+      "name": "中信建投",
+      "code": "601066",
+      "action": "买入",
+      "price": 24.72,
+      "shares": 800,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-28"
+      }
+    },
+    {
+      "id": "broker2025-ceec9d3fd48a1cb222f4",
+      "date": "2025-11-28",
+      "time": "10:06",
+      "name": "中信建投",
+      "code": "601066",
+      "action": "买入",
+      "price": 24.73,
+      "shares": 1300,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-28"
+      }
+    },
+    {
+      "id": "broker2025-c3ed2abd91508cab4340",
+      "date": "2025-11-28",
+      "time": "09:35",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 56.13,
+      "shares": 200,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-28"
+      }
+    },
+    {
+      "id": "broker2025-cd4f6b2fa7f67d8b4df1",
+      "date": "2025-11-27",
+      "time": "13:58",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 56.17,
+      "shares": 200,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-27"
+      }
+    },
+    {
+      "id": "broker2025-fa933d50214aaab2e28c",
+      "date": "2025-11-27",
+      "time": "10:07",
+      "name": "中信建投",
+      "code": "601066",
+      "action": "买入",
+      "price": 24.81,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-27"
+      }
+    },
+    {
+      "id": "broker2025-ecf22f919fd1b3a1486a",
+      "date": "2025-11-27",
+      "time": "09:54",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 42.88,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-27"
+      }
+    },
+    {
+      "id": "broker2025-5638c57cee1419095048",
+      "date": "2025-11-27",
+      "time": "09:35",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "买入",
+      "price": 14.68,
+      "shares": 1000,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-27"
+      }
+    },
+    {
+      "id": "broker2025-fc2b01235921c13b8448",
+      "date": "2025-11-26",
+      "time": "13:12",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "买入",
+      "price": 14.72,
+      "shares": 700,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-26"
+      }
+    },
+    {
+      "id": "broker2025-1d893c51e310d2c3b23c",
+      "date": "2025-11-26",
+      "time": "13:11",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 56.03,
+      "shares": 200,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-26"
+      }
+    },
+    {
+      "id": "broker2025-01d0186003a0118e2301",
+      "date": "2025-11-25",
+      "time": "14:41",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 78.66,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-25"
+      }
+    },
+    {
+      "id": "broker2025-6edf1ed770cf29871832",
+      "date": "2025-11-24",
+      "time": "09:31",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 55.84,
+      "shares": 200,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-24"
+      }
+    },
+    {
+      "id": "broker2025-2b59d54648be3269a603",
+      "date": "2025-11-20",
+      "time": "11:19",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "卖出",
+      "price": 109.02,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-20"
+      }
+    },
+    {
+      "id": "broker2025-31fe43d4fcc861d3c40a",
+      "date": "2025-11-19",
+      "time": "09:45",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "卖出",
+      "price": 29.61,
+      "shares": 200,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-19"
+      }
+    },
+    {
+      "id": "broker2025-37bb1c56e1d8d80601d4",
+      "date": "2025-11-18",
+      "time": "09:36",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 29.42,
+      "shares": 200,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-18"
+      }
+    },
+    {
+      "id": "broker2025-4674285fbcdda061ec6c",
+      "date": "2025-11-13",
+      "time": "10:34",
+      "name": "海尔智家",
+      "code": "600690",
+      "action": "卖出",
+      "price": 27.06,
+      "shares": 100,
+      "dividendPerShare": 0.2692,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-13"
+      }
+    },
+    {
+      "id": "broker2025-d1a943f110047be6486f",
+      "date": "2025-11-12",
+      "time": "13:46",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "卖出",
+      "price": 14.61,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-12"
+      }
+    },
+    {
+      "id": "broker2025-91ce6870adc2fbfed70d",
+      "date": "2025-11-12",
+      "time": "10:29",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "买入",
+      "price": 108.195,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-12"
+      }
+    },
+    {
+      "id": "broker2025-de5687c470b093bb4c46",
+      "date": "2025-11-12",
+      "time": "10:00",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "卖出",
+      "price": 15.51,
+      "shares": 200,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-12"
+      }
+    },
+    {
+      "id": "broker2025-ce9c8aba7dab3d3e2bfc",
+      "date": "2025-11-12",
+      "time": "09:59",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "卖出",
+      "price": 108.31,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-12"
+      }
+    },
+    {
+      "id": "broker2025-09239726bdd64b1f9991",
+      "date": "2025-11-11",
+      "time": "14:48",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "买入",
+      "price": 107.88,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-11"
+      }
+    },
+    {
+      "id": "broker2025-9d3dbecb7781f9455055",
+      "date": "2025-11-11",
+      "time": "13:47",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "卖出",
+      "price": 28.39,
+      "shares": 500,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-11"
+      }
+    },
+    {
+      "id": "broker2025-e2c5224558bd6e2e26e7",
+      "date": "2025-11-11",
+      "time": "13:46",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "卖出",
+      "price": 28.39,
+      "shares": 600,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-11"
+      }
+    },
+    {
+      "id": "broker2025-3494381b7ffbed20610a",
+      "date": "2025-11-11",
+      "time": "10:50",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "卖出",
+      "price": 28.32,
+      "shares": 200,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-11"
+      }
+    },
+    {
+      "id": "broker2025-c09b06ccf3df35233985",
+      "date": "2025-11-10",
+      "time": "14:09",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "卖出",
+      "price": 28.24,
+      "shares": 300,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-10"
+      }
+    },
+    {
+      "id": "broker2025-2ea83e193f9af8117457",
+      "date": "2025-11-10",
+      "time": "14:02",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 28.23,
+      "shares": 100,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-10"
+      }
+    },
+    {
+      "id": "broker2025-05e12dfa7ac93b6200ef",
+      "date": "2025-11-10",
+      "time": "14:01",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 28.24,
+      "shares": 500,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-10"
+      }
+    },
+    {
+      "id": "broker2025-db020739bc80aaf76553",
+      "date": "2025-11-10",
+      "time": "13:46",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "卖出",
+      "price": 28.22,
+      "shares": 1000,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-10"
+      }
+    },
+    {
+      "id": "broker2025-4c654b71ef9f58626b1c",
+      "date": "2025-11-10",
+      "time": "09:31",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "卖出",
+      "price": 15.39,
+      "shares": 200,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-10"
+      }
+    },
+    {
+      "id": "broker2025-a6678fda9e74711fcccd",
+      "date": "2025-11-10",
+      "time": "09:30",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "卖出",
+      "price": 15.41,
+      "shares": 400,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-10"
+      }
+    },
+    {
+      "id": "broker2025-6b4097b890074a926c65",
+      "date": "2025-11-07",
+      "time": "14:50",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 76.19,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-07"
+      }
+    },
+    {
+      "id": "broker2025-80ab49fca41624292955",
+      "date": "2025-11-07",
+      "time": "09:42",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 58.93,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-07"
+      }
+    },
+    {
+      "id": "broker2025-c97ca947b1300351e76b",
+      "date": "2025-11-07",
+      "time": "09:41",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 76.86,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-07"
+      }
+    },
+    {
+      "id": "broker2025-927b4b3f185b1240acec",
+      "date": "2025-11-07",
+      "time": "09:37",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "买入",
+      "price": 15.25,
+      "shares": 900,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-07"
+      }
+    },
+    {
+      "id": "broker2025-5f32345daf55ab8321c5",
+      "date": "2025-11-06",
+      "time": "14:41",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 42.37,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-06"
+      }
+    },
+    {
+      "id": "broker2025-03af50c53ff4af581d68",
+      "date": "2025-11-05",
+      "time": "10:26",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 75.99,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-05"
+      }
+    },
+    {
+      "id": "broker2025-4f8bb589afedafec0920",
+      "date": "2025-11-04",
+      "time": "09:34",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 42.32,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-11-04"
+      }
+    },
+    {
+      "id": "broker2025-d125fe1c09440ef70a7d",
+      "date": "2025-10-31",
+      "time": "10:43",
+      "name": "海尔智家",
+      "code": "600690",
+      "action": "卖出",
+      "price": 26.64,
+      "shares": 100,
+      "dividendPerShare": 0.2692,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-31"
+      }
+    },
+    {
+      "id": "broker2025-5f5428574ef612ded62d",
+      "date": "2025-10-31",
+      "time": "10:43",
+      "name": "中国石油",
+      "code": "601857",
+      "action": "卖出",
+      "price": 9.1,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-31"
+      }
+    },
+    {
+      "id": "broker2025-9588a7e2281665b7fec9",
+      "date": "2025-10-30",
+      "time": "09:58",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 75.54,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-30"
+      }
+    },
+    {
+      "id": "broker2025-25f1df3a0d938eee2b39",
+      "date": "2025-10-30",
+      "time": "09:47",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 59.7,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-30"
+      }
+    },
+    {
+      "id": "broker2025-2b2bb5cde77b7e9a9daa",
+      "date": "2025-10-29",
+      "time": "09:31",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "卖出",
+      "price": 14.73,
+      "shares": 100,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-29"
+      }
+    },
+    {
+      "id": "broker2025-6755892f47f2e34ee78c",
+      "date": "2025-10-22",
+      "time": "13:36",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 56.47,
+      "shares": 200,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-22"
+      }
+    },
+    {
+      "id": "broker2025-b9e07d13952267be7bcf",
+      "date": "2025-10-22",
+      "time": "09:50",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 42.06,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-22"
+      }
+    },
+    {
+      "id": "broker2025-3ffd334e29967a36fa33",
+      "date": "2025-10-21",
+      "time": "13:03",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 58.54,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-21"
+      }
+    },
+    {
+      "id": "broker2025-792f40d62415109a5cda",
+      "date": "2025-10-21",
+      "time": "13:02",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 58.54,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-21"
+      }
+    },
+    {
+      "id": "broker2025-4f8b372e61bee8c8fcd5",
+      "date": "2025-10-21",
+      "time": "11:01",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 27.47,
+      "shares": 300,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-21"
+      }
+    },
+    {
+      "id": "broker2025-51bf8da6e2036d8c62e9",
+      "date": "2025-10-20",
+      "time": "13:52",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 73.0,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-20"
+      }
+    },
+    {
+      "id": "broker2025-f625459cc6528490b396",
+      "date": "2025-10-17",
+      "time": "14:53",
+      "name": "海尔智家",
+      "code": "600690",
+      "action": "买入",
+      "price": 25.05,
+      "shares": 200,
+      "dividendPerShare": 0.2692,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-17"
+      }
+    },
+    {
+      "id": "broker2025-953ddaf6f399b50ecb66",
+      "date": "2025-10-17",
+      "time": "14:52",
+      "name": "海尔智家",
+      "code": "600690",
+      "action": "买入",
+      "price": 25.05,
+      "shares": 200,
+      "dividendPerShare": 0.2692,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-17"
+      }
+    },
+    {
+      "id": "broker2025-5aecf2e4221e18096009",
+      "date": "2025-10-16",
+      "time": "13:59",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "卖出",
+      "price": 14.33,
+      "shares": 300,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-16"
+      }
+    },
+    {
+      "id": "broker2025-ee01cbba042e25149f04",
+      "date": "2025-10-16",
+      "time": "13:41",
+      "name": "格力电器",
+      "code": "000651",
+      "action": "卖出",
+      "price": 40.64,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-16"
+      }
+    },
+    {
+      "id": "broker2025-ac3f7fa66e777fe41f99",
+      "date": "2025-10-15",
+      "time": "11:11",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 27.63,
+      "shares": 400,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-15"
+      }
+    },
+    {
+      "id": "broker2025-fde6d902771bdf105fca",
+      "date": "2025-10-15",
+      "time": "09:52",
+      "name": "光伏ETF",
+      "code": "159857",
+      "action": "卖出",
+      "price": 0.783,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-15"
+      }
+    },
+    {
+      "id": "broker2025-4f1ef6ef916c335c965a",
+      "date": "2025-10-14",
+      "time": "14:55",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "卖出",
+      "price": 14.27,
+      "shares": 400,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-14"
+      }
+    },
+    {
+      "id": "broker2025-dddf1f74399f8182c5f2",
+      "date": "2025-10-14",
+      "time": "13:54",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 41.33,
+      "shares": 500,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-14"
+      }
+    },
+    {
+      "id": "broker2025-3e769ef9f4127feaf7e9",
+      "date": "2025-10-10",
+      "time": "13:56",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 73.03,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-10"
+      }
+    },
+    {
+      "id": "broker2025-f2decc61f89b575a2014",
+      "date": "2025-10-10",
+      "time": "13:42",
+      "name": "中国石油",
+      "code": "601857",
+      "action": "买入",
+      "price": 8.3,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-10"
+      }
+    },
+    {
+      "id": "broker2025-118396fae161d8f0aa51",
+      "date": "2025-10-10",
+      "time": "13:42",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 40.4,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-10"
+      }
+    },
+    {
+      "id": "broker2025-10f7a0c84f7dfbeefeb7",
+      "date": "2025-10-09",
+      "time": "09:59",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 27.04,
+      "shares": 500,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-09"
+      }
+    },
+    {
+      "id": "broker2025-c18f0b44a7883114bdb5",
+      "date": "2025-10-09",
+      "time": "09:58",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 71.53,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-10-09"
+      }
+    },
+    {
+      "id": "broker2025-6054ca1178e49d4eaf07",
+      "date": "2025-09-30",
+      "time": "13:53",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 55.39,
+      "shares": 200,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-30"
+      }
+    },
+    {
+      "id": "broker2025-095ea83c5e385d7502fb",
+      "date": "2025-09-30",
+      "time": "13:53",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 40.57,
+      "shares": 300,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-30"
+      }
+    },
+    {
+      "id": "broker2025-6a5490689eeb0ceda4fc",
+      "date": "2025-09-30",
+      "time": "13:51",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "卖出",
+      "price": 27.4,
+      "shares": 200,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-30"
+      }
+    },
+    {
+      "id": "broker2025-6b82147de82bc2be629f",
+      "date": "2025-09-25",
+      "time": "14:51",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 26.98,
+      "shares": 200,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-25"
+      }
+    },
+    {
+      "id": "broker2025-a521fb12cebcb0efc901",
+      "date": "2025-09-24",
+      "time": "09:44",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 27.41,
+      "shares": 200,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-24"
+      }
+    },
+    {
+      "id": "broker2025-d33d7f04031e27d7e62b",
+      "date": "2025-09-23",
+      "time": "14:32",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 41.51,
+      "shares": 300,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-23"
+      }
+    },
+    {
+      "id": "broker2025-eb69d2ca27d232494c92",
+      "date": "2025-09-23",
+      "time": "13:42",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 41.54,
+      "shares": 100,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-23"
+      }
+    },
+    {
+      "id": "broker2025-21c8f8bfadb32d65670b",
+      "date": "2025-09-19",
+      "time": "13:53",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 41.35,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-19"
+      }
+    },
+    {
+      "id": "broker2025-4f8b3105f985aed6fa58",
+      "date": "2025-09-18",
+      "time": "14:43",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 40.83,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-18"
+      }
+    },
+    {
+      "id": "broker2025-f98c329b3b2fddf8c40a",
+      "date": "2025-09-18",
+      "time": "11:07",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 41.3,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-18"
+      }
+    },
+    {
+      "id": "broker2025-8aa440df5046dea12b72",
+      "date": "2025-09-18",
+      "time": "11:06",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 41.26,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-18"
+      }
+    },
+    {
+      "id": "broker2025-6e62e75234383f739471",
+      "date": "2025-09-15",
+      "time": "11:05",
+      "name": "格力电器",
+      "code": "000651",
+      "action": "买入",
+      "price": 40.95,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-15"
+      }
+    },
+    {
+      "id": "broker2025-471e6c64eb18617b99f7",
+      "date": "2025-09-11",
+      "time": "14:52",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "买入",
+      "price": 108.12,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-11"
+      }
+    },
+    {
+      "id": "broker2025-bce3c79b680c4398e0f5",
+      "date": "2025-09-11",
+      "time": "13:22",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "买入",
+      "price": 14.13,
+      "shares": 400,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-11"
+      }
+    },
+    {
+      "id": "broker2025-bea2d50c50eea258ee0c",
+      "date": "2025-09-10",
+      "time": "10:07",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 28.29,
+      "shares": 200,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-10"
+      }
+    },
+    {
+      "id": "broker2025-76f5a8a09aec28aca085",
+      "date": "2025-09-10",
+      "time": "09:53",
+      "name": "格力电器",
+      "code": "000651",
+      "action": "卖出",
+      "price": 41.26,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-10"
+      }
+    },
+    {
+      "id": "broker2025-7850ee5a46b5274742f7",
+      "date": "2025-09-09",
+      "time": "10:58",
+      "name": "格力电器",
+      "code": "000651",
+      "action": "卖出",
+      "price": 41.52,
+      "shares": 400,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-09"
+      }
+    },
+    {
+      "id": "broker2025-495e452021d0b420eb3e",
+      "date": "2025-09-09",
+      "time": "10:46",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 28.31,
+      "shares": 200,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-09"
+      }
+    },
+    {
+      "id": "broker2025-114b540fd8448f5b7b65",
+      "date": "2025-09-09",
+      "time": "10:46",
+      "name": "格力电器",
+      "code": "000651",
+      "action": "买入",
+      "price": 41.56,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-09"
+      }
+    },
+    {
+      "id": "broker2025-5335c9d6aab2fc231118",
+      "date": "2025-09-08",
+      "time": "09:46",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "卖出",
+      "price": 15.17,
+      "shares": 200,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-08"
+      }
+    },
+    {
+      "id": "broker2025-0845f33b0ab510fb9947",
+      "date": "2025-09-08",
+      "time": "09:44",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 57.79,
+      "shares": 200,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-08"
+      }
+    },
+    {
+      "id": "broker2025-3f1d1cc1fa212e7b4430",
+      "date": "2025-09-03",
+      "time": "10:52",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "买入",
+      "price": 15.23,
+      "shares": 300,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-03"
+      }
+    },
+    {
+      "id": "broker2025-ce75c37c19eedf4ba80a",
+      "date": "2025-09-03",
+      "time": "10:43",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 28.06,
+      "shares": 300,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-03"
+      }
+    },
+    {
+      "id": "broker2025-5a5d07b5b64f6490b31a",
+      "date": "2025-09-03",
+      "time": "09:31",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 59.08,
+      "shares": 200,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-03"
+      }
+    },
+    {
+      "id": "broker2025-83f7462bfe5d272d2556",
+      "date": "2025-09-02",
+      "time": "14:08",
+      "name": "格力电器",
+      "code": "000651",
+      "action": "买入",
+      "price": 41.47,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-02"
+      }
+    },
+    {
+      "id": "broker2025-9f67a2b6dca66c1e6dd7",
+      "date": "2025-09-02",
+      "time": "09:31",
+      "name": "中国海油",
+      "code": "600938",
+      "action": "卖出",
+      "price": 26.01,
+      "shares": 200,
+      "dividendPerShare": 1.14493,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-02"
+      }
+    },
+    {
+      "id": "broker2025-956f590d1a222c0aef40",
+      "date": "2025-09-01",
+      "time": "14:42",
+      "name": "长江电力",
+      "code": "600900",
+      "action": "卖出",
+      "price": 27.74,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-01"
+      }
+    },
+    {
+      "id": "broker2025-25d0b08053bce3f79982",
+      "date": "2025-09-01",
+      "time": "14:08",
+      "name": "格力电器",
+      "code": "000651",
+      "action": "买入",
+      "price": 41.4,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-01"
+      }
+    },
+    {
+      "id": "broker2025-e49102def5d5ca341f99",
+      "date": "2025-09-01",
+      "time": "11:27",
+      "name": "格力电器",
+      "code": "000651",
+      "action": "买入",
+      "price": 41.53,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-01"
+      }
+    },
+    {
+      "id": "broker2025-fa284725ee814ece4f56",
+      "date": "2025-09-01",
+      "time": "09:45",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 42.35,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-01"
+      }
+    },
+    {
+      "id": "broker2025-9ffc304844ac90204dcd",
+      "date": "2025-09-01",
+      "time": "09:31",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "卖出",
+      "price": 59.0,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-01"
+      }
+    },
+    {
+      "id": "broker2025-500daad9e7eca6d5529f",
+      "date": "2025-09-01",
+      "time": "09:31",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 74.62,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-09-01"
+      }
+    },
+    {
+      "id": "broker2025-c4cde0ad045237af48cd",
+      "date": "2025-08-29",
+      "time": "14:32",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "卖出",
+      "price": 109.53,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-29"
+      }
+    },
+    {
+      "id": "broker2025-0ed8c872db2cb4d4a4df",
+      "date": "2025-08-29",
+      "time": "14:28",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "卖出",
+      "price": 109.5,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-29"
+      }
+    },
+    {
+      "id": "broker2025-387974284ca6bc76afd0",
+      "date": "2025-08-29",
+      "time": "14:07",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "卖出",
+      "price": 109.54,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-29"
+      }
+    },
+    {
+      "id": "broker2025-81c5dc175be6430e9b6f",
+      "date": "2025-08-29",
+      "time": "09:35",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "卖出",
+      "price": 29.04,
+      "shares": 400,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-29"
+      }
+    },
+    {
+      "id": "broker2025-8a0361ab28f1bc63b7f6",
+      "date": "2025-08-28",
+      "time": "10:54",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 42.96,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-28"
+      }
+    },
+    {
+      "id": "broker2025-08f77a68909c0d11916f",
+      "date": "2025-08-28",
+      "time": "10:22",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 42.67,
+      "shares": 100,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-28"
+      }
+    },
+    {
+      "id": "broker2025-19ef20c3d08bf9ea278f",
+      "date": "2025-08-28",
+      "time": "10:18",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "买入",
+      "price": 108.91,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-28"
+      }
+    },
+    {
+      "id": "broker2025-3c192bcde904b592f708",
+      "date": "2025-08-28",
+      "time": "10:16",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 73.19,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-28"
+      }
+    },
+    {
+      "id": "broker2025-4b5a6691f3c8fc67ced6",
+      "date": "2025-08-27",
+      "time": "10:03",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 59.39,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-27"
+      }
+    },
+    {
+      "id": "broker2025-0d2ddf224d767339a485",
+      "date": "2025-08-25",
+      "time": "13:04",
+      "name": "中国石油",
+      "code": "601857",
+      "action": "卖出",
+      "price": 8.74,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-25"
+      }
+    },
+    {
+      "id": "broker2025-db88ab364f520a431982",
+      "date": "2025-08-25",
+      "time": "13:03",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 72.72,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-25"
+      }
+    },
+    {
+      "id": "broker2025-fdc18cb6fb7c42f5aa2f",
+      "date": "2025-08-25",
+      "time": "13:02",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 60.64,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-25"
+      }
+    },
+    {
+      "id": "broker2025-5c4cd3910ef5049d5518",
+      "date": "2025-08-25",
+      "time": "13:02",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "卖出",
+      "price": 43.67,
+      "shares": 100,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-25"
+      }
+    },
+    {
+      "id": "broker2025-abc74fc8ef88e301ce6a",
+      "date": "2025-08-25",
+      "time": "10:09",
+      "name": "中国海油",
+      "code": "600938",
+      "action": "买入",
+      "price": 25.73,
+      "shares": 200,
+      "dividendPerShare": 1.14493,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-25"
+      }
+    },
+    {
+      "id": "broker2025-1bbef90f6cc0bade3976",
+      "date": "2025-08-22",
+      "time": "14:47",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "卖出",
+      "price": 57.6,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-22"
+      }
+    },
+    {
+      "id": "broker2025-e24c0823f08a7c266be3",
+      "date": "2025-08-22",
+      "time": "14:35",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 57.64,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-22"
+      }
+    },
+    {
+      "id": "broker2025-e6098b88692bbca6249e",
+      "date": "2025-08-22",
+      "time": "10:05",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 57.32,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-22"
+      }
+    },
+    {
+      "id": "broker2025-a682f4d9dd36fe2f7b18",
+      "date": "2025-08-22",
+      "time": "10:01",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 57.27,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-22"
+      }
+    },
+    {
+      "id": "broker2025-55444f7e35ba220c433e",
+      "date": "2025-08-22",
+      "time": "09:54",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 57.21,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-22"
+      }
+    },
+    {
+      "id": "broker2025-305488389ed4e3f87ea1",
+      "date": "2025-08-22",
+      "time": "09:32",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 71.94,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-22"
+      }
+    },
+    {
+      "id": "broker2025-cb3d1911dab3c92f7163",
+      "date": "2025-08-21",
+      "time": "13:06",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 59.75,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-21"
+      }
+    },
+    {
+      "id": "broker2025-10f0b8286f7f719c3fae",
+      "date": "2025-08-20",
+      "time": "09:48",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 71.86,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-20"
+      }
+    },
+    {
+      "id": "broker2025-68e5b4cc05cac2974cae",
+      "date": "2025-08-19",
+      "time": "14:56",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 58.12,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-19"
+      }
+    },
+    {
+      "id": "broker2025-6b8b0f4f73a78a85279f",
+      "date": "2025-08-19",
+      "time": "13:55",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "买入",
+      "price": 107.15,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-19"
+      }
+    },
+    {
+      "id": "broker2025-0aefb72b7e10c4ccfad7",
+      "date": "2025-08-19",
+      "time": "10:43",
+      "name": "中金公司",
+      "code": "601995",
+      "action": "卖出",
+      "price": 38.23,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-19"
+      }
+    },
+    {
+      "id": "broker2025-eb732fe4c1a3cba0719d",
+      "date": "2025-08-19",
+      "time": "09:51",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 72.77,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-19"
+      }
+    },
+    {
+      "id": "broker2025-81a286a58d1ad748b7d5",
+      "date": "2025-08-19",
+      "time": "09:35",
+      "name": "长江电力",
+      "code": "600900",
+      "action": "卖出",
+      "price": 27.7,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-19"
+      }
+    },
+    {
+      "id": "broker2025-919cda2b073487a6a514",
+      "date": "2025-08-19",
+      "time": "09:31",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "卖出",
+      "price": 57.17,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-19"
+      }
+    },
+    {
+      "id": "broker2025-7cb63c366cbfb7473e14",
+      "date": "2025-08-19",
+      "time": "09:31",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 27.39,
+      "shares": 200,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-19"
+      }
+    },
+    {
+      "id": "broker2025-443517948b31f73aba1b",
+      "date": "2025-08-19",
+      "time": "09:31",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 43.53,
+      "shares": 100,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-19"
+      }
+    },
+    {
+      "id": "broker2025-c9afedb1b7012492cfbf",
+      "date": "2025-08-19",
+      "time": "09:30",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "卖出",
+      "price": 15.45,
+      "shares": 200,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-19"
+      }
+    },
+    {
+      "id": "broker2025-efcfc3cdeb34bc359c42",
+      "date": "2025-08-18",
+      "time": "10:40",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 43.29,
+      "shares": 100,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-18"
+      }
+    },
+    {
+      "id": "broker2025-ad391addc1ec6a6f03ff",
+      "date": "2025-08-18",
+      "time": "09:59",
+      "name": "招商银行",
+      "code": "600036",
+      "action": "买入",
+      "price": 43.03,
+      "shares": 200,
+      "dividendPerShare": 2.016,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-18"
+      }
+    },
+    {
+      "id": "broker2025-cd0561e54921b35747c9",
+      "date": "2025-08-15",
+      "time": "14:55",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 59.92,
+      "shares": 200,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-15"
+      }
+    },
+    {
+      "id": "broker2025-a00ece98fc9cfe7fb000",
+      "date": "2025-08-15",
+      "time": "13:55",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 72.21,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-15"
+      }
+    },
+    {
+      "id": "broker2025-b8fa78be2fb7be01adba",
+      "date": "2025-08-15",
+      "time": "13:52",
+      "name": "伊利股份",
+      "code": "600887",
+      "action": "买入",
+      "price": 27.31,
+      "shares": 200,
+      "dividendPerShare": 0.9,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-15"
+      }
+    },
+    {
+      "id": "broker2025-6d6e5e3e927dd5da43b7",
+      "date": "2025-08-15",
+      "time": "13:52",
+      "name": "中远海控",
+      "code": "601919",
+      "action": "买入",
+      "price": 15.54,
+      "shares": 200,
+      "dividendPerShare": 1.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-15"
+      }
+    },
+    {
+      "id": "broker2025-2145387f60e70c38a81f",
+      "date": "2025-08-14",
+      "time": "13:07",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 72.31,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-14"
+      }
+    },
+    {
+      "id": "broker2025-24721ce2daed116cfcbe",
+      "date": "2025-08-14",
+      "time": "09:31",
+      "name": "长江电力",
+      "code": "600900",
+      "action": "买入",
+      "price": 27.66,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-14"
+      }
+    },
+    {
+      "id": "broker2025-03f3af788b08121e07b3",
+      "date": "2025-08-14",
+      "time": "09:30",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "买入",
+      "price": 14.81,
+      "shares": 300,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-14"
+      }
+    },
+    {
+      "id": "broker2025-c9acf0ec960c6cd11473",
+      "date": "2025-08-12",
+      "time": "10:37",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "卖出",
+      "price": 56.06,
+      "shares": 400,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-12"
+      }
+    },
+    {
+      "id": "broker2025-ab4b646d3d7a5149d955",
+      "date": "2025-08-12",
+      "time": "10:05",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "卖出",
+      "price": 14.96,
+      "shares": 300,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-12"
+      }
+    },
+    {
+      "id": "broker2025-712d0fb42cb516c832b3",
+      "date": "2025-08-11",
+      "time": "10:15",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "买入",
+      "price": 14.9,
+      "shares": 300,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-11"
+      }
+    },
+    {
+      "id": "broker2025-4b54207a329dc3877156",
+      "date": "2025-08-06",
+      "time": "13:58",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 55.98,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-06"
+      }
+    },
+    {
+      "id": "broker2025-83d5b13099dda48711e1",
+      "date": "2025-08-06",
+      "time": "13:55",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 56.0,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-06"
+      }
+    },
+    {
+      "id": "broker2025-82cbabfe062d70f73f51",
+      "date": "2025-08-05",
+      "time": "14:11",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 59.11,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-05"
+      }
+    },
+    {
+      "id": "broker2025-a6bb403325d6d4220e08",
+      "date": "2025-08-05",
+      "time": "09:46",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 56.11,
+      "shares": 200,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-05"
+      }
+    },
+    {
+      "id": "broker2025-1f115602f2bc935a68d7",
+      "date": "2025-08-01",
+      "time": "14:15",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 58.3,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-01"
+      }
+    },
+    {
+      "id": "broker2025-3fbf28b31cc37bde6f23",
+      "date": "2025-08-01",
+      "time": "10:00",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "卖出",
+      "price": 57.02,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-01"
+      }
+    },
+    {
+      "id": "broker2025-3f09a988fde4b5756fbd",
+      "date": "2025-08-01",
+      "time": "09:32",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 56.23,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-08-01"
+      }
+    },
+    {
+      "id": "broker2025-684c4757936a16d20122",
+      "date": "2025-07-31",
+      "time": "14:13",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 56.2,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-31"
+      }
+    },
+    {
+      "id": "broker2025-53c6f69cbe831684353f",
+      "date": "2025-07-31",
+      "time": "10:00",
+      "name": "国电电力",
+      "code": "600795",
+      "action": "卖出",
+      "price": 4.59,
+      "shares": 200,
+      "dividendPerShare": 0.241,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-31"
+      }
+    },
+    {
+      "id": "broker2025-0d15a93e44b431dedf4a",
+      "date": "2025-07-30",
+      "time": "13:02",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "卖出",
+      "price": 72.26,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-30"
+      }
+    },
+    {
+      "id": "broker2025-0077fc5f4b566efbd4ed",
+      "date": "2025-07-30",
+      "time": "13:02",
+      "name": "国电电力",
+      "code": "600795",
+      "action": "卖出",
+      "price": 4.71,
+      "shares": 100,
+      "dividendPerShare": 0.241,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-30"
+      }
+    },
+    {
+      "id": "broker2025-ef5ef9598c0e85756a22",
+      "date": "2025-07-30",
+      "time": "09:51",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "卖出",
+      "price": 56.48,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-30"
+      }
+    },
+    {
+      "id": "broker2025-6654c37172887057ec14",
+      "date": "2025-07-29",
+      "time": "13:50",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 55.75,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-29"
+      }
+    },
+    {
+      "id": "broker2025-8759e5e1cbe7a71c69a9",
+      "date": "2025-07-29",
+      "time": "13:48",
+      "name": "国电电力",
+      "code": "600795",
+      "action": "买入",
+      "price": 4.61,
+      "shares": 300,
+      "dividendPerShare": 0.241,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-29"
+      }
+    },
+    {
+      "id": "broker2025-adaac88fbe8470b7a035",
+      "date": "2025-07-29",
+      "time": "13:32",
+      "name": "中国海油",
+      "code": "600938",
+      "action": "卖出",
+      "price": 26.1,
+      "shares": 200,
+      "dividendPerShare": 1.14493,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-29"
+      }
+    },
+    {
+      "id": "broker2025-b3d7ec3e1eb5746e7cd4",
+      "date": "2025-07-29",
+      "time": "09:54",
+      "name": "中信建投",
+      "code": "601066",
+      "action": "卖出",
+      "price": 26.01,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-29"
+      }
+    },
+    {
+      "id": "broker2025-cbe817149cd8087a938b",
+      "date": "2025-07-28",
+      "time": "13:46",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 71.95,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-28"
+      }
+    },
+    {
+      "id": "broker2025-da77efc1489423078f3e",
+      "date": "2025-07-28",
+      "time": "10:09",
+      "name": "标普信息科技LOF",
+      "code": "161128",
+      "action": "卖出",
+      "price": 5.421,
+      "shares": 20,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-28"
+      }
+    },
+    {
+      "id": "broker2025-376f61a26dda55f35253",
+      "date": "2025-07-28",
+      "time": "09:41",
+      "name": "中金公司",
+      "code": "601995",
+      "action": "卖出",
+      "price": 37.24,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-28"
+      }
+    },
+    {
+      "id": "broker2025-4e2cd4c332a870feb66f",
+      "date": "2025-07-28",
+      "time": "09:39",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 58.8,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-28"
+      }
+    },
+    {
+      "id": "broker2025-d0f37c4db124534062a4",
+      "date": "2025-07-28",
+      "time": "09:33",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 59.01,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-28"
+      }
+    },
+    {
+      "id": "broker2025-95d1b274d03ddc49842f",
+      "date": "2025-07-28",
+      "time": "09:31",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "卖出",
+      "price": 15.31,
+      "shares": 300,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-28"
+      }
+    },
+    {
+      "id": "broker2025-987262d2dce1239e02ab",
+      "date": "2025-07-25",
+      "time": "13:31",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "卖出",
+      "price": 56.81,
+      "shares": 200,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-25"
+      }
+    },
+    {
+      "id": "broker2025-c4bc120455c3a740030b",
+      "date": "2025-07-25",
+      "time": "09:58",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 57.11,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-25"
+      }
+    },
+    {
+      "id": "broker2025-7c0f062c2d08c19f58ad",
+      "date": "2025-07-25",
+      "time": "09:34",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "卖出",
+      "price": 15.35,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-25"
+      }
+    },
+    {
+      "id": "broker2025-0029ed5f782189f6ae2a",
+      "date": "2025-07-25",
+      "time": "09:32",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "卖出",
+      "price": 15.39,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-25"
+      }
+    },
+    {
+      "id": "broker2025-bee100cc2839bd9f03c7",
+      "date": "2025-07-25",
+      "time": "09:31",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "买入",
+      "price": 15.25,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-25"
+      }
+    },
+    {
+      "id": "broker2025-68b62213198c95200b5e",
+      "date": "2025-07-25",
+      "time": "09:30",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "买入",
+      "price": 15.25,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-25"
+      }
+    },
+    {
+      "id": "broker2025-ad1d3e415418c2c77ea0",
+      "date": "2025-07-24",
+      "time": "14:18",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "买入",
+      "price": 15.11,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "broker2025-05d29900b2a3354dec99",
+      "date": "2025-07-24",
+      "time": "14:18",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 58.49,
+      "shares": 200,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "broker2025-a7ec5024a0c3ac4ddc11",
+      "date": "2025-07-24",
+      "time": "11:04",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "卖出",
+      "price": 58.87,
+      "shares": 200,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "broker2025-7dd59f1b49030a1a35d7",
+      "date": "2025-07-24",
+      "time": "11:03",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 58.97,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "broker2025-8e57a034d859291845d9",
+      "date": "2025-07-24",
+      "time": "09:43",
+      "name": "中国海油",
+      "code": "600938",
+      "action": "买入",
+      "price": 26.07,
+      "shares": 100,
+      "dividendPerShare": 1.14493,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "broker2025-cae0da7b65f82a769f14",
+      "date": "2025-07-24",
+      "time": "09:40",
+      "name": "中国海油",
+      "code": "600938",
+      "action": "买入",
+      "price": 26.05,
+      "shares": 100,
+      "dividendPerShare": 1.14493,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "broker2025-2d025af0592f3c3ddc22",
+      "date": "2025-07-23",
+      "time": "09:32",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "卖出",
+      "price": 15.49,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-23"
+      }
+    },
+    {
+      "id": "broker2025-0adddcf5dc5cb0f65133",
+      "date": "2025-07-23",
+      "time": "09:30",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "卖出",
+      "price": 15.6,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-23"
+      }
+    },
+    {
+      "id": "broker2025-23abc07c513973be7713",
+      "date": "2025-07-22",
+      "time": "13:33",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "买入",
+      "price": 111.61,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-22"
+      }
+    },
+    {
+      "id": "broker2025-f273eeb41f6734234399",
+      "date": "2025-07-22",
+      "time": "11:25",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 56.38,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-22"
+      }
+    },
+    {
+      "id": "broker2025-4ccb0fc5ce338ee1343a",
+      "date": "2025-07-22",
+      "time": "11:25",
+      "name": "中金公司",
+      "code": "601995",
+      "action": "买入",
+      "price": 36.49,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-22"
+      }
+    },
+    {
+      "id": "broker2025-0ade02d0d8805f7f0b46",
+      "date": "2025-07-22",
+      "time": "11:25",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 72.67,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-22"
+      }
+    },
+    {
+      "id": "broker2025-f332c4215225f145dc69",
+      "date": "2025-07-22",
+      "time": "10:52",
+      "name": "中国移动",
+      "code": "600941",
+      "action": "买入",
+      "price": 110.88,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-22"
+      }
+    },
+    {
+      "id": "broker2025-93f502345e6f6f55c038",
+      "date": "2025-07-22",
+      "time": "10:33",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "卖出",
+      "price": 15.3,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-22"
+      }
+    },
+    {
+      "id": "broker2025-7fdf736cd2bbd8c1cf79",
+      "date": "2025-07-22",
+      "time": "09:31",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "买入",
+      "price": 15.31,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-22"
+      }
+    },
+    {
+      "id": "broker2025-25753826a442e32784a8",
+      "date": "2025-07-21",
+      "time": "09:47",
+      "name": "中国石油",
+      "code": "601857",
+      "action": "卖出",
+      "price": 8.93,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-21"
+      }
+    },
+    {
+      "id": "broker2025-976a1abd542dc9307d73",
+      "date": "2025-07-21",
+      "time": "09:46",
+      "name": "机器人",
+      "code": "562500",
+      "action": "卖出",
+      "price": 0.891,
+      "shares": 500,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-21"
+      }
+    },
+    {
+      "id": "broker2025-4b9661ecf30cf1d86bf8",
+      "date": "2025-07-21",
+      "time": "09:45",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "卖出",
+      "price": 15.01,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-21"
+      }
+    },
+    {
+      "id": "broker2025-7590ac15dce5fee0ceb9",
+      "date": "2025-07-18",
+      "time": "10:13",
+      "name": "中金公司",
+      "code": "601995",
+      "action": "买入",
+      "price": 36.27,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "broker2025-ef4905020d4d00efb293",
+      "date": "2025-07-16",
+      "time": "14:57",
+      "name": "甬矽转债",
+      "code": "118057",
+      "action": "卖出",
+      "price": 127.959,
+      "shares": 1,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-16"
+      }
+    },
+    {
+      "id": "broker2025-a694e36e35462482c526",
+      "date": "2025-07-16",
+      "time": "13:49",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "买入",
+      "price": 14.68,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-16"
+      }
+    },
+    {
+      "id": "broker2025-59a09e14eade5b4fedba",
+      "date": "2025-07-16",
+      "time": "13:34",
+      "name": "美的集团",
+      "code": "000333",
+      "action": "买入",
+      "price": 73.0,
+      "shares": 100,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-16"
+      }
+    },
+    {
+      "id": "broker2025-d6943d1d27742cb47659",
+      "date": "2025-07-16",
+      "time": "13:32",
+      "name": "云南白药",
+      "code": "000538",
+      "action": "买入",
+      "price": 55.79,
+      "shares": 100,
+      "dividendPerShare": 1.583,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-16"
+      }
+    },
+    {
+      "id": "broker2025-7eddad4736c27cad19ec",
+      "date": "2025-07-16",
+      "time": "09:33",
+      "name": "国电电力",
+      "code": "600795",
+      "action": "卖出",
+      "price": 4.69,
+      "shares": 1000,
+      "dividendPerShare": 0.241,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-16"
+      }
+    },
+    {
+      "id": "broker2025-667302f27845ddb94a83",
+      "date": "2025-07-14",
+      "time": "14:53",
+      "name": "中国石油",
+      "code": "601857",
+      "action": "卖出",
+      "price": 8.88,
+      "shares": 300,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-14"
+      }
+    },
+    {
+      "id": "broker2025-94736083ee74e2b2e247",
+      "date": "2025-07-14",
+      "time": "14:19",
+      "name": "工商银行",
+      "code": "601398",
+      "action": "卖出",
+      "price": 7.86,
+      "shares": 600,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-14"
+      }
+    },
+    {
+      "id": "broker2025-9b613afcce9ce3fe7ff7",
+      "date": "2025-07-14",
+      "time": "10:21",
+      "name": "北京银行",
+      "code": "601169",
+      "action": "卖出",
+      "price": 7.06,
+      "shares": 300,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-14"
+      }
+    },
+    {
+      "id": "broker2025-d596e0153871fb536070",
+      "date": "2025-07-14",
+      "time": "10:17",
+      "name": "邮储银行",
+      "code": "601658",
+      "action": "卖出",
+      "price": 5.77,
+      "shares": 300,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-14"
+      }
+    },
+    {
+      "id": "broker2025-7dd1af95425812aebfd5",
+      "date": "2025-07-11",
+      "time": "14:44",
+      "name": "常熟银行",
+      "code": "601128",
+      "action": "卖出",
+      "price": 7.49,
+      "shares": 760,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-11"
+      }
+    },
+    {
+      "id": "broker2025-14e5975d54edea90e5fb",
+      "date": "2025-07-11",
+      "time": "13:45",
+      "name": "国电电力",
+      "code": "600795",
+      "action": "买入",
+      "price": 4.77,
+      "shares": 1000,
+      "dividendPerShare": 0.241,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-11"
+      }
+    },
+    {
+      "id": "broker2025-994dbad86dffcd1010a0",
+      "date": "2025-07-11",
+      "time": "13:44",
+      "name": "国投电力",
+      "code": "600886",
+      "action": "买入",
+      "price": 14.88,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-11"
+      }
+    },
+    {
+      "id": "broker2025-62ab852f26984a27722e",
+      "date": "2025-07-11",
+      "time": "13:35",
+      "name": "北京银行",
+      "code": "601169",
+      "action": "卖出",
+      "price": 7.0,
+      "shares": 300,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-11"
+      }
+    },
+    {
+      "id": "broker2025-d65d93e5b4926aeed8c9",
+      "date": "2025-07-11",
+      "time": "13:33",
+      "name": "常熟银行",
+      "code": "601128",
+      "action": "卖出",
+      "price": 7.56,
+      "shares": 600,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-11"
+      }
+    },
+    {
+      "id": "broker2025-51fbde55cf32fd5e94f7",
+      "date": "2025-07-10",
+      "time": "14:53",
+      "name": "中国石油",
+      "code": "601857",
+      "action": "卖出",
+      "price": 8.67,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-10"
+      }
+    },
+    {
+      "id": "broker2025-03b386b430a9b4edad49",
+      "date": "2025-07-10",
+      "time": "14:52",
+      "name": "邮储银行",
+      "code": "601658",
+      "action": "卖出",
+      "price": 5.8,
+      "shares": 400,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-10"
+      }
+    },
+    {
+      "id": "broker2025-f815b835d7106b1a630e",
+      "date": "2025-07-10",
+      "time": "10:17",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 56.54,
+      "shares": 200,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-10"
+      }
+    },
+    {
+      "id": "broker2025-20b78b631991d4f9fc3e",
+      "date": "2025-07-10",
+      "time": "10:16",
+      "name": "中国海油",
+      "code": "600938",
+      "action": "卖出",
+      "price": 26.45,
+      "shares": 400,
+      "dividendPerShare": 1.14493,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-10"
+      }
+    },
+    {
+      "id": "broker2025-7f59ac63667f9a79b5b0",
+      "date": "2025-07-07",
+      "time": "10:13",
+      "name": "中国平安",
+      "code": "601318",
+      "action": "买入",
+      "price": 56.29,
+      "shares": 100,
+      "dividendPerShare": 2.7,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-07"
+      }
+    },
+    {
+      "id": "broker2025-61c84046681192e54833",
+      "date": "2025-07-01",
+      "time": "14:47",
+      "name": "中信建投",
+      "code": "601066",
+      "action": "买入",
+      "price": 23.88,
+      "shares": 200,
+      "dividendPerShare": 0.0,
+      "createdAt": "2026-07-17T20:00:00+08:00",
+      "source": "用户确认的券商成交截图（2025年）",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2025-07-01"
+      }
     }
   ]
 }

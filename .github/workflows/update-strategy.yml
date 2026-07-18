@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'data/trade-records.json'
+      - 'data/strategy-feedback.json'
   schedule:
     # 北京时间每天 08:45，使用最新行情重新生成个人策略建议
     - cron: '45 0 * * *'

@@ -11,6 +11,7 @@ BJ=ZoneInfo('Asia/Shanghai')
 TRADES=ROOT/'data/trade-records.json'
 MARKET=ROOT/'data/market.json'
 ANALYSIS=ROOT/'data/strategy-analysis.json'
+FEEDBACK=ROOT/'data/strategy-feedback.json'
 MODEL='gpt-5.6-sol'
 MODEL_URL='https://api.fenno.ai/v1/chat/completions'
 HEADERS={'User-Agent':'Mozilla/5.0','Referer':'https://quote.eastmoney.com/'}
@@ -19,6 +20,11 @@ KLINE_CACHE={}
 def number(value):
     try:return float(value)
     except (TypeError,ValueError):return 0.0
+
+def confidence_percent(value):
+    value=number(value)
+    if 0<value<=1:value*=100
+    return round(max(0,min(100,value)),1)
 
 def position_item(current,rows):
     if not rows:return None
@@ -79,7 +85,7 @@ def extract_json(text):
         if start>=0 and end>start:return json.loads(text[start:end+1])
         raise
 
-def model_analysis(records,stocks):
+def model_analysis(records,stocks,feedback_records):
     key=os.getenv('STRATEGY_MODEL_API_KEY')
     if not key:return None,'missing_secret'
     ordered=sorted(records,key=lambda r:(str(r.get('date') or ''),str(r.get('time') or ''),str(r.get('id') or '')),reverse=True)
@@ -101,7 +107,8 @@ def model_analysis(records,stocks):
     all_stats={'recordCount':len(records),'buyCount':sum('买入' in str(r.get('action') or '') for r in records),'sellCount':sum('卖出' in str(r.get('action') or '') for r in records),'firstDate':min((str(r.get('date')) for r in records),default=None),'lastDate':max((str(r.get('date')) for r in records),default=None),'byStock':sorted(stock_stats.values(),key=lambda x:x['buyCount']+x['sellCount'],reverse=True)}
     compact_records=[brief(r) for r in ordered[:180]]
     compact_stocks=[{'code':s.get('code'),'name':s.get('name'),'price':s.get('price'),'yield':round((number(s.get('annualDividend'))+number(s.get('interimDividend')))/number(s.get('price'))*100,3) if number(s.get('price')) else 0,'positions':{p:((s.get('positions') or {}).get(p) or {}).get('zone') for p in ('day','week','month')}} for s in stocks]
-    prompt={'strategyMode':'持续更新的个人交易复盘策略；每次新增记录都以全量统计重新生成','fixedPrinciples':['5%左右开始分批买入','接近7%属于高性价比区','结合日周月位置做T','4%～4.5%进入全部卖出区'],'allHistoryStats':all_stats,'dataCaveat':'历史股息率使用录入时保存的正式每股分红快照除以成交价，不等同于成交当日可知的历史分红口径；不要据此断言历史收益。','recentTradeRecords':compact_records,'currentStocks':compact_stocks,'task':'基于真实成交归纳可验证的操作偏好，形成“初步、可迭代”的个人策略，并给出今日条件式观察建议。必须说明证据数量；不能仅凭成交记录断言盈利，不能承诺收益，不能要求用户盲从，不能自动交易。建议应写成满足条件才执行、执行前由用户确认的形式。recordInsights只需覆盖最近20笔。只输出JSON。','schema':{'profileSummary':'string','learnedRules':['string'],'recordInsights':{'recent_record_id':'string'},'advice':[{'code':'string','action':'继续观察|等待接近5%|可分批买入|高性价比分批买|小仓分批/等待|做T卖出观察|卖出区提醒|暂不追入|等待正式数据','reason':'string','confidence':0}]}}
+    feedback_stats={'count':len(feedback_records),'executed':sum(x.get('status')=='executed' for x in feedback_records),'notExecuted':sum(x.get('status')=='not_executed' for x in feedback_records),'deferred':sum(x.get('status')=='deferred' for x in feedback_records),'recent':feedback_records[-80:]}
+    prompt={'strategyMode':'持续更新的个人交易复盘策略；每次新增成交或建议反馈都以全量统计重新生成','fixedPrinciples':['5%左右开始分批买入','接近7%属于高性价比区','结合日周月位置做T','4%～4.5%进入全部卖出区'],'allHistoryStats':all_stats,'recommendationFeedback':feedback_stats,'dataCaveat':'历史股息率使用录入时保存的正式每股分红快照除以成交价，不等同于成交当日可知的历史分红口径；不要据此断言历史收益。未点击反馈不能被推断为未执行。','recentTradeRecords':compact_records,'currentStocks':compact_stocks,'task':'基于真实成交和用户明确点击的建议反馈归纳可验证偏好。除详细advice外，必须给出一个briefCommand：只选当前最符合条件的一只股票和一个明确动作；若没有合格买点，明确写“当前不买”。动作必须带条件，执行前由用户确认。没有用户反馈时不得臆测是否执行。不能承诺收益或自动交易。recordInsights只覆盖最近20笔。只输出JSON。','schema':{'profileSummary':'string','learnedRules':['string'],'recordInsights':{'recent_record_id':'string'},'briefCommand':{'code':'string','action':'分批买入|暂不买入|当前不买','reason':'string','condition':'string','confidence':0},'advice':[{'code':'string','action':'继续观察|等待接近5%|可分批买入|高性价比分批买|小仓分批/等待|做T卖出观察|卖出区提醒|暂不追入|等待正式数据','reason':'string','confidence':0}]}}
     request_body={'model':MODEL,'messages':[{'role':'system','content':'你是谨慎的个人投资复盘助手。区分事实、用户固定原则和待验证偏好；策略会随新增记录持续更新，但不代表模型权重训练。输出严格JSON，不输出思维链。'},{'role':'user','content':json.dumps(prompt,ensure_ascii=False)}],'temperature':0.2,'max_tokens':3500,'response_format':{'type':'json_object'}}
     response=None
     for attempt in range(2):
@@ -112,9 +119,22 @@ def model_analysis(records,stocks):
     if response is None:raise requests.RequestException('模型请求未返回结果')
     body=response.json();content=body['choices'][0]['message']['content'];return extract_json(content),None
 
+def deterministic_brief(stocks):
+    candidates=[]
+    for stock in stocks:
+        price=number(stock.get('price'));dps=number(stock.get('annualDividend'))+number(stock.get('interimDividend'))
+        if not price or not dps:continue
+        yield_rate=dps/price*100;positions=stock.get('positions') or {};day=(positions.get('day') or {}).get('zone','待更新');week=(positions.get('week') or {}).get('zone','待更新')
+        score=(yield_rate-5)*20+(18 if day=='下部' else 0)+(8 if week=='下部' else 0)-(12 if week=='上部' else 0)
+        if yield_rate>=5:candidates.append((score,stock,yield_rate,day,week))
+    if not candidates:return {'id':f'brief-{datetime.now(BJ).date().isoformat()}-none','code':'','name':'','action':'当前不买','reason':'没有股票同时达到约5%的正式股息率起买线和可用行情条件。','condition':'继续等待正式股息率或位置进入你的固定买点。','confidence':65}
+    _,stock,yield_rate,day,week=max(candidates,key=lambda x:x[0]);action='分批买入' if day=='下部' else '暂不买入';condition='仅在你确认仓位后小批执行，不一次买满。' if action=='分批买入' else '等待日线回到下部后再分批。'
+    return {'id':f"brief-{datetime.now(BJ).date().isoformat()}-{stock.get('code')}",'code':str(stock.get('code')),'name':str(stock.get('name')),'action':action,'reason':f'正式股息率{yield_rate:.2f}%，日线{day}、周线{week}。','condition':condition,'confidence':72}
+
 def main():
     payload=json.loads(TRADES.read_text()) if TRADES.exists() else {'version':1,'records':[]};records=payload.get('records') or []
     market=json.loads(MARKET.read_text()) if MARKET.exists() else {'stocks':[]};stocks=market.get('stocks') or [];market_by_code={s.get('code'):s for s in stocks}
+    feedback_payload=json.loads(FEEDBACK.read_text()) if FEEDBACK.exists() else {'records':[]};feedback_records=feedback_payload.get('records') or []
     changed=False
     for record in records:
         context=record.get('context') or {}
@@ -124,7 +144,7 @@ def main():
             record['context']={**context,'status':'retry','requestedDate':record.get('date'),'error':'历史行情暂不可用，将在下次任务重试'};changed=True
     now=datetime.now(BJ).isoformat(timespec='seconds')
     if changed:payload['updatedAt']=now;TRADES.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n')
-    try:analysis,error=model_analysis(records,stocks)
+    try:analysis,error=model_analysis(records,stocks,feedback_records)
     except (requests.RequestException,ValueError,KeyError,IndexError,json.JSONDecodeError) as exc:analysis,error=None,type(exc).__name__
     if analysis:
         insights=analysis.get('recordInsights') or {}
@@ -134,9 +154,12 @@ def main():
         tracked_codes={str(s.get('code')) for s in stocks};allowed_actions={'继续观察','等待接近5%','可分批买入','高性价比分批买','小仓分批/等待','做T卖出观察','卖出区提醒','暂不追入','等待正式数据'};safe_advice=[]
         for item in analysis.get('advice') or []:
             if not isinstance(item,dict) or str(item.get('code')) not in tracked_codes:continue
-            action=str(item.get('action') or '继续观察');confidence=max(0,min(100,number(item.get('confidence'))))
-            safe_advice.append({'code':str(item['code']),'action':action if action in allowed_actions else '继续观察','reason':str(item.get('reason') or '')[:600],'confidence':round(confidence,1)})
-        output={'updatedAt':now,'model':MODEL,'status':'success','profileSummary':str(analysis.get('profileSummary') or '')[:1500],'learnedRules':[str(x)[:500] for x in (analysis.get('learnedRules') or [])][:12],'advice':safe_advice[:30]}
+            action=str(item.get('action') or '继续观察');confidence=confidence_percent(item.get('confidence'))
+            safe_advice.append({'code':str(item['code']),'action':action if action in allowed_actions else '继续观察','reason':str(item.get('reason') or '')[:600],'confidence':confidence})
+        raw_brief=analysis.get('briefCommand') if isinstance(analysis.get('briefCommand'),dict) else {};brief_code=str(raw_brief.get('code') or '');brief_stock=market_by_code.get(brief_code,{});allowed_brief={'分批买入','暂不买入','当前不买'};brief_action=str(raw_brief.get('action') or '当前不买')
+        brief={'id':f'brief-{datetime.now(BJ).date().isoformat()}-{brief_code or "none"}','code':brief_code if brief_code in tracked_codes else '','name':str(brief_stock.get('name') or ''),'action':brief_action if brief_action in allowed_brief else '当前不买','reason':str(raw_brief.get('reason') or '')[:350],'condition':str(raw_brief.get('condition') or '')[:250],'confidence':confidence_percent(raw_brief.get('confidence'))}
+        if brief['code'] not in tracked_codes:brief=deterministic_brief(stocks)
+        output={'updatedAt':now,'model':MODEL,'status':'success','profileSummary':str(analysis.get('profileSummary') or '')[:1500],'learnedRules':[str(x)[:500] for x in (analysis.get('learnedRules') or [])][:12],'briefCommand':brief,'feedbackStats':{'count':len(feedback_records),'executed':sum(x.get('status')=='executed' for x in feedback_records),'notExecuted':sum(x.get('status')=='not_executed' for x in feedback_records),'deferred':sum(x.get('status')=='deferred' for x in feedback_records)},'advice':safe_advice[:30]}
     else:
         rules=[]
         for record in records:
@@ -146,8 +169,8 @@ def main():
         for record in records:name_counts[str(record.get('name') or record.get('code') or '未知')]=name_counts.get(str(record.get('name') or record.get('code') or '未知'),0)+1
         top_names='、'.join(name for name,_ in sorted(name_counts.items(),key=lambda x:x[1],reverse=True)[:5]);date_values=[str(r.get('date')) for r in records if r.get('date')]
         fallback_profile=f'已纳入{len(records)}笔真实成交（买入{buy_count}笔、卖出{sell_count}笔），记录跨度{min(date_values) if date_values else "待积累"}至{max(date_values) if date_values else "待积累"}；操作较多的标的包括{top_names or "待积累"}。模型分析暂不可用，以下仅保留固定规则和可验证统计，后续任务会自动重试。'
-        output={'updatedAt':now,'model':MODEL if os.getenv('STRATEGY_MODEL_API_KEY') else None,'status':'rules_only','profileSummary':fallback_profile,'learnedRules':rules[:12],'advice':[],'retryReason':error}
+        output={'updatedAt':now,'model':MODEL if os.getenv('STRATEGY_MODEL_API_KEY') else None,'status':'rules_only','profileSummary':fallback_profile,'learnedRules':rules[:12],'briefCommand':deterministic_brief(stocks),'feedbackStats':{'count':len(feedback_records),'executed':sum(x.get('status')=='executed' for x in feedback_records),'notExecuted':sum(x.get('status')=='not_executed' for x in feedback_records),'deferred':sum(x.get('status')=='deferred' for x in feedback_records)},'advice':[],'retryReason':error}
     ANALYSIS.write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps({'ok':True,'records':len(records),'enriched':sum((r.get('context') or {}).get('status')=='complete' for r in records),'modelStatus':output['status']},ensure_ascii=False))
+    print(json.dumps({'ok':True,'records':len(records),'feedback':len(feedback_records),'enriched':sum((r.get('context') or {}).get('status')=='complete' for r in records),'modelStatus':output['status'],'briefCommand':output.get('briefCommand',{}).get('action')},ensure_ascii=False))
 
 if __name__=='__main__':main()

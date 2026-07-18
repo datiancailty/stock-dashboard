@@ -249,9 +249,14 @@ def main():
     positions=fetch_positions(stocks,prices,previous)
     weekly_boll=fetch_weekly_boll(stocks,previous)
     batch,next_cursor=dividend_batch(stocks,previous)
-    payload=api_query('、'.join(s['name'] for s in batch),year)
+    dividend_warning=None
+    try:
+        payload=api_query('、'.join(s['name'] for s in batch),year)
+    except (requests.RequestException,RuntimeError,ValueError,KeyError) as error:
+        # 分红明细接口偶发不可用时，仍发布价格、位置和周BOLL；旧正式分红由 parse 保留。
+        payload={'result':[]}; dividend_warning=f'分红明细暂不可用，已保留上次正式数据：{type(error).__name__}'
     parsed,events=parse(payload,stocks,year,previous,prices,positions,weekly_boll)
-    result={'updatedAt':now.isoformat(timespec='seconds'),'source':'东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细','strategy':'上一完整年度已实施的年报与中报税前每股股利之和','positionStrategy':'当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部','weeklyBollStrategy':'前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)','dividendCursor':next_cursor,'dividendBatch':[s['code'] for s in batch],'stocks':parsed,'events':events}
+    result={'updatedAt':now.isoformat(timespec='seconds'),'source':'东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细','strategy':'上一完整年度已实施的年报与中报税前每股股利之和','positionStrategy':'当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部','weeklyBollStrategy':'前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)','dividendWarning':dividend_warning,'dividendCursor':next_cursor,'dividendBatch':[s['code'] for s in batch],'stocks':parsed,'events':events}
     out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({'ok':True,'updatedAt':result['updatedAt'],'stocks':len(parsed),'prices':len(prices),'positions':len(positions),'weeklyBoll':len(weekly_boll),'dividendBatch':result['dividendBatch'],'events':len(events)},ensure_ascii=False))
 

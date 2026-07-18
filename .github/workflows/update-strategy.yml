@@ -44,16 +44,16 @@ jobs:
         env:
           STRATEGY_MODEL_API_KEY: ${{ secrets.STRATEGY_MODEL_API_KEY }}
         run: python scripts/process_trade_records.py
-      - name: 把补全后的操作记录同步回 GitHub
+      - name: 把补全后的操作记录和策略档案同步回 GitHub
         run: |
-          if git diff --quiet -- data/trade-records.json; then
-            echo "没有待补全的操作记录"
+          if git diff --quiet -- data/trade-records.json data/strategy-recommendations.json; then
+            echo "没有待补全的操作记录或策略档案"
             exit 0
           fi
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add data/trade-records.json
-          git commit -m "strategy: enrich trade records"
+          git add data/trade-records.json data/strategy-recommendations.json
+          git commit -m "strategy: update records and recommendation outcomes"
           git push origin HEAD:main
       - name: 发布最新AI策略画像到 live 分支
         env:

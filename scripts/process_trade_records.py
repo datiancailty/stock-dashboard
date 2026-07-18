@@ -12,6 +12,7 @@ TRADES=ROOT/'data/trade-records.json'
 MARKET=ROOT/'data/market.json'
 ANALYSIS=ROOT/'data/strategy-analysis.json'
 FEEDBACK=ROOT/'data/strategy-feedback.json'
+RECOMMENDATIONS=ROOT/'data/strategy-recommendations.json'
 MODEL='gpt-5.6-sol'
 MODEL_URL='https://api.fenno.ai/v1/chat/completions'
 HEADERS={'User-Agent':'Mozilla/5.0','Referer':'https://quote.eastmoney.com/'}
@@ -33,13 +34,14 @@ def position_item(current,rows):
     zone='下部' if percent<100/3 else ('中部' if percent<200/3 else '上部')
     return {'zone':zone,'percent':round(percent,1),'low':round(low,3),'high':round(high,3)}
 
-def kline_rows(code,target):
-    cache_key=(code,target.isoformat())
+def kline_rows(code,target,end_target=None):
+    end_target=end_target or target
+    cache_key=(code,target.isoformat(),end_target.isoformat())
     if cache_key in KLINE_CACHE:return KLINE_CACHE[cache_key]
     # 沪市可转债以 11 开头；其余现有记录按股票/基金常用代码前缀判断。
     market='sh' if code.startswith(('5','6','9','11')) else 'sz';secid=('1.' if market=='sh' else '0.')+code
     start=(target.replace(day=1)-timedelta(days=10)).strftime('%Y%m%d')
-    end=(target+timedelta(days=10)).strftime('%Y%m%d')
+    end=(end_target+timedelta(days=3)).strftime('%Y%m%d')
     rows=[]
     try:
         params={'secid':secid,'klt':'101','fqt':'0','lmt':'1000','beg':start,'end':end,'fields1':'f1,f2,f3,f4,f5,f6','fields2':'f51,f52,f53,f54,f55,f56','ut':'fa5fd1943c7b386f172d6893dbfba10b'}
@@ -85,7 +87,7 @@ def extract_json(text):
         if start>=0 and end>start:return json.loads(text[start:end+1])
         raise
 
-def model_analysis(records,stocks,feedback_records):
+def model_analysis(records,stocks,feedback_records,recommendation_context):
     key=os.getenv('STRATEGY_MODEL_API_KEY')
     if not key:return None,'missing_secret'
     ordered=sorted(records,key=lambda r:(str(r.get('date') or ''),str(r.get('time') or ''),str(r.get('id') or '')),reverse=True)
@@ -108,7 +110,7 @@ def model_analysis(records,stocks,feedback_records):
     compact_records=[brief(r) for r in ordered[:180]]
     compact_stocks=[{'code':s.get('code'),'name':s.get('name'),'price':s.get('price'),'yield':round((number(s.get('annualDividend'))+number(s.get('interimDividend')))/number(s.get('price'))*100,3) if number(s.get('price')) else 0,'positions':{p:((s.get('positions') or {}).get(p) or {}).get('zone') for p in ('day','week','month')}} for s in stocks]
     feedback_stats={'count':len(feedback_records),'executed':sum(x.get('status')=='executed' for x in feedback_records),'notExecuted':sum(x.get('status')=='not_executed' for x in feedback_records),'deferred':sum(x.get('status')=='deferred' for x in feedback_records),'recent':feedback_records[-80:]}
-    prompt={'strategyMode':'持续更新的个人交易复盘策略；每次新增成交或建议反馈都以全量统计重新生成','fixedPrinciples':['5%左右开始分批买入','接近7%属于高性价比区','结合日周月位置做T','4%～4.5%进入全部卖出区'],'allHistoryStats':all_stats,'recommendationFeedback':feedback_stats,'dataCaveat':'历史股息率使用录入时保存的正式每股分红快照除以成交价，不等同于成交当日可知的历史分红口径；不要据此断言历史收益。未点击反馈不能被推断为未执行。','recentTradeRecords':compact_records,'currentStocks':compact_stocks,'task':'基于真实成交和用户明确点击的建议反馈归纳可验证偏好。除详细advice外，必须给出一个briefCommand：只选当前最符合条件的一只股票和一个明确动作；若没有合格买点，明确写“当前不买”。动作必须带条件，执行前由用户确认。没有用户反馈时不得臆测是否执行。不能承诺收益或自动交易。recordInsights只覆盖最近20笔。只输出JSON。','schema':{'profileSummary':'string','learnedRules':['string'],'recordInsights':{'recent_record_id':'string'},'briefCommand':{'code':'string','action':'分批买入|暂不买入|当前不买','reason':'string','condition':'string','confidence':0},'advice':[{'code':'string','action':'继续观察|等待接近5%|可分批买入|高性价比分批买|小仓分批/等待|做T卖出观察|卖出区提醒|暂不追入|等待正式数据','reason':'string','confidence':0}]}}
+    prompt={'strategyMode':'持续更新的个人交易复盘策略；每次新增成交、建议反馈或建议结果都以全量统计重新生成','fixedPrinciples':['5%左右开始分批买入','接近7%属于高性价比区','结合日周月位置做T','4%～4.5%进入全部卖出区'],'allHistoryStats':all_stats,'recommendationFeedback':feedback_stats,'recommendationPerformance':recommendation_context,'dataCaveat':'历史股息率使用录入时保存的正式每股分红快照除以成交价，不等同于成交当日可知的历史分红口径；不要据此断言历史收益。未点击反馈不能被推断为未执行。策略命中按明确的机械口径统计，不代表未来收益。','recentTradeRecords':compact_records,'currentStocks':compact_stocks,'task':'基于真实成交、用户明确反馈和旧建议后续表现归纳可验证偏好。除详细advice外，必须给出一个briefCommand：只选当前最符合条件的一只股票和一个明确动作；若没有合格买点，明确写“当前不买”。动作必须带条件，执行前由用户确认。没有用户反馈时不得臆测是否执行。不能承诺收益或自动交易。recordInsights只覆盖最近20笔。只输出JSON。','schema':{'profileSummary':'string','learnedRules':['string'],'recordInsights':{'recent_record_id':'string'},'briefCommand':{'code':'string','action':'分批买入|暂不买入|当前不买','reason':'string','condition':'string','confidence':0},'advice':[{'code':'string','action':'继续观察|等待接近5%|可分批买入|高性价比分批买|小仓分批/等待|做T卖出观察|卖出区提醒|暂不追入|等待正式数据','reason':'string','confidence':0}]}}
     request_body={'model':MODEL,'messages':[{'role':'system','content':'你是谨慎的个人投资复盘助手。区分事实、用户固定原则和待验证偏好；策略会随新增记录持续更新，但不代表模型权重训练。输出严格JSON，不输出思维链。'},{'role':'user','content':json.dumps(prompt,ensure_ascii=False)}],'temperature':0.2,'max_tokens':3500,'response_format':{'type':'json_object'}}
     response=None
     for attempt in range(2):
@@ -131,10 +133,59 @@ def deterministic_brief(stocks):
     _,stock,yield_rate,day,week=max(candidates,key=lambda x:x[0]);action='分批买入' if day=='下部' else '暂不买入';condition='仅在你确认仓位后小批执行，不一次买满。' if action=='分批买入' else '等待日线回到下部后再分批。'
     return {'id':f"brief-{datetime.now(BJ).date().isoformat()}-{stock.get('code')}",'code':str(stock.get('code')),'name':str(stock.get('name')),'action':action,'reason':f'正式股息率{yield_rate:.2f}%，日线{day}、周线{week}。','condition':condition,'confidence':72}
 
+def recommendation_stats(records):
+    buys=[r for r in records if r.get('action')=='分批买入']
+    successes=[r for r in buys if (r.get('evaluation') or {}).get('status')=='success']
+    failures=[r for r in buys if (r.get('evaluation') or {}).get('status')=='failed']
+    pending=[r for r in buys if (r.get('evaluation') or {}).get('status') in ('pending','no_data',None)]
+    resolved=len(successes)+len(failures)
+    hit_days=[number((r.get('evaluation') or {}).get('tradingDaysToHit')) for r in successes]
+    calendar_days=[number((r.get('evaluation') or {}).get('calendarDaysToHit')) for r in successes]
+    weekly_hits=[r for r in buys if (r.get('evaluation') or {}).get('weeklyUpperFirstAt')]
+    weekly_days=[number((r.get('evaluation') or {}).get('tradingDaysToWeeklyUpper')) for r in weekly_hits]
+    return {'criterion':'分批买入后30个交易日内，盘中最高价达到指令价+5%','targetGainPct':5,'windowTradingDays':30,'totalCommands':len(records),'buyCommands':len(buys),'resolved':resolved,'successes':len(successes),'failures':len(failures),'pending':len(pending),'successRate':round(len(successes)/resolved*100,1) if resolved else None,'avgTradingDaysToHit':round(sum(hit_days)/len(hit_days),1) if hit_days else None,'avgCalendarDaysToHit':round(sum(calendar_days)/len(calendar_days),1) if calendar_days else None,'weeklyUpperHits':len(weekly_hits),'weeklyUpperRate':round(len(weekly_hits)/len(buys)*100,1) if buys else None,'avgTradingDaysToWeeklyUpper':round(sum(weekly_days)/len(weekly_days),1) if weekly_days else None}
+
+def evaluate_recommendations(payload):
+    today=datetime.now(BJ).date();changed=False
+    for record in payload.get('records') or []:
+        if record.get('action')!='分批买入':
+            evaluation=record.get('evaluation') or {}
+            if evaluation.get('status')!='not_scored':
+                record['evaluation']={'status':'not_scored','reason':'非明确买入指令，不计入买入命中率'};changed=True
+            continue
+        try:start=date.fromisoformat(str(record.get('recommendedAt') or record.get('date'))[:10])
+        except ValueError:continue
+        entry=number((record.get('snapshot') or {}).get('price'))
+        if not entry:continue
+        all_rows=kline_rows(str(record.get('code') or ''),start,today)
+        rows=[x for x in all_rows if start<x['date']<=today][:30]
+        target=entry*1.05;hit=next((x for x in rows if x['high']>=target),None);weekly_hit=None
+        for index,bar in enumerate(rows):
+            iso=bar['date'].isocalendar();week=[x for x in all_rows if x['date']<=bar['date'] and x['date'].isocalendar()[:2]==iso[:2]]
+            item=position_item(bar['close'],week)
+            if item and item['zone']=='上部' and bar['close']>entry:weekly_hit=bar;break
+        max_high=max((x['high'] for x in rows),default=entry);latest_close=rows[-1]['close'] if rows else entry
+        evaluation={'status':'success' if hit else ('failed' if len(rows)>=30 else ('pending' if rows else 'no_data')),'criterion':'30个交易日内最高价达到指令价+5%','entryPrice':round(entry,3),'targetPrice':round(target,3),'observedTradingDays':len(rows),'maxGainPct':round((max_high/entry-1)*100,3),'latestReturnPct':round((latest_close/entry-1)*100,3)}
+        if hit:evaluation.update({'firstHitAt':hit['date'].isoformat(),'tradingDaysToHit':rows.index(hit)+1,'calendarDaysToHit':(hit['date']-start).days})
+        if weekly_hit:evaluation.update({'weeklyUpperFirstAt':weekly_hit['date'].isoformat(),'tradingDaysToWeeklyUpper':rows.index(weekly_hit)+1,'calendarDaysToWeeklyUpper':(weekly_hit['date']-start).days})
+        previous=record.get('evaluation') or {};previous_core={k:v for k,v in previous.items() if k!='evaluatedAt'}
+        if previous_core!=evaluation:
+            evaluation['evaluatedAt']=datetime.now(BJ).isoformat(timespec='seconds');record['evaluation']=evaluation;changed=True
+    return changed,recommendation_stats(payload.get('records') or [])
+
+def append_recommendation(payload,brief,stocks,now):
+    recommendation_id=str(brief.get('id') or '')
+    if not recommendation_id or any(r.get('recommendationId')==recommendation_id for r in payload.get('records') or []):return False
+    stock=next((s for s in stocks if str(s.get('code'))==str(brief.get('code') or '')),{});price=number(stock.get('price'));dps=number(stock.get('annualDividend'))+number(stock.get('interimDividend'));positions=stock.get('positions') or {}
+    payload.setdefault('records',[]).append({'id':f'recommendation-{recommendation_id}','recommendationId':recommendation_id,'recommendedAt':now,'date':now[:10],'code':str(brief.get('code') or ''),'name':str(brief.get('name') or stock.get('name') or ''),'action':str(brief.get('action') or ''),'reason':str(brief.get('reason') or ''),'condition':str(brief.get('condition') or ''),'confidence':confidence_percent(brief.get('confidence')),'snapshot':{'price':price,'dividendPerShare':round(dps,6),'yield':round(dps/price*100,6) if price else 0,'day':(positions.get('day') or {}).get('zone'),'week':(positions.get('week') or {}).get('zone'),'month':(positions.get('month') or {}).get('zone'),'weeklyBoll':stock.get('weeklyBoll'),'marketUpdatedAt':stock.get('updatedAt')},'evaluation':{'status':'pending' if brief.get('action')=='分批买入' else 'not_scored','reason':None if brief.get('action')=='分批买入' else '非明确买入指令，不计入买入命中率'}})
+    return True
+
 def main():
     payload=json.loads(TRADES.read_text()) if TRADES.exists() else {'version':1,'records':[]};records=payload.get('records') or []
     market=json.loads(MARKET.read_text()) if MARKET.exists() else {'stocks':[]};stocks=market.get('stocks') or [];market_by_code={s.get('code'):s for s in stocks}
     feedback_payload=json.loads(FEEDBACK.read_text()) if FEEDBACK.exists() else {'records':[]};feedback_records=feedback_payload.get('records') or []
+    recommendation_payload=json.loads(RECOMMENDATIONS.read_text()) if RECOMMENDATIONS.exists() else {'version':1,'records':[]}
+    recommendations_changed,performance=evaluate_recommendations(recommendation_payload)
     changed=False
     for record in records:
         context=record.get('context') or {}
@@ -144,7 +195,8 @@ def main():
             record['context']={**context,'status':'retry','requestedDate':record.get('date'),'error':'历史行情暂不可用，将在下次任务重试'};changed=True
     now=datetime.now(BJ).isoformat(timespec='seconds')
     if changed:payload['updatedAt']=now;TRADES.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n')
-    try:analysis,error=model_analysis(records,stocks,feedback_records)
+    recommendation_context={'summary':performance,'recent':(recommendation_payload.get('records') or [])[-40:]}
+    try:analysis,error=model_analysis(records,stocks,feedback_records,recommendation_context)
     except (requests.RequestException,ValueError,KeyError,IndexError,json.JSONDecodeError) as exc:analysis,error=None,type(exc).__name__
     if analysis:
         insights=analysis.get('recordInsights') or {}
@@ -170,7 +222,12 @@ def main():
         top_names='、'.join(name for name,_ in sorted(name_counts.items(),key=lambda x:x[1],reverse=True)[:5]);date_values=[str(r.get('date')) for r in records if r.get('date')]
         fallback_profile=f'已纳入{len(records)}笔真实成交（买入{buy_count}笔、卖出{sell_count}笔），记录跨度{min(date_values) if date_values else "待积累"}至{max(date_values) if date_values else "待积累"}；操作较多的标的包括{top_names or "待积累"}。模型分析暂不可用，以下仅保留固定规则和可验证统计，后续任务会自动重试。'
         output={'updatedAt':now,'model':MODEL if os.getenv('STRATEGY_MODEL_API_KEY') else None,'status':'rules_only','profileSummary':fallback_profile,'learnedRules':rules[:12],'briefCommand':deterministic_brief(stocks),'feedbackStats':{'count':len(feedback_records),'executed':sum(x.get('status')=='executed' for x in feedback_records),'notExecuted':sum(x.get('status')=='not_executed' for x in feedback_records),'deferred':sum(x.get('status')=='deferred' for x in feedback_records)},'advice':[],'retryReason':error}
+    if append_recommendation(recommendation_payload,output.get('briefCommand') or {},stocks,now):recommendations_changed=True
+    performance=recommendation_stats(recommendation_payload.get('records') or []);output['recommendationPerformance']=performance
+    if recommendations_changed:
+        recommendation_payload['updatedAt']=now
+        RECOMMENDATIONS.write_text(json.dumps(recommendation_payload,ensure_ascii=False,indent=2)+'\n')
     ANALYSIS.write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps({'ok':True,'records':len(records),'feedback':len(feedback_records),'enriched':sum((r.get('context') or {}).get('status')=='complete' for r in records),'modelStatus':output['status'],'briefCommand':output.get('briefCommand',{}).get('action')},ensure_ascii=False))
+    print(json.dumps({'ok':True,'records':len(records),'feedback':len(feedback_records),'recommendations':len(recommendation_payload.get('records') or []),'recommendationSuccessRate':performance.get('successRate'),'enriched':sum((r.get('context') or {}).get('status')=='complete' for r in records),'modelStatus':output['status'],'briefCommand':output.get('briefCommand',{}).get('action')},ensure_ascii=False))
 
 if __name__=='__main__':main()

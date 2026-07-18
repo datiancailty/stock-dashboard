@@ -1,5 +1,42 @@
 {
   "version": 1,
-  "updatedAt": null,
-  "records": []
+  "updatedAt": "2026-07-18T14:40:38+08:00",
+  "records": [
+    {
+      "id": "recommendation-brief-2026-07-18-601919",
+      "recommendationId": "brief-2026-07-18-601919",
+      "recommendedAt": "2026-07-18T14:40:38+08:00",
+      "date": "2026-07-18",
+      "code": "601919",
+      "name": "中远海控",
+      "action": "分批买入",
+      "reason": "中远海控当前股息率快照为6.878%，是当前列表中最接近7%高性价比区的标的，日线也处于下部；历史上曾在约6.79%～7.09%附近出现多次买入。不过周线和月线均处于上部，且上一条同类建议只有延期反馈，未确认执行，因此只能考虑首批小仓，不能追价或一次性重仓。",
+      "condition": "先复核正式分红口径；仅当复核后股息率仍不低于6.8%、成交价不高于14.60元、日线未转为上部，且不存在已经执行但尚未反馈的重复下单风险时，才考虑首批小仓分批买入。周线和月线仍在上部时不得加速加仓，执行前必须由用户确认。",
+      "confidence": 84.0,
+      "snapshot": {
+        "price": 14.54,
+        "dividendPerShare": 1.0,
+        "yield": 6.877579,
+        "day": "下部",
+        "week": "上部",
+        "month": "上部",
+        "weeklyBoll": {
+          "asOf": "2026-07-17",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 15.531,
+          "middle": 14.248,
+          "lower": 12.965
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "pending",
+        "reason": null
+      }
+    }
+  ]
 }

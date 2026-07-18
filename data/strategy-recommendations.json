@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-18T14:40:38+08:00",
+  "updatedAt": "2026-07-18T15:15:22+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -34,8 +34,14 @@
         "marketUpdatedAt": null
       },
       "evaluation": {
-        "status": "pending",
-        "reason": null
+        "status": "no_data",
+        "criterion": "30个交易日内最高价达到指令价+5%",
+        "entryPrice": 14.54,
+        "targetPrice": 15.267,
+        "observedTradingDays": 0,
+        "maxGainPct": 0.0,
+        "latestReturnPct": 0.0,
+        "evaluatedAt": "2026-07-18T15:15:22+08:00"
       }
     }
   ]

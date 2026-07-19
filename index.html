@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="A股持仓、多周期位置、股息率价格网格、分红日历、公告AI预估与个人操作策略" />
+  <meta name="description" content="A股持仓、周BOLL股息网格、分红日历、公告AI预估与个人操作策略" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <title>我的分红工具</title>
-  <link rel="stylesheet" href="assets/app.css?v=20260718-strategy-performance-2" />
+  <link rel="stylesheet" href="assets/app.css?v=20260719-boll-csv-3" />
 </head>
 <body>
   <main class="shell">
@@ -27,7 +27,6 @@
     <nav class="tabs" aria-label="功能切换">
       <button class="tab active" data-tab="holdings"><b>1</b><span><strong>自选股持仓</strong><small>云端添加与维护</small></span></button>
       <button class="tab" data-tab="positions"><b>2</b><span><strong>周BOLL股息网格</strong><small>买入 · 卖出信号</small></span></button>
-      <button class="tab" data-tab="grid"><b>3</b><span><strong>股息率价格网格</strong><small>正式分红目标价</small></span></button>
       <button class="tab" data-tab="calendar"><b>4</b><span><strong>分红日历</strong><small>登记、除息、派息</small></span></button>
       <button class="tab" data-tab="news"><b>5</b><span><strong>公告AI预估</strong><small>增量记忆与来源</small></span></button>
       <button class="tab" data-tab="strategy"><b>6</b><span><strong>操作与策略</strong><small>记录 · 学习 · 建议</small></span></button>
@@ -57,11 +56,6 @@
       <div id="bollGroups"></div>
     </section>
 
-    <section id="grid" class="page">
-      <div class="page-head"><div><h2>股息率价格网格</h2><p>与 Part 1 使用相同的持仓市值降序；正式口径仍为上一完整年度已实施税前现金分红。</p></div><button class="ghost" id="openRule">计算规则</button></div>
-      <div class="formula">各档目标价均按正式年度每股分红计算；公告AI预估请在 Part 5 单独查看。</div>
-      <div class="table-scroll"><table><thead><tr><th>股票</th><th>正式分红构成</th><th>正式每股分红</th><th>当前价 / 股息率</th><th>3.5%</th><th>4.0%</th><th>4.5%</th><th>5.0%</th><th>5.5%</th><th>6.0%</th><th>6.5%</th><th>7.0%</th><th>操作</th></tr></thead><tbody id="gridBody"></tbody></table></div>
-    </section>
 
     <section id="calendar" class="page">
       <div class="page-head"><div><h2>分红日历</h2><p>展示云端自选股票的登记日、除息日和派息日。</p></div><div class="month-nav"><button class="ghost" id="prevMonth">‹</button><strong id="monthTitle"></strong><button class="ghost" id="nextMonth">›</button></div></div>
@@ -76,7 +70,7 @@
     </section>
 
     <section id="strategy" class="page">
-      <div class="page-head"><div><h2>我的操作与策略学习</h2><p>操作记录公开保存在GitHub，可跨电脑同步；服务端自动回查成交日期行情，并由GPT-5.6 SOL持续更新策略画像。</p></div><div class="top-actions"><button class="ghost" id="refreshStrategy">↻ 刷新云端记录</button><button class="primary" id="showTradeRecord">＋ 记录一笔操作</button></div></div>
+      <div class="page-head"><div><h2>我的操作与策略学习</h2><p>操作记录公开保存在GitHub，可跨电脑同步；服务端自动回查成交日期行情，并由GPT-5.6 SOL持续更新策略画像。</p></div><div class="top-actions"><button class="ghost" id="exportTradesCsv">↓ 导出操作CSV</button><button class="ghost protected" id="importTradesCsv">↑ CSV批量导入</button><input class="hidden" id="tradeCsvFile" type="file" accept=".csv,text/csv" /><button class="ghost" id="refreshStrategy">↻ 刷新云端记录</button><button class="primary" id="showTradeRecord">＋ 记录一笔操作</button></div></div>
       <div class="notice"><b>你的基础框架：</b>正式股息率约 5% 开始分批买入，持有期间结合日/周/月位置做T；接近 7% 时性价比较高；股息率降至 4%～4.5% 时倾向全部卖出。你只填写日期、股票、操作、成交价格和成交股数，其他环境由系统自动补充。</div>
       <div class="strategy-layout">
         <section class="strategy-panel strategy-learning"><div class="strategy-head"><div><h3>个人策略画像</h3><small>每次新增记录后，系统会用全量历史重新统计并更新策略；这是持续复盘，不是修改模型权重</small></div><strong id="strategyStage">等待第一笔操作</strong></div><div class="strategy-progress"><i id="strategyProgress"></i></div><div class="strategy-stats" id="strategyStats"></div><div class="strategy-performance" id="strategyPerformance"><div><small>策略命中率</small><strong>待积累</strong></div><div><small>平均达标时间</small><strong>待积累</strong></div><p>明确买入后30个交易日内达到指令价+5%记为命中；观察中样本不提前算失败。</p></div><div class="strategy-rules" id="learnedRules"></div></section>
@@ -90,12 +84,11 @@
 
   <dialog id="loginDialog"><form method="dialog" id="loginForm"><h3>管理员登录</h3><p class="muted">只有知道用户名和密码的人才能修改 GitHub 云端自选股。登录成功后，这个浏览器会记住管理员权限7天；点击“退出登录”可立即清除。</p><label>用户名<input id="loginUsername" autocomplete="username" required /></label><label>密码<input id="loginPassword" type="password" autocomplete="current-password" required /></label><p class="form-error" id="loginError"></p><div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button type="submit" class="primary">登录并保持7天</button></div></form></dialog>
   <dialog id="holdingDialog"><form id="holdingForm"><h3>编辑持仓与成本</h3><input type="hidden" id="holdingCode" /><p class="muted" id="holdingStockName"></p><label>持仓股数<input id="holdingShares" type="number" min="0" step="1" inputmode="numeric" required /></label><label>每股成本价（元）<input id="holdingCost" type="number" step="0.001" inputmode="decimal" required /></label><p class="muted">保存后会立即重新计算持仓市值、预计年度分红和组合股息率。持仓与成本保存在当前浏览器；允许录入因历史分红形成的负成本。</p><div class="dialog-actions"><button type="button" class="ghost" id="cancelHolding">取消</button><button type="submit" class="primary" id="saveHolding">保存</button></div></form></dialog>
-  <dialog id="editDialog"><form method="dialog" id="editForm"><h3>手动修改分红数据</h3><input type="hidden" id="editCode" /><label>年报每股分红（税前）<input id="editAnnual" type="number" min="0" step="0.0001" /></label><label>中报每股分红（税前）<input id="editInterim" type="number" min="0" step="0.0001" /></label><label>当前股价<input id="editPrice" type="number" min="0" step="0.001" /></label><p class="muted">手动值仅保存在当前浏览器；点击“恢复自动”可重新使用东方财富数据。</p><div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button type="button" id="resetAuto" class="ghost danger">恢复自动</button><button value="save" class="primary" id="saveEdit">保存</button></div></form></dialog>
-  <dialog id="ruleDialog"><form method="dialog"><h3>自动计算规则</h3><ol><li>选择上一完整财务年度。</li><li>读取该年度所有已实施现金分红。</li><li>年报与中报税前每股分红相加。</li><li>过滤“不分配不转增”。</li><li>正式股息率 = 正式年度每股分红 ÷ 当前股价 × 100%。</li><li>公告AI预估独立保存，并展示来源、公式和可信度，不覆盖正式数据。</li></ol><button class="primary">知道了</button></form></dialog>
+
   <dialog id="messageDialog"><form method="dialog"><h3 id="messageTitle">提示</h3><p id="messageText"></p><button class="primary">知道了</button></form></dialog>
   <dialog id="bollSettingsDialog"><form id="bollSettingsForm"><div class="dialog-title"><h3>网格设置</h3><button type="button" class="dialog-x" data-close-dialog="bollSettingsDialog">×</button></div><div class="boll-setting buy"><h4>买入网格</h4><label>步长<select id="bollBuyStep"><option value="0.25">0.25%</option><option value="0.5">0.5%</option></select></label><label>档数<select id="bollBuyCount"><option>2</option><option>4</option><option>6</option><option>8</option></select></label></div><div class="boll-setting sell"><h4>卖出网格</h4><label>步长<select id="bollSellStep"><option value="0.25">0.25%</option><option value="0.5">0.5%</option></select></label><label>档数<select id="bollSellCount"><option>2</option><option>4</option><option>6</option><option>8</option></select></label></div><div class="boll-setting"><h4>周轨附近偏差</h4><label>下轨偏差（±%）<input id="bollLowDev" type="number" min="0" step="0.1"></label><label>上轨偏差（±%）<input id="bollHighDev" type="number" min="0" step="0.1"></label></div><div class="boll-setting"><h4>买卖点股息率浮动</h4><label>上下浮动（±百分点）<input id="bollYieldDev" type="number" min="0" step="0.05"></label></div><p class="muted">浮动仅用于信号筛选，不改变正式网格目标价。</p><div class="dialog-actions"><button type="button" class="ghost" data-close-dialog="bollSettingsDialog">取消</button><button type="submit" class="primary">保存设置</button></div></form></dialog>
   <dialog id="bollManageDialog"><form id="bollManageForm"><div class="dialog-title"><h3>编辑大板块与标的</h3><button type="button" class="dialog-x" data-close-dialog="bollManageDialog">×</button></div><p class="muted">Part 1持仓会自动出现在Part 2；Part 2额外标的不会自动加入Part 1。</p><label>新板块名称<input id="bollNewGroup" placeholder="例如：水电"></label><label class="check-label"><input id="bollNewHydro" type="checkbox"> 该板块使用水电阈值</label><button type="button" class="ghost" id="bollAddGroup">添加板块</button><hr><label>搜索并添加Part 2标的<input id="bollStockSearch" list="bollStockOptions" placeholder="输入股票代码或名称"><datalist id="bollStockOptions"></datalist></label><label>放入板块<select id="bollGroupSelect"></select></label><button type="button" class="primary" id="bollAddStock">添加标的</button><div class="boll-manage-list" id="bollManageList"></div><div class="dialog-actions"><button type="button" class="primary" data-close-dialog="bollManageDialog">完成</button></div></form></dialog>
   <dialog id="tradeRecordDialog"><form id="tradeRecordForm"><h3>记录一笔真实操作</h3><p class="muted">只需填写成交信息；正式股息率、日/周/月位置和持仓状态由系统自动保存。</p><div class="trade-form-grid"><label>日期<input id="tradeDate" type="date" required /></label><label>股票<select id="tradeStock" required></select></label><label>操作<select id="tradeAction" required><option>买入</option><option>卖出</option><option>做T买入</option><option>做T卖出</option></select></label><label>成交价格<input id="tradePrice" type="number" min="0.001" step="0.001" inputmode="decimal" required /></label><label>成交股数<input id="tradeShares" type="number" min="1" step="1" inputmode="numeric" required /></label><div class="trade-auto-note"><b>系统自动补充：</b>当时正式股息率、日线位置、周线位置、月线位置、操作前后持仓和行情更新时间。</div></div><div class="dialog-actions"><button type="button" class="ghost" id="cancelTradeRecord">取消</button><button type="submit" class="primary">保存操作</button></div></form></dialog>
-  <script src="assets/app.js?v=20260718-strategy-performance-2"></script>
+  <script src="assets/app.js?v=20260719-boll-csv-3"></script>
 </body>
 </html>

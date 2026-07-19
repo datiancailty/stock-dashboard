@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-18T15:15:22+08:00",
+  "updatedAt": "2026-07-19T16:59:37+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -42,6 +42,42 @@
         "maxGainPct": 0.0,
         "latestReturnPct": 0.0,
         "evaluatedAt": "2026-07-18T15:15:22+08:00"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-07-19-601919",
+      "recommendationId": "brief-2026-07-19-601919",
+      "recommendedAt": "2026-07-19T16:59:37+08:00",
+      "date": "2026-07-19",
+      "code": "601919",
+      "name": "中远海控",
+      "action": "分批买入",
+      "reason": "正式股息率6.88%，日线下部、周线上部。",
+      "condition": "仅在你确认仓位后小批执行，不一次买满。",
+      "confidence": 72.0,
+      "snapshot": {
+        "price": 14.54,
+        "dividendPerShare": 1.0,
+        "yield": 6.877579,
+        "day": "下部",
+        "week": "上部",
+        "month": "上部",
+        "weeklyBoll": {
+          "asOf": "2026-07-17",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 15.531,
+          "middle": 14.248,
+          "lower": 12.965
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "pending",
+        "reason": null
       }
     }
   ]

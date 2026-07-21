@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-21T14:29:15+08:00",
+  "updatedAt": "2026-07-21T18:07:48+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -40,11 +40,11 @@
         "targetPrice": 15.267,
         "observedTradingDays": 2,
         "maxGainPct": 3.645,
-        "latestReturnPct": 2.338,
+        "latestReturnPct": 2.27,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-07-21T14:29:10+08:00"
+        "evaluatedAt": "2026-07-21T18:07:42+08:00"
       }
     },
     {
@@ -85,11 +85,11 @@
         "targetPrice": 15.267,
         "observedTradingDays": 2,
         "maxGainPct": 3.645,
-        "latestReturnPct": 2.338,
+        "latestReturnPct": 2.27,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-07-21T14:29:12+08:00"
+        "evaluatedAt": "2026-07-21T18:07:45+08:00"
       }
     },
     {
@@ -130,11 +130,8 @@
         "targetPrice": 15.267,
         "observedTradingDays": 1,
         "maxGainPct": 3.645,
-        "latestReturnPct": 2.407,
-        "weeklyUpperFirstAt": "2026-07-21",
-        "tradingDaysToWeeklyUpper": 1,
-        "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-07-21T14:29:15+08:00"
+        "latestReturnPct": 2.27,
+        "evaluatedAt": "2026-07-21T18:07:48+08:00"
       }
     },
     {

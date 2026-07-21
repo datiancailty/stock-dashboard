@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-20T19:27:31+08:00",
+  "updatedAt": "2026-07-21T14:29:15+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -38,13 +38,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 14.54,
         "targetPrice": 15.267,
-        "observedTradingDays": 1,
-        "maxGainPct": 3.026,
-        "latestReturnPct": 2.682,
+        "observedTradingDays": 2,
+        "maxGainPct": 3.645,
+        "latestReturnPct": 2.338,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-07-20T19:27:30+08:00"
+        "evaluatedAt": "2026-07-21T14:29:10+08:00"
       }
     },
     {
@@ -83,13 +83,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 14.54,
         "targetPrice": 15.267,
-        "observedTradingDays": 1,
-        "maxGainPct": 3.026,
-        "latestReturnPct": 2.682,
+        "observedTradingDays": 2,
+        "maxGainPct": 3.645,
+        "latestReturnPct": 2.338,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-07-20T19:27:31+08:00"
+        "evaluatedAt": "2026-07-21T14:29:12+08:00"
       }
     },
     {
@@ -125,7 +125,52 @@
       },
       "evaluation": {
         "status": "pending",
-        "reason": null
+        "criterion": "30个交易日内最高价达到指令价+5%",
+        "entryPrice": 14.54,
+        "targetPrice": 15.267,
+        "observedTradingDays": 1,
+        "maxGainPct": 3.645,
+        "latestReturnPct": 2.407,
+        "weeklyUpperFirstAt": "2026-07-21",
+        "tradingDaysToWeeklyUpper": 1,
+        "calendarDaysToWeeklyUpper": 1,
+        "evaluatedAt": "2026-07-21T14:29:15+08:00"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-07-21-601919",
+      "recommendationId": "brief-2026-07-21-601919",
+      "recommendedAt": "2026-07-21T14:29:15+08:00",
+      "date": "2026-07-21",
+      "code": "601919",
+      "name": "中远海控",
+      "action": "暂不买入",
+      "reason": "正式股息率6.70%，日线上部、周线上部。",
+      "condition": "等待日线回到下部后再分批。",
+      "confidence": 72.0,
+      "snapshot": {
+        "price": 14.93,
+        "dividendPerShare": 1.0,
+        "yield": 6.697924,
+        "day": "上部",
+        "week": "上部",
+        "month": "上部",
+        "weeklyBoll": {
+          "asOf": "2026-07-20",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 15.446,
+          "middle": 14.227,
+          "lower": 13.008
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "not_scored",
+        "reason": "非明确买入指令，不计入买入命中率"
       }
     }
   ]

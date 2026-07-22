@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-21T18:07:48+08:00",
+  "updatedAt": "2026-07-22T17:43:54+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -38,13 +38,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 14.54,
         "targetPrice": 15.267,
-        "observedTradingDays": 2,
-        "maxGainPct": 3.645,
-        "latestReturnPct": 2.27,
+        "observedTradingDays": 3,
+        "maxGainPct": 4.195,
+        "latestReturnPct": 4.127,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-07-21T18:07:42+08:00"
+        "evaluatedAt": "2026-07-22T17:43:53+08:00"
       }
     },
     {
@@ -83,13 +83,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 14.54,
         "targetPrice": 15.267,
-        "observedTradingDays": 2,
-        "maxGainPct": 3.645,
-        "latestReturnPct": 2.27,
+        "observedTradingDays": 3,
+        "maxGainPct": 4.195,
+        "latestReturnPct": 4.127,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-07-21T18:07:45+08:00"
+        "evaluatedAt": "2026-07-22T17:43:54+08:00"
       }
     },
     {
@@ -128,10 +128,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 14.54,
         "targetPrice": 15.267,
-        "observedTradingDays": 1,
-        "maxGainPct": 3.645,
-        "latestReturnPct": 2.27,
-        "evaluatedAt": "2026-07-21T18:07:48+08:00"
+        "observedTradingDays": 2,
+        "maxGainPct": 4.195,
+        "latestReturnPct": 4.127,
+        "weeklyUpperFirstAt": "2026-07-22",
+        "tradingDaysToWeeklyUpper": 2,
+        "calendarDaysToWeeklyUpper": 2,
+        "evaluatedAt": "2026-07-22T17:43:54+08:00"
       }
     },
     {
@@ -168,6 +171,42 @@
       "evaluation": {
         "status": "not_scored",
         "reason": "非明确买入指令，不计入买入命中率"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-07-22-600036",
+      "recommendationId": "brief-2026-07-22-600036",
+      "recommendedAt": "2026-07-22T17:43:54+08:00",
+      "date": "2026-07-22",
+      "code": "600036",
+      "name": "招商银行",
+      "action": "分批买入",
+      "reason": "招商银行当前股息率快照5.307%，已进入约5%的分批买入区；日线和周线均在下部、月线中部，位置组合优于其他当前高股息候选。其近期在约5.47%、日周月均下部时已有连续分批买入记录，历史卖出也更多出现在上部，因此与已明确原则和可观察成交习惯的一致性最高。",
+      "condition": "先复核最新正式每股分红和实际仓位；仅当复核后股息率仍不低于5.2%、成交价不高于38.00元、日线和周线未转为上部，且不存在已下单但未反馈的重复交易风险时，才考虑首批小仓买入。不得一次买满，执行前必须由用户确认。",
+      "confidence": 88.0,
+      "snapshot": {
+        "price": 37.99,
+        "dividendPerShare": 2.016,
+        "yield": 5.30666,
+        "day": "下部",
+        "week": "下部",
+        "month": "中部",
+        "weeklyBoll": {
+          "asOf": "2026-07-21",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 39.653,
+          "middle": 37.46,
+          "lower": 35.267
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "pending",
+        "reason": null
       }
     }
   ]

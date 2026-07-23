@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-22T17:43:54+08:00",
+  "updatedAt": "2026-07-23T17:42:44+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -34,17 +34,20 @@
         "marketUpdatedAt": null
       },
       "evaluation": {
-        "status": "pending",
+        "status": "success",
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 14.54,
         "targetPrice": 15.267,
-        "observedTradingDays": 3,
-        "maxGainPct": 4.195,
-        "latestReturnPct": 4.127,
+        "observedTradingDays": 4,
+        "maxGainPct": 5.158,
+        "latestReturnPct": 5.021,
+        "firstHitAt": "2026-07-23",
+        "tradingDaysToHit": 4,
+        "calendarDaysToHit": 5,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-07-22T17:43:53+08:00"
+        "evaluatedAt": "2026-07-23T17:42:42+08:00"
       }
     },
     {
@@ -79,17 +82,20 @@
         "marketUpdatedAt": null
       },
       "evaluation": {
-        "status": "pending",
+        "status": "success",
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 14.54,
         "targetPrice": 15.267,
-        "observedTradingDays": 3,
-        "maxGainPct": 4.195,
-        "latestReturnPct": 4.127,
+        "observedTradingDays": 4,
+        "maxGainPct": 5.158,
+        "latestReturnPct": 5.021,
+        "firstHitAt": "2026-07-23",
+        "tradingDaysToHit": 4,
+        "calendarDaysToHit": 4,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-07-22T17:43:54+08:00"
+        "evaluatedAt": "2026-07-23T17:42:43+08:00"
       }
     },
     {
@@ -124,17 +130,20 @@
         "marketUpdatedAt": null
       },
       "evaluation": {
-        "status": "pending",
+        "status": "success",
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 14.54,
         "targetPrice": 15.267,
-        "observedTradingDays": 2,
-        "maxGainPct": 4.195,
-        "latestReturnPct": 4.127,
+        "observedTradingDays": 3,
+        "maxGainPct": 5.158,
+        "latestReturnPct": 5.021,
+        "firstHitAt": "2026-07-23",
+        "tradingDaysToHit": 3,
+        "calendarDaysToHit": 3,
         "weeklyUpperFirstAt": "2026-07-22",
         "tradingDaysToWeeklyUpper": 2,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-07-22T17:43:54+08:00"
+        "evaluatedAt": "2026-07-23T17:42:43+08:00"
       }
     },
     {
@@ -206,7 +215,52 @@
       },
       "evaluation": {
         "status": "pending",
-        "reason": null
+        "criterion": "30个交易日内最高价达到指令价+5%",
+        "entryPrice": 37.99,
+        "targetPrice": 39.89,
+        "observedTradingDays": 1,
+        "maxGainPct": 2.632,
+        "latestReturnPct": 2.422,
+        "weeklyUpperFirstAt": "2026-07-23",
+        "tradingDaysToWeeklyUpper": 1,
+        "calendarDaysToWeeklyUpper": 1,
+        "evaluatedAt": "2026-07-23T17:42:44+08:00"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-07-23-601919",
+      "recommendationId": "brief-2026-07-23-601919",
+      "recommendedAt": "2026-07-23T17:42:44+08:00",
+      "date": "2026-07-23",
+      "code": "601919",
+      "name": "中远海控",
+      "action": "当前不买",
+      "reason": "中远海控当前股息率快照为6.605%，接近高性价比区但尚未达到约7%的明确区间；同时日线、周线、月线均处于上部，追入的价格位置与用户的日周月做T原则不匹配。",
+      "condition": "当前不执行买入；仅在复核正式分红口径后股息率接近或达到6.8%～7.0%、成交价回落且日线重新回到下部时，才由用户确认后考虑首批小仓分批买入；周线或月线仍在上部时不得一次性重仓。",
+      "confidence": 91.0,
+      "snapshot": {
+        "price": 15.14,
+        "dividendPerShare": 1.0,
+        "yield": 6.60502,
+        "day": "上部",
+        "week": "上部",
+        "month": "上部",
+        "weeklyBoll": {
+          "asOf": "2026-07-22",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 15.485,
+          "middle": 14.238,
+          "lower": 12.99
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "not_scored",
+        "reason": "非明确买入指令，不计入买入命中率"
       }
     }
   ]

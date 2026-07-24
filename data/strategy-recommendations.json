@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-23T17:42:44+08:00",
+  "updatedAt": "2026-07-24T17:39:10+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -38,16 +38,16 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 14.54,
         "targetPrice": 15.267,
-        "observedTradingDays": 4,
-        "maxGainPct": 5.158,
-        "latestReturnPct": 5.021,
+        "observedTradingDays": 5,
+        "maxGainPct": 5.915,
+        "latestReturnPct": 5.365,
         "firstHitAt": "2026-07-23",
         "tradingDaysToHit": 4,
         "calendarDaysToHit": 5,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-07-23T17:42:42+08:00"
+        "evaluatedAt": "2026-07-24T17:39:05+08:00"
       }
     },
     {
@@ -86,16 +86,16 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 14.54,
         "targetPrice": 15.267,
-        "observedTradingDays": 4,
-        "maxGainPct": 5.158,
-        "latestReturnPct": 5.021,
+        "observedTradingDays": 5,
+        "maxGainPct": 5.915,
+        "latestReturnPct": 5.365,
         "firstHitAt": "2026-07-23",
         "tradingDaysToHit": 4,
         "calendarDaysToHit": 4,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-07-23T17:42:43+08:00"
+        "evaluatedAt": "2026-07-24T17:39:06+08:00"
       }
     },
     {
@@ -134,16 +134,16 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 14.54,
         "targetPrice": 15.267,
-        "observedTradingDays": 3,
-        "maxGainPct": 5.158,
-        "latestReturnPct": 5.021,
+        "observedTradingDays": 4,
+        "maxGainPct": 5.915,
+        "latestReturnPct": 5.365,
         "firstHitAt": "2026-07-23",
         "tradingDaysToHit": 3,
         "calendarDaysToHit": 3,
         "weeklyUpperFirstAt": "2026-07-22",
         "tradingDaysToWeeklyUpper": 2,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-07-23T17:42:43+08:00"
+        "evaluatedAt": "2026-07-24T17:39:07+08:00"
       }
     },
     {
@@ -218,13 +218,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 37.99,
         "targetPrice": 39.89,
-        "observedTradingDays": 1,
-        "maxGainPct": 2.632,
-        "latestReturnPct": 2.422,
+        "observedTradingDays": 2,
+        "maxGainPct": 3.317,
+        "latestReturnPct": 3.185,
         "weeklyUpperFirstAt": "2026-07-23",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-07-23T17:42:44+08:00"
+        "evaluatedAt": "2026-07-24T17:39:10+08:00"
       }
     },
     {
@@ -255,6 +255,42 @@
           "upper": 15.485,
           "middle": 14.238,
           "lower": 12.99
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "not_scored",
+        "reason": "非明确买入指令，不计入买入命中率"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-07-24-601919",
+      "recommendationId": "brief-2026-07-24-601919",
+      "recommendedAt": "2026-07-24T17:39:10+08:00",
+      "date": "2026-07-24",
+      "code": "601919",
+      "name": "中远海控",
+      "action": "当前不买",
+      "reason": "中远海控当前股息率快照为6.549%，是当前列表中最接近7%高性价比区的标的，但尚未达到此前建议采用的6.8%复核门槛，而且日线、周线和月线全部处于上部。当前追入不符合股息率与位置同时满足的条件；此前同类建议的行情命中也不能证明用户已经执行。",
+      "condition": "当前不下买单。仅在复核正式每股分红后股息率仍达到至少6.8%、价格相应回落且日线重新进入下部时，才考虑首批小仓；周线或月线仍在上部时不得一次买满，并须排除已有未反馈订单或重复交易风险，执行前由用户确认实际仓位。",
+      "confidence": 94.0,
+      "snapshot": {
+        "price": 15.27,
+        "dividendPerShare": 1.0,
+        "yield": 6.548788,
+        "day": "上部",
+        "week": "上部",
+        "month": "上部",
+        "weeklyBoll": {
+          "asOf": "2026-07-23",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 15.513,
+          "middle": 14.244,
+          "lower": 12.975
         },
         "marketUpdatedAt": null
       },

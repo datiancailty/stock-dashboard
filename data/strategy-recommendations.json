@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-24T17:39:10+08:00",
+  "updatedAt": "2026-07-25T16:32:21+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -297,6 +297,42 @@
       "evaluation": {
         "status": "not_scored",
         "reason": "非明确买入指令，不计入买入命中率"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-07-25-600011",
+      "recommendationId": "brief-2026-07-25-600011",
+      "recommendedAt": "2026-07-25T16:32:21+08:00",
+      "date": "2026-07-25",
+      "code": "600011",
+      "name": "华能国际",
+      "action": "分批买入",
+      "reason": "华能国际当前股息率快照为5.642%，已明显进入约5%的分批买入区，且日线、周线均在下部、月线中部，是当前列表中股息率和多周期位置组合最符合固定原则的标的。历史上该股曾在约5.46%和5.93%股息率买入，并在股息率下降至约4.90%和4.29%时卖出，虽样本较少，但方向与现有框架基本一致。",
+      "condition": "先核对最新正式每股分红、除权口径、实际持仓和是否存在未反馈订单；仅在复核后股息率仍不低于5.5%、成交价不高于7.20元且日线和周线未转为上部时，由用户确认后执行首批小仓。不得一次买满，不自动下单；若月线转为上部或正式股息率跌破5.5%，则改为等待。",
+      "confidence": 90.0,
+      "snapshot": {
+        "price": 7.09,
+        "dividendPerShare": 0.4,
+        "yield": 5.641749,
+        "day": "下部",
+        "week": "下部",
+        "month": "中部",
+        "weeklyBoll": {
+          "asOf": "2026-07-24",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 8.096,
+          "middle": 7.072,
+          "lower": 6.048
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "pending",
+        "reason": null
       }
     }
   ]

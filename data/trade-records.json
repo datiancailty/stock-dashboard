@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-02T10:47:13+05:00",
+  "updatedAt": "2026-08-02T13:59:19+08:00",
   "records": [
     {
       "id": "import-20260722-601985-sell-9.040-600-1",
@@ -13,9 +13,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-22"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-22",
+        "asOf": "2026-07-22",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 9.04,
+        "historicalClose": 9.07,
+        "totalDividend": 0.18,
+        "yield": 1.99115,
+        "positions": {
+          "asOf": "2026-07-22",
+          "day": {
+            "zone": "上部",
+            "percent": 75.0,
+            "low": 8.89,
+            "high": 9.09
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 71.1,
+            "low": 8.77,
+            "high": 9.15
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 75.6,
+            "low": 8.7,
+            "high": 9.15
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:58:56+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
       "id": "import-20260722-601985-sell-9.040-1100-1",
@@ -28,9 +58,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-22"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-22",
+        "asOf": "2026-07-22",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 9.04,
+        "historicalClose": 9.07,
+        "totalDividend": 0.18,
+        "yield": 1.99115,
+        "positions": {
+          "asOf": "2026-07-22",
+          "day": {
+            "zone": "上部",
+            "percent": 75.0,
+            "low": 8.89,
+            "high": 9.09
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 71.1,
+            "low": 8.77,
+            "high": 9.15
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 75.6,
+            "low": 8.7,
+            "high": 9.15
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:58:56+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
       "id": "import-20260722-601985-sell-9.040-2300-1",
@@ -43,9 +103,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-22"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-22",
+        "asOf": "2026-07-22",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 9.04,
+        "historicalClose": 9.07,
+        "totalDividend": 0.18,
+        "yield": 1.99115,
+        "positions": {
+          "asOf": "2026-07-22",
+          "day": {
+            "zone": "上部",
+            "percent": 75.0,
+            "low": 8.89,
+            "high": 9.09
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 71.1,
+            "low": 8.77,
+            "high": 9.15
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 75.6,
+            "low": 8.7,
+            "high": 9.15
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:58:56+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
       "id": "import-20260721-601985-sell-8.980-4500-1",
@@ -58,9 +148,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-21"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-21",
+        "asOf": "2026-07-21",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 8.98,
+        "historicalClose": 8.97,
+        "totalDividend": 0.18,
+        "yield": 2.004454,
+        "positions": {
+          "asOf": "2026-07-21",
+          "day": {
+            "zone": "下部",
+            "percent": 22.7,
+            "low": 8.93,
+            "high": 9.15
+          },
+          "week": {
+            "zone": "中部",
+            "percent": 55.3,
+            "low": 8.77,
+            "high": 9.15
+          },
+          "month": {
+            "zone": "中部",
+            "percent": 62.2,
+            "low": 8.7,
+            "high": 9.15
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:58:58+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
       "id": "import-20260721-600887-sell-27.170-100-1",
@@ -73,9 +193,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-21"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-21",
+        "asOf": "2026-07-21",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 27.17,
+        "historicalClose": 27.07,
+        "totalDividend": 0.9,
+        "yield": 3.312477,
+        "positions": {
+          "asOf": "2026-07-21",
+          "day": {
+            "zone": "下部",
+            "percent": 32.9,
+            "low": 26.92,
+            "high": 27.68
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 69.6,
+            "low": 26.0,
+            "high": 27.68
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 87.0,
+            "low": 23.76,
+            "high": 27.68
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:58:59+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
       "id": "import-20260721-000423-sell-51.900-100-1",
@@ -88,9 +238,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-21"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-21",
+        "asOf": "2026-07-21",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 51.9,
+        "historicalClose": 51.05,
+        "totalDividend": 2.7055823,
+        "yield": 5.213068,
+        "positions": {
+          "asOf": "2026-07-21",
+          "day": {
+            "zone": "中部",
+            "percent": 57.4,
+            "low": 50.2,
+            "high": 53.16
+          },
+          "week": {
+            "zone": "中部",
+            "percent": 62.9,
+            "low": 49.76,
+            "high": 53.16
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 85.6,
+            "low": 44.44,
+            "high": 53.16
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:01+08:00"
+      },
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
       "id": "import-20260721-300157-sell-3.970-600-1",
@@ -103,9 +283,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-21"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-21",
+        "asOf": "2026-07-21",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 3.97,
+        "historicalClose": 4.17,
+        "totalDividend": 0.0,
+        "yield": 0.0,
+        "positions": {
+          "asOf": "2026-07-21",
+          "day": {
+            "zone": "中部",
+            "percent": 42.1,
+            "low": 3.81,
+            "high": 4.19
+          },
+          "week": {
+            "zone": "下部",
+            "percent": 25.0,
+            "low": 3.81,
+            "high": 4.45
+          },
+          "month": {
+            "zone": "中部",
+            "percent": 44.2,
+            "low": 3.59,
+            "high": 4.45
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:03+08:00"
+      },
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
       "id": "import-20260720-300157-buy-4.350-200-1",
@@ -118,9 +328,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 4.35,
+        "historicalClose": 4.37,
+        "totalDividend": 0.0,
+        "yield": 0.0,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "上部",
+            "percent": 69.7,
+            "low": 4.12,
+            "high": 4.45
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 69.7,
+            "low": 4.12,
+            "high": 4.45
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 88.4,
+            "low": 3.59,
+            "high": 4.45
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:04+08:00"
+      },
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
       "id": "import-20260720-300157-buy-4.360-500-1",
@@ -133,9 +373,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 4.36,
+        "historicalClose": 4.37,
+        "totalDividend": 0.0,
+        "yield": 0.0,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "上部",
+            "percent": 72.7,
+            "low": 4.12,
+            "high": 4.45
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 72.7,
+            "low": 4.12,
+            "high": 4.45
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 89.5,
+            "low": 3.59,
+            "high": 4.45
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:04+08:00"
+      },
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
       "id": "import-20260720-600863-sell-4.970-500-1",
@@ -148,9 +418,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 4.97,
+        "historicalClose": 5.02,
+        "totalDividend": 0.22000000000000003,
+        "yield": 4.426559,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "上部",
+            "percent": 89.6,
+            "low": 4.54,
+            "high": 5.02
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 89.6,
+            "low": 4.54,
+            "high": 5.02
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 93.4,
+            "low": 4.26,
+            "high": 5.02
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:06+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
       "id": "import-20260720-600887-sell-26.780-100-1",
@@ -163,9 +463,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 26.78,
+        "historicalClose": 27.0,
+        "totalDividend": 0.9,
+        "yield": 3.360717,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "上部",
+            "percent": 78.0,
+            "low": 26.0,
+            "high": 27.0
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 78.0,
+            "low": 26.0,
+            "high": 27.0
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 93.2,
+            "low": 23.76,
+            "high": 27.0
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:08+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
       "id": "import-20260720-601919-buy-14.810-400-1",
@@ -178,9 +508,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 14.81,
+        "historicalClose": 14.93,
+        "totalDividend": 1.0,
+        "yield": 6.752194,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "中部",
+            "percent": 63.8,
+            "low": 14.51,
+            "high": 14.98
+          },
+          "week": {
+            "zone": "中部",
+            "percent": 63.8,
+            "low": 14.51,
+            "high": 14.98
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 91.1,
+            "low": 13.08,
+            "high": 14.98
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:09+08:00"
+      },
+      "learning": "5%以上买入：强化分批建仓规则"
     },
     {
       "id": "import-20260720-601919-sell-14.800-900-1",
@@ -193,9 +553,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 14.8,
+        "historicalClose": 14.93,
+        "totalDividend": 1.0,
+        "yield": 6.756757,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "中部",
+            "percent": 61.7,
+            "low": 14.51,
+            "high": 14.98
+          },
+          "week": {
+            "zone": "中部",
+            "percent": 61.7,
+            "low": 14.51,
+            "high": 14.98
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 90.5,
+            "low": 13.08,
+            "high": 14.98
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:09+08:00"
+      },
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
       "id": "import-20260720-601985-sell-8.970-400-1",
@@ -208,9 +598,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 8.97,
+        "historicalClose": 9.07,
+        "totalDividend": 0.18,
+        "yield": 2.006689,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "中部",
+            "percent": 64.5,
+            "low": 8.77,
+            "high": 9.08
+          },
+          "week": {
+            "zone": "中部",
+            "percent": 64.5,
+            "low": 8.77,
+            "high": 9.08
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 71.1,
+            "low": 8.7,
+            "high": 9.08
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:11+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
       "id": "import-20260720-600028-sell-5.160-1400-1",
@@ -223,9 +643,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 5.16,
+        "historicalClose": 5.24,
+        "totalDividend": 0.2,
+        "yield": 3.875969,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "中部",
+            "percent": 60.0,
+            "low": 5.04,
+            "high": 5.24
+          },
+          "week": {
+            "zone": "中部",
+            "percent": 60.0,
+            "low": 5.04,
+            "high": 5.24
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 90.1,
+            "low": 4.43,
+            "high": 5.24
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:13+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
       "id": "import-20260720-601318-sell-52.660-300-1",
@@ -238,9 +688,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 52.66,
+        "historicalClose": 53.23,
+        "totalDividend": 2.7,
+        "yield": 5.127231,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "上部",
+            "percent": 76.2,
+            "low": 50.71,
+            "high": 53.27
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 76.2,
+            "low": 50.71,
+            "high": 53.27
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 90.0,
+            "low": 47.19,
+            "high": 53.27
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:14+08:00"
+      },
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
       "id": "import-20260720-300157-sell-4.280-6300-1",
@@ -253,9 +733,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 4.28,
+        "historicalClose": 4.37,
+        "totalDividend": 0.0,
+        "yield": 0.0,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "中部",
+            "percent": 48.5,
+            "low": 4.12,
+            "high": 4.45
+          },
+          "week": {
+            "zone": "中部",
+            "percent": 48.5,
+            "low": 4.12,
+            "high": 4.45
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 80.2,
+            "low": 3.59,
+            "high": 4.45
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:14+08:00"
+      },
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
       "id": "import-20260720-601857-sell-10.770-100-1",
@@ -268,9 +778,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 10.77,
+        "historicalClose": 11.01,
+        "totalDividend": 0.0,
+        "yield": 0.0,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "中部",
+            "percent": 54.7,
+            "low": 10.36,
+            "high": 11.11
+          },
+          "week": {
+            "zone": "中部",
+            "percent": 54.7,
+            "low": 10.36,
+            "high": 11.11
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 86.5,
+            "low": 8.59,
+            "high": 11.11
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:16+08:00"
+      },
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
       "id": "import-20260720-600938-sell-31.260-200-1",
@@ -283,9 +823,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-20"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-20",
+        "asOf": "2026-07-20",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 31.26,
+        "historicalClose": 31.87,
+        "totalDividend": 1.14493,
+        "yield": 3.662604,
+        "positions": {
+          "asOf": "2026-07-20",
+          "day": {
+            "zone": "上部",
+            "percent": 74.2,
+            "low": 29.51,
+            "high": 31.87
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 74.2,
+            "low": 29.51,
+            "high": 31.87
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 88.8,
+            "low": 26.4,
+            "high": 31.87
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:18+08:00"
+      },
+      "learning": "4%～4.5%卖出：强化清仓底线"
     },
     {
       "id": "import-20260717-600795-sell-4.780-800-1",
@@ -298,9 +868,39 @@
       "sourceType": "brokerage-screenshot-import",
       "createdAt": "2026-08-02T10:47:13+05:00",
       "context": {
-        "status": "pending",
-        "requestedDate": "2026-07-17"
-      }
+        "status": "complete",
+        "requestedDate": "2026-07-17",
+        "asOf": "2026-07-17",
+        "isExactTradingDate": true,
+        "marketPriceAtRecord": 4.78,
+        "historicalClose": 4.75,
+        "totalDividend": 0.241,
+        "yield": 5.041841,
+        "positions": {
+          "asOf": "2026-07-17",
+          "day": {
+            "zone": "上部",
+            "percent": 85.7,
+            "low": 4.66,
+            "high": 4.8
+          },
+          "week": {
+            "zone": "上部",
+            "percent": 88.9,
+            "low": 4.62,
+            "high": 4.8
+          },
+          "month": {
+            "zone": "上部",
+            "percent": 89.5,
+            "low": 4.61,
+            "high": 4.8
+          }
+        },
+        "source": "东方财富/腾讯公开不复权日K",
+        "enrichedAt": "2026-08-02T13:59:19+08:00"
+      },
+      "learning": "已纳入策略画像，等待更多相似操作形成稳定规律"
     },
     {
       "id": "ff1e5c03-7c24-4e7d-979a-2846335cf4d6",

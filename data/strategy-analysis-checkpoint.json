@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-02T20:23:39+05:00",
+  "profileVersion": "v0.7",
+  "tradeRecordCheckpoint": {
+    "count": 384,
+    "lastUpdatedAt": "2026-08-02T13:59:19+08:00"
+  },
+  "focusedStudies": {
+    "mx-2024-week-day-down-month-mid-v1": {
+      "sourceDataThrough": "2026-07-31",
+      "codes": [
+        "600887",
+        "600036",
+        "000538"
+      ],
+      "artifact": "data/strategy-backtest-week-day-down-month-mid.json",
+      "nextReview": "每只股票新增至少10个独立信号簇后复核；目标窗口胜率≥60%、收益中位数>0，且中位最大回撤不恶化，才考虑升级。否则保持或降级。"
+    }
+  },
+  "purpose": "下次只处理检查点之后的新增交易与新增行情，再与现有画像结论合并。"
+}

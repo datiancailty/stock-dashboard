@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "sourceTitle": "红利股息+BOLL+行业轮动投资策略",
+  "sourceVersion": "v0.7",
+  "updatedAt": "2026-08-02T10:47:13+05:00",
+  "externalLearnedRules": [
+    {
+      "id": "ext-v07-value-boll-order",
+      "sourceType": "user-provided-image",
+      "sourceImage": "27996d78dc3e32cc.JPG",
+      "sourceLocator": "一、策略总纲/顶层原则",
+      "verbatim": "股息率判断是否值得买卖以及操作意愿有多强；250日线判断是否应降低卖出力度；日、周、月BOLL信号确定具体执行时机；仓位决定具体减多少。",
+      "normalizedRule": "决策顺序为股息率→250日线→日/周/月BOLL→仓位；未满足前置条件不得把后置信号当作独立触发器。",
+      "thresholds": {
+        "trendLineDays": 250
+      },
+      "preconditions": [
+        "需有对应历史行情口径",
+        "需确认个股股息的正式来源"
+      ],
+      "exceptions": [
+        "股息率仍有吸引力或趋势刚站稳250日线时不机械大卖"
+      ],
+      "evidenceBoundary": "图片明确了分工，但未提供可泛化的统一BOLL参数。",
+      "applicability": "研究与条件式复盘",
+      "status": "research_only"
+    },
+    {
+      "id": "ext-v07-concentration",
+      "sourceType": "user-provided-image",
+      "sourceImage": "27996d78dc3e32cc.JPG",
+      "sourceLocator": "二、完整流程/资金与行业配置",
+      "verbatim": "单行业原则上不超过20%；单票上限原则上不超过总资产12%。",
+      "normalizedRule": "行业和单票集中度是风险边界，不是自动下单条件。",
+      "thresholds": {
+        "industryMaxPct": 20,
+        "singleStockMaxPct": 12
+      },
+      "preconditions": [
+        "必须知道总资产和行业归类"
+      ],
+      "exceptions": [
+        "图片使用‘原则上’，未定义例外审批流程"
+      ],
+      "evidenceBoundary": "未提供当前总资产、行业分类和可执行仓位数据。",
+      "applicability": "固定风险边界候选",
+      "status": "needs_user_confirmation"
+    },
+    {
+      "id": "ext-v07-core-exit",
+      "sourceType": "user-provided-image",
+      "sourceImage": "c4e8be3f4e612602.JPG",
+      "sourceLocator": "八、核心仓退出",
+      "verbatim": "4%：退出观察线；3.75%：最终退出线。",
+      "normalizedRule": "股息率进入4%至3.75%区间时，只能作为人工复核的估值退出信号，不能自动改变持仓。",
+      "thresholds": {
+        "exitObservePct": 4,
+        "exitFinalPct": 3.75
+      },
+      "preconditions": [
+        "正式股息口径已确认",
+        "结合个股质量、趋势和替代机会"
+      ],
+      "exceptions": [
+        "4%处图片要求结合个股与趋势决定节奏"
+      ],
+      "evidenceBoundary": "阈值来自图片；未提供不同股票的历史分位或行业校准。",
+      "applicability": "条件式人工复核",
+      "status": "research_only"
+    },
+    {
+      "id": "ext-v07-core-tactical",
+      "sourceType": "user-provided-image",
+      "sourceImage": "051d67daf6528c51.JPG",
+      "sourceLocator": "五、核心仓与机动仓",
+      "verbatim": "核心仓负责收取股息和长期趋势；机动仓只能在估值允许、BOLL触发且不破坏核心股票的前提下运行。",
+      "normalizedRule": "核心仓与机动仓应分开核算；机动仓规则不得覆盖核心仓保护边界。",
+      "thresholds": {
+        "illustrativeCoreParts": 7,
+        "illustrativeTacticalMaxParts": 5
+      },
+      "preconditions": [
+        "需要用户确认仓位单位和风险预算"
+      ],
+      "exceptions": [
+        "7-3-2、7-2-3是示例，不是自动执行参数"
+      ],
+      "evidenceBoundary": "图片中的仓位份数是案例与经验尺度，不能直接转成用户仓位。",
+      "applicability": "不可自动执行",
+      "status": "non_executable"
+    },
+    {
+      "id": "ext-v07-deleveraging",
+      "sourceType": "user-provided-image",
+      "sourceImage": "478091bb7bcdf5b5.JPG",
+      "sourceLocator": "七、上涨减仓决策",
+      "verbatim": "仅有日上应更谨慎；日上+周上可以执行一部分减仓；日上+周上+月中/月上可提高兑现力度。",
+      "normalizedRule": "多周期BOLL只提供执行时机与信号强弱，仍需先通过股息率和250日线判断。",
+      "thresholds": {
+        "trendLineDays": 250
+      },
+      "preconditions": [
+        "需有日/周/月BOLL和250日线历史数据"
+      ],
+      "exceptions": [
+        "股息率仍有吸引力或趋势刚站稳250日线时不机械大卖"
+      ],
+      "evidenceBoundary": "图片底部部分被截断，不能补全未显示的减仓公式。",
+      "applicability": "研究与人工复核",
+      "status": "research_only"
+    }
+  ],
+  "personalBehaviorEvidence": {
+    "source": "data/trade-records.json",
+    "recordCount": 384,
+    "timeRange": {
+      "from": "2025-07-01",
+      "to": "2026-07-22"
+    },
+    "buyCount": 194,
+    "sellCount": 190,
+    "evidence": [
+      {
+        "id": "behaviour-sample-size",
+        "criterion": "按action统计全部原始记录",
+        "sampleSize": 384,
+        "supportingRecordIds": [],
+        "counterexampleRecordIds": [],
+        "confidence": "high",
+        "limitations": "记录只反映已保存成交事实，不证明未来行为或收益。"
+      },
+      {
+        "id": "behaviour-buy-sell-balance",
+        "criterion": "买入与卖出数量分别统计",
+        "sampleSize": 384,
+        "supportingRecordIds": [],
+        "counterexampleRecordIds": [],
+        "confidence": "high",
+        "limitations": "未将少量样本自动解释为偏好，也未使用当前持仓推断历史仓位。"
+      }
+    ]
+  },
+  "fixedGuardrails": [
+    {
+      "id": "guardrail-user-yield-buy",
+      "text": "正式股息率约5%开始分批买入；仅作用户已确认的人工底线。"
+    },
+    {
+      "id": "guardrail-user-yield-value",
+      "text": "接近7%时性价比较高；不构成收益保证。"
+    },
+    {
+      "id": "guardrail-user-t-position",
+      "text": "持有期间结合日/周/月位置做T，最终由用户确认。"
+    },
+    {
+      "id": "guardrail-user-yield-exit",
+      "text": "股息率降至4%～4.5%时倾向全部卖出；不得自动执行。"
+    }
+  ],
+  "derivedProfileConclusions": [
+    {
+      "id": "profile-public-counts",
+      "text": "当前公开成交数据可复算为384笔，买入194笔、卖出190笔；这只是记录层事实。",
+      "sourceRecordIds": [],
+      "confidence": "high"
+    },
+    {
+      "id": "profile-rule-boundary",
+      "text": "外部v0.7策略与用户固定底线存在不同退出阈值，页面并列展示，不静默裁决。",
+      "sourceRuleIds": [
+        "ext-v07-core-exit"
+      ],
+      "sourceGuardrailIds": [
+        "guardrail-user-yield-exit"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "nonExecutablePositionSuggestions": [
+    {
+      "id": "suggestion-concentration",
+      "text": "单行业20%、单票12%仅为外部策略的研究边界；因缺少总资产、行业归类和用户确认，暂不可执行。",
+      "status": "non_executable"
+    },
+    {
+      "id": "suggestion-core-tactical",
+      "text": "7-3-2、7-2-3、12走7仅为案例仓位尺度；未形成自动仓位建议。",
+      "status": "non_executable"
+    }
+  ],
+  "conflictsAndGaps": [
+    "外部策略核心仓退出区为4%—3.75%，用户固定底线为4%—4.5%，需由用户在具体股票和趋势下最终确认。",
+    "截图未提供完整BOLL参数、复权口径、个股历史分位和用户风险预算。",
+    "图14-16部分持仓成本字段在截图中未清晰显示，必须由一次性本地导入数据补齐，不能写入公开数据。"
+  ],
+  "auditMeta": {
+    "reviewedBy": "OpenAI GPT-5.6 Luna",
+    "fennoUsed": false,
+    "sourceImages": 9,
+    "limitations": "图片转录中被截断或模糊部分保持needs_review/non_executable，未补造参数。"
+  }
+}

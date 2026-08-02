@@ -1,7 +1,307 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-02T13:07:06+08:00",
+  "updatedAt": "2026-08-02T10:47:13+05:00",
   "records": [
+    {
+      "id": "import-20260722-601985-sell-9.040-600-1",
+      "date": "2026-07-22",
+      "code": "601985",
+      "name": "中国核电",
+      "action": "卖出",
+      "price": 9.04,
+      "shares": 600,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-22"
+      }
+    },
+    {
+      "id": "import-20260722-601985-sell-9.040-1100-1",
+      "date": "2026-07-22",
+      "code": "601985",
+      "name": "中国核电",
+      "action": "卖出",
+      "price": 9.04,
+      "shares": 1100,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-22"
+      }
+    },
+    {
+      "id": "import-20260722-601985-sell-9.040-2300-1",
+      "date": "2026-07-22",
+      "code": "601985",
+      "name": "中国核电",
+      "action": "卖出",
+      "price": 9.04,
+      "shares": 2300,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-22"
+      }
+    },
+    {
+      "id": "import-20260721-601985-sell-8.980-4500-1",
+      "date": "2026-07-21",
+      "code": "601985",
+      "name": "中国核电",
+      "action": "卖出",
+      "price": 8.98,
+      "shares": 4500,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-21"
+      }
+    },
+    {
+      "id": "import-20260721-600887-sell-27.170-100-1",
+      "date": "2026-07-21",
+      "code": "600887",
+      "name": "伊利股份",
+      "action": "卖出",
+      "price": 27.17,
+      "shares": 100,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-21"
+      }
+    },
+    {
+      "id": "import-20260721-000423-sell-51.900-100-1",
+      "date": "2026-07-21",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "action": "卖出",
+      "price": 51.9,
+      "shares": 100,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-21"
+      }
+    },
+    {
+      "id": "import-20260721-300157-sell-3.970-600-1",
+      "date": "2026-07-21",
+      "code": "300157",
+      "name": "新锦动力",
+      "action": "卖出",
+      "price": 3.97,
+      "shares": 600,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-21"
+      }
+    },
+    {
+      "id": "import-20260720-300157-buy-4.350-200-1",
+      "date": "2026-07-20",
+      "code": "300157",
+      "name": "新锦动力",
+      "action": "买入",
+      "price": 4.35,
+      "shares": 200,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260720-300157-buy-4.360-500-1",
+      "date": "2026-07-20",
+      "code": "300157",
+      "name": "新锦动力",
+      "action": "买入",
+      "price": 4.36,
+      "shares": 500,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260720-600863-sell-4.970-500-1",
+      "date": "2026-07-20",
+      "code": "600863",
+      "name": "华能蒙电",
+      "action": "卖出",
+      "price": 4.97,
+      "shares": 500,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260720-600887-sell-26.780-100-1",
+      "date": "2026-07-20",
+      "code": "600887",
+      "name": "伊利股份",
+      "action": "卖出",
+      "price": 26.78,
+      "shares": 100,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260720-601919-buy-14.810-400-1",
+      "date": "2026-07-20",
+      "code": "601919",
+      "name": "中远海控",
+      "action": "买入",
+      "price": 14.81,
+      "shares": 400,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260720-601919-sell-14.800-900-1",
+      "date": "2026-07-20",
+      "code": "601919",
+      "name": "中远海控",
+      "action": "卖出",
+      "price": 14.8,
+      "shares": 900,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260720-601985-sell-8.970-400-1",
+      "date": "2026-07-20",
+      "code": "601985",
+      "name": "中国核电",
+      "action": "卖出",
+      "price": 8.97,
+      "shares": 400,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260720-600028-sell-5.160-1400-1",
+      "date": "2026-07-20",
+      "code": "600028",
+      "name": "中国石化",
+      "action": "卖出",
+      "price": 5.16,
+      "shares": 1400,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260720-601318-sell-52.660-300-1",
+      "date": "2026-07-20",
+      "code": "601318",
+      "name": "中国平安",
+      "action": "卖出",
+      "price": 52.66,
+      "shares": 300,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260720-300157-sell-4.280-6300-1",
+      "date": "2026-07-20",
+      "code": "300157",
+      "name": "新锦动力",
+      "action": "卖出",
+      "price": 4.28,
+      "shares": 6300,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260720-601857-sell-10.770-100-1",
+      "date": "2026-07-20",
+      "code": "601857",
+      "name": "中国石油",
+      "action": "卖出",
+      "price": 10.77,
+      "shares": 100,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260720-600938-sell-31.260-200-1",
+      "date": "2026-07-20",
+      "code": "600938",
+      "name": "中国海油",
+      "action": "卖出",
+      "price": 31.26,
+      "shares": 200,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-20"
+      }
+    },
+    {
+      "id": "import-20260717-600795-sell-4.780-800-1",
+      "date": "2026-07-17",
+      "code": "600795",
+      "name": "国电电力",
+      "action": "卖出",
+      "price": 4.78,
+      "shares": 800,
+      "sourceType": "brokerage-screenshot-import",
+      "createdAt": "2026-08-02T10:47:13+05:00",
+      "context": {
+        "status": "pending",
+        "requestedDate": "2026-07-17"
+      }
+    },
     {
       "id": "ff1e5c03-7c24-4e7d-979a-2846335cf4d6",
       "date": "2026-07-17",

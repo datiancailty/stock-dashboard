@@ -1,17 +1,16 @@
 {
-  "updatedAt": "2026-08-01T00:18:10+08:00",
+  "updatedAt": "2026-08-02T13:58:32+08:00",
   "source": "东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
   "positionStrategy": "当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部",
   "weeklyBollStrategy": "前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)",
   "dividendWarning": null,
-  "dividendCursor": 10,
+  "dividendCursor": 0,
   "dividendBatch": [
-    "601919",
-    "600887",
-    "600795",
-    "003816",
-    "600028"
+    "688825",
+    "601398",
+    "601169",
+    "601658"
   ],
   "stocks": [
     {
@@ -627,6 +626,160 @@
       "fiscalYear": 2025,
       "annualDividend": 1.75,
       "interimDividend": 0.95,
+      "source": "东方财富公开行情/前复权日K + mx-data"
+    },
+    {
+      "code": "688825",
+      "name": "C长鑫",
+      "price": 53.97,
+      "positions": {
+        "asOf": "2026-07-31",
+        "day": {
+          "zone": "下部",
+          "percent": 14.1,
+          "low": 52.88,
+          "high": 60.6
+        },
+        "week": {
+          "zone": "上部",
+          "percent": 70.5,
+          "low": 38.11,
+          "high": 60.6
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 70.5,
+          "low": 38.11,
+          "high": 60.6
+        }
+      },
+      "weeklyBoll": null,
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
+      "source": "东方财富公开行情/前复权日K + mx-data"
+    },
+    {
+      "code": "601398",
+      "name": "工商银行",
+      "price": 7.99,
+      "positions": {
+        "asOf": "2026-07-31",
+        "day": {
+          "zone": "上部",
+          "percent": 90.9,
+          "low": 7.79,
+          "high": 8.01
+        },
+        "week": {
+          "zone": "中部",
+          "percent": 63.8,
+          "low": 7.69,
+          "high": 8.16
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 86.0,
+          "low": 6.95,
+          "high": 8.16
+        }
+      },
+      "weeklyBoll": {
+        "asOf": "2026-07-31",
+        "basis": "前复权周K",
+        "period": 20,
+        "multiplier": 2,
+        "stddev": "sample",
+        "sampleCount": 20,
+        "upper": 7.835,
+        "middle": 7.352,
+        "lower": 6.868
+      },
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
+      "source": "东方财富公开行情/前复权日K + mx-data"
+    },
+    {
+      "code": "601169",
+      "name": "北京银行",
+      "price": 5.22,
+      "positions": {
+        "asOf": "2026-07-31",
+        "day": {
+          "zone": "上部",
+          "percent": 100.0,
+          "low": 5.1,
+          "high": 5.22
+        },
+        "week": {
+          "zone": "上部",
+          "percent": 100.0,
+          "low": 5.04,
+          "high": 5.22
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 100.0,
+          "low": 4.84,
+          "high": 5.22
+        }
+      },
+      "weeklyBoll": {
+        "asOf": "2026-07-31",
+        "basis": "前复权周K",
+        "period": 20,
+        "multiplier": 2,
+        "stddev": "sample",
+        "sampleCount": 20,
+        "upper": 5.321,
+        "middle": 4.986,
+        "lower": 4.65
+      },
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
+      "source": "东方财富公开行情/前复权日K + mx-data"
+    },
+    {
+      "code": "601658",
+      "name": "邮储银行",
+      "price": 5.18,
+      "positions": {
+        "asOf": "2026-07-31",
+        "day": {
+          "zone": "上部",
+          "percent": 100.0,
+          "low": 5.07,
+          "high": 5.18
+        },
+        "week": {
+          "zone": "上部",
+          "percent": 73.3,
+          "low": 5.07,
+          "high": 5.22
+        },
+        "month": {
+          "zone": "上部",
+          "percent": 87.9,
+          "low": 4.89,
+          "high": 5.22
+        }
+      },
+      "weeklyBoll": {
+        "asOf": "2026-07-31",
+        "basis": "前复权周K",
+        "period": 20,
+        "multiplier": 2,
+        "stddev": "sample",
+        "sampleCount": 20,
+        "upper": 5.183,
+        "middle": 4.958,
+        "lower": 4.733
+      },
+      "fiscalYear": 2025,
+      "annualDividend": 0,
+      "interimDividend": 0,
       "source": "东方财富公开行情/前复权日K + mx-data"
     }
   ],

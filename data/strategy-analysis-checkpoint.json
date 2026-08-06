@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-02T20:23:39+05:00",
+  "updatedAt": "2026-08-06T17:34:27+05:00",
   "profileVersion": "v0.7",
   "tradeRecordCheckpoint": {
     "count": 384,
@@ -16,7 +16,19 @@
       ],
       "artifact": "data/strategy-backtest-week-day-down-month-mid.json",
       "nextReview": "每只股票新增至少10个独立信号簇后复核；目标窗口胜率≥60%、收益中位数>0，且中位最大回撤不恶化，才考虑升级。否则保持或降级。"
+    },
+    "public-2022-four-stocks-day-week-month-v1": {
+      "sourceDataThrough": "2026-08-06",
+      "codes": [
+        "601985",
+        "003816",
+        "601318",
+        "000423"
+      ],
+      "artifact": "data/strategy-backtest-new-focused-stocks.json",
+      "nextReview": "每只股票新增至少10个独立信号簇后复核；若当前年度与全历史方向一致且20日胜率≥60%、收益中位数>0、30日最大回撤不恶化，才考虑升级；若最近两个窗口转弱则降级为观察。",
+      "rawCache": "analysis/mx-focused-v2/（本地回测缓存，不上传）"
     }
   },
-  "purpose": "下次只处理检查点之后的新增交易与新增行情，再与现有画像结论合并。"
+  "purpose": "下次只处理检查点之后的新增交易与新增行情，再与现有画像结论合并；新增四只股票按照独立信号簇和最近状态增量复核。"
 }

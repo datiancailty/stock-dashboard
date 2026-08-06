@@ -1,0 +1,7802 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-06T17:33:19+05:00",
+  "dataSource": "东方财富官方公开历史K线接口（前复权fqt=1）；东方财富妙想API本次因调用额度达到上限未返回数据",
+  "evaluationWindow": "2022-01-01至接口最新交易日",
+  "entryMethod": "信号日收盘后形成信号，下一交易日开盘进入；收益不含分红、费用、滑点",
+  "indicatorDefinition": {
+    "day": "当日最高/最低区间内收盘价百分位",
+    "week": "当前ISO周截至信号日的最高/最低区间内收盘价百分位",
+    "month": "当前自然月截至信号日的最高/最低区间内收盘价百分位",
+    "zone": "下部<33.33%，中部为33.33%至<66.67%，上部≥66.67%",
+    "primarySignal": "日下+周下+月中",
+    "antiLookahead": "周/月只使用信号日及之前数据；收益从下一交易日开盘计算；连续4个自然日内的信号合并为同一观察窗口"
+  },
+  "stocks": [
+    {
+      "code": "601985",
+      "name": "中国核电",
+      "source": "东方财富妙想调用受限；使用腾讯公开历史日K回退（未提供前复权参数）",
+      "sourceRows": 1112,
+      "sourceRange": [
+        "2022-01-04",
+        "2026-08-06"
+      ],
+      "primary": {
+        "signal": "周下+日下+月中",
+        "signalDays": {
+          "signals": 75,
+          "d5": {
+            "n": 75,
+            "medianPct": -0.46,
+            "winPct": 42.7
+          },
+          "d10": {
+            "n": 74,
+            "medianPct": 0.34,
+            "winPct": 54.1
+          },
+          "d20": {
+            "n": 73,
+            "medianPct": 0.77,
+            "winPct": 52.1
+          },
+          "d30": {
+            "n": 73,
+            "medianPct": -0.22,
+            "winPct": 45.2
+          },
+          "d60": {
+            "n": 69,
+            "medianPct": -0.41,
+            "winPct": 47.8
+          },
+          "max30MedianPct": 6.55,
+          "drawdown30MedianPct": -3.83
+        },
+        "episodeFirst": {
+          "signals": 52,
+          "d5": {
+            "n": 52,
+            "medianPct": 0.0,
+            "winPct": 48.1
+          },
+          "d10": {
+            "n": 51,
+            "medianPct": 0.14,
+            "winPct": 52.9
+          },
+          "d20": {
+            "n": 50,
+            "medianPct": 0.22,
+            "winPct": 50.0
+          },
+          "d30": {
+            "n": 50,
+            "medianPct": -0.33,
+            "winPct": 46.0
+          },
+          "d60": {
+            "n": 48,
+            "medianPct": -0.44,
+            "winPct": 45.8
+          },
+          "max30MedianPct": 6.21,
+          "drawdown30MedianPct": -4.27
+        },
+        "episodeDates": [
+          [
+            "2022-02-14",
+            "2022-02-14",
+            1
+          ],
+          [
+            "2022-03-07",
+            "2022-03-07",
+            1
+          ],
+          [
+            "2022-03-14",
+            "2022-03-14",
+            1
+          ],
+          [
+            "2022-03-23",
+            "2022-03-24",
+            2
+          ],
+          [
+            "2022-05-16",
+            "2022-05-16",
+            1
+          ],
+          [
+            "2022-05-24",
+            "2022-05-24",
+            1
+          ],
+          [
+            "2022-08-31",
+            "2022-08-31",
+            1
+          ],
+          [
+            "2022-09-13",
+            "2022-09-15",
+            2
+          ],
+          [
+            "2022-10-19",
+            "2022-10-19",
+            1
+          ],
+          [
+            "2022-10-25",
+            "2022-10-27",
+            2
+          ],
+          [
+            "2022-11-09",
+            "2022-11-09",
+            1
+          ],
+          [
+            "2022-11-14",
+            "2022-11-18",
+            2
+          ],
+          [
+            "2023-01-09",
+            "2023-01-09",
+            1
+          ],
+          [
+            "2023-03-21",
+            "2023-03-31",
+            5
+          ],
+          [
+            "2023-04-21",
+            "2023-04-21",
+            1
+          ],
+          [
+            "2023-05-09",
+            "2023-05-09",
+            1
+          ],
+          [
+            "2023-05-15",
+            "2023-05-15",
+            1
+          ],
+          [
+            "2023-07-18",
+            "2023-07-18",
+            1
+          ],
+          [
+            "2023-08-09",
+            "2023-08-09",
+            1
+          ],
+          [
+            "2023-08-28",
+            "2023-08-28",
+            1
+          ],
+          [
+            "2023-09-20",
+            "2023-09-22",
+            2
+          ],
+          [
+            "2023-09-27",
+            "2023-09-27",
+            1
+          ],
+          [
+            "2023-10-19",
+            "2023-10-19",
+            1
+          ],
+          [
+            "2024-01-22",
+            "2024-01-22",
+            1
+          ],
+          [
+            "2024-02-26",
+            "2024-02-26",
+            1
+          ],
+          [
+            "2024-03-11",
+            "2024-03-11",
+            1
+          ],
+          [
+            "2024-03-25",
+            "2024-03-25",
+            1
+          ],
+          [
+            "2024-04-23",
+            "2024-04-26",
+            2
+          ],
+          [
+            "2024-06-14",
+            "2024-06-14",
+            1
+          ],
+          [
+            "2024-07-30",
+            "2024-07-30",
+            1
+          ],
+          [
+            "2024-08-29",
+            "2024-08-29",
+            1
+          ],
+          [
+            "2024-11-18",
+            "2024-11-18",
+            1
+          ],
+          [
+            "2024-12-13",
+            "2024-12-13",
+            1
+          ],
+          [
+            "2024-12-20",
+            "2024-12-20",
+            1
+          ],
+          [
+            "2025-02-24",
+            "2025-02-25",
+            2
+          ],
+          [
+            "2025-04-30",
+            "2025-04-30",
+            1
+          ],
+          [
+            "2025-05-16",
+            "2025-05-16",
+            1
+          ],
+          [
+            "2025-05-28",
+            "2025-05-29",
+            2
+          ],
+          [
+            "2025-07-10",
+            "2025-07-14",
+            3
+          ],
+          [
+            "2025-07-23",
+            "2025-07-23",
+            1
+          ],
+          [
+            "2025-12-08",
+            "2025-12-08",
+            1
+          ],
+          [
+            "2025-12-15",
+            "2025-12-15",
+            1
+          ],
+          [
+            "2025-12-22",
+            "2025-12-23",
+            2
+          ],
+          [
+            "2025-12-29",
+            "2025-12-29",
+            1
+          ],
+          [
+            "2026-01-13",
+            "2026-01-16",
+            3
+          ],
+          [
+            "2026-02-10",
+            "2026-02-12",
+            3
+          ],
+          [
+            "2026-03-17",
+            "2026-03-19",
+            3
+          ],
+          [
+            "2026-03-31",
+            "2026-03-31",
+            1
+          ],
+          [
+            "2026-05-14",
+            "2026-05-20",
+            3
+          ],
+          [
+            "2026-06-18",
+            "2026-06-18",
+            1
+          ],
+          [
+            "2026-07-13",
+            "2026-07-13",
+            1
+          ],
+          [
+            "2026-07-27",
+            "2026-07-27",
+            1
+          ]
+        ],
+        "yearStats": {
+          "2022": {
+            "signals": 12,
+            "d5": {
+              "n": 12,
+              "medianPct": 1.86,
+              "winPct": 66.7
+            },
+            "d10": {
+              "n": 12,
+              "medianPct": 0.86,
+              "winPct": 50.0
+            },
+            "d20": {
+              "n": 12,
+              "medianPct": 0.71,
+              "winPct": 58.3
+            },
+            "d30": {
+              "n": 12,
+              "medianPct": -1.29,
+              "winPct": 41.7
+            },
+            "d60": {
+              "n": 12,
+              "medianPct": -4.79,
+              "winPct": 8.3
+            },
+            "max30MedianPct": 6.98,
+            "drawdown30MedianPct": -5.91
+          },
+          "2023": {
+            "signals": 11,
+            "d5": {
+              "n": 11,
+              "medianPct": -0.83,
+              "winPct": 27.3
+            },
+            "d10": {
+              "n": 11,
+              "medianPct": 0.14,
+              "winPct": 63.6
+            },
+            "d20": {
+              "n": 11,
+              "medianPct": -0.66,
+              "winPct": 45.5
+            },
+            "d30": {
+              "n": 11,
+              "medianPct": -0.14,
+              "winPct": 45.5
+            },
+            "d60": {
+              "n": 11,
+              "medianPct": 3.97,
+              "winPct": 72.7
+            },
+            "max30MedianPct": 3.4,
+            "drawdown30MedianPct": -4.47
+          },
+          "2024": {
+            "signals": 11,
+            "d5": {
+              "n": 11,
+              "medianPct": 0.76,
+              "winPct": 63.6
+            },
+            "d10": {
+              "n": 11,
+              "medianPct": 1.95,
+              "winPct": 54.5
+            },
+            "d20": {
+              "n": 11,
+              "medianPct": 2.4,
+              "winPct": 63.6
+            },
+            "d30": {
+              "n": 11,
+              "medianPct": 5.33,
+              "winPct": 81.8
+            },
+            "d60": {
+              "n": 11,
+              "medianPct": 1.7,
+              "winPct": 63.6
+            },
+            "max30MedianPct": 10.56,
+            "drawdown30MedianPct": -5.81
+          },
+          "2025": {
+            "signals": 10,
+            "d5": {
+              "n": 10,
+              "medianPct": -0.23,
+              "winPct": 30.0
+            },
+            "d10": {
+              "n": 10,
+              "medianPct": 0.05,
+              "winPct": 50.0
+            },
+            "d20": {
+              "n": 10,
+              "medianPct": -0.56,
+              "winPct": 40.0
+            },
+            "d30": {
+              "n": 10,
+              "medianPct": -1.26,
+              "winPct": 20.0
+            },
+            "d60": {
+              "n": 10,
+              "medianPct": -1.6,
+              "winPct": 40.0
+            },
+            "max30MedianPct": 5.41,
+            "drawdown30MedianPct": -2.24
+          },
+          "2026": {
+            "signals": 8,
+            "d5": {
+              "n": 8,
+              "medianPct": -0.53,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 7,
+              "medianPct": -2.1,
+              "winPct": 42.9
+            },
+            "d20": {
+              "n": 6,
+              "medianPct": -1.34,
+              "winPct": 33.3
+            },
+            "d30": {
+              "n": 6,
+              "medianPct": -0.33,
+              "winPct": 33.3
+            },
+            "d60": {
+              "n": 4,
+              "medianPct": 1.57,
+              "winPct": 50.0
+            },
+            "max30MedianPct": 4.02,
+            "drawdown30MedianPct": -3.67
+          }
+        }
+      },
+      "stateMatrix": [
+        {
+          "state": "下部/下部/下部",
+          "signalDays": 195,
+          "episodes": 94,
+          "all": {
+            "signals": 195,
+            "d5": {
+              "n": 192,
+              "medianPct": 0.31,
+              "winPct": 53.6
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 192,
+              "medianPct": 1.13,
+              "winPct": 58.9
+            },
+            "d30": {
+              "n": 191,
+              "medianPct": 1.28,
+              "winPct": 57.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.98,
+            "drawdown30MedianPct": -3.59
+          },
+          "episodeFirst": {
+            "signals": 94,
+            "d5": {
+              "n": 93,
+              "medianPct": 0.24,
+              "winPct": 51.6
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 93,
+              "medianPct": 1.27,
+              "winPct": 57.0
+            },
+            "d30": {
+              "n": 92,
+              "medianPct": 1.33,
+              "winPct": 57.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.84,
+            "drawdown30MedianPct": -3.61
+          }
+        },
+        {
+          "state": "上部/上部/上部",
+          "signalDays": 209,
+          "episodes": 93,
+          "all": {
+            "signals": 209,
+            "d5": {
+              "n": 208,
+              "medianPct": 0.12,
+              "winPct": 50.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 202,
+              "medianPct": -0.81,
+              "winPct": 44.6
+            },
+            "d30": {
+              "n": 200,
+              "medianPct": -0.74,
+              "winPct": 42.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.24,
+            "drawdown30MedianPct": -4.92
+          },
+          "episodeFirst": {
+            "signals": 93,
+            "d5": {
+              "n": 93,
+              "medianPct": 0.17,
+              "winPct": 53.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 90,
+              "medianPct": -0.11,
+              "winPct": 48.9
+            },
+            "d30": {
+              "n": 89,
+              "medianPct": -0.11,
+              "winPct": 49.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.49,
+            "drawdown30MedianPct": -4.42
+          }
+        },
+        {
+          "state": "下部/下部/中部",
+          "signalDays": 75,
+          "episodes": 52,
+          "all": {
+            "signals": 75,
+            "d5": {
+              "n": 75,
+              "medianPct": -0.46,
+              "winPct": 42.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 73,
+              "medianPct": 0.77,
+              "winPct": 52.1
+            },
+            "d30": {
+              "n": 73,
+              "medianPct": -0.22,
+              "winPct": 45.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.55,
+            "drawdown30MedianPct": -3.83
+          },
+          "episodeFirst": {
+            "signals": 52,
+            "d5": {
+              "n": 52,
+              "medianPct": 0.0,
+              "winPct": 48.1
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 50,
+              "medianPct": 0.22,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 50,
+              "medianPct": -0.33,
+              "winPct": 46.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.21,
+            "drawdown30MedianPct": -4.27
+          }
+        },
+        {
+          "state": "中部/中部/中部",
+          "signalDays": 60,
+          "episodes": 49,
+          "all": {
+            "signals": 60,
+            "d5": {
+              "n": 60,
+              "medianPct": -0.22,
+              "winPct": 43.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 60,
+              "medianPct": 0.0,
+              "winPct": 48.3
+            },
+            "d30": {
+              "n": 59,
+              "medianPct": -0.65,
+              "winPct": 44.1
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.07,
+            "drawdown30MedianPct": -3.47
+          },
+          "episodeFirst": {
+            "signals": 49,
+            "d5": {
+              "n": 49,
+              "medianPct": 0.34,
+              "winPct": 51.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 49,
+              "medianPct": 0.85,
+              "winPct": 51.0
+            },
+            "d30": {
+              "n": 48,
+              "medianPct": -0.48,
+              "winPct": 47.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.46,
+            "drawdown30MedianPct": -2.92
+          }
+        },
+        {
+          "state": "上部/上部/中部",
+          "signalDays": 65,
+          "episodes": 48,
+          "all": {
+            "signals": 65,
+            "d5": {
+              "n": 65,
+              "medianPct": -0.22,
+              "winPct": 46.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 64,
+              "medianPct": -0.28,
+              "winPct": 46.9
+            },
+            "d30": {
+              "n": 62,
+              "medianPct": -0.42,
+              "winPct": 45.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.74,
+            "drawdown30MedianPct": -4.08
+          },
+          "episodeFirst": {
+            "signals": 48,
+            "d5": {
+              "n": 48,
+              "medianPct": -0.17,
+              "winPct": 45.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 47,
+              "medianPct": -0.43,
+              "winPct": 46.8
+            },
+            "d30": {
+              "n": 46,
+              "medianPct": -0.42,
+              "winPct": 43.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.11,
+            "drawdown30MedianPct": -3.65
+          }
+        },
+        {
+          "state": "中部/上部/上部",
+          "signalDays": 64,
+          "episodes": 45,
+          "all": {
+            "signals": 64,
+            "d5": {
+              "n": 64,
+              "medianPct": 0.33,
+              "winPct": 53.1
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 64,
+              "medianPct": -0.82,
+              "winPct": 45.3
+            },
+            "d30": {
+              "n": 64,
+              "medianPct": 0.49,
+              "winPct": 51.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.77,
+            "drawdown30MedianPct": -4.94
+          },
+          "episodeFirst": {
+            "signals": 45,
+            "d5": {
+              "n": 45,
+              "medianPct": 0.32,
+              "winPct": 53.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 45,
+              "medianPct": -0.95,
+              "winPct": 42.2
+            },
+            "d30": {
+              "n": 45,
+              "medianPct": -0.48,
+              "winPct": 46.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.44,
+            "drawdown30MedianPct": -5.15
+          }
+        },
+        {
+          "state": "中部/下部/下部",
+          "signalDays": 47,
+          "episodes": 40,
+          "all": {
+            "signals": 47,
+            "d5": {
+              "n": 47,
+              "medianPct": 0.33,
+              "winPct": 57.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 46,
+              "medianPct": 1.45,
+              "winPct": 63.0
+            },
+            "d30": {
+              "n": 45,
+              "medianPct": 2.5,
+              "winPct": 64.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.0,
+            "drawdown30MedianPct": -2.65
+          },
+          "episodeFirst": {
+            "signals": 40,
+            "d5": {
+              "n": 40,
+              "medianPct": 0.55,
+              "winPct": 62.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 39,
+              "medianPct": 1.71,
+              "winPct": 61.5
+            },
+            "d30": {
+              "n": 38,
+              "medianPct": 2.57,
+              "winPct": 60.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.94,
+            "drawdown30MedianPct": -2.47
+          }
+        },
+        {
+          "state": "下部/中部/中部",
+          "signalDays": 41,
+          "episodes": 36,
+          "all": {
+            "signals": 41,
+            "d5": {
+              "n": 41,
+              "medianPct": -0.99,
+              "winPct": 43.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 38,
+              "medianPct": -0.71,
+              "winPct": 42.1
+            },
+            "d30": {
+              "n": 38,
+              "medianPct": 0.63,
+              "winPct": 52.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.53,
+            "drawdown30MedianPct": -4.34
+          },
+          "episodeFirst": {
+            "signals": 36,
+            "d5": {
+              "n": 36,
+              "medianPct": -1.14,
+              "winPct": 38.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 34,
+              "medianPct": -0.71,
+              "winPct": 41.2
+            },
+            "d30": {
+              "n": 34,
+              "medianPct": 0.63,
+              "winPct": 52.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.39,
+            "drawdown30MedianPct": -4.36
+          }
+        },
+        {
+          "state": "中部/中部/下部",
+          "signalDays": 52,
+          "episodes": 36,
+          "all": {
+            "signals": 52,
+            "d5": {
+              "n": 52,
+              "medianPct": -0.36,
+              "winPct": 46.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 52,
+              "medianPct": 0.34,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 52,
+              "medianPct": 0.21,
+              "winPct": 51.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.63,
+            "drawdown30MedianPct": -5.17
+          },
+          "episodeFirst": {
+            "signals": 36,
+            "d5": {
+              "n": 36,
+              "medianPct": -0.59,
+              "winPct": 41.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 36,
+              "medianPct": -0.58,
+              "winPct": 47.2
+            },
+            "d30": {
+              "n": 36,
+              "medianPct": 0.1,
+              "winPct": 50.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.05,
+            "drawdown30MedianPct": -5.4
+          }
+        },
+        {
+          "state": "中部/中部/上部",
+          "signalDays": 49,
+          "episodes": 35,
+          "all": {
+            "signals": 49,
+            "d5": {
+              "n": 49,
+              "medianPct": 0.0,
+              "winPct": 49.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 49,
+              "medianPct": -1.22,
+              "winPct": 36.7
+            },
+            "d30": {
+              "n": 49,
+              "medianPct": -0.79,
+              "winPct": 42.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.2,
+            "drawdown30MedianPct": -5.1
+          },
+          "episodeFirst": {
+            "signals": 35,
+            "d5": {
+              "n": 35,
+              "medianPct": 0.15,
+              "winPct": 51.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 35,
+              "medianPct": -1.57,
+              "winPct": 37.1
+            },
+            "d30": {
+              "n": 35,
+              "medianPct": -0.96,
+              "winPct": 40.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.66,
+            "drawdown30MedianPct": -5.1
+          }
+        },
+        {
+          "state": "上部/中部/中部",
+          "signalDays": 32,
+          "episodes": 30,
+          "all": {
+            "signals": 32,
+            "d5": {
+              "n": 32,
+              "medianPct": 0.78,
+              "winPct": 68.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 31,
+              "medianPct": 1.82,
+              "winPct": 71.0
+            },
+            "d30": {
+              "n": 30,
+              "medianPct": 1.77,
+              "winPct": 66.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.81,
+            "drawdown30MedianPct": -2.31
+          },
+          "episodeFirst": {
+            "signals": 30,
+            "d5": {
+              "n": 30,
+              "medianPct": 0.78,
+              "winPct": 66.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 29,
+              "medianPct": 1.82,
+              "winPct": 72.4
+            },
+            "d30": {
+              "n": 28,
+              "medianPct": 1.77,
+              "winPct": 67.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.58,
+            "drawdown30MedianPct": -2.31
+          }
+        },
+        {
+          "state": "上部/中部/下部",
+          "signalDays": 32,
+          "episodes": 27,
+          "all": {
+            "signals": 32,
+            "d5": {
+              "n": 32,
+              "medianPct": -0.53,
+              "winPct": 40.6
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 31,
+              "medianPct": 0.57,
+              "winPct": 54.8
+            },
+            "d30": {
+              "n": 31,
+              "medianPct": 0.55,
+              "winPct": 54.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.73,
+            "drawdown30MedianPct": -5.54
+          },
+          "episodeFirst": {
+            "signals": 27,
+            "d5": {
+              "n": 27,
+              "medianPct": -0.23,
+              "winPct": 44.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 26,
+              "medianPct": 0.37,
+              "winPct": 53.8
+            },
+            "d30": {
+              "n": 26,
+              "medianPct": 0.69,
+              "winPct": 57.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.29,
+            "drawdown30MedianPct": -5.5
+          }
+        },
+        {
+          "state": "下部/中部/上部",
+          "signalDays": 29,
+          "episodes": 25,
+          "all": {
+            "signals": 29,
+            "d5": {
+              "n": 29,
+              "medianPct": 0.1,
+              "winPct": 51.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 29,
+              "medianPct": -1.96,
+              "winPct": 34.5
+            },
+            "d30": {
+              "n": 29,
+              "medianPct": -1.31,
+              "winPct": 34.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.76,
+            "drawdown30MedianPct": -5.63
+          },
+          "episodeFirst": {
+            "signals": 25,
+            "d5": {
+              "n": 25,
+              "medianPct": -0.16,
+              "winPct": 48.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 25,
+              "medianPct": -1.75,
+              "winPct": 36.0
+            },
+            "d30": {
+              "n": 25,
+              "medianPct": -1.9,
+              "winPct": 36.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.34,
+            "drawdown30MedianPct": -5.63
+          }
+        },
+        {
+          "state": "中部/下部/中部",
+          "signalDays": 20,
+          "episodes": 19,
+          "all": {
+            "signals": 20,
+            "d5": {
+              "n": 20,
+              "medianPct": -0.51,
+              "winPct": 35.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 20,
+              "medianPct": -0.09,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 20,
+              "medianPct": -0.33,
+              "winPct": 45.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.71,
+            "drawdown30MedianPct": -4.33
+          },
+          "episodeFirst": {
+            "signals": 19,
+            "d5": {
+              "n": 19,
+              "medianPct": -0.73,
+              "winPct": 36.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 19,
+              "medianPct": -0.45,
+              "winPct": 47.4
+            },
+            "d30": {
+              "n": 19,
+              "medianPct": -0.52,
+              "winPct": 42.1
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.88,
+            "drawdown30MedianPct": -4.73
+          }
+        },
+        {
+          "state": "上部/上部/下部",
+          "signalDays": 24,
+          "episodes": 19,
+          "all": {
+            "signals": 24,
+            "d5": {
+              "n": 24,
+              "medianPct": 0.65,
+              "winPct": 54.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 24,
+              "medianPct": 1.11,
+              "winPct": 54.2
+            },
+            "d30": {
+              "n": 24,
+              "medianPct": 1.99,
+              "winPct": 66.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.55,
+            "drawdown30MedianPct": -2.0
+          },
+          "episodeFirst": {
+            "signals": 19,
+            "d5": {
+              "n": 19,
+              "medianPct": 1.08,
+              "winPct": 57.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 19,
+              "medianPct": -0.11,
+              "winPct": 47.4
+            },
+            "d30": {
+              "n": 19,
+              "medianPct": 1.81,
+              "winPct": 63.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.15,
+            "drawdown30MedianPct": -2.56
+          }
+        },
+        {
+          "state": "下部/中部/下部",
+          "signalDays": 18,
+          "episodes": 18,
+          "all": {
+            "signals": 18,
+            "d5": {
+              "n": 18,
+              "medianPct": 0.0,
+              "winPct": 44.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 18,
+              "medianPct": -0.64,
+              "winPct": 38.9
+            },
+            "d30": {
+              "n": 17,
+              "medianPct": 0.6,
+              "winPct": 52.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.85,
+            "drawdown30MedianPct": -4.65
+          },
+          "episodeFirst": {
+            "signals": 18,
+            "d5": {
+              "n": 18,
+              "medianPct": 0.0,
+              "winPct": 44.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 18,
+              "medianPct": -0.64,
+              "winPct": 38.9
+            },
+            "d30": {
+              "n": 17,
+              "medianPct": 0.6,
+              "winPct": 52.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.85,
+            "drawdown30MedianPct": -4.65
+          }
+        },
+        {
+          "state": "中部/上部/中部",
+          "signalDays": 17,
+          "episodes": 17,
+          "all": {
+            "signals": 17,
+            "d5": {
+              "n": 17,
+              "medianPct": 0.36,
+              "winPct": 58.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 17,
+              "medianPct": -1.55,
+              "winPct": 35.3
+            },
+            "d30": {
+              "n": 17,
+              "medianPct": -0.27,
+              "winPct": 35.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.81,
+            "drawdown30MedianPct": -5.21
+          },
+          "episodeFirst": {
+            "signals": 17,
+            "d5": {
+              "n": 17,
+              "medianPct": 0.36,
+              "winPct": 58.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 17,
+              "medianPct": -1.55,
+              "winPct": 35.3
+            },
+            "d30": {
+              "n": 17,
+              "medianPct": -0.27,
+              "winPct": 35.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.81,
+            "drawdown30MedianPct": -5.21
+          }
+        },
+        {
+          "state": "上部/中部/上部",
+          "signalDays": 17,
+          "episodes": 15,
+          "all": {
+            "signals": 17,
+            "d5": {
+              "n": 17,
+              "medianPct": -1.0,
+              "winPct": 41.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 17,
+              "medianPct": 0.61,
+              "winPct": 52.9
+            },
+            "d30": {
+              "n": 17,
+              "medianPct": 1.07,
+              "winPct": 58.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.85,
+            "drawdown30MedianPct": -4.67
+          },
+          "episodeFirst": {
+            "signals": 15,
+            "d5": {
+              "n": 15,
+              "medianPct": -1.0,
+              "winPct": 40.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": -0.74,
+              "winPct": 46.7
+            },
+            "d30": {
+              "n": 15,
+              "medianPct": 0.9,
+              "winPct": 53.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.31,
+            "drawdown30MedianPct": -4.67
+          }
+        },
+        {
+          "state": "下部/下部/上部",
+          "signalDays": 23,
+          "episodes": 15,
+          "all": {
+            "signals": 23,
+            "d5": {
+              "n": 23,
+              "medianPct": 0.13,
+              "winPct": 56.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 23,
+              "medianPct": 2.9,
+              "winPct": 65.2
+            },
+            "d30": {
+              "n": 23,
+              "medianPct": 1.11,
+              "winPct": 78.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.91,
+            "drawdown30MedianPct": -3.61
+          },
+          "episodeFirst": {
+            "signals": 15,
+            "d5": {
+              "n": 15,
+              "medianPct": 0.13,
+              "winPct": 60.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": -1.39,
+              "winPct": 46.7
+            },
+            "d30": {
+              "n": 15,
+              "medianPct": 1.06,
+              "winPct": 66.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.21,
+            "drawdown30MedianPct": -3.99
+          }
+        },
+        {
+          "state": "上部/下部/下部",
+          "signalDays": 15,
+          "episodes": 13,
+          "all": {
+            "signals": 15,
+            "d5": {
+              "n": 15,
+              "medianPct": 0.7,
+              "winPct": 73.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": 0.52,
+              "winPct": 53.3
+            },
+            "d30": {
+              "n": 15,
+              "medianPct": 0.32,
+              "winPct": 60.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 8.13,
+            "drawdown30MedianPct": -4.05
+          },
+          "episodeFirst": {
+            "signals": 13,
+            "d5": {
+              "n": 13,
+              "medianPct": 0.69,
+              "winPct": 69.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 13,
+              "medianPct": 0.52,
+              "winPct": 53.8
+            },
+            "d30": {
+              "n": 13,
+              "medianPct": 0.72,
+              "winPct": 61.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 8.13,
+            "drawdown30MedianPct": -4.23
+          }
+        },
+        {
+          "state": "下部/上部/上部",
+          "signalDays": 13,
+          "episodes": 12,
+          "all": {
+            "signals": 13,
+            "d5": {
+              "n": 13,
+              "medianPct": -1.72,
+              "winPct": 30.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 13,
+              "medianPct": -0.88,
+              "winPct": 38.5
+            },
+            "d30": {
+              "n": 13,
+              "medianPct": -0.66,
+              "winPct": 46.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 3.64,
+            "drawdown30MedianPct": -5.7
+          },
+          "episodeFirst": {
+            "signals": 12,
+            "d5": {
+              "n": 12,
+              "medianPct": -1.69,
+              "winPct": 33.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 12,
+              "medianPct": -0.61,
+              "winPct": 41.7
+            },
+            "d30": {
+              "n": 12,
+              "medianPct": -0.27,
+              "winPct": 50.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.85,
+            "drawdown30MedianPct": -5.14
+          }
+        }
+      ],
+      "learnedClassification": {
+        "tier": "历史有优势但近期降级",
+        "window": "等待当前状态确认",
+        "rule": "全历史主信号曾有优势，但最近年度转弱；不单独买入，先等待日线止跌、股息率/250日线重新满足，并用新信号簇复核。",
+        "basis": "全历史20日50.0%/0.22%，最近年度20日33.3%/-1.34%"
+      },
+      "latestState": {
+        "day": "上部",
+        "week": "下部",
+        "month": "下部",
+        "percent": {
+          "day": 77.8,
+          "week": 15.6,
+          "month": 15.6
+        }
+      }
+    },
+    {
+      "code": "003816",
+      "name": "中国广核",
+      "source": "东方财富妙想调用受限；使用腾讯公开历史日K回退（未提供前复权参数）",
+      "sourceRows": 1112,
+      "sourceRange": [
+        "2022-01-04",
+        "2026-08-06"
+      ],
+      "primary": {
+        "signal": "周下+日下+月中",
+        "signalDays": {
+          "signals": 89,
+          "d5": {
+            "n": 89,
+            "medianPct": 0.38,
+            "winPct": 52.8
+          },
+          "d10": {
+            "n": 89,
+            "medianPct": 0.52,
+            "winPct": 53.9
+          },
+          "d20": {
+            "n": 89,
+            "medianPct": 0.52,
+            "winPct": 55.1
+          },
+          "d30": {
+            "n": 89,
+            "medianPct": 0.65,
+            "winPct": 55.1
+          },
+          "d60": {
+            "n": 89,
+            "medianPct": 1.7,
+            "winPct": 57.3
+          },
+          "max30MedianPct": 5.63,
+          "drawdown30MedianPct": -2.98
+        },
+        "episodeFirst": {
+          "signals": 58,
+          "d5": {
+            "n": 58,
+            "medianPct": 0.33,
+            "winPct": 51.7
+          },
+          "d10": {
+            "n": 58,
+            "medianPct": 0.13,
+            "winPct": 50.0
+          },
+          "d20": {
+            "n": 58,
+            "medianPct": 0.44,
+            "winPct": 56.9
+          },
+          "d30": {
+            "n": 58,
+            "medianPct": 0.59,
+            "winPct": 55.2
+          },
+          "d60": {
+            "n": 58,
+            "medianPct": 1.76,
+            "winPct": 58.6
+          },
+          "max30MedianPct": 5.65,
+          "drawdown30MedianPct": -3.23
+        },
+        "episodeDates": [
+          [
+            "2022-02-14",
+            "2022-02-16",
+            3
+          ],
+          [
+            "2022-03-07",
+            "2022-03-07",
+            1
+          ],
+          [
+            "2022-04-07",
+            "2022-04-07",
+            1
+          ],
+          [
+            "2022-04-25",
+            "2022-04-25",
+            1
+          ],
+          [
+            "2022-05-16",
+            "2022-05-16",
+            1
+          ],
+          [
+            "2022-06-22",
+            "2022-06-24",
+            2
+          ],
+          [
+            "2022-07-11",
+            "2022-07-14",
+            2
+          ],
+          [
+            "2022-08-18",
+            "2022-08-18",
+            1
+          ],
+          [
+            "2022-08-31",
+            "2022-08-31",
+            1
+          ],
+          [
+            "2022-09-13",
+            "2022-09-13",
+            1
+          ],
+          [
+            "2022-10-19",
+            "2022-10-19",
+            1
+          ],
+          [
+            "2022-10-27",
+            "2022-10-27",
+            1
+          ],
+          [
+            "2022-11-14",
+            "2022-11-14",
+            1
+          ],
+          [
+            "2022-11-21",
+            "2022-11-21",
+            1
+          ],
+          [
+            "2022-12-07",
+            "2022-12-08",
+            2
+          ],
+          [
+            "2023-01-30",
+            "2023-01-30",
+            1
+          ],
+          [
+            "2023-03-10",
+            "2023-03-10",
+            1
+          ],
+          [
+            "2023-03-21",
+            "2023-03-21",
+            1
+          ],
+          [
+            "2023-03-27",
+            "2023-03-28",
+            2
+          ],
+          [
+            "2023-04-21",
+            "2023-04-21",
+            1
+          ],
+          [
+            "2023-05-09",
+            "2023-05-09",
+            1
+          ],
+          [
+            "2023-06-12",
+            "2023-06-13",
+            2
+          ],
+          [
+            "2023-08-24",
+            "2023-08-29",
+            3
+          ],
+          [
+            "2023-09-12",
+            "2023-09-15",
+            2
+          ],
+          [
+            "2023-09-21",
+            "2023-09-21",
+            1
+          ],
+          [
+            "2023-12-28",
+            "2023-12-28",
+            1
+          ],
+          [
+            "2024-01-22",
+            "2024-01-22",
+            1
+          ],
+          [
+            "2024-02-26",
+            "2024-02-26",
+            1
+          ],
+          [
+            "2024-03-11",
+            "2024-03-11",
+            1
+          ],
+          [
+            "2024-04-23",
+            "2024-04-26",
+            3
+          ],
+          [
+            "2024-07-10",
+            "2024-07-12",
+            2
+          ],
+          [
+            "2024-07-30",
+            "2024-07-30",
+            1
+          ],
+          [
+            "2024-08-26",
+            "2024-08-29",
+            2
+          ],
+          [
+            "2024-12-13",
+            "2024-12-13",
+            1
+          ],
+          [
+            "2024-12-20",
+            "2024-12-20",
+            1
+          ],
+          [
+            "2025-02-10",
+            "2025-02-14",
+            3
+          ],
+          [
+            "2025-02-25",
+            "2025-02-26",
+            2
+          ],
+          [
+            "2025-03-17",
+            "2025-03-21",
+            3
+          ],
+          [
+            "2025-04-23",
+            "2025-04-24",
+            2
+          ],
+          [
+            "2025-04-29",
+            "2025-04-30",
+            2
+          ],
+          [
+            "2025-05-16",
+            "2025-05-16",
+            1
+          ],
+          [
+            "2025-05-30",
+            "2025-05-30",
+            1
+          ],
+          [
+            "2025-06-16",
+            "2025-06-16",
+            1
+          ],
+          [
+            "2025-06-24",
+            "2025-06-26",
+            2
+          ],
+          [
+            "2025-07-15",
+            "2025-07-15",
+            1
+          ],
+          [
+            "2025-07-25",
+            "2025-07-25",
+            1
+          ],
+          [
+            "2025-08-11",
+            "2025-08-11",
+            1
+          ],
+          [
+            "2025-10-31",
+            "2025-10-31",
+            1
+          ],
+          [
+            "2025-11-13",
+            "2025-11-13",
+            1
+          ],
+          [
+            "2025-12-08",
+            "2025-12-08",
+            1
+          ],
+          [
+            "2025-12-16",
+            "2025-12-16",
+            1
+          ],
+          [
+            "2025-12-22",
+            "2025-12-23",
+            2
+          ],
+          [
+            "2025-12-29",
+            "2025-12-29",
+            1
+          ],
+          [
+            "2026-01-13",
+            "2026-01-16",
+            4
+          ],
+          [
+            "2026-01-27",
+            "2026-01-27",
+            1
+          ],
+          [
+            "2026-02-10",
+            "2026-02-12",
+            3
+          ],
+          [
+            "2026-03-16",
+            "2026-03-20",
+            4
+          ],
+          [
+            "2026-04-29",
+            "2026-04-29",
+            1
+          ]
+        ],
+        "yearStats": {
+          "2022": {
+            "signals": 15,
+            "d5": {
+              "n": 15,
+              "medianPct": 0.38,
+              "winPct": 60.0
+            },
+            "d10": {
+              "n": 15,
+              "medianPct": -0.36,
+              "winPct": 26.7
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": -0.37,
+              "winPct": 40.0
+            },
+            "d30": {
+              "n": 15,
+              "medianPct": -1.05,
+              "winPct": 33.3
+            },
+            "d60": {
+              "n": 15,
+              "medianPct": -1.47,
+              "winPct": 40.0
+            },
+            "max30MedianPct": 2.8,
+            "drawdown30MedianPct": -4.68
+          },
+          "2023": {
+            "signals": 11,
+            "d5": {
+              "n": 11,
+              "medianPct": -0.37,
+              "winPct": 45.5
+            },
+            "d10": {
+              "n": 11,
+              "medianPct": 2.08,
+              "winPct": 54.5
+            },
+            "d20": {
+              "n": 11,
+              "medianPct": 1.33,
+              "winPct": 63.6
+            },
+            "d30": {
+              "n": 11,
+              "medianPct": 0.65,
+              "winPct": 63.6
+            },
+            "d60": {
+              "n": 11,
+              "medianPct": 3.75,
+              "winPct": 63.6
+            },
+            "max30MedianPct": 7.49,
+            "drawdown30MedianPct": -2.08
+          },
+          "2024": {
+            "signals": 9,
+            "d5": {
+              "n": 9,
+              "medianPct": 0.5,
+              "winPct": 55.6
+            },
+            "d10": {
+              "n": 9,
+              "medianPct": -1.92,
+              "winPct": 44.4
+            },
+            "d20": {
+              "n": 9,
+              "medianPct": 0.61,
+              "winPct": 55.6
+            },
+            "d30": {
+              "n": 9,
+              "medianPct": 1.45,
+              "winPct": 55.6
+            },
+            "d60": {
+              "n": 9,
+              "medianPct": -7.23,
+              "winPct": 44.4
+            },
+            "max30MedianPct": 6.49,
+            "drawdown30MedianPct": -7.73
+          },
+          "2025": {
+            "signals": 18,
+            "d5": {
+              "n": 18,
+              "medianPct": 0.27,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 18,
+              "medianPct": 0.66,
+              "winPct": 61.1
+            },
+            "d20": {
+              "n": 18,
+              "medianPct": 0.66,
+              "winPct": 55.6
+            },
+            "d30": {
+              "n": 18,
+              "medianPct": 1.25,
+              "winPct": 61.1
+            },
+            "d60": {
+              "n": 18,
+              "medianPct": 4.87,
+              "winPct": 72.2
+            },
+            "max30MedianPct": 5.09,
+            "drawdown30MedianPct": -2.0
+          },
+          "2026": {
+            "signals": 5,
+            "d5": {
+              "n": 5,
+              "medianPct": 0.0,
+              "winPct": 40.0
+            },
+            "d10": {
+              "n": 5,
+              "medianPct": 3.58,
+              "winPct": 80.0
+            },
+            "d20": {
+              "n": 5,
+              "medianPct": 4.96,
+              "winPct": 100.0
+            },
+            "d30": {
+              "n": 5,
+              "medianPct": 8.07,
+              "winPct": 80.0
+            },
+            "d60": {
+              "n": 5,
+              "medianPct": 13.92,
+              "winPct": 80.0
+            },
+            "max30MedianPct": 11.58,
+            "drawdown30MedianPct": -2.58
+          }
+        }
+      },
+      "stateMatrix": [
+        {
+          "state": "上部/上部/上部",
+          "signalDays": 202,
+          "episodes": 104,
+          "all": {
+            "signals": 202,
+            "d5": {
+              "n": 201,
+              "medianPct": -0.22,
+              "winPct": 45.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 196,
+              "medianPct": 0.0,
+              "winPct": 49.0
+            },
+            "d30": {
+              "n": 195,
+              "medianPct": 0.0,
+              "winPct": 49.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.87,
+            "drawdown30MedianPct": -4.19
+          },
+          "episodeFirst": {
+            "signals": 104,
+            "d5": {
+              "n": 104,
+              "medianPct": -0.26,
+              "winPct": 42.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 101,
+              "medianPct": 0.0,
+              "winPct": 46.5
+            },
+            "d30": {
+              "n": 100,
+              "medianPct": -0.12,
+              "winPct": 49.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.81,
+            "drawdown30MedianPct": -3.78
+          }
+        },
+        {
+          "state": "下部/下部/下部",
+          "signalDays": 181,
+          "episodes": 86,
+          "all": {
+            "signals": 181,
+            "d5": {
+              "n": 179,
+              "medianPct": 0.28,
+              "winPct": 52.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 179,
+              "medianPct": 1.09,
+              "winPct": 62.0
+            },
+            "d30": {
+              "n": 175,
+              "medianPct": 0.99,
+              "winPct": 57.1
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.3,
+            "drawdown30MedianPct": -2.96
+          },
+          "episodeFirst": {
+            "signals": 86,
+            "d5": {
+              "n": 85,
+              "medianPct": 0.27,
+              "winPct": 50.6
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 85,
+              "medianPct": 0.72,
+              "winPct": 52.9
+            },
+            "d30": {
+              "n": 84,
+              "medianPct": 0.73,
+              "winPct": 56.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.16,
+            "drawdown30MedianPct": -2.97
+          }
+        },
+        {
+          "state": "中部/中部/中部",
+          "signalDays": 96,
+          "episodes": 64,
+          "all": {
+            "signals": 96,
+            "d5": {
+              "n": 95,
+              "medianPct": 0.71,
+              "winPct": 58.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 92,
+              "medianPct": 2.07,
+              "winPct": 64.1
+            },
+            "d30": {
+              "n": 91,
+              "medianPct": 0.98,
+              "winPct": 62.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.16,
+            "drawdown30MedianPct": -2.59
+          },
+          "episodeFirst": {
+            "signals": 64,
+            "d5": {
+              "n": 63,
+              "medianPct": 0.55,
+              "winPct": 58.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 61,
+              "medianPct": 0.53,
+              "winPct": 54.1
+            },
+            "d30": {
+              "n": 60,
+              "medianPct": 0.52,
+              "winPct": 56.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.43,
+            "drawdown30MedianPct": -2.81
+          }
+        },
+        {
+          "state": "下部/下部/中部",
+          "signalDays": 89,
+          "episodes": 58,
+          "all": {
+            "signals": 89,
+            "d5": {
+              "n": 89,
+              "medianPct": 0.38,
+              "winPct": 52.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 89,
+              "medianPct": 0.52,
+              "winPct": 55.1
+            },
+            "d30": {
+              "n": 89,
+              "medianPct": 0.65,
+              "winPct": 55.1
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.63,
+            "drawdown30MedianPct": -2.98
+          },
+          "episodeFirst": {
+            "signals": 58,
+            "d5": {
+              "n": 58,
+              "medianPct": 0.33,
+              "winPct": 51.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 58,
+              "medianPct": 0.44,
+              "winPct": 56.9
+            },
+            "d30": {
+              "n": 58,
+              "medianPct": 0.59,
+              "winPct": 55.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.65,
+            "drawdown30MedianPct": -3.23
+          }
+        },
+        {
+          "state": "中部/上部/上部",
+          "signalDays": 62,
+          "episodes": 49,
+          "all": {
+            "signals": 62,
+            "d5": {
+              "n": 62,
+              "medianPct": 0.0,
+              "winPct": 48.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 60,
+              "medianPct": 0.68,
+              "winPct": 55.0
+            },
+            "d30": {
+              "n": 60,
+              "medianPct": 0.71,
+              "winPct": 51.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.0,
+            "drawdown30MedianPct": -4.06
+          },
+          "episodeFirst": {
+            "signals": 49,
+            "d5": {
+              "n": 49,
+              "medianPct": 0.25,
+              "winPct": 51.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 47,
+              "medianPct": 0.55,
+              "winPct": 53.2
+            },
+            "d30": {
+              "n": 47,
+              "medianPct": 0.0,
+              "winPct": 46.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.14,
+            "drawdown30MedianPct": -4.48
+          }
+        },
+        {
+          "state": "上部/上部/中部",
+          "signalDays": 63,
+          "episodes": 46,
+          "all": {
+            "signals": 63,
+            "d5": {
+              "n": 63,
+              "medianPct": 0.54,
+              "winPct": 58.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 63,
+              "medianPct": 0.77,
+              "winPct": 54.0
+            },
+            "d30": {
+              "n": 63,
+              "medianPct": 1.08,
+              "winPct": 60.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.76,
+            "drawdown30MedianPct": -2.94
+          },
+          "episodeFirst": {
+            "signals": 46,
+            "d5": {
+              "n": 46,
+              "medianPct": 0.53,
+              "winPct": 60.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 46,
+              "medianPct": 0.8,
+              "winPct": 56.5
+            },
+            "d30": {
+              "n": 46,
+              "medianPct": 1.1,
+              "winPct": 58.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.89,
+            "drawdown30MedianPct": -3.23
+          }
+        },
+        {
+          "state": "下部/中部/中部",
+          "signalDays": 54,
+          "episodes": 44,
+          "all": {
+            "signals": 54,
+            "d5": {
+              "n": 54,
+              "medianPct": 0.0,
+              "winPct": 46.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 52,
+              "medianPct": -0.27,
+              "winPct": 44.2
+            },
+            "d30": {
+              "n": 52,
+              "medianPct": -0.32,
+              "winPct": 42.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.82,
+            "drawdown30MedianPct": -3.14
+          },
+          "episodeFirst": {
+            "signals": 44,
+            "d5": {
+              "n": 44,
+              "medianPct": 0.14,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 42,
+              "medianPct": -0.79,
+              "winPct": 40.5
+            },
+            "d30": {
+              "n": 42,
+              "medianPct": -0.72,
+              "winPct": 40.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.68,
+            "drawdown30MedianPct": -3.26
+          }
+        },
+        {
+          "state": "中部/下部/下部",
+          "signalDays": 45,
+          "episodes": 41,
+          "all": {
+            "signals": 45,
+            "d5": {
+              "n": 45,
+              "medianPct": 1.05,
+              "winPct": 68.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 45,
+              "medianPct": 1.82,
+              "winPct": 73.3
+            },
+            "d30": {
+              "n": 44,
+              "medianPct": 1.05,
+              "winPct": 68.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.59,
+            "drawdown30MedianPct": -2.03
+          },
+          "episodeFirst": {
+            "signals": 41,
+            "d5": {
+              "n": 41,
+              "medianPct": 0.8,
+              "winPct": 65.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 41,
+              "medianPct": 1.63,
+              "winPct": 70.7
+            },
+            "d30": {
+              "n": 40,
+              "medianPct": 0.91,
+              "winPct": 67.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.59,
+            "drawdown30MedianPct": -2.27
+          }
+        },
+        {
+          "state": "中部/中部/上部",
+          "signalDays": 52,
+          "episodes": 37,
+          "all": {
+            "signals": 52,
+            "d5": {
+              "n": 52,
+              "medianPct": -1.06,
+              "winPct": 34.6
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 51,
+              "medianPct": -1.73,
+              "winPct": 31.4
+            },
+            "d30": {
+              "n": 51,
+              "medianPct": 0.37,
+              "winPct": 52.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.19,
+            "drawdown30MedianPct": -5.73
+          },
+          "episodeFirst": {
+            "signals": 37,
+            "d5": {
+              "n": 37,
+              "medianPct": -0.53,
+              "winPct": 40.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 36,
+              "medianPct": -1.35,
+              "winPct": 36.1
+            },
+            "d30": {
+              "n": 36,
+              "medianPct": 0.39,
+              "winPct": 58.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.5,
+            "drawdown30MedianPct": -5.17
+          }
+        },
+        {
+          "state": "上部/中部/中部",
+          "signalDays": 38,
+          "episodes": 34,
+          "all": {
+            "signals": 38,
+            "d5": {
+              "n": 38,
+              "medianPct": 0.36,
+              "winPct": 60.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 37,
+              "medianPct": 1.04,
+              "winPct": 59.5
+            },
+            "d30": {
+              "n": 35,
+              "medianPct": 0.84,
+              "winPct": 62.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.64,
+            "drawdown30MedianPct": -2.55
+          },
+          "episodeFirst": {
+            "signals": 34,
+            "d5": {
+              "n": 34,
+              "medianPct": 0.3,
+              "winPct": 55.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 34,
+              "medianPct": 1.01,
+              "winPct": 58.8
+            },
+            "d30": {
+              "n": 32,
+              "medianPct": 0.95,
+              "winPct": 62.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.64,
+            "drawdown30MedianPct": -2.71
+          }
+        },
+        {
+          "state": "中部/中部/下部",
+          "signalDays": 49,
+          "episodes": 34,
+          "all": {
+            "signals": 49,
+            "d5": {
+              "n": 49,
+              "medianPct": 0.36,
+              "winPct": 55.1
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 49,
+              "medianPct": 1.32,
+              "winPct": 57.1
+            },
+            "d30": {
+              "n": 49,
+              "medianPct": 1.37,
+              "winPct": 59.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.59,
+            "drawdown30MedianPct": -2.72
+          },
+          "episodeFirst": {
+            "signals": 34,
+            "d5": {
+              "n": 34,
+              "medianPct": 0.43,
+              "winPct": 58.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 34,
+              "medianPct": 1.2,
+              "winPct": 58.8
+            },
+            "d30": {
+              "n": 34,
+              "medianPct": 1.37,
+              "winPct": 55.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.13,
+            "drawdown30MedianPct": -2.73
+          }
+        },
+        {
+          "state": "下部/中部/上部",
+          "signalDays": 21,
+          "episodes": 21,
+          "all": {
+            "signals": 21,
+            "d5": {
+              "n": 21,
+              "medianPct": 0.36,
+              "winPct": 52.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 20,
+              "medianPct": 0.51,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 20,
+              "medianPct": 1.27,
+              "winPct": 65.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.43,
+            "drawdown30MedianPct": -3.91
+          },
+          "episodeFirst": {
+            "signals": 21,
+            "d5": {
+              "n": 21,
+              "medianPct": 0.36,
+              "winPct": 52.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 20,
+              "medianPct": 0.51,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 20,
+              "medianPct": 1.27,
+              "winPct": 65.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.43,
+            "drawdown30MedianPct": -3.91
+          }
+        },
+        {
+          "state": "下部/中部/下部",
+          "signalDays": 23,
+          "episodes": 20,
+          "all": {
+            "signals": 23,
+            "d5": {
+              "n": 23,
+              "medianPct": 0.36,
+              "winPct": 56.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 23,
+              "medianPct": -1.35,
+              "winPct": 39.1
+            },
+            "d30": {
+              "n": 23,
+              "medianPct": 0.25,
+              "winPct": 52.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.05,
+            "drawdown30MedianPct": -4.23
+          },
+          "episodeFirst": {
+            "signals": 20,
+            "d5": {
+              "n": 20,
+              "medianPct": 0.3,
+              "winPct": 55.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 20,
+              "medianPct": -0.84,
+              "winPct": 40.0
+            },
+            "d30": {
+              "n": 20,
+              "medianPct": 0.29,
+              "winPct": 55.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.01,
+            "drawdown30MedianPct": -4.13
+          }
+        },
+        {
+          "state": "上部/上部/下部",
+          "signalDays": 28,
+          "episodes": 20,
+          "all": {
+            "signals": 28,
+            "d5": {
+              "n": 28,
+              "medianPct": -0.14,
+              "winPct": 46.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 28,
+              "medianPct": 1.48,
+              "winPct": 64.3
+            },
+            "d30": {
+              "n": 27,
+              "medianPct": 0.82,
+              "winPct": 59.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.29,
+            "drawdown30MedianPct": -2.7
+          },
+          "episodeFirst": {
+            "signals": 20,
+            "d5": {
+              "n": 20,
+              "medianPct": 0.0,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 20,
+              "medianPct": 0.98,
+              "winPct": 60.0
+            },
+            "d30": {
+              "n": 19,
+              "medianPct": 0.67,
+              "winPct": 57.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.71,
+            "drawdown30MedianPct": -2.45
+          }
+        },
+        {
+          "state": "上部/中部/上部",
+          "signalDays": 15,
+          "episodes": 15,
+          "all": {
+            "signals": 15,
+            "d5": {
+              "n": 15,
+              "medianPct": 0.32,
+              "winPct": 53.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": -1.42,
+              "winPct": 40.0
+            },
+            "d30": {
+              "n": 15,
+              "medianPct": -1.97,
+              "winPct": 40.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 3.95,
+            "drawdown30MedianPct": -5.41
+          },
+          "episodeFirst": {
+            "signals": 15,
+            "d5": {
+              "n": 15,
+              "medianPct": 0.32,
+              "winPct": 53.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": -1.42,
+              "winPct": 40.0
+            },
+            "d30": {
+              "n": 15,
+              "medianPct": -1.97,
+              "winPct": 40.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 3.95,
+            "drawdown30MedianPct": -5.41
+          }
+        },
+        {
+          "state": "上部/中部/下部",
+          "signalDays": 15,
+          "episodes": 14,
+          "all": {
+            "signals": 15,
+            "d5": {
+              "n": 15,
+              "medianPct": 1.12,
+              "winPct": 73.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": 0.75,
+              "winPct": 66.7
+            },
+            "d30": {
+              "n": 15,
+              "medianPct": 1.38,
+              "winPct": 66.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.37,
+            "drawdown30MedianPct": -1.87
+          },
+          "episodeFirst": {
+            "signals": 14,
+            "d5": {
+              "n": 14,
+              "medianPct": 1.1,
+              "winPct": 71.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 14,
+              "medianPct": 0.65,
+              "winPct": 64.3
+            },
+            "d30": {
+              "n": 14,
+              "medianPct": 1.05,
+              "winPct": 64.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.35,
+            "drawdown30MedianPct": -2.6
+          }
+        },
+        {
+          "state": "下部/下部/上部",
+          "signalDays": 15,
+          "episodes": 13,
+          "all": {
+            "signals": 15,
+            "d5": {
+              "n": 15,
+              "medianPct": -0.26,
+              "winPct": 46.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": 1.39,
+              "winPct": 66.7
+            },
+            "d30": {
+              "n": 15,
+              "medianPct": 0.99,
+              "winPct": 66.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.76,
+            "drawdown30MedianPct": -2.86
+          },
+          "episodeFirst": {
+            "signals": 13,
+            "d5": {
+              "n": 13,
+              "medianPct": 0.32,
+              "winPct": 53.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 13,
+              "medianPct": 1.59,
+              "winPct": 69.2
+            },
+            "d30": {
+              "n": 13,
+              "medianPct": 1.39,
+              "winPct": 69.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.02,
+            "drawdown30MedianPct": -2.77
+          }
+        },
+        {
+          "state": "中部/下部/中部",
+          "signalDays": 14,
+          "episodes": 13,
+          "all": {
+            "signals": 14,
+            "d5": {
+              "n": 14,
+              "medianPct": 1.42,
+              "winPct": 71.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 14,
+              "medianPct": 2.25,
+              "winPct": 71.4
+            },
+            "d30": {
+              "n": 14,
+              "medianPct": 0.78,
+              "winPct": 50.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 8.13,
+            "drawdown30MedianPct": -3.41
+          },
+          "episodeFirst": {
+            "signals": 13,
+            "d5": {
+              "n": 13,
+              "medianPct": 1.36,
+              "winPct": 69.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 13,
+              "medianPct": 2.14,
+              "winPct": 69.2
+            },
+            "d30": {
+              "n": 13,
+              "medianPct": 1.84,
+              "winPct": 53.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.84,
+            "drawdown30MedianPct": -3.04
+          }
+        },
+        {
+          "state": "上部/下部/下部",
+          "signalDays": 12,
+          "episodes": 10,
+          "all": {
+            "signals": 12,
+            "d5": {
+              "n": 12,
+              "medianPct": 1.44,
+              "winPct": 91.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 12,
+              "medianPct": 1.51,
+              "winPct": 83.3
+            },
+            "d30": {
+              "n": 12,
+              "medianPct": 1.69,
+              "winPct": 75.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.77,
+            "drawdown30MedianPct": -0.77
+          },
+          "episodeFirst": {
+            "signals": 10,
+            "d5": {
+              "n": 10,
+              "medianPct": 1.37,
+              "winPct": 90.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 10,
+              "medianPct": 0.98,
+              "winPct": 80.0
+            },
+            "d30": {
+              "n": 10,
+              "medianPct": 1.16,
+              "winPct": 70.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.77,
+            "drawdown30MedianPct": -1.13
+          }
+        },
+        {
+          "state": "下部/上部/上部",
+          "signalDays": 10,
+          "episodes": 10,
+          "all": {
+            "signals": 10,
+            "d5": {
+              "n": 10,
+              "medianPct": 0.6,
+              "winPct": 60.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 10,
+              "medianPct": 1.66,
+              "winPct": 70.0
+            },
+            "d30": {
+              "n": 10,
+              "medianPct": 3.72,
+              "winPct": 60.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.5,
+            "drawdown30MedianPct": -2.49
+          },
+          "episodeFirst": {
+            "signals": 10,
+            "d5": {
+              "n": 10,
+              "medianPct": 0.6,
+              "winPct": 60.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 10,
+              "medianPct": 1.66,
+              "winPct": 70.0
+            },
+            "d30": {
+              "n": 10,
+              "medianPct": 3.72,
+              "winPct": 60.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.5,
+            "drawdown30MedianPct": -2.49
+          }
+        },
+        {
+          "state": "中部/上部/中部",
+          "signalDays": 10,
+          "episodes": 9,
+          "all": {
+            "signals": 10,
+            "d5": {
+              "n": 10,
+              "medianPct": 1.03,
+              "winPct": 70.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 10,
+              "medianPct": 1.91,
+              "winPct": 60.0
+            },
+            "d30": {
+              "n": 10,
+              "medianPct": 3.63,
+              "winPct": 70.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.32,
+            "drawdown30MedianPct": -1.36
+          },
+          "episodeFirst": {
+            "signals": 9,
+            "d5": {
+              "n": 9,
+              "medianPct": 1.69,
+              "winPct": 66.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 9,
+              "medianPct": 0.84,
+              "winPct": 55.6
+            },
+            "d30": {
+              "n": 9,
+              "medianPct": 3.4,
+              "winPct": 66.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.79,
+            "drawdown30MedianPct": -1.4
+          }
+        },
+        {
+          "state": "上部/下部/中部",
+          "signalDays": 5,
+          "episodes": 5,
+          "all": {
+            "signals": 5,
+            "d5": {
+              "n": 5,
+              "medianPct": 1.63,
+              "winPct": 60.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 5,
+              "medianPct": -1.63,
+              "winPct": 20.0
+            },
+            "d30": {
+              "n": 5,
+              "medianPct": 1.63,
+              "winPct": 60.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.71,
+            "drawdown30MedianPct": -3.26
+          },
+          "episodeFirst": {
+            "signals": 5,
+            "d5": {
+              "n": 5,
+              "medianPct": 1.63,
+              "winPct": 60.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 5,
+              "medianPct": -1.63,
+              "winPct": 20.0
+            },
+            "d30": {
+              "n": 5,
+              "medianPct": 1.63,
+              "winPct": 60.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.71,
+            "drawdown30MedianPct": -3.26
+          }
+        },
+        {
+          "state": "中部/上部/下部",
+          "signalDays": 6,
+          "episodes": 5,
+          "all": {
+            "signals": 6,
+            "d5": {
+              "n": 6,
+              "medianPct": -0.14,
+              "winPct": 33.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 6,
+              "medianPct": 2.58,
+              "winPct": 66.7
+            },
+            "d30": {
+              "n": 6,
+              "medianPct": 0.46,
+              "winPct": 66.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.73,
+            "drawdown30MedianPct": -1.67
+          },
+          "episodeFirst": {
+            "signals": 5,
+            "d5": {
+              "n": 5,
+              "medianPct": 0.0,
+              "winPct": 40.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 5,
+              "medianPct": 4.42,
+              "winPct": 80.0
+            },
+            "d30": {
+              "n": 5,
+              "medianPct": 0.55,
+              "winPct": 60.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.46,
+            "drawdown30MedianPct": -1.49
+          }
+        }
+      ],
+      "learnedClassification": {
+        "tier": "观察/需确认",
+        "window": "至少等待止跌或新信号簇",
+        "rule": "主信号不能单独触发买入；增加止跌确认或股息率/250日线联合条件后再人工复核。",
+        "basis": "独立信号簇20日56.9%/0.44%，30日55.2%/0.59%"
+      },
+      "latestState": {
+        "day": "中部",
+        "week": "下部",
+        "month": "下部",
+        "percent": {
+          "day": 50.0,
+          "week": 9.7,
+          "month": 9.7
+        }
+      }
+    },
+    {
+      "code": "601318",
+      "name": "中国平安",
+      "source": "东方财富妙想调用受限；使用腾讯公开历史日K回退（未提供前复权参数）",
+      "sourceRows": 1112,
+      "sourceRange": [
+        "2022-01-04",
+        "2026-08-06"
+      ],
+      "primary": {
+        "signal": "周下+日下+月中",
+        "signalDays": {
+          "signals": 65,
+          "d5": {
+            "n": 65,
+            "medianPct": -0.09,
+            "winPct": 46.2
+          },
+          "d10": {
+            "n": 65,
+            "medianPct": -0.05,
+            "winPct": 49.2
+          },
+          "d20": {
+            "n": 65,
+            "medianPct": 0.7,
+            "winPct": 53.8
+          },
+          "d30": {
+            "n": 65,
+            "medianPct": 0.39,
+            "winPct": 53.8
+          },
+          "d60": {
+            "n": 64,
+            "medianPct": 0.59,
+            "winPct": 53.1
+          },
+          "max30MedianPct": 6.2,
+          "drawdown30MedianPct": -4.87
+        },
+        "episodeFirst": {
+          "signals": 49,
+          "d5": {
+            "n": 49,
+            "medianPct": -0.09,
+            "winPct": 46.9
+          },
+          "d10": {
+            "n": 49,
+            "medianPct": -0.05,
+            "winPct": 49.0
+          },
+          "d20": {
+            "n": 49,
+            "medianPct": 0.52,
+            "winPct": 53.1
+          },
+          "d30": {
+            "n": 49,
+            "medianPct": 0.02,
+            "winPct": 51.0
+          },
+          "d60": {
+            "n": 48,
+            "medianPct": -0.03,
+            "winPct": 50.0
+          },
+          "max30MedianPct": 6.2,
+          "drawdown30MedianPct": -5.38
+        },
+        "episodeDates": [
+          [
+            "2022-01-13",
+            "2022-01-13",
+            1
+          ],
+          [
+            "2022-02-14",
+            "2022-02-17",
+            2
+          ],
+          [
+            "2022-02-23",
+            "2022-02-23",
+            1
+          ],
+          [
+            "2022-03-29",
+            "2022-03-29",
+            1
+          ],
+          [
+            "2022-06-13",
+            "2022-06-13",
+            1
+          ],
+          [
+            "2022-06-22",
+            "2022-06-22",
+            1
+          ],
+          [
+            "2022-06-30",
+            "2022-06-30",
+            1
+          ],
+          [
+            "2022-08-08",
+            "2022-08-08",
+            1
+          ],
+          [
+            "2022-08-15",
+            "2022-08-16",
+            2
+          ],
+          [
+            "2022-09-16",
+            "2022-09-16",
+            1
+          ],
+          [
+            "2022-10-18",
+            "2022-10-18",
+            1
+          ],
+          [
+            "2022-12-12",
+            "2022-12-12",
+            1
+          ],
+          [
+            "2022-12-19",
+            "2022-12-19",
+            1
+          ],
+          [
+            "2023-01-10",
+            "2023-01-10",
+            1
+          ],
+          [
+            "2023-01-31",
+            "2023-01-31",
+            1
+          ],
+          [
+            "2023-02-22",
+            "2023-02-22",
+            1
+          ],
+          [
+            "2023-04-11",
+            "2023-04-12",
+            2
+          ],
+          [
+            "2023-04-24",
+            "2023-04-24",
+            1
+          ],
+          [
+            "2023-05-09",
+            "2023-05-09",
+            1
+          ],
+          [
+            "2023-06-06",
+            "2023-06-06",
+            1
+          ],
+          [
+            "2023-06-14",
+            "2023-06-14",
+            1
+          ],
+          [
+            "2023-07-17",
+            "2023-07-20",
+            3
+          ],
+          [
+            "2023-09-05",
+            "2023-09-07",
+            2
+          ],
+          [
+            "2024-01-30",
+            "2024-01-30",
+            1
+          ],
+          [
+            "2024-05-24",
+            "2024-05-30",
+            4
+          ],
+          [
+            "2024-12-11",
+            "2024-12-11",
+            1
+          ],
+          [
+            "2025-01-20",
+            "2025-01-21",
+            2
+          ],
+          [
+            "2025-01-27",
+            "2025-01-27",
+            1
+          ],
+          [
+            "2025-02-11",
+            "2025-02-11",
+            1
+          ],
+          [
+            "2025-02-18",
+            "2025-02-20",
+            2
+          ],
+          [
+            "2025-02-25",
+            "2025-02-25",
+            1
+          ],
+          [
+            "2025-03-20",
+            "2025-03-21",
+            2
+          ],
+          [
+            "2025-03-26",
+            "2025-03-26",
+            1
+          ],
+          [
+            "2025-03-31",
+            "2025-03-31",
+            1
+          ],
+          [
+            "2025-04-14",
+            "2025-04-14",
+            1
+          ],
+          [
+            "2025-04-21",
+            "2025-04-21",
+            1
+          ],
+          [
+            "2025-05-19",
+            "2025-05-23",
+            2
+          ],
+          [
+            "2025-05-28",
+            "2025-05-28",
+            1
+          ],
+          [
+            "2025-06-10",
+            "2025-06-10",
+            1
+          ],
+          [
+            "2025-07-14",
+            "2025-07-15",
+            2
+          ],
+          [
+            "2025-07-31",
+            "2025-07-31",
+            1
+          ],
+          [
+            "2025-08-11",
+            "2025-08-13",
+            2
+          ],
+          [
+            "2025-08-18",
+            "2025-08-18",
+            1
+          ],
+          [
+            "2025-10-31",
+            "2025-10-31",
+            1
+          ],
+          [
+            "2025-11-17",
+            "2025-11-18",
+            2
+          ],
+          [
+            "2026-02-11",
+            "2026-02-11",
+            1
+          ],
+          [
+            "2026-04-13",
+            "2026-04-13",
+            1
+          ],
+          [
+            "2026-04-21",
+            "2026-04-21",
+            1
+          ],
+          [
+            "2026-06-15",
+            "2026-06-15",
+            1
+          ]
+        ],
+        "yearStats": {
+          "2022": {
+            "signals": 13,
+            "d5": {
+              "n": 13,
+              "medianPct": -0.46,
+              "winPct": 38.5
+            },
+            "d10": {
+              "n": 13,
+              "medianPct": -2.98,
+              "winPct": 38.5
+            },
+            "d20": {
+              "n": 13,
+              "medianPct": 2.02,
+              "winPct": 53.8
+            },
+            "d30": {
+              "n": 13,
+              "medianPct": -2.73,
+              "winPct": 38.5
+            },
+            "d60": {
+              "n": 13,
+              "medianPct": -1.6,
+              "winPct": 30.8
+            },
+            "max30MedianPct": 7.41,
+            "drawdown30MedianPct": -9.23
+          },
+          "2023": {
+            "signals": 10,
+            "d5": {
+              "n": 10,
+              "medianPct": 0.18,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 10,
+              "medianPct": -2.32,
+              "winPct": 40.0
+            },
+            "d20": {
+              "n": 10,
+              "medianPct": -1.87,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 10,
+              "medianPct": -3.32,
+              "winPct": 30.0
+            },
+            "d60": {
+              "n": 10,
+              "medianPct": -1.24,
+              "winPct": 40.0
+            },
+            "max30MedianPct": 5.84,
+            "drawdown30MedianPct": -6.44
+          },
+          "2024": {
+            "signals": 3,
+            "d5": {
+              "n": 3,
+              "medianPct": -2.11,
+              "winPct": 33.3
+            },
+            "d10": {
+              "n": 3,
+              "medianPct": -1.93,
+              "winPct": 33.3
+            },
+            "d20": {
+              "n": 3,
+              "medianPct": -5.0,
+              "winPct": 33.3
+            },
+            "d30": {
+              "n": 3,
+              "medianPct": -7.18,
+              "winPct": 33.3
+            },
+            "d60": {
+              "n": 3,
+              "medianPct": -2.71,
+              "winPct": 33.3
+            },
+            "max30MedianPct": 1.62,
+            "drawdown30MedianPct": -7.64
+          },
+          "2025": {
+            "signals": 19,
+            "d5": {
+              "n": 19,
+              "medianPct": 0.34,
+              "winPct": 57.9
+            },
+            "d10": {
+              "n": 19,
+              "medianPct": 0.78,
+              "winPct": 68.4
+            },
+            "d20": {
+              "n": 19,
+              "medianPct": 1.46,
+              "winPct": 68.4
+            },
+            "d30": {
+              "n": 19,
+              "medianPct": 3.47,
+              "winPct": 78.9
+            },
+            "d60": {
+              "n": 19,
+              "medianPct": 4.5,
+              "winPct": 78.9
+            },
+            "max30MedianPct": 6.3,
+            "drawdown30MedianPct": -2.57
+          },
+          "2026": {
+            "signals": 4,
+            "d5": {
+              "n": 4,
+              "medianPct": -3.38,
+              "winPct": 25.0
+            },
+            "d10": {
+              "n": 4,
+              "medianPct": -4.67,
+              "winPct": 25.0
+            },
+            "d20": {
+              "n": 4,
+              "medianPct": -7.81,
+              "winPct": 0.0
+            },
+            "d30": {
+              "n": 4,
+              "medianPct": -8.87,
+              "winPct": 25.0
+            },
+            "d60": {
+              "n": 3,
+              "medianPct": -15.03,
+              "winPct": 0.0
+            },
+            "max30MedianPct": 3.08,
+            "drawdown30MedianPct": -11.79
+          }
+        }
+      },
+      "stateMatrix": [
+        {
+          "state": "下部/下部/下部",
+          "signalDays": 253,
+          "episodes": 105,
+          "all": {
+            "signals": 253,
+            "d5": {
+              "n": 252,
+              "medianPct": -0.65,
+              "winPct": 39.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 252,
+              "medianPct": -1.4,
+              "winPct": 44.8
+            },
+            "d30": {
+              "n": 251,
+              "medianPct": -0.86,
+              "winPct": 47.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.18,
+            "drawdown30MedianPct": -6.23
+          },
+          "episodeFirst": {
+            "signals": 105,
+            "d5": {
+              "n": 104,
+              "medianPct": -0.39,
+              "winPct": 42.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 104,
+              "medianPct": -1.17,
+              "winPct": 47.1
+            },
+            "d30": {
+              "n": 104,
+              "medianPct": -0.74,
+              "winPct": 47.1
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.18,
+            "drawdown30MedianPct": -5.9
+          }
+        },
+        {
+          "state": "上部/上部/上部",
+          "signalDays": 175,
+          "episodes": 85,
+          "all": {
+            "signals": 175,
+            "d5": {
+              "n": 173,
+              "medianPct": 0.08,
+              "winPct": 50.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 165,
+              "medianPct": 0.43,
+              "winPct": 52.1
+            },
+            "d30": {
+              "n": 163,
+              "medianPct": -1.64,
+              "winPct": 46.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.62,
+            "drawdown30MedianPct": -5.07
+          },
+          "episodeFirst": {
+            "signals": 85,
+            "d5": {
+              "n": 85,
+              "medianPct": -0.42,
+              "winPct": 45.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 82,
+              "medianPct": 0.28,
+              "winPct": 52.4
+            },
+            "d30": {
+              "n": 80,
+              "medianPct": -0.2,
+              "winPct": 48.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.59,
+            "drawdown30MedianPct": -5.36
+          }
+        },
+        {
+          "state": "中部/中部/中部",
+          "signalDays": 85,
+          "episodes": 52,
+          "all": {
+            "signals": 85,
+            "d5": {
+              "n": 85,
+              "medianPct": 0.84,
+              "winPct": 57.6
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 85,
+              "medianPct": -0.31,
+              "winPct": 48.2
+            },
+            "d30": {
+              "n": 84,
+              "medianPct": -0.48,
+              "winPct": 45.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.08,
+            "drawdown30MedianPct": -6.08
+          },
+          "episodeFirst": {
+            "signals": 52,
+            "d5": {
+              "n": 52,
+              "medianPct": 0.85,
+              "winPct": 55.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 52,
+              "medianPct": 0.44,
+              "winPct": 51.9
+            },
+            "d30": {
+              "n": 51,
+              "medianPct": -0.46,
+              "winPct": 45.1
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.37,
+            "drawdown30MedianPct": -4.66
+          }
+        },
+        {
+          "state": "下部/下部/中部",
+          "signalDays": 65,
+          "episodes": 49,
+          "all": {
+            "signals": 65,
+            "d5": {
+              "n": 65,
+              "medianPct": -0.09,
+              "winPct": 46.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 65,
+              "medianPct": 0.7,
+              "winPct": 53.8
+            },
+            "d30": {
+              "n": 65,
+              "medianPct": 0.39,
+              "winPct": 53.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.2,
+            "drawdown30MedianPct": -4.87
+          },
+          "episodeFirst": {
+            "signals": 49,
+            "d5": {
+              "n": 49,
+              "medianPct": -0.09,
+              "winPct": 46.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 49,
+              "medianPct": 0.52,
+              "winPct": 53.1
+            },
+            "d30": {
+              "n": 49,
+              "medianPct": 0.02,
+              "winPct": 51.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.2,
+            "drawdown30MedianPct": -5.38
+          }
+        },
+        {
+          "state": "中部/中部/下部",
+          "signalDays": 58,
+          "episodes": 45,
+          "all": {
+            "signals": 58,
+            "d5": {
+              "n": 58,
+              "medianPct": -0.65,
+              "winPct": 37.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 58,
+              "medianPct": -0.02,
+              "winPct": 48.3
+            },
+            "d30": {
+              "n": 58,
+              "medianPct": 0.8,
+              "winPct": 51.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.82,
+            "drawdown30MedianPct": -6.05
+          },
+          "episodeFirst": {
+            "signals": 45,
+            "d5": {
+              "n": 45,
+              "medianPct": -0.24,
+              "winPct": 42.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 45,
+              "medianPct": -0.74,
+              "winPct": 46.7
+            },
+            "d30": {
+              "n": 45,
+              "medianPct": -0.91,
+              "winPct": 44.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.9,
+            "drawdown30MedianPct": -6.46
+          }
+        },
+        {
+          "state": "中部/下部/下部",
+          "signalDays": 49,
+          "episodes": 40,
+          "all": {
+            "signals": 49,
+            "d5": {
+              "n": 49,
+              "medianPct": 0.11,
+              "winPct": 51.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 49,
+              "medianPct": -1.23,
+              "winPct": 32.7
+            },
+            "d30": {
+              "n": 49,
+              "medianPct": -0.84,
+              "winPct": 44.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 3.29,
+            "drawdown30MedianPct": -5.65
+          },
+          "episodeFirst": {
+            "signals": 40,
+            "d5": {
+              "n": 40,
+              "medianPct": 0.24,
+              "winPct": 52.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 40,
+              "medianPct": -1.05,
+              "winPct": 37.5
+            },
+            "d30": {
+              "n": 40,
+              "medianPct": -0.59,
+              "winPct": 47.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.17,
+            "drawdown30MedianPct": -4.7
+          }
+        },
+        {
+          "state": "下部/中部/中部",
+          "signalDays": 44,
+          "episodes": 38,
+          "all": {
+            "signals": 44,
+            "d5": {
+              "n": 44,
+              "medianPct": -0.02,
+              "winPct": 47.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 44,
+              "medianPct": 0.81,
+              "winPct": 52.3
+            },
+            "d30": {
+              "n": 43,
+              "medianPct": -0.23,
+              "winPct": 46.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.72,
+            "drawdown30MedianPct": -4.15
+          },
+          "episodeFirst": {
+            "signals": 38,
+            "d5": {
+              "n": 38,
+              "medianPct": -0.12,
+              "winPct": 42.1
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 38,
+              "medianPct": -0.52,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 37,
+              "medianPct": -1.17,
+              "winPct": 45.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.46,
+            "drawdown30MedianPct": -5.94
+          }
+        },
+        {
+          "state": "上部/上部/中部",
+          "signalDays": 49,
+          "episodes": 37,
+          "all": {
+            "signals": 49,
+            "d5": {
+              "n": 49,
+              "medianPct": -0.53,
+              "winPct": 44.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 49,
+              "medianPct": -2.78,
+              "winPct": 40.8
+            },
+            "d30": {
+              "n": 49,
+              "medianPct": -0.15,
+              "winPct": 49.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.5,
+            "drawdown30MedianPct": -8.02
+          },
+          "episodeFirst": {
+            "signals": 37,
+            "d5": {
+              "n": 37,
+              "medianPct": -0.97,
+              "winPct": 37.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 37,
+              "medianPct": -2.64,
+              "winPct": 43.2
+            },
+            "d30": {
+              "n": 37,
+              "medianPct": 1.36,
+              "winPct": 51.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.5,
+            "drawdown30MedianPct": -8.02
+          }
+        },
+        {
+          "state": "中部/上部/上部",
+          "signalDays": 40,
+          "episodes": 33,
+          "all": {
+            "signals": 40,
+            "d5": {
+              "n": 40,
+              "medianPct": 0.51,
+              "winPct": 57.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 37,
+              "medianPct": 0.68,
+              "winPct": 54.1
+            },
+            "d30": {
+              "n": 37,
+              "medianPct": 1.42,
+              "winPct": 54.1
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.67,
+            "drawdown30MedianPct": -3.57
+          },
+          "episodeFirst": {
+            "signals": 33,
+            "d5": {
+              "n": 33,
+              "medianPct": 1.16,
+              "winPct": 57.6
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 30,
+              "medianPct": 0.09,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 30,
+              "medianPct": 0.04,
+              "winPct": 50.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.36,
+            "drawdown30MedianPct": -3.6
+          }
+        },
+        {
+          "state": "下部/中部/下部",
+          "signalDays": 41,
+          "episodes": 32,
+          "all": {
+            "signals": 41,
+            "d5": {
+              "n": 41,
+              "medianPct": -0.25,
+              "winPct": 46.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 41,
+              "medianPct": 0.3,
+              "winPct": 53.7
+            },
+            "d30": {
+              "n": 40,
+              "medianPct": -2.76,
+              "winPct": 42.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.45,
+            "drawdown30MedianPct": -7.63
+          },
+          "episodeFirst": {
+            "signals": 32,
+            "d5": {
+              "n": 32,
+              "medianPct": -0.31,
+              "winPct": 43.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 32,
+              "medianPct": 0.03,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 31,
+              "medianPct": -3.01,
+              "winPct": 38.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.19,
+            "drawdown30MedianPct": -7.6
+          }
+        },
+        {
+          "state": "中部/中部/上部",
+          "signalDays": 35,
+          "episodes": 31,
+          "all": {
+            "signals": 35,
+            "d5": {
+              "n": 35,
+              "medianPct": -0.53,
+              "winPct": 45.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 34,
+              "medianPct": 1.02,
+              "winPct": 55.9
+            },
+            "d30": {
+              "n": 34,
+              "medianPct": -0.06,
+              "winPct": 47.1
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.49,
+            "drawdown30MedianPct": -4.47
+          },
+          "episodeFirst": {
+            "signals": 31,
+            "d5": {
+              "n": 31,
+              "medianPct": -0.53,
+              "winPct": 45.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 30,
+              "medianPct": 0.51,
+              "winPct": 53.3
+            },
+            "d30": {
+              "n": 30,
+              "medianPct": -0.29,
+              "winPct": 43.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.9,
+            "drawdown30MedianPct": -5.31
+          }
+        },
+        {
+          "state": "上部/上部/下部",
+          "signalDays": 33,
+          "episodes": 27,
+          "all": {
+            "signals": 33,
+            "d5": {
+              "n": 33,
+              "medianPct": 0.29,
+              "winPct": 54.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 33,
+              "medianPct": 0.62,
+              "winPct": 54.5
+            },
+            "d30": {
+              "n": 32,
+              "medianPct": -1.02,
+              "winPct": 43.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.8,
+            "drawdown30MedianPct": -6.27
+          },
+          "episodeFirst": {
+            "signals": 27,
+            "d5": {
+              "n": 27,
+              "medianPct": 0.17,
+              "winPct": 51.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 27,
+              "medianPct": 0.36,
+              "winPct": 51.9
+            },
+            "d30": {
+              "n": 26,
+              "medianPct": -1.02,
+              "winPct": 42.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.42,
+            "drawdown30MedianPct": -6.27
+          }
+        },
+        {
+          "state": "上部/中部/中部",
+          "signalDays": 23,
+          "episodes": 21,
+          "all": {
+            "signals": 23,
+            "d5": {
+              "n": 22,
+              "medianPct": 0.08,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 22,
+              "medianPct": 0.29,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 22,
+              "medianPct": -2.55,
+              "winPct": 36.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.95,
+            "drawdown30MedianPct": -5.7
+          },
+          "episodeFirst": {
+            "signals": 21,
+            "d5": {
+              "n": 20,
+              "medianPct": 0.08,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 20,
+              "medianPct": 1.01,
+              "winPct": 55.0
+            },
+            "d30": {
+              "n": 20,
+              "medianPct": -2.06,
+              "winPct": 40.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.95,
+            "drawdown30MedianPct": -5.7
+          }
+        },
+        {
+          "state": "中部/上部/中部",
+          "signalDays": 20,
+          "episodes": 18,
+          "all": {
+            "signals": 20,
+            "d5": {
+              "n": 20,
+              "medianPct": 0.78,
+              "winPct": 55.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 20,
+              "medianPct": 1.81,
+              "winPct": 65.0
+            },
+            "d30": {
+              "n": 20,
+              "medianPct": 3.16,
+              "winPct": 60.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 9.34,
+            "drawdown30MedianPct": -3.68
+          },
+          "episodeFirst": {
+            "signals": 18,
+            "d5": {
+              "n": 18,
+              "medianPct": 0.19,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 18,
+              "medianPct": 0.77,
+              "winPct": 61.1
+            },
+            "d30": {
+              "n": 18,
+              "medianPct": 1.46,
+              "winPct": 55.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.69,
+            "drawdown30MedianPct": -4.48
+          }
+        },
+        {
+          "state": "下部/中部/上部",
+          "signalDays": 21,
+          "episodes": 18,
+          "all": {
+            "signals": 21,
+            "d5": {
+              "n": 21,
+              "medianPct": -0.15,
+              "winPct": 47.6
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 20,
+              "medianPct": 2.27,
+              "winPct": 60.0
+            },
+            "d30": {
+              "n": 19,
+              "medianPct": 3.79,
+              "winPct": 57.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 8.13,
+            "drawdown30MedianPct": -2.89
+          },
+          "episodeFirst": {
+            "signals": 18,
+            "d5": {
+              "n": 18,
+              "medianPct": -0.49,
+              "winPct": 38.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 17,
+              "medianPct": 0.59,
+              "winPct": 52.9
+            },
+            "d30": {
+              "n": 16,
+              "medianPct": -0.55,
+              "winPct": 50.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.88,
+            "drawdown30MedianPct": -3.87
+          }
+        },
+        {
+          "state": "下部/下部/上部",
+          "signalDays": 25,
+          "episodes": 17,
+          "all": {
+            "signals": 25,
+            "d5": {
+              "n": 25,
+              "medianPct": 0.16,
+              "winPct": 52.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 24,
+              "medianPct": -1.18,
+              "winPct": 41.7
+            },
+            "d30": {
+              "n": 24,
+              "medianPct": -0.67,
+              "winPct": 50.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.9,
+            "drawdown30MedianPct": -5.32
+          },
+          "episodeFirst": {
+            "signals": 17,
+            "d5": {
+              "n": 17,
+              "medianPct": -0.29,
+              "winPct": 41.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 16,
+              "medianPct": -2.67,
+              "winPct": 37.5
+            },
+            "d30": {
+              "n": 16,
+              "medianPct": -2.0,
+              "winPct": 43.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.05,
+            "drawdown30MedianPct": -5.32
+          }
+        },
+        {
+          "state": "上部/中部/下部",
+          "signalDays": 18,
+          "episodes": 17,
+          "all": {
+            "signals": 18,
+            "d5": {
+              "n": 18,
+              "medianPct": -0.15,
+              "winPct": 38.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 18,
+              "medianPct": 2.63,
+              "winPct": 55.6
+            },
+            "d30": {
+              "n": 18,
+              "medianPct": -2.01,
+              "winPct": 44.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.87,
+            "drawdown30MedianPct": -4.84
+          },
+          "episodeFirst": {
+            "signals": 17,
+            "d5": {
+              "n": 17,
+              "medianPct": -0.05,
+              "winPct": 41.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 17,
+              "medianPct": 2.53,
+              "winPct": 52.9
+            },
+            "d30": {
+              "n": 17,
+              "medianPct": -2.07,
+              "winPct": 41.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.62,
+            "drawdown30MedianPct": -5.14
+          }
+        },
+        {
+          "state": "中部/下部/中部",
+          "signalDays": 18,
+          "episodes": 16,
+          "all": {
+            "signals": 18,
+            "d5": {
+              "n": 18,
+              "medianPct": 1.63,
+              "winPct": 61.1
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 18,
+              "medianPct": -1.56,
+              "winPct": 38.9
+            },
+            "d30": {
+              "n": 18,
+              "medianPct": 0.5,
+              "winPct": 55.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.02,
+            "drawdown30MedianPct": -8.43
+          },
+          "episodeFirst": {
+            "signals": 16,
+            "d5": {
+              "n": 16,
+              "medianPct": 0.86,
+              "winPct": 56.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 16,
+              "medianPct": -1.56,
+              "winPct": 37.5
+            },
+            "d30": {
+              "n": 16,
+              "medianPct": 0.5,
+              "winPct": 56.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.02,
+            "drawdown30MedianPct": -8.43
+          }
+        },
+        {
+          "state": "下部/上部/上部",
+          "signalDays": 15,
+          "episodes": 14,
+          "all": {
+            "signals": 15,
+            "d5": {
+              "n": 15,
+              "medianPct": -0.39,
+              "winPct": 46.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 14,
+              "medianPct": 1.32,
+              "winPct": 64.3
+            },
+            "d30": {
+              "n": 14,
+              "medianPct": 0.67,
+              "winPct": 64.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.55,
+            "drawdown30MedianPct": -4.25
+          },
+          "episodeFirst": {
+            "signals": 14,
+            "d5": {
+              "n": 14,
+              "medianPct": -0.43,
+              "winPct": 42.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 13,
+              "medianPct": 0.8,
+              "winPct": 61.5
+            },
+            "d30": {
+              "n": 13,
+              "medianPct": 0.21,
+              "winPct": 61.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.15,
+            "drawdown30MedianPct": -4.28
+          }
+        },
+        {
+          "state": "上部/中部/上部",
+          "signalDays": 15,
+          "episodes": 12,
+          "all": {
+            "signals": 15,
+            "d5": {
+              "n": 15,
+              "medianPct": -0.88,
+              "winPct": 40.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": -1.15,
+              "winPct": 40.0
+            },
+            "d30": {
+              "n": 13,
+              "medianPct": -6.69,
+              "winPct": 30.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.87,
+            "drawdown30MedianPct": -9.23
+          },
+          "episodeFirst": {
+            "signals": 12,
+            "d5": {
+              "n": 12,
+              "medianPct": -2.54,
+              "winPct": 25.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 12,
+              "medianPct": -2.82,
+              "winPct": 33.3
+            },
+            "d30": {
+              "n": 11,
+              "medianPct": -6.69,
+              "winPct": 36.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 3.26,
+            "drawdown30MedianPct": -9.76
+          }
+        },
+        {
+          "state": "上部/下部/下部",
+          "signalDays": 9,
+          "episodes": 8,
+          "all": {
+            "signals": 9,
+            "d5": {
+              "n": 9,
+              "medianPct": -0.14,
+              "winPct": 44.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 9,
+              "medianPct": -4.61,
+              "winPct": 44.4
+            },
+            "d30": {
+              "n": 9,
+              "medianPct": -0.02,
+              "winPct": 44.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 3.08,
+            "drawdown30MedianPct": -6.08
+          },
+          "episodeFirst": {
+            "signals": 8,
+            "d5": {
+              "n": 8,
+              "medianPct": -0.76,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 8,
+              "medianPct": -1.91,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 8,
+              "medianPct": -0.2,
+              "winPct": 50.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 3.59,
+            "drawdown30MedianPct": -5.76
+          }
+        },
+        {
+          "state": "中部/上部/下部",
+          "signalDays": 8,
+          "episodes": 7,
+          "all": {
+            "signals": 8,
+            "d5": {
+              "n": 8,
+              "medianPct": -0.52,
+              "winPct": 37.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 8,
+              "medianPct": -0.21,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 8,
+              "medianPct": 2.61,
+              "winPct": 62.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.36,
+            "drawdown30MedianPct": -4.33
+          },
+          "episodeFirst": {
+            "signals": 7,
+            "d5": {
+              "n": 7,
+              "medianPct": -0.12,
+              "winPct": 42.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 7,
+              "medianPct": 1.1,
+              "winPct": 57.1
+            },
+            "d30": {
+              "n": 7,
+              "medianPct": 4.17,
+              "winPct": 71.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.76,
+            "drawdown30MedianPct": -3.66
+          }
+        },
+        {
+          "state": "中部/下部/上部",
+          "signalDays": 6,
+          "episodes": 5,
+          "all": {
+            "signals": 6,
+            "d5": {
+              "n": 6,
+              "medianPct": 1.07,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 6,
+              "medianPct": -1.86,
+              "winPct": 33.3
+            },
+            "d30": {
+              "n": 6,
+              "medianPct": -4.88,
+              "winPct": 33.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.83,
+            "drawdown30MedianPct": -6.16
+          },
+          "episodeFirst": {
+            "signals": 5,
+            "d5": {
+              "n": 5,
+              "medianPct": 2.23,
+              "winPct": 60.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 5,
+              "medianPct": -0.83,
+              "winPct": 40.0
+            },
+            "d30": {
+              "n": 5,
+              "medianPct": -2.8,
+              "winPct": 40.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.38,
+            "drawdown30MedianPct": -4.58
+          }
+        }
+      ],
+      "learnedClassification": {
+        "tier": "历史有优势但近期降级",
+        "window": "等待当前状态确认",
+        "rule": "全历史主信号曾有优势，但最近年度转弱；不单独买入，先等待日线止跌、股息率/250日线重新满足，并用新信号簇复核。",
+        "basis": "全历史20日53.1%/0.52%，最近年度20日0.0%/-7.81%"
+      },
+      "latestState": {
+        "day": "下部",
+        "week": "下部",
+        "month": "下部",
+        "percent": {
+          "day": 32.4,
+          "week": 14.4,
+          "month": 14.4
+        }
+      }
+    },
+    {
+      "code": "000423",
+      "name": "东阿阿胶",
+      "source": "东方财富妙想调用受限；使用腾讯公开历史日K回退（未提供前复权参数）",
+      "sourceRows": 1112,
+      "sourceRange": [
+        "2022-01-04",
+        "2026-08-06"
+      ],
+      "primary": {
+        "signal": "周下+日下+月中",
+        "signalDays": {
+          "signals": 66,
+          "d5": {
+            "n": 66,
+            "medianPct": -0.51,
+            "winPct": 45.5
+          },
+          "d10": {
+            "n": 66,
+            "medianPct": -0.32,
+            "winPct": 47.0
+          },
+          "d20": {
+            "n": 66,
+            "medianPct": 2.01,
+            "winPct": 60.6
+          },
+          "d30": {
+            "n": 66,
+            "medianPct": 1.31,
+            "winPct": 59.1
+          },
+          "d60": {
+            "n": 66,
+            "medianPct": 7.62,
+            "winPct": 63.6
+          },
+          "max30MedianPct": 8.54,
+          "drawdown30MedianPct": -4.25
+        },
+        "episodeFirst": {
+          "signals": 45,
+          "d5": {
+            "n": 45,
+            "medianPct": 0.86,
+            "winPct": 53.3
+          },
+          "d10": {
+            "n": 45,
+            "medianPct": -0.1,
+            "winPct": 48.9
+          },
+          "d20": {
+            "n": 45,
+            "medianPct": 2.17,
+            "winPct": 62.2
+          },
+          "d30": {
+            "n": 45,
+            "medianPct": 2.97,
+            "winPct": 62.2
+          },
+          "d60": {
+            "n": 45,
+            "medianPct": 7.66,
+            "winPct": 66.7
+          },
+          "max30MedianPct": 8.49,
+          "drawdown30MedianPct": -4.17
+        },
+        "episodeDates": [
+          [
+            "2022-03-30",
+            "2022-03-31",
+            2
+          ],
+          [
+            "2022-05-16",
+            "2022-05-16",
+            1
+          ],
+          [
+            "2022-07-21",
+            "2022-07-21",
+            1
+          ],
+          [
+            "2022-07-27",
+            "2022-07-27",
+            1
+          ],
+          [
+            "2022-08-09",
+            "2022-08-10",
+            2
+          ],
+          [
+            "2022-08-18",
+            "2022-08-18",
+            1
+          ],
+          [
+            "2022-09-14",
+            "2022-09-15",
+            2
+          ],
+          [
+            "2022-10-19",
+            "2022-10-19",
+            1
+          ],
+          [
+            "2022-10-24",
+            "2022-10-24",
+            1
+          ],
+          [
+            "2022-11-16",
+            "2022-11-18",
+            3
+          ],
+          [
+            "2022-12-05",
+            "2022-12-06",
+            2
+          ],
+          [
+            "2022-12-27",
+            "2022-12-27",
+            1
+          ],
+          [
+            "2023-01-17",
+            "2023-01-17",
+            1
+          ],
+          [
+            "2023-02-14",
+            "2023-02-16",
+            2
+          ],
+          [
+            "2023-03-07",
+            "2023-03-07",
+            1
+          ],
+          [
+            "2023-07-25",
+            "2023-07-26",
+            2
+          ],
+          [
+            "2023-08-11",
+            "2023-08-11",
+            1
+          ],
+          [
+            "2023-08-18",
+            "2023-08-21",
+            2
+          ],
+          [
+            "2023-10-16",
+            "2023-10-16",
+            1
+          ],
+          [
+            "2023-10-31",
+            "2023-10-31",
+            1
+          ],
+          [
+            "2024-01-31",
+            "2024-01-31",
+            1
+          ],
+          [
+            "2024-02-21",
+            "2024-02-22",
+            2
+          ],
+          [
+            "2024-03-04",
+            "2024-03-04",
+            1
+          ],
+          [
+            "2024-03-12",
+            "2024-03-12",
+            1
+          ],
+          [
+            "2024-03-25",
+            "2024-03-25",
+            1
+          ],
+          [
+            "2024-04-23",
+            "2024-04-26",
+            2
+          ],
+          [
+            "2024-08-21",
+            "2024-08-22",
+            2
+          ],
+          [
+            "2024-09-23",
+            "2024-09-23",
+            1
+          ],
+          [
+            "2024-11-15",
+            "2024-11-18",
+            2
+          ],
+          [
+            "2024-12-17",
+            "2024-12-17",
+            1
+          ],
+          [
+            "2025-03-18",
+            "2025-03-19",
+            2
+          ],
+          [
+            "2025-04-14",
+            "2025-04-14",
+            1
+          ],
+          [
+            "2025-04-23",
+            "2025-04-25",
+            2
+          ],
+          [
+            "2025-05-19",
+            "2025-05-23",
+            3
+          ],
+          [
+            "2025-06-10",
+            "2025-06-10",
+            1
+          ],
+          [
+            "2025-07-28",
+            "2025-07-28",
+            1
+          ],
+          [
+            "2025-08-26",
+            "2025-08-27",
+            2
+          ],
+          [
+            "2025-10-28",
+            "2025-10-28",
+            1
+          ],
+          [
+            "2025-11-17",
+            "2025-11-19",
+            3
+          ],
+          [
+            "2025-12-08",
+            "2025-12-08",
+            1
+          ],
+          [
+            "2025-12-16",
+            "2025-12-16",
+            1
+          ],
+          [
+            "2026-01-12",
+            "2026-01-12",
+            1
+          ],
+          [
+            "2026-02-26",
+            "2026-02-27",
+            2
+          ],
+          [
+            "2026-03-23",
+            "2026-03-23",
+            1
+          ],
+          [
+            "2026-05-12",
+            "2026-05-12",
+            1
+          ]
+        ],
+        "yearStats": {
+          "2022": {
+            "signals": 12,
+            "d5": {
+              "n": 12,
+              "medianPct": 0.24,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 12,
+              "medianPct": -0.5,
+              "winPct": 25.0
+            },
+            "d20": {
+              "n": 12,
+              "medianPct": -0.83,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 12,
+              "medianPct": 4.29,
+              "winPct": 58.3
+            },
+            "d60": {
+              "n": 12,
+              "medianPct": 14.24,
+              "winPct": 91.7
+            },
+            "max30MedianPct": 10.17,
+            "drawdown30MedianPct": -6.62
+          },
+          "2023": {
+            "signals": 8,
+            "d5": {
+              "n": 8,
+              "medianPct": -0.04,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 8,
+              "medianPct": 0.66,
+              "winPct": 50.0
+            },
+            "d20": {
+              "n": 8,
+              "medianPct": 3.08,
+              "winPct": 62.5
+            },
+            "d30": {
+              "n": 8,
+              "medianPct": 6.86,
+              "winPct": 75.0
+            },
+            "d60": {
+              "n": 8,
+              "medianPct": 7.2,
+              "winPct": 62.5
+            },
+            "max30MedianPct": 9.63,
+            "drawdown30MedianPct": -5.05
+          },
+          "2024": {
+            "signals": 10,
+            "d5": {
+              "n": 10,
+              "medianPct": 3.46,
+              "winPct": 70.0
+            },
+            "d10": {
+              "n": 10,
+              "medianPct": 5.83,
+              "winPct": 90.0
+            },
+            "d20": {
+              "n": 10,
+              "medianPct": 7.49,
+              "winPct": 90.0
+            },
+            "d30": {
+              "n": 10,
+              "medianPct": 13.38,
+              "winPct": 100.0
+            },
+            "d60": {
+              "n": 10,
+              "medianPct": 14.42,
+              "winPct": 80.0
+            },
+            "max30MedianPct": 18.23,
+            "drawdown30MedianPct": -1.96
+          },
+          "2025": {
+            "signals": 11,
+            "d5": {
+              "n": 11,
+              "medianPct": 0.99,
+              "winPct": 54.5
+            },
+            "d10": {
+              "n": 11,
+              "medianPct": -1.49,
+              "winPct": 45.5
+            },
+            "d20": {
+              "n": 11,
+              "medianPct": 0.7,
+              "winPct": 54.5
+            },
+            "d30": {
+              "n": 11,
+              "medianPct": -6.56,
+              "winPct": 27.3
+            },
+            "d60": {
+              "n": 11,
+              "medianPct": -6.32,
+              "winPct": 36.4
+            },
+            "max30MedianPct": 4.13,
+            "drawdown30MedianPct": -8.4
+          },
+          "2026": {
+            "signals": 4,
+            "d5": {
+              "n": 4,
+              "medianPct": -2.42,
+              "winPct": 25.0
+            },
+            "d10": {
+              "n": 4,
+              "medianPct": -2.4,
+              "winPct": 25.0
+            },
+            "d20": {
+              "n": 4,
+              "medianPct": -0.88,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 4,
+              "medianPct": -1.72,
+              "winPct": 50.0
+            },
+            "d60": {
+              "n": 4,
+              "medianPct": -3.61,
+              "winPct": 50.0
+            },
+            "max30MedianPct": 5.79,
+            "drawdown30MedianPct": -6.48
+          }
+        }
+      },
+      "stateMatrix": [
+        {
+          "state": "上部/上部/上部",
+          "signalDays": 173,
+          "episodes": 89,
+          "all": {
+            "signals": 173,
+            "d5": {
+              "n": 173,
+              "medianPct": -0.02,
+              "winPct": 49.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 165,
+              "medianPct": 0.76,
+              "winPct": 55.8
+            },
+            "d30": {
+              "n": 162,
+              "medianPct": 1.22,
+              "winPct": 55.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.4,
+            "drawdown30MedianPct": -4.96
+          },
+          "episodeFirst": {
+            "signals": 89,
+            "d5": {
+              "n": 89,
+              "medianPct": -0.06,
+              "winPct": 47.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 87,
+              "medianPct": 0.64,
+              "winPct": 54.0
+            },
+            "d30": {
+              "n": 86,
+              "medianPct": 1.52,
+              "winPct": 53.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.25,
+            "drawdown30MedianPct": -6.11
+          }
+        },
+        {
+          "state": "下部/下部/下部",
+          "signalDays": 203,
+          "episodes": 86,
+          "all": {
+            "signals": 203,
+            "d5": {
+              "n": 202,
+              "medianPct": 0.31,
+              "winPct": 54.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 202,
+              "medianPct": -0.73,
+              "winPct": 46.5
+            },
+            "d30": {
+              "n": 202,
+              "medianPct": -0.24,
+              "winPct": 48.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.88,
+            "drawdown30MedianPct": -6.78
+          },
+          "episodeFirst": {
+            "signals": 86,
+            "d5": {
+              "n": 85,
+              "medianPct": 0.63,
+              "winPct": 55.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 85,
+              "medianPct": -0.25,
+              "winPct": 49.4
+            },
+            "d30": {
+              "n": 85,
+              "medianPct": 0.67,
+              "winPct": 50.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.87,
+            "drawdown30MedianPct": -6.66
+          }
+        },
+        {
+          "state": "中部/中部/中部",
+          "signalDays": 83,
+          "episodes": 65,
+          "all": {
+            "signals": 83,
+            "d5": {
+              "n": 82,
+              "medianPct": -0.01,
+              "winPct": 48.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 82,
+              "medianPct": -0.25,
+              "winPct": 47.6
+            },
+            "d30": {
+              "n": 81,
+              "medianPct": 1.15,
+              "winPct": 50.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.3,
+            "drawdown30MedianPct": -6.81
+          },
+          "episodeFirst": {
+            "signals": 65,
+            "d5": {
+              "n": 64,
+              "medianPct": -0.01,
+              "winPct": 48.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 64,
+              "medianPct": 0.04,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 63,
+              "medianPct": 1.17,
+              "winPct": 52.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.47,
+            "drawdown30MedianPct": -6.81
+          }
+        },
+        {
+          "state": "上部/上部/中部",
+          "signalDays": 75,
+          "episodes": 59,
+          "all": {
+            "signals": 75,
+            "d5": {
+              "n": 75,
+              "medianPct": -0.35,
+              "winPct": 45.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 75,
+              "medianPct": 0.19,
+              "winPct": 50.7
+            },
+            "d30": {
+              "n": 74,
+              "medianPct": 1.37,
+              "winPct": 52.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.03,
+            "drawdown30MedianPct": -7.89
+          },
+          "episodeFirst": {
+            "signals": 59,
+            "d5": {
+              "n": 59,
+              "medianPct": -0.32,
+              "winPct": 45.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 59,
+              "medianPct": 0.19,
+              "winPct": 50.8
+            },
+            "d30": {
+              "n": 58,
+              "medianPct": 1.0,
+              "winPct": 51.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.0,
+            "drawdown30MedianPct": -7.89
+          }
+        },
+        {
+          "state": "中部/下部/下部",
+          "signalDays": 63,
+          "episodes": 50,
+          "all": {
+            "signals": 63,
+            "d5": {
+              "n": 62,
+              "medianPct": 0.19,
+              "winPct": 53.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 62,
+              "medianPct": -0.51,
+              "winPct": 48.4
+            },
+            "d30": {
+              "n": 61,
+              "medianPct": -1.64,
+              "winPct": 42.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.27,
+            "drawdown30MedianPct": -5.66
+          },
+          "episodeFirst": {
+            "signals": 50,
+            "d5": {
+              "n": 49,
+              "medianPct": 0.06,
+              "winPct": 51.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 49,
+              "medianPct": -0.8,
+              "winPct": 46.9
+            },
+            "d30": {
+              "n": 48,
+              "medianPct": -1.52,
+              "winPct": 43.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.02,
+            "drawdown30MedianPct": -5.74
+          }
+        },
+        {
+          "state": "中部/中部/下部",
+          "signalDays": 65,
+          "episodes": 47,
+          "all": {
+            "signals": 65,
+            "d5": {
+              "n": 65,
+              "medianPct": 1.17,
+              "winPct": 66.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 65,
+              "medianPct": -1.04,
+              "winPct": 46.2
+            },
+            "d30": {
+              "n": 65,
+              "medianPct": -0.49,
+              "winPct": 44.6
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.91,
+            "drawdown30MedianPct": -6.8
+          },
+          "episodeFirst": {
+            "signals": 47,
+            "d5": {
+              "n": 47,
+              "medianPct": 1.39,
+              "winPct": 72.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 47,
+              "medianPct": 1.11,
+              "winPct": 53.2
+            },
+            "d30": {
+              "n": 47,
+              "medianPct": -0.08,
+              "winPct": 48.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.91,
+            "drawdown30MedianPct": -6.36
+          }
+        },
+        {
+          "state": "下部/下部/中部",
+          "signalDays": 66,
+          "episodes": 45,
+          "all": {
+            "signals": 66,
+            "d5": {
+              "n": 66,
+              "medianPct": -0.51,
+              "winPct": 45.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 66,
+              "medianPct": 2.01,
+              "winPct": 60.6
+            },
+            "d30": {
+              "n": 66,
+              "medianPct": 1.31,
+              "winPct": 59.1
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 8.54,
+            "drawdown30MedianPct": -4.25
+          },
+          "episodeFirst": {
+            "signals": 45,
+            "d5": {
+              "n": 45,
+              "medianPct": 0.86,
+              "winPct": 53.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 45,
+              "medianPct": 2.17,
+              "winPct": 62.2
+            },
+            "d30": {
+              "n": 45,
+              "medianPct": 2.97,
+              "winPct": 62.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 8.49,
+            "drawdown30MedianPct": -4.17
+          }
+        },
+        {
+          "state": "下部/中部/中部",
+          "signalDays": 47,
+          "episodes": 43,
+          "all": {
+            "signals": 47,
+            "d5": {
+              "n": 47,
+              "medianPct": 0.18,
+              "winPct": 51.1
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 47,
+              "medianPct": 2.74,
+              "winPct": 63.8
+            },
+            "d30": {
+              "n": 47,
+              "medianPct": 4.3,
+              "winPct": 66.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 9.18,
+            "drawdown30MedianPct": -5.37
+          },
+          "episodeFirst": {
+            "signals": 43,
+            "d5": {
+              "n": 43,
+              "medianPct": 0.2,
+              "winPct": 53.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 43,
+              "medianPct": 2.74,
+              "winPct": 65.1
+            },
+            "d30": {
+              "n": 43,
+              "medianPct": 4.3,
+              "winPct": 65.1
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 9.18,
+            "drawdown30MedianPct": -5.37
+          }
+        },
+        {
+          "state": "中部/上部/上部",
+          "signalDays": 44,
+          "episodes": 37,
+          "all": {
+            "signals": 44,
+            "d5": {
+              "n": 43,
+              "medianPct": -0.03,
+              "winPct": 46.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 42,
+              "medianPct": -0.85,
+              "winPct": 45.2
+            },
+            "d30": {
+              "n": 41,
+              "medianPct": 1.56,
+              "winPct": 58.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.79,
+            "drawdown30MedianPct": -4.47
+          },
+          "episodeFirst": {
+            "signals": 37,
+            "d5": {
+              "n": 36,
+              "medianPct": -0.03,
+              "winPct": 47.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 35,
+              "medianPct": 1.28,
+              "winPct": 51.4
+            },
+            "d30": {
+              "n": 34,
+              "medianPct": 1.14,
+              "winPct": 58.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.67,
+            "drawdown30MedianPct": -3.71
+          }
+        },
+        {
+          "state": "中部/中部/上部",
+          "signalDays": 45,
+          "episodes": 32,
+          "all": {
+            "signals": 45,
+            "d5": {
+              "n": 45,
+              "medianPct": 0.06,
+              "winPct": 53.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 44,
+              "medianPct": 2.02,
+              "winPct": 59.1
+            },
+            "d30": {
+              "n": 43,
+              "medianPct": 0.07,
+              "winPct": 51.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.43,
+            "drawdown30MedianPct": -5.84
+          },
+          "episodeFirst": {
+            "signals": 32,
+            "d5": {
+              "n": 32,
+              "medianPct": -0.16,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 31,
+              "medianPct": 2.27,
+              "winPct": 61.3
+            },
+            "d30": {
+              "n": 30,
+              "medianPct": 0.16,
+              "winPct": 50.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 8.23,
+            "drawdown30MedianPct": -5.15
+          }
+        },
+        {
+          "state": "上部/中部/下部",
+          "signalDays": 27,
+          "episodes": 26,
+          "all": {
+            "signals": 27,
+            "d5": {
+              "n": 27,
+              "medianPct": 0.72,
+              "winPct": 66.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 27,
+              "medianPct": 0.4,
+              "winPct": 51.9
+            },
+            "d30": {
+              "n": 27,
+              "medianPct": 2.16,
+              "winPct": 66.7
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.92,
+            "drawdown30MedianPct": -6.07
+          },
+          "episodeFirst": {
+            "signals": 26,
+            "d5": {
+              "n": 26,
+              "medianPct": 0.46,
+              "winPct": 65.4
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 26,
+              "medianPct": -0.03,
+              "winPct": 50.0
+            },
+            "d30": {
+              "n": 26,
+              "medianPct": 1.94,
+              "winPct": 65.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.96,
+            "drawdown30MedianPct": -6.48
+          }
+        },
+        {
+          "state": "上部/上部/下部",
+          "signalDays": 26,
+          "episodes": 25,
+          "all": {
+            "signals": 26,
+            "d5": {
+              "n": 26,
+              "medianPct": -0.66,
+              "winPct": 42.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 26,
+              "medianPct": -3.23,
+              "winPct": 30.8
+            },
+            "d30": {
+              "n": 26,
+              "medianPct": -3.55,
+              "winPct": 38.5
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.3,
+            "drawdown30MedianPct": -7.83
+          },
+          "episodeFirst": {
+            "signals": 25,
+            "d5": {
+              "n": 25,
+              "medianPct": -0.67,
+              "winPct": 40.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 25,
+              "medianPct": -3.1,
+              "winPct": 32.0
+            },
+            "d30": {
+              "n": 25,
+              "medianPct": -2.59,
+              "winPct": 40.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.34,
+            "drawdown30MedianPct": -7.31
+          }
+        },
+        {
+          "state": "上部/中部/中部",
+          "signalDays": 26,
+          "episodes": 24,
+          "all": {
+            "signals": 26,
+            "d5": {
+              "n": 26,
+              "medianPct": 0.46,
+              "winPct": 57.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 25,
+              "medianPct": 3.97,
+              "winPct": 64.0
+            },
+            "d30": {
+              "n": 25,
+              "medianPct": 5.0,
+              "winPct": 64.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 11.14,
+            "drawdown30MedianPct": -3.24
+          },
+          "episodeFirst": {
+            "signals": 24,
+            "d5": {
+              "n": 24,
+              "medianPct": 0.4,
+              "winPct": 54.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 23,
+              "medianPct": 3.37,
+              "winPct": 60.9
+            },
+            "d30": {
+              "n": 23,
+              "medianPct": 3.21,
+              "winPct": 60.9
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 9.32,
+            "drawdown30MedianPct": -3.45
+          }
+        },
+        {
+          "state": "下部/中部/下部",
+          "signalDays": 25,
+          "episodes": 22,
+          "all": {
+            "signals": 25,
+            "d5": {
+              "n": 25,
+              "medianPct": -0.33,
+              "winPct": 48.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 25,
+              "medianPct": -1.36,
+              "winPct": 44.0
+            },
+            "d30": {
+              "n": 25,
+              "medianPct": -1.97,
+              "winPct": 36.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.09,
+            "drawdown30MedianPct": -6.89
+          },
+          "episodeFirst": {
+            "signals": 22,
+            "d5": {
+              "n": 22,
+              "medianPct": -0.61,
+              "winPct": 45.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 22,
+              "medianPct": -2.52,
+              "winPct": 40.9
+            },
+            "d30": {
+              "n": 22,
+              "medianPct": -2.9,
+              "winPct": 31.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.95,
+            "drawdown30MedianPct": -7.67
+          }
+        },
+        {
+          "state": "中部/上部/中部",
+          "signalDays": 19,
+          "episodes": 17,
+          "all": {
+            "signals": 19,
+            "d5": {
+              "n": 19,
+              "medianPct": 1.36,
+              "winPct": 63.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 19,
+              "medianPct": -0.35,
+              "winPct": 47.4
+            },
+            "d30": {
+              "n": 19,
+              "medianPct": -2.94,
+              "winPct": 42.1
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.87,
+            "drawdown30MedianPct": -6.5
+          },
+          "episodeFirst": {
+            "signals": 17,
+            "d5": {
+              "n": 17,
+              "medianPct": 0.81,
+              "winPct": 58.8
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 17,
+              "medianPct": -0.35,
+              "winPct": 47.1
+            },
+            "d30": {
+              "n": 17,
+              "medianPct": -2.94,
+              "winPct": 41.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 6.87,
+            "drawdown30MedianPct": -7.04
+          }
+        },
+        {
+          "state": "上部/下部/下部",
+          "signalDays": 17,
+          "episodes": 16,
+          "all": {
+            "signals": 17,
+            "d5": {
+              "n": 17,
+              "medianPct": -0.63,
+              "winPct": 35.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 17,
+              "medianPct": -3.58,
+              "winPct": 35.3
+            },
+            "d30": {
+              "n": 17,
+              "medianPct": -0.96,
+              "winPct": 41.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.17,
+            "drawdown30MedianPct": -8.71
+          },
+          "episodeFirst": {
+            "signals": 16,
+            "d5": {
+              "n": 16,
+              "medianPct": -0.56,
+              "winPct": 37.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 16,
+              "medianPct": -3.92,
+              "winPct": 31.2
+            },
+            "d30": {
+              "n": 16,
+              "medianPct": -0.93,
+              "winPct": 43.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.69,
+            "drawdown30MedianPct": -7.59
+          }
+        },
+        {
+          "state": "下部/中部/上部",
+          "signalDays": 21,
+          "episodes": 16,
+          "all": {
+            "signals": 21,
+            "d5": {
+              "n": 21,
+              "medianPct": -0.33,
+              "winPct": 47.6
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 20,
+              "medianPct": -1.02,
+              "winPct": 45.0
+            },
+            "d30": {
+              "n": 20,
+              "medianPct": -3.75,
+              "winPct": 30.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 5.97,
+            "drawdown30MedianPct": -6.86
+          },
+          "episodeFirst": {
+            "signals": 16,
+            "d5": {
+              "n": 16,
+              "medianPct": -0.04,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": -0.57,
+              "winPct": 46.7
+            },
+            "d30": {
+              "n": 15,
+              "medianPct": -2.74,
+              "winPct": 40.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.06,
+            "drawdown30MedianPct": -5.49
+          }
+        },
+        {
+          "state": "下部/下部/上部",
+          "signalDays": 22,
+          "episodes": 16,
+          "all": {
+            "signals": 22,
+            "d5": {
+              "n": 22,
+              "medianPct": -0.61,
+              "winPct": 45.5
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 21,
+              "medianPct": 0.35,
+              "winPct": 52.4
+            },
+            "d30": {
+              "n": 20,
+              "medianPct": -0.14,
+              "winPct": 45.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.57,
+            "drawdown30MedianPct": -5.8
+          },
+          "episodeFirst": {
+            "signals": 16,
+            "d5": {
+              "n": 16,
+              "medianPct": 0.91,
+              "winPct": 56.2
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": 0.87,
+              "winPct": 66.7
+            },
+            "d30": {
+              "n": 14,
+              "medianPct": 2.34,
+              "winPct": 64.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 8.33,
+            "drawdown30MedianPct": -4.2
+          }
+        },
+        {
+          "state": "上部/中部/上部",
+          "signalDays": 17,
+          "episodes": 16,
+          "all": {
+            "signals": 17,
+            "d5": {
+              "n": 17,
+              "medianPct": 0.9,
+              "winPct": 52.9
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 16,
+              "medianPct": 1.86,
+              "winPct": 56.2
+            },
+            "d30": {
+              "n": 16,
+              "medianPct": -0.98,
+              "winPct": 43.8
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 8.22,
+            "drawdown30MedianPct": -7.07
+          },
+          "episodeFirst": {
+            "signals": 16,
+            "d5": {
+              "n": 16,
+              "medianPct": -0.48,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 15,
+              "medianPct": 1.01,
+              "winPct": 53.3
+            },
+            "d30": {
+              "n": 15,
+              "medianPct": -1.86,
+              "winPct": 40.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 7.78,
+            "drawdown30MedianPct": -7.91
+          }
+        },
+        {
+          "state": "中部/下部/中部",
+          "signalDays": 17,
+          "episodes": 12,
+          "all": {
+            "signals": 17,
+            "d5": {
+              "n": 17,
+              "medianPct": 1.38,
+              "winPct": 64.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 17,
+              "medianPct": 3.58,
+              "winPct": 58.8
+            },
+            "d30": {
+              "n": 17,
+              "medianPct": 14.55,
+              "winPct": 82.4
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 18.47,
+            "drawdown30MedianPct": -2.34
+          },
+          "episodeFirst": {
+            "signals": 12,
+            "d5": {
+              "n": 12,
+              "medianPct": 2.04,
+              "winPct": 66.7
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 12,
+              "medianPct": 6.26,
+              "winPct": 66.7
+            },
+            "d30": {
+              "n": 12,
+              "medianPct": 13.52,
+              "winPct": 83.3
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 17.91,
+            "drawdown30MedianPct": -2.26
+          }
+        },
+        {
+          "state": "下部/上部/上部",
+          "signalDays": 10,
+          "episodes": 10,
+          "all": {
+            "signals": 10,
+            "d5": {
+              "n": 10,
+              "medianPct": 0.08,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 9,
+              "medianPct": -2.84,
+              "winPct": 33.3
+            },
+            "d30": {
+              "n": 9,
+              "medianPct": -2.29,
+              "winPct": 22.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.85,
+            "drawdown30MedianPct": -7.57
+          },
+          "episodeFirst": {
+            "signals": 10,
+            "d5": {
+              "n": 10,
+              "medianPct": 0.08,
+              "winPct": 50.0
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 9,
+              "medianPct": -2.84,
+              "winPct": 33.3
+            },
+            "d30": {
+              "n": 9,
+              "medianPct": -2.29,
+              "winPct": 22.2
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 4.85,
+            "drawdown30MedianPct": -7.57
+          }
+        },
+        {
+          "state": "下部/上部/中部",
+          "signalDays": 6,
+          "episodes": 6,
+          "all": {
+            "signals": 6,
+            "d5": {
+              "n": 6,
+              "medianPct": -1.34,
+              "winPct": 33.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 6,
+              "medianPct": -2.64,
+              "winPct": 33.3
+            },
+            "d30": {
+              "n": 6,
+              "medianPct": -0.8,
+              "winPct": 50.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 3.96,
+            "drawdown30MedianPct": -9.46
+          },
+          "episodeFirst": {
+            "signals": 6,
+            "d5": {
+              "n": 6,
+              "medianPct": -1.34,
+              "winPct": 33.3
+            },
+            "d10": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "d20": {
+              "n": 6,
+              "medianPct": -2.64,
+              "winPct": 33.3
+            },
+            "d30": {
+              "n": 6,
+              "medianPct": -0.8,
+              "winPct": 50.0
+            },
+            "d60": {
+              "n": 0,
+              "medianPct": null,
+              "winPct": null
+            },
+            "max30MedianPct": 3.96,
+            "drawdown30MedianPct": -9.46
+          }
+        }
+      ],
+      "learnedClassification": {
+        "tier": "历史有优势但近期降级",
+        "window": "等待当前状态确认",
+        "rule": "全历史主信号曾有优势，但最近年度转弱；不单独买入，先等待日线止跌、股息率/250日线重新满足，并用新信号簇复核。",
+        "basis": "全历史20日62.2%/2.17%，最近年度20日50.0%/-0.88%"
+      },
+      "latestState": {
+        "day": "下部",
+        "week": "下部",
+        "month": "下部",
+        "percent": {
+          "day": 20.8,
+          "week": 15.0,
+          "month": 15.0
+        }
+      }
+    }
+  ]
+}

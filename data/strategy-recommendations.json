@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-06T18:19:12+08:00",
+  "updatedAt": "2026-08-06T20:24:19+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -825,6 +825,48 @@
           "upper": 40.038,
           "middle": 37.573,
           "lower": 35.109
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "no_data",
+        "criterion": "30个交易日内最高价达到指令价+5%",
+        "entryPrice": 38.94,
+        "targetPrice": 40.887,
+        "observedTradingDays": 0,
+        "maxGainPct": 0.0,
+        "latestReturnPct": 0.0,
+        "evaluatedAt": "2026-08-06T20:24:19+08:00"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-08-06-600011",
+      "recommendationId": "brief-2026-08-06-600011",
+      "recommendedAt": "2026-08-06T20:24:19+08:00",
+      "date": "2026-08-06",
+      "code": "600011",
+      "name": "华能国际",
+      "action": "分批买入",
+      "reason": "华能国际当前价格约7.01元、股息率约5.706%，已进入约5%的分批买入区，并且日线、周线、月线均处于下部，位置与用户固定原则高度一致。相较于招商银行当前日线处于上部，华能国际当前多周期位置更合适；相较于中国平安和东阿阿胶，华能国际股息率更高。但该股真实成交样本仅少量，不能据此提高仓位或一次性买满。",
+      "condition": "先复核最新正式每股分红、除权口径、实际持仓、可用资金及所有未反馈订单。仅当复核后可比口径股息率仍不低于5.5%、成交价不高于7.10元、日线和周线仍处于下部、月线未转为上部且不存在重复下单风险时，才由用户确认后执行首批小仓；不得一次买满，不自动下单。任一条件不满足则当前不买。",
+      "confidence": 88.0,
+      "snapshot": {
+        "price": 7.01,
+        "dividendPerShare": 0.4,
+        "yield": 5.706134,
+        "day": "下部",
+        "week": "下部",
+        "month": "下部",
+        "weeklyBoll": {
+          "asOf": "2026-08-06",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 8.062,
+          "middle": 7.053,
+          "lower": 6.043
         },
         "marketUpdatedAt": null
       },

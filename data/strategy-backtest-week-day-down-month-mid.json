@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-08-02T20:22:09+05:00",
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-07T10:22:03+05:00",
   "dataSource": "东方财富妙想金融数据（前复权日线）",
   "evaluationWindow": "2024-01-01至数据最新交易日",
   "indicatorDefinition": {
@@ -9,6 +9,7 @@
     "week": "ISO周内截至当日最高/最低",
     "month": "自然月内截至当日最高/最低",
     "signal": "周下+日下+月中",
+    "testedSignalSpace": "周中/下 + 日中/下 + 月中/下，共8种组合",
     "antiLookahead": "周/月只使用截至信号日已经出现的数据；未来收益使用前复权收盘价；不计分红、费用和滑点。"
   },
   "stocks": [
@@ -212,7 +213,542 @@
           "2026-07-27",
           1
         ]
-      ]
+      ],
+      "variantStudy": {
+        "preferredSignal": "周下+日下+月中",
+        "testedSignals": [
+          "周下+日下+月中",
+          "周下+日下+月下",
+          "周下+日中+月中",
+          "周下+日中+月下",
+          "周中+日下+月中",
+          "周中+日下+月下",
+          "周中+日中+月中",
+          "周中+日中+月下"
+        ],
+        "variants": [
+          {
+            "signal": "周下+日下+月中",
+            "preferred": true,
+            "signalDays": {
+              "signals": 38,
+              "d5": {
+                "n": 37,
+                "medianPct": -0.9,
+                "winPct": 29.7
+              },
+              "d10": {
+                "n": 37,
+                "medianPct": -1.24,
+                "winPct": 21.6
+              },
+              "d20": {
+                "n": 37,
+                "medianPct": -0.5,
+                "winPct": 40.5
+              },
+              "d30": {
+                "n": 37,
+                "medianPct": 1.26,
+                "winPct": 51.4
+              },
+              "d60": {
+                "n": 35,
+                "medianPct": 0.73,
+                "winPct": 54.3
+              },
+              "max30MedianPct": 4.66,
+              "drawdown30MedianPct": -5.18
+            },
+            "episodes": 26,
+            "episodeFirst": {
+              "signals": 26,
+              "d5": {
+                "n": 25,
+                "medianPct": -0.83,
+                "winPct": 36.0
+              },
+              "d10": {
+                "n": 25,
+                "medianPct": -1.9,
+                "winPct": 32.0
+              },
+              "d20": {
+                "n": 25,
+                "medianPct": -0.5,
+                "winPct": 36.0
+              },
+              "d30": {
+                "n": 25,
+                "medianPct": 0.0,
+                "winPct": 48.0
+              },
+              "d60": {
+                "n": 23,
+                "medianPct": 1.4,
+                "winPct": 60.9
+              },
+              "max30MedianPct": 4.42,
+              "drawdown30MedianPct": -5.04
+            }
+          },
+          {
+            "signal": "周下+日下+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 135,
+              "d5": {
+                "n": 135,
+                "medianPct": -0.15,
+                "winPct": 48.1
+              },
+              "d10": {
+                "n": 135,
+                "medianPct": 0.0,
+                "winPct": 49.6
+              },
+              "d20": {
+                "n": 135,
+                "medianPct": 0.21,
+                "winPct": 50.4
+              },
+              "d30": {
+                "n": 133,
+                "medianPct": -0.14,
+                "winPct": 48.1
+              },
+              "d60": {
+                "n": 122,
+                "medianPct": 1.84,
+                "winPct": 58.2
+              },
+              "max30MedianPct": 5.18,
+              "drawdown30MedianPct": -4.53
+            },
+            "episodes": 59,
+            "episodeFirst": {
+              "signals": 59,
+              "d5": {
+                "n": 59,
+                "medianPct": 0.0,
+                "winPct": 49.2
+              },
+              "d10": {
+                "n": 59,
+                "medianPct": 0.53,
+                "winPct": 50.8
+              },
+              "d20": {
+                "n": 59,
+                "medianPct": 0.65,
+                "winPct": 57.6
+              },
+              "d30": {
+                "n": 58,
+                "medianPct": -0.23,
+                "winPct": 48.3
+              },
+              "d60": {
+                "n": 54,
+                "medianPct": 1.84,
+                "winPct": 61.1
+              },
+              "max30MedianPct": 5.38,
+              "drawdown30MedianPct": -3.79
+            }
+          },
+          {
+            "signal": "周下+日中+月中",
+            "preferred": false,
+            "signalDays": {
+              "signals": 7,
+              "d5": {
+                "n": 7,
+                "medianPct": 0.41,
+                "winPct": 71.4
+              },
+              "d10": {
+                "n": 7,
+                "medianPct": 1.98,
+                "winPct": 71.4
+              },
+              "d20": {
+                "n": 7,
+                "medianPct": -1.27,
+                "winPct": 42.9
+              },
+              "d30": {
+                "n": 7,
+                "medianPct": -1.23,
+                "winPct": 42.9
+              },
+              "d60": {
+                "n": 7,
+                "medianPct": 2.73,
+                "winPct": 71.4
+              },
+              "max30MedianPct": 6.54,
+              "drawdown30MedianPct": -5.06
+            },
+            "episodes": 7,
+            "episodeFirst": {
+              "signals": 7,
+              "d5": {
+                "n": 7,
+                "medianPct": 0.41,
+                "winPct": 71.4
+              },
+              "d10": {
+                "n": 7,
+                "medianPct": 1.98,
+                "winPct": 71.4
+              },
+              "d20": {
+                "n": 7,
+                "medianPct": -1.27,
+                "winPct": 42.9
+              },
+              "d30": {
+                "n": 7,
+                "medianPct": -1.23,
+                "winPct": 42.9
+              },
+              "d60": {
+                "n": 7,
+                "medianPct": 2.73,
+                "winPct": 71.4
+              },
+              "max30MedianPct": 6.54,
+              "drawdown30MedianPct": -5.06
+            }
+          },
+          {
+            "signal": "周下+日中+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 37,
+              "d5": {
+                "n": 37,
+                "medianPct": -0.47,
+                "winPct": 35.1
+              },
+              "d10": {
+                "n": 37,
+                "medianPct": 0.37,
+                "winPct": 54.1
+              },
+              "d20": {
+                "n": 37,
+                "medianPct": 1.6,
+                "winPct": 67.6
+              },
+              "d30": {
+                "n": 37,
+                "medianPct": 2.06,
+                "winPct": 56.8
+              },
+              "d60": {
+                "n": 36,
+                "medianPct": 5.52,
+                "winPct": 77.8
+              },
+              "max30MedianPct": 5.58,
+              "drawdown30MedianPct": -3.25
+            },
+            "episodes": 25,
+            "episodeFirst": {
+              "signals": 25,
+              "d5": {
+                "n": 25,
+                "medianPct": -0.24,
+                "winPct": 44.0
+              },
+              "d10": {
+                "n": 25,
+                "medianPct": 2.6,
+                "winPct": 56.0
+              },
+              "d20": {
+                "n": 25,
+                "medianPct": 2.02,
+                "winPct": 72.0
+              },
+              "d30": {
+                "n": 25,
+                "medianPct": 2.06,
+                "winPct": 56.0
+              },
+              "d60": {
+                "n": 24,
+                "medianPct": 5.02,
+                "winPct": 70.8
+              },
+              "max30MedianPct": 6.05,
+              "drawdown30MedianPct": -3.25
+            }
+          },
+          {
+            "signal": "周中+日下+月中",
+            "preferred": false,
+            "signalDays": {
+              "signals": 21,
+              "d5": {
+                "n": 21,
+                "medianPct": -0.17,
+                "winPct": 42.9
+              },
+              "d10": {
+                "n": 21,
+                "medianPct": 1.2,
+                "winPct": 61.9
+              },
+              "d20": {
+                "n": 21,
+                "medianPct": -1.25,
+                "winPct": 33.3
+              },
+              "d30": {
+                "n": 21,
+                "medianPct": -1.34,
+                "winPct": 14.3
+              },
+              "d60": {
+                "n": 20,
+                "medianPct": 0.19,
+                "winPct": 55.0
+              },
+              "max30MedianPct": 3.83,
+              "drawdown30MedianPct": -6.18
+            },
+            "episodes": 17,
+            "episodeFirst": {
+              "signals": 17,
+              "d5": {
+                "n": 17,
+                "medianPct": -0.95,
+                "winPct": 41.2
+              },
+              "d10": {
+                "n": 17,
+                "medianPct": 0.22,
+                "winPct": 52.9
+              },
+              "d20": {
+                "n": 17,
+                "medianPct": -0.89,
+                "winPct": 35.3
+              },
+              "d30": {
+                "n": 17,
+                "medianPct": -1.53,
+                "winPct": 17.6
+              },
+              "d60": {
+                "n": 16,
+                "medianPct": 1.14,
+                "winPct": 62.5
+              },
+              "max30MedianPct": 3.83,
+              "drawdown30MedianPct": -6.2
+            }
+          },
+          {
+            "signal": "周中+日下+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 17,
+              "d5": {
+                "n": 17,
+                "medianPct": -0.37,
+                "winPct": 41.2
+              },
+              "d10": {
+                "n": 17,
+                "medianPct": 0.53,
+                "winPct": 52.9
+              },
+              "d20": {
+                "n": 17,
+                "medianPct": 2.53,
+                "winPct": 58.8
+              },
+              "d30": {
+                "n": 15,
+                "medianPct": -1.65,
+                "winPct": 33.3
+              },
+              "d60": {
+                "n": 15,
+                "medianPct": 1.21,
+                "winPct": 53.3
+              },
+              "max30MedianPct": 5.71,
+              "drawdown30MedianPct": -2.86
+            },
+            "episodes": 13,
+            "episodeFirst": {
+              "signals": 13,
+              "d5": {
+                "n": 13,
+                "medianPct": -1.51,
+                "winPct": 38.5
+              },
+              "d10": {
+                "n": 13,
+                "medianPct": -0.65,
+                "winPct": 46.2
+              },
+              "d20": {
+                "n": 13,
+                "medianPct": 1.23,
+                "winPct": 53.8
+              },
+              "d30": {
+                "n": 12,
+                "medianPct": -2.0,
+                "winPct": 33.3
+              },
+              "d60": {
+                "n": 12,
+                "medianPct": 1.35,
+                "winPct": 58.3
+              },
+              "max30MedianPct": 4.33,
+              "drawdown30MedianPct": -3.76
+            }
+          },
+          {
+            "signal": "周中+日中+月中",
+            "preferred": false,
+            "signalDays": {
+              "signals": 48,
+              "d5": {
+                "n": 48,
+                "medianPct": -0.36,
+                "winPct": 39.6
+              },
+              "d10": {
+                "n": 48,
+                "medianPct": -0.18,
+                "winPct": 47.9
+              },
+              "d20": {
+                "n": 48,
+                "medianPct": -0.62,
+                "winPct": 39.6
+              },
+              "d30": {
+                "n": 48,
+                "medianPct": -1.81,
+                "winPct": 41.7
+              },
+              "d60": {
+                "n": 42,
+                "medianPct": -1.02,
+                "winPct": 38.1
+              },
+              "max30MedianPct": 4.0,
+              "drawdown30MedianPct": -4.67
+            },
+            "episodes": 33,
+            "episodeFirst": {
+              "signals": 33,
+              "d5": {
+                "n": 33,
+                "medianPct": 0.07,
+                "winPct": 51.5
+              },
+              "d10": {
+                "n": 33,
+                "medianPct": -0.07,
+                "winPct": 48.5
+              },
+              "d20": {
+                "n": 33,
+                "medianPct": -0.6,
+                "winPct": 42.4
+              },
+              "d30": {
+                "n": 33,
+                "medianPct": -1.98,
+                "winPct": 45.5
+              },
+              "d60": {
+                "n": 30,
+                "medianPct": -0.81,
+                "winPct": 46.7
+              },
+              "max30MedianPct": 4.28,
+              "drawdown30MedianPct": -4.63
+            }
+          },
+          {
+            "signal": "周中+日中+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 35,
+              "d5": {
+                "n": 35,
+                "medianPct": -0.84,
+                "winPct": 42.9
+              },
+              "d10": {
+                "n": 35,
+                "medianPct": -0.04,
+                "winPct": 48.6
+              },
+              "d20": {
+                "n": 35,
+                "medianPct": -2.03,
+                "winPct": 34.3
+              },
+              "d30": {
+                "n": 34,
+                "medianPct": -0.09,
+                "winPct": 50.0
+              },
+              "d60": {
+                "n": 31,
+                "medianPct": 1.75,
+                "winPct": 61.3
+              },
+              "max30MedianPct": 4.89,
+              "drawdown30MedianPct": -3.66
+            },
+            "episodes": 28,
+            "episodeFirst": {
+              "signals": 28,
+              "d5": {
+                "n": 28,
+                "medianPct": -0.85,
+                "winPct": 42.9
+              },
+              "d10": {
+                "n": 28,
+                "medianPct": 0.04,
+                "winPct": 50.0
+              },
+              "d20": {
+                "n": 28,
+                "medianPct": -1.23,
+                "winPct": 35.7
+              },
+              "d30": {
+                "n": 27,
+                "medianPct": 0.27,
+                "winPct": 55.6
+              },
+              "d60": {
+                "n": 25,
+                "medianPct": 1.69,
+                "winPct": 56.0
+              },
+              "max30MedianPct": 5.18,
+              "drawdown30MedianPct": -3.56
+            }
+          }
+        ]
+      }
     },
     {
       "code": "600036",
@@ -424,7 +960,542 @@
           "2026-06-16",
           1
         ]
-      ]
+      ],
+      "variantStudy": {
+        "preferredSignal": "周下+日下+月中",
+        "testedSignals": [
+          "周下+日下+月中",
+          "周下+日下+月下",
+          "周下+日中+月中",
+          "周下+日中+月下",
+          "周中+日下+月中",
+          "周中+日下+月下",
+          "周中+日中+月中",
+          "周中+日中+月下"
+        ],
+        "variants": [
+          {
+            "signal": "周下+日下+月中",
+            "preferred": true,
+            "signalDays": {
+              "signals": 45,
+              "d5": {
+                "n": 45,
+                "medianPct": 1.57,
+                "winPct": 62.2
+              },
+              "d10": {
+                "n": 45,
+                "medianPct": 1.85,
+                "winPct": 60.0
+              },
+              "d20": {
+                "n": 45,
+                "medianPct": 1.19,
+                "winPct": 64.4
+              },
+              "d30": {
+                "n": 45,
+                "medianPct": 0.51,
+                "winPct": 51.1
+              },
+              "d60": {
+                "n": 44,
+                "medianPct": 3.59,
+                "winPct": 63.6
+              },
+              "max30MedianPct": 5.04,
+              "drawdown30MedianPct": -3.38
+            },
+            "episodes": 28,
+            "episodeFirst": {
+              "signals": 28,
+              "d5": {
+                "n": 28,
+                "medianPct": 1.04,
+                "winPct": 64.3
+              },
+              "d10": {
+                "n": 28,
+                "medianPct": 1.0,
+                "winPct": 57.1
+              },
+              "d20": {
+                "n": 28,
+                "medianPct": 0.55,
+                "winPct": 57.1
+              },
+              "d30": {
+                "n": 28,
+                "medianPct": -0.31,
+                "winPct": 50.0
+              },
+              "d60": {
+                "n": 27,
+                "medianPct": 1.51,
+                "winPct": 55.6
+              },
+              "max30MedianPct": 4.37,
+              "drawdown30MedianPct": -4.12
+            }
+          },
+          {
+            "signal": "周下+日下+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 106,
+              "d5": {
+                "n": 106,
+                "medianPct": -0.26,
+                "winPct": 42.5
+              },
+              "d10": {
+                "n": 106,
+                "medianPct": 0.14,
+                "winPct": 51.9
+              },
+              "d20": {
+                "n": 106,
+                "medianPct": 0.44,
+                "winPct": 53.8
+              },
+              "d30": {
+                "n": 102,
+                "medianPct": 1.22,
+                "winPct": 58.8
+              },
+              "d60": {
+                "n": 90,
+                "medianPct": 2.98,
+                "winPct": 67.8
+              },
+              "max30MedianPct": 5.31,
+              "drawdown30MedianPct": -5.09
+            },
+            "episodes": 45,
+            "episodeFirst": {
+              "signals": 45,
+              "d5": {
+                "n": 45,
+                "medianPct": 0.15,
+                "winPct": 51.1
+              },
+              "d10": {
+                "n": 45,
+                "medianPct": 0.21,
+                "winPct": 57.8
+              },
+              "d20": {
+                "n": 45,
+                "medianPct": 0.4,
+                "winPct": 51.1
+              },
+              "d30": {
+                "n": 44,
+                "medianPct": 1.22,
+                "winPct": 59.1
+              },
+              "d60": {
+                "n": 41,
+                "medianPct": 3.42,
+                "winPct": 63.4
+              },
+              "max30MedianPct": 4.97,
+              "drawdown30MedianPct": -5.39
+            }
+          },
+          {
+            "signal": "周下+日中+月中",
+            "preferred": false,
+            "signalDays": {
+              "signals": 18,
+              "d5": {
+                "n": 18,
+                "medianPct": -0.25,
+                "winPct": 44.4
+              },
+              "d10": {
+                "n": 18,
+                "medianPct": -1.55,
+                "winPct": 44.4
+              },
+              "d20": {
+                "n": 18,
+                "medianPct": 0.84,
+                "winPct": 61.1
+              },
+              "d30": {
+                "n": 18,
+                "medianPct": 2.5,
+                "winPct": 77.8
+              },
+              "d60": {
+                "n": 17,
+                "medianPct": 7.18,
+                "winPct": 64.7
+              },
+              "max30MedianPct": 4.44,
+              "drawdown30MedianPct": -4.28
+            },
+            "episodes": 13,
+            "episodeFirst": {
+              "signals": 13,
+              "d5": {
+                "n": 13,
+                "medianPct": -0.37,
+                "winPct": 46.2
+              },
+              "d10": {
+                "n": 13,
+                "medianPct": 0.53,
+                "winPct": 53.8
+              },
+              "d20": {
+                "n": 13,
+                "medianPct": 1.43,
+                "winPct": 61.5
+              },
+              "d30": {
+                "n": 13,
+                "medianPct": 1.56,
+                "winPct": 76.9
+              },
+              "d60": {
+                "n": 12,
+                "medianPct": 7.15,
+                "winPct": 58.3
+              },
+              "max30MedianPct": 4.72,
+              "drawdown30MedianPct": -4.25
+            }
+          },
+          {
+            "signal": "周下+日中+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 23,
+              "d5": {
+                "n": 23,
+                "medianPct": 0.16,
+                "winPct": 56.5
+              },
+              "d10": {
+                "n": 23,
+                "medianPct": 0.61,
+                "winPct": 60.9
+              },
+              "d20": {
+                "n": 23,
+                "medianPct": 0.96,
+                "winPct": 56.5
+              },
+              "d30": {
+                "n": 23,
+                "medianPct": 3.85,
+                "winPct": 65.2
+              },
+              "d60": {
+                "n": 23,
+                "medianPct": 1.61,
+                "winPct": 60.9
+              },
+              "max30MedianPct": 5.78,
+              "drawdown30MedianPct": -4.07
+            },
+            "episodes": 17,
+            "episodeFirst": {
+              "signals": 17,
+              "d5": {
+                "n": 17,
+                "medianPct": 0.06,
+                "winPct": 52.9
+              },
+              "d10": {
+                "n": 17,
+                "medianPct": 0.61,
+                "winPct": 52.9
+              },
+              "d20": {
+                "n": 17,
+                "medianPct": 0.96,
+                "winPct": 58.8
+              },
+              "d30": {
+                "n": 17,
+                "medianPct": 3.85,
+                "winPct": 64.7
+              },
+              "d60": {
+                "n": 17,
+                "medianPct": 1.61,
+                "winPct": 64.7
+              },
+              "max30MedianPct": 5.56,
+              "drawdown30MedianPct": -4.07
+            }
+          },
+          {
+            "signal": "周中+日下+月中",
+            "preferred": false,
+            "signalDays": {
+              "signals": 26,
+              "d5": {
+                "n": 26,
+                "medianPct": -0.25,
+                "winPct": 46.2
+              },
+              "d10": {
+                "n": 26,
+                "medianPct": 0.3,
+                "winPct": 50.0
+              },
+              "d20": {
+                "n": 26,
+                "medianPct": 0.29,
+                "winPct": 50.0
+              },
+              "d30": {
+                "n": 26,
+                "medianPct": -0.77,
+                "winPct": 46.2
+              },
+              "d60": {
+                "n": 26,
+                "medianPct": 2.41,
+                "winPct": 57.7
+              },
+              "max30MedianPct": 3.33,
+              "drawdown30MedianPct": -4.43
+            },
+            "episodes": 17,
+            "episodeFirst": {
+              "signals": 17,
+              "d5": {
+                "n": 17,
+                "medianPct": -0.15,
+                "winPct": 47.1
+              },
+              "d10": {
+                "n": 17,
+                "medianPct": 0.66,
+                "winPct": 52.9
+              },
+              "d20": {
+                "n": 17,
+                "medianPct": 0.7,
+                "winPct": 52.9
+              },
+              "d30": {
+                "n": 17,
+                "medianPct": -1.54,
+                "winPct": 47.1
+              },
+              "d60": {
+                "n": 17,
+                "medianPct": 3.56,
+                "winPct": 58.8
+              },
+              "max30MedianPct": 3.42,
+              "drawdown30MedianPct": -3.8
+            }
+          },
+          {
+            "signal": "周中+日下+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 17,
+              "d5": {
+                "n": 17,
+                "medianPct": 0.25,
+                "winPct": 52.9
+              },
+              "d10": {
+                "n": 17,
+                "medianPct": 0.43,
+                "winPct": 64.7
+              },
+              "d20": {
+                "n": 17,
+                "medianPct": -0.29,
+                "winPct": 47.1
+              },
+              "d30": {
+                "n": 16,
+                "medianPct": -3.04,
+                "winPct": 43.8
+              },
+              "d60": {
+                "n": 13,
+                "medianPct": -0.41,
+                "winPct": 46.2
+              },
+              "max30MedianPct": 3.93,
+              "drawdown30MedianPct": -4.96
+            },
+            "episodes": 16,
+            "episodeFirst": {
+              "signals": 16,
+              "d5": {
+                "n": 16,
+                "medianPct": 0.26,
+                "winPct": 56.2
+              },
+              "d10": {
+                "n": 16,
+                "medianPct": 0.95,
+                "winPct": 68.8
+              },
+              "d20": {
+                "n": 16,
+                "medianPct": -1.65,
+                "winPct": 43.8
+              },
+              "d30": {
+                "n": 15,
+                "medianPct": -3.01,
+                "winPct": 46.7
+              },
+              "d60": {
+                "n": 13,
+                "medianPct": -0.41,
+                "winPct": 46.2
+              },
+              "max30MedianPct": 4.54,
+              "drawdown30MedianPct": -5.31
+            }
+          },
+          {
+            "signal": "周中+日中+月中",
+            "preferred": false,
+            "signalDays": {
+              "signals": 34,
+              "d5": {
+                "n": 34,
+                "medianPct": 1.1,
+                "winPct": 61.8
+              },
+              "d10": {
+                "n": 34,
+                "medianPct": 2.1,
+                "winPct": 58.8
+              },
+              "d20": {
+                "n": 34,
+                "medianPct": 1.71,
+                "winPct": 55.9
+              },
+              "d30": {
+                "n": 34,
+                "medianPct": 1.28,
+                "winPct": 67.6
+              },
+              "d60": {
+                "n": 32,
+                "medianPct": 4.19,
+                "winPct": 68.8
+              },
+              "max30MedianPct": 4.8,
+              "drawdown30MedianPct": -3.11
+            },
+            "episodes": 24,
+            "episodeFirst": {
+              "signals": 24,
+              "d5": {
+                "n": 24,
+                "medianPct": 0.96,
+                "winPct": 62.5
+              },
+              "d10": {
+                "n": 24,
+                "medianPct": 2.07,
+                "winPct": 54.2
+              },
+              "d20": {
+                "n": 24,
+                "medianPct": 1.11,
+                "winPct": 54.2
+              },
+              "d30": {
+                "n": 24,
+                "medianPct": 1.28,
+                "winPct": 75.0
+              },
+              "d60": {
+                "n": 22,
+                "medianPct": 6.31,
+                "winPct": 72.7
+              },
+              "max30MedianPct": 4.98,
+              "drawdown30MedianPct": -3.68
+            }
+          },
+          {
+            "signal": "周中+日中+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 19,
+              "d5": {
+                "n": 19,
+                "medianPct": 0.71,
+                "winPct": 63.2
+              },
+              "d10": {
+                "n": 19,
+                "medianPct": 1.4,
+                "winPct": 52.6
+              },
+              "d20": {
+                "n": 19,
+                "medianPct": 1.94,
+                "winPct": 68.4
+              },
+              "d30": {
+                "n": 19,
+                "medianPct": 1.99,
+                "winPct": 57.9
+              },
+              "d60": {
+                "n": 17,
+                "medianPct": 5.97,
+                "winPct": 70.6
+              },
+              "max30MedianPct": 5.07,
+              "drawdown30MedianPct": -4.65
+            },
+            "episodes": 17,
+            "episodeFirst": {
+              "signals": 17,
+              "d5": {
+                "n": 17,
+                "medianPct": 0.88,
+                "winPct": 64.7
+              },
+              "d10": {
+                "n": 17,
+                "medianPct": 1.95,
+                "winPct": 58.8
+              },
+              "d20": {
+                "n": 17,
+                "medianPct": 1.94,
+                "winPct": 70.6
+              },
+              "d30": {
+                "n": 17,
+                "medianPct": 3.73,
+                "winPct": 64.7
+              },
+              "d60": {
+                "n": 15,
+                "medianPct": 5.97,
+                "winPct": 73.3
+              },
+              "max30MedianPct": 5.93,
+              "drawdown30MedianPct": -3.67
+            }
+          }
+        ]
+      }
     },
     {
       "code": "000538",
@@ -631,7 +1702,542 @@
           "2026-07-09",
           2
         ]
-      ]
+      ],
+      "variantStudy": {
+        "preferredSignal": "周下+日下+月中",
+        "testedSignals": [
+          "周下+日下+月中",
+          "周下+日下+月下",
+          "周下+日中+月中",
+          "周下+日中+月下",
+          "周中+日下+月中",
+          "周中+日下+月下",
+          "周中+日中+月中",
+          "周中+日中+月下"
+        ],
+        "variants": [
+          {
+            "signal": "周下+日下+月中",
+            "preferred": true,
+            "signalDays": {
+              "signals": 36,
+              "d5": {
+                "n": 36,
+                "medianPct": 0.31,
+                "winPct": 52.8
+              },
+              "d10": {
+                "n": 36,
+                "medianPct": -0.26,
+                "winPct": 47.2
+              },
+              "d20": {
+                "n": 34,
+                "medianPct": 1.14,
+                "winPct": 70.6
+              },
+              "d30": {
+                "n": 34,
+                "medianPct": 3.49,
+                "winPct": 67.6
+              },
+              "d60": {
+                "n": 33,
+                "medianPct": 1.56,
+                "winPct": 66.7
+              },
+              "max30MedianPct": 6.31,
+              "drawdown30MedianPct": -3.05
+            },
+            "episodes": 27,
+            "episodeFirst": {
+              "signals": 27,
+              "d5": {
+                "n": 27,
+                "medianPct": 0.13,
+                "winPct": 51.9
+              },
+              "d10": {
+                "n": 27,
+                "medianPct": -0.5,
+                "winPct": 44.4
+              },
+              "d20": {
+                "n": 26,
+                "medianPct": 0.81,
+                "winPct": 65.4
+              },
+              "d30": {
+                "n": 26,
+                "medianPct": 2.03,
+                "winPct": 61.5
+              },
+              "d60": {
+                "n": 25,
+                "medianPct": 1.54,
+                "winPct": 68.0
+              },
+              "max30MedianPct": 5.29,
+              "drawdown30MedianPct": -3.34
+            }
+          },
+          {
+            "signal": "周下+日下+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 114,
+              "d5": {
+                "n": 114,
+                "medianPct": 0.2,
+                "winPct": 54.4
+              },
+              "d10": {
+                "n": 114,
+                "medianPct": -0.07,
+                "winPct": 47.4
+              },
+              "d20": {
+                "n": 114,
+                "medianPct": 0.13,
+                "winPct": 50.9
+              },
+              "d30": {
+                "n": 113,
+                "medianPct": 0.05,
+                "winPct": 51.3
+              },
+              "d60": {
+                "n": 99,
+                "medianPct": 1.39,
+                "winPct": 67.7
+              },
+              "max30MedianPct": 3.7,
+              "drawdown30MedianPct": -3.61
+            },
+            "episodes": 56,
+            "episodeFirst": {
+              "signals": 56,
+              "d5": {
+                "n": 56,
+                "medianPct": 0.23,
+                "winPct": 57.1
+              },
+              "d10": {
+                "n": 56,
+                "medianPct": -0.29,
+                "winPct": 42.9
+              },
+              "d20": {
+                "n": 56,
+                "medianPct": -0.04,
+                "winPct": 50.0
+              },
+              "d30": {
+                "n": 55,
+                "medianPct": -0.14,
+                "winPct": 47.3
+              },
+              "d60": {
+                "n": 51,
+                "medianPct": 1.1,
+                "winPct": 62.7
+              },
+              "max30MedianPct": 3.58,
+              "drawdown30MedianPct": -3.35
+            }
+          },
+          {
+            "signal": "周下+日中+月中",
+            "preferred": false,
+            "signalDays": {
+              "signals": 8,
+              "d5": {
+                "n": 8,
+                "medianPct": 0.23,
+                "winPct": 62.5
+              },
+              "d10": {
+                "n": 8,
+                "medianPct": 2.48,
+                "winPct": 62.5
+              },
+              "d20": {
+                "n": 8,
+                "medianPct": 3.6,
+                "winPct": 87.5
+              },
+              "d30": {
+                "n": 8,
+                "medianPct": 5.11,
+                "winPct": 87.5
+              },
+              "d60": {
+                "n": 8,
+                "medianPct": 4.46,
+                "winPct": 87.5
+              },
+              "max30MedianPct": 7.92,
+              "drawdown30MedianPct": -2.92
+            },
+            "episodes": 8,
+            "episodeFirst": {
+              "signals": 8,
+              "d5": {
+                "n": 8,
+                "medianPct": 0.23,
+                "winPct": 62.5
+              },
+              "d10": {
+                "n": 8,
+                "medianPct": 2.48,
+                "winPct": 62.5
+              },
+              "d20": {
+                "n": 8,
+                "medianPct": 3.6,
+                "winPct": 87.5
+              },
+              "d30": {
+                "n": 8,
+                "medianPct": 5.11,
+                "winPct": 87.5
+              },
+              "d60": {
+                "n": 8,
+                "medianPct": 4.46,
+                "winPct": 87.5
+              },
+              "max30MedianPct": 7.92,
+              "drawdown30MedianPct": -2.92
+            }
+          },
+          {
+            "signal": "周下+日中+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 35,
+              "d5": {
+                "n": 35,
+                "medianPct": 0.22,
+                "winPct": 57.1
+              },
+              "d10": {
+                "n": 35,
+                "medianPct": 0.29,
+                "winPct": 54.3
+              },
+              "d20": {
+                "n": 35,
+                "medianPct": 1.22,
+                "winPct": 57.1
+              },
+              "d30": {
+                "n": 33,
+                "medianPct": 0.96,
+                "winPct": 57.6
+              },
+              "d60": {
+                "n": 31,
+                "medianPct": 1.58,
+                "winPct": 58.1
+              },
+              "max30MedianPct": 4.34,
+              "drawdown30MedianPct": -2.76
+            },
+            "episodes": 27,
+            "episodeFirst": {
+              "signals": 27,
+              "d5": {
+                "n": 27,
+                "medianPct": 0.38,
+                "winPct": 63.0
+              },
+              "d10": {
+                "n": 27,
+                "medianPct": 0.49,
+                "winPct": 59.3
+              },
+              "d20": {
+                "n": 27,
+                "medianPct": 0.65,
+                "winPct": 55.6
+              },
+              "d30": {
+                "n": 26,
+                "medianPct": 1.4,
+                "winPct": 61.5
+              },
+              "d60": {
+                "n": 24,
+                "medianPct": 1.66,
+                "winPct": 62.5
+              },
+              "max30MedianPct": 4.34,
+              "drawdown30MedianPct": -2.74
+            }
+          },
+          {
+            "signal": "周中+日下+月中",
+            "preferred": false,
+            "signalDays": {
+              "signals": 26,
+              "d5": {
+                "n": 26,
+                "medianPct": -1.06,
+                "winPct": 19.2
+              },
+              "d10": {
+                "n": 26,
+                "medianPct": -1.48,
+                "winPct": 19.2
+              },
+              "d20": {
+                "n": 26,
+                "medianPct": -1.49,
+                "winPct": 11.5
+              },
+              "d30": {
+                "n": 26,
+                "medianPct": -1.45,
+                "winPct": 30.8
+              },
+              "d60": {
+                "n": 25,
+                "medianPct": -1.9,
+                "winPct": 40.0
+              },
+              "max30MedianPct": 1.5,
+              "drawdown30MedianPct": -4.55
+            },
+            "episodes": 23,
+            "episodeFirst": {
+              "signals": 23,
+              "d5": {
+                "n": 23,
+                "medianPct": -1.14,
+                "winPct": 21.7
+              },
+              "d10": {
+                "n": 23,
+                "medianPct": -1.48,
+                "winPct": 17.4
+              },
+              "d20": {
+                "n": 23,
+                "medianPct": -1.52,
+                "winPct": 13.0
+              },
+              "d30": {
+                "n": 23,
+                "medianPct": -1.59,
+                "winPct": 30.4
+              },
+              "d60": {
+                "n": 22,
+                "medianPct": -1.8,
+                "winPct": 40.9
+              },
+              "max30MedianPct": 1.53,
+              "drawdown30MedianPct": -4.66
+            }
+          },
+          {
+            "signal": "周中+日下+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 18,
+              "d5": {
+                "n": 18,
+                "medianPct": 0.09,
+                "winPct": 50.0
+              },
+              "d10": {
+                "n": 18,
+                "medianPct": 1.57,
+                "winPct": 72.2
+              },
+              "d20": {
+                "n": 18,
+                "medianPct": -0.23,
+                "winPct": 44.4
+              },
+              "d30": {
+                "n": 16,
+                "medianPct": -1.69,
+                "winPct": 37.5
+              },
+              "d60": {
+                "n": 14,
+                "medianPct": -0.86,
+                "winPct": 50.0
+              },
+              "max30MedianPct": 4.85,
+              "drawdown30MedianPct": -4.14
+            },
+            "episodes": 18,
+            "episodeFirst": {
+              "signals": 18,
+              "d5": {
+                "n": 18,
+                "medianPct": 0.09,
+                "winPct": 50.0
+              },
+              "d10": {
+                "n": 18,
+                "medianPct": 1.57,
+                "winPct": 72.2
+              },
+              "d20": {
+                "n": 18,
+                "medianPct": -0.23,
+                "winPct": 44.4
+              },
+              "d30": {
+                "n": 16,
+                "medianPct": -1.69,
+                "winPct": 37.5
+              },
+              "d60": {
+                "n": 14,
+                "medianPct": -0.86,
+                "winPct": 50.0
+              },
+              "max30MedianPct": 4.85,
+              "drawdown30MedianPct": -4.14
+            }
+          },
+          {
+            "signal": "周中+日中+月中",
+            "preferred": false,
+            "signalDays": {
+              "signals": 44,
+              "d5": {
+                "n": 44,
+                "medianPct": -0.36,
+                "winPct": 36.4
+              },
+              "d10": {
+                "n": 44,
+                "medianPct": -0.78,
+                "winPct": 27.3
+              },
+              "d20": {
+                "n": 43,
+                "medianPct": -0.14,
+                "winPct": 46.5
+              },
+              "d30": {
+                "n": 43,
+                "medianPct": 0.46,
+                "winPct": 53.5
+              },
+              "d60": {
+                "n": 41,
+                "medianPct": 0.94,
+                "winPct": 61.0
+              },
+              "max30MedianPct": 2.99,
+              "drawdown30MedianPct": -3.75
+            },
+            "episodes": 35,
+            "episodeFirst": {
+              "signals": 35,
+              "d5": {
+                "n": 35,
+                "medianPct": -0.33,
+                "winPct": 40.0
+              },
+              "d10": {
+                "n": 35,
+                "medianPct": -0.79,
+                "winPct": 28.6
+              },
+              "d20": {
+                "n": 34,
+                "medianPct": -0.17,
+                "winPct": 47.1
+              },
+              "d30": {
+                "n": 34,
+                "medianPct": 0.39,
+                "winPct": 52.9
+              },
+              "d60": {
+                "n": 32,
+                "medianPct": 0.64,
+                "winPct": 56.2
+              },
+              "max30MedianPct": 3.05,
+              "drawdown30MedianPct": -3.93
+            }
+          },
+          {
+            "signal": "周中+日中+月下",
+            "preferred": false,
+            "signalDays": {
+              "signals": 40,
+              "d5": {
+                "n": 40,
+                "medianPct": 0.09,
+                "winPct": 55.0
+              },
+              "d10": {
+                "n": 40,
+                "medianPct": 0.87,
+                "winPct": 62.5
+              },
+              "d20": {
+                "n": 40,
+                "medianPct": -0.46,
+                "winPct": 45.0
+              },
+              "d30": {
+                "n": 40,
+                "medianPct": -0.45,
+                "winPct": 45.0
+              },
+              "d60": {
+                "n": 38,
+                "medianPct": 0.92,
+                "winPct": 55.3
+              },
+              "max30MedianPct": 2.36,
+              "drawdown30MedianPct": -2.66
+            },
+            "episodes": 27,
+            "episodeFirst": {
+              "signals": 27,
+              "d5": {
+                "n": 27,
+                "medianPct": 0.19,
+                "winPct": 51.9
+              },
+              "d10": {
+                "n": 27,
+                "medianPct": 0.75,
+                "winPct": 59.3
+              },
+              "d20": {
+                "n": 27,
+                "medianPct": -0.39,
+                "winPct": 44.4
+              },
+              "d30": {
+                "n": 27,
+                "medianPct": -0.21,
+                "winPct": 48.1
+              },
+              "d60": {
+                "n": 25,
+                "medianPct": 0.52,
+                "winPct": 56.0
+              },
+              "max30MedianPct": 3.52,
+              "drawdown30MedianPct": -3.57
+            }
+          }
+        ]
+      }
     }
   ]
 }

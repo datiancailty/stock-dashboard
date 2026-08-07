@@ -195,11 +195,11 @@
     "图14-16部分持仓成本字段在截图中未清晰显示，必须由一次性本地导入数据补齐，不能写入公开数据。"
   ],
   "auditMeta": {
-    "reviewedBy": "OpenAI GPT-5.6 Luna",
-    "fennoUsed": false,
+    "reviewedBy": "OpenAI GPT-5.6 Luna Max",
+    "provider": "official-openai",
     "sourceImages": 9,
     "limitations": "图片转录中被截断或模糊部分保持needs_review/non_executable，未补造参数。",
-    "evolutionModel": "official OpenAI GPT-5.6 Sol",
+    "evolutionModel": "official OpenAI GPT-5.6 Luna Max",
     "evolutionRecordCount": 384,
     "focusedEvolutionData": "原三只专项 + 新增四只专项；新增四只数据截止 2026-08-06",
     "newFocusedStudySource": "妙想API额度耗尽；官方公开历史K线端点受限时使用腾讯公开日K线回退，未提供前复权参数"

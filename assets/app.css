@@ -36,3 +36,38 @@ dialog{border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0
 @media(max-width:620px){.evolution-thoughts,.evolution-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.strategy-audit-grid{grid-template-columns:1fr}}
 .focused-study{margin-top:1.25rem;padding:1rem;border:1px solid #dce7f3;border-radius:16px;background:#f8fbff}.focused-study-head{display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;margin-bottom:.75rem}.focused-study-head h4{margin:0 0 .25rem}.focused-study-head small,.focused-study-head span{color:#64748b;font-size:.78rem}.focused-study-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem}.focused-study-card{background:#fff;border:1px solid #e5edf5;border-radius:12px;padding:.85rem}.focused-study-card.new-study{border-color:#c7d9ee;background:#fbfdff}.focused-study-title{display:flex;justify-content:space-between;gap:.5rem;align-items:baseline}.focused-study-title span{font-size:.72rem;color:#64748b}.focused-study-badge{display:inline-block;margin-top:.45rem;padding:.22rem .45rem;border-radius:999px;background:#edf3f9;color:#476683;font-size:.7rem;font-weight:800}.focused-study-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:.45rem;margin:.7rem 0}.focused-study-metrics span{font-size:.78rem;color:#64748b}.focused-study-metrics b{display:block;color:#17324d;font-size:1rem}.focused-study-card small{display:block;color:#52677d;line-height:1.5}.focused-study-source{margin-top:.4rem;color:#8594a3!important;font-size:.7rem}.focused-study-head small{line-height:1.5}@media(max-width:800px){.focused-study-grid{grid-template-columns:1fr}.focused-study-head{display:block}.focused-study-head span{display:block;margin-top:.35rem}}
+
+/* 2026-08 focused-study compact cards and collapsible strategy sections */
+.strategy-advice>summary,.strategy-history>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;color:var(--text)}
+.strategy-advice>summary::-webkit-details-marker,.strategy-history>summary::-webkit-details-marker,.focused-variant-details>summary::-webkit-details-marker{display:none}
+.strategy-advice>summary span{color:var(--muted);font-size:11px;font-weight:700}
+.strategy-history>summary>span{display:flex;flex-direction:column;gap:3px}
+.strategy-history>summary small{display:block;color:var(--muted);font-size:11px;font-weight:500}
+.strategy-history>summary>strong{color:var(--accent);font-size:13px;white-space:nowrap}
+.strategy-history[open]>summary{padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.strategy-history-body .table-scroll{margin-top:12px}
+.focused-study{margin-top:1rem;padding:.7rem;border-radius:13px}
+.focused-study-head{margin-bottom:.55rem;gap:.7rem}
+.focused-study-head h4{font-size:15px;margin:0 0 .15rem}
+.focused-study-head small,.focused-study-head span{font-size:.68rem;line-height:1.35}
+.focused-study-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem}
+.focused-study-card{padding:.58rem;border-radius:10px}
+.focused-study-title{gap:.35rem}
+.focused-study-title b{font-size:.82rem}
+.focused-study-title span{font-size:.62rem;white-space:nowrap}
+.focused-study-badge{margin-top:.28rem;padding:.14rem .34rem;font-size:.6rem}
+.focused-study-metrics{grid-template-columns:repeat(4,minmax(0,1fr));gap:.25rem;margin:.42rem 0}
+.focused-study-metrics span{font-size:.6rem;line-height:1.25}
+.focused-study-metrics b{font-size:.75rem;margin-top:2px}
+.focused-study-card small{font-size:.64rem;line-height:1.35}
+.focused-study-note{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;margin-top:.25rem}
+.focused-study-source{margin-top:.25rem;font-size:.58rem!important}
+.focused-variant-details{margin-top:.35rem;border-top:1px solid #edf1f5;padding-top:.3rem}
+.focused-variant-details>summary{list-style:none;cursor:pointer;color:#54718e;font-size:.62rem;font-weight:800}
+.focused-variant-list{display:grid;gap:.2rem;margin-top:.3rem}
+.focused-variant-row{display:grid;grid-template-columns:1.25fr .45fr 1.15fr .85fr;gap:.25rem;align-items:center;color:#5b7187;font-size:.58rem;line-height:1.25}
+.focused-variant-row b{font-size:.58rem;color:#294968}
+.focused-variant-row em{font-style:normal;color:#b35b23}
+@media(max-width:1200px){.focused-study-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:800px){.focused-study-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.focused-study-grid{grid-template-columns:1fr}.focused-variant-row{grid-template-columns:1.25fr .45fr 1.1fr .8fr;font-size:.62rem}}

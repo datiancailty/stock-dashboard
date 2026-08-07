@@ -13,8 +13,8 @@ MARKET=ROOT/'data/market.json'
 ANALYSIS=ROOT/'data/strategy-analysis.json'
 FEEDBACK=ROOT/'data/strategy-feedback.json'
 RECOMMENDATIONS=ROOT/'data/strategy-recommendations.json'
-MODEL='gpt-5.6-sol'
-MODEL_URL='https://api.fenno.ai/v1/chat/completions'
+MODEL=os.getenv('OPENAI_MODEL','gpt-5.6-luna')
+MODEL_URL=os.getenv('OPENAI_CHAT_COMPLETIONS_URL','https://api.openai.com/v1/chat/completions')
 HEADERS={'User-Agent':'Mozilla/5.0','Referer':'https://quote.eastmoney.com/'}
 KLINE_CACHE={}
 
@@ -88,7 +88,7 @@ def extract_json(text):
         raise
 
 def model_analysis(records,stocks,feedback_records,recommendation_context):
-    key=os.getenv('STRATEGY_MODEL_API_KEY')
+    key=os.getenv('OPENAI_API_KEY')
     if not key:return None,'missing_secret'
     ordered=sorted(records,key=lambda r:(str(r.get('date') or ''),str(r.get('time') or ''),str(r.get('id') or '')),reverse=True)
     def brief(r):
@@ -221,7 +221,7 @@ def main():
         for record in records:name_counts[str(record.get('name') or record.get('code') or '未知')]=name_counts.get(str(record.get('name') or record.get('code') or '未知'),0)+1
         top_names='、'.join(name for name,_ in sorted(name_counts.items(),key=lambda x:x[1],reverse=True)[:5]);date_values=[str(r.get('date')) for r in records if r.get('date')]
         fallback_profile=f'已纳入{len(records)}笔真实成交（买入{buy_count}笔、卖出{sell_count}笔），记录跨度{min(date_values) if date_values else "待积累"}至{max(date_values) if date_values else "待积累"}；操作较多的标的包括{top_names or "待积累"}。模型分析暂不可用，以下仅保留固定规则和可验证统计，后续任务会自动重试。'
-        output={'updatedAt':now,'model':MODEL if os.getenv('STRATEGY_MODEL_API_KEY') else None,'status':'rules_only','profileSummary':fallback_profile,'learnedRules':rules[:12],'briefCommand':deterministic_brief(stocks),'feedbackStats':{'count':len(feedback_records),'executed':sum(x.get('status')=='executed' for x in feedback_records),'notExecuted':sum(x.get('status')=='not_executed' for x in feedback_records),'deferred':sum(x.get('status')=='deferred' for x in feedback_records)},'advice':[],'retryReason':error}
+        output={'updatedAt':now,'model':MODEL if os.getenv('OPENAI_API_KEY') else None,'status':'rules_only','profileSummary':fallback_profile,'learnedRules':rules[:12],'briefCommand':deterministic_brief(stocks),'feedbackStats':{'count':len(feedback_records),'executed':sum(x.get('status')=='executed' for x in feedback_records),'notExecuted':sum(x.get('status')=='not_executed' for x in feedback_records),'deferred':sum(x.get('status')=='deferred' for x in feedback_records)},'advice':[],'retryReason':error}
     if append_recommendation(recommendation_payload,output.get('briefCommand') or {},stocks,now):recommendations_changed=True
     performance=recommendation_stats(recommendation_payload.get('records') or []);output['recommendationPerformance']=performance
     if recommendations_changed:

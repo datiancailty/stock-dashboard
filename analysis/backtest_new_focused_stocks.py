@@ -27,6 +27,17 @@ STOCKS={
 }
 API='https://push2his.eastmoney.com/api/qt/stock/kline/get'
 HEADERS={'User-Agent':'Mozilla/5.0','Referer':'https://quote.eastmoney.com/'}
+PREFERRED_SIGNAL='周下+日下+月中'
+VARIANT_DEFS=[
+    {'signal':'周下+日下+月中','week':'下部','day':'下部','month':'中部','preferred':True},
+    {'signal':'周下+日下+月下','week':'下部','day':'下部','month':'下部'},
+    {'signal':'周下+日中+月中','week':'下部','day':'中部','month':'中部'},
+    {'signal':'周下+日中+月下','week':'下部','day':'中部','month':'下部'},
+    {'signal':'周中+日下+月中','week':'中部','day':'下部','month':'中部'},
+    {'signal':'周中+日下+月下','week':'中部','day':'下部','month':'下部'},
+    {'signal':'周中+日中+月中','week':'中部','day':'中部','month':'中部'},
+    {'signal':'周中+日中+月下','week':'中部','day':'中部','month':'下部'},
+]
 
 
 def fetch(code,meta):
@@ -110,10 +121,11 @@ def stats(samples):
     return out
 
 
-def make_samples(rows, predicate):
+def make_samples(rows, predicate, states=None):
     samples=[]
     for i,r in enumerate(rows):
-        if r['date']<date(2022,1,1) or not predicate(state_for(rows,i)): continue
+        state=states[i] if states is not None else state_for(rows,i)
+        if r['date']<date(2022,1,1) or not predicate(state): continue
         entry_i=i+1
         if entry_i>=len(rows): continue
         entry=rows[entry_i]
@@ -140,6 +152,21 @@ def year_stats(samples):
     grouped=defaultdict(list)
     for s in samples: grouped[s['signalDate'][:4]].append(s)
     return {year:stats(items) for year,items in sorted(grouped.items())}
+
+
+def variant_summary(rows, states, definition):
+    predicate=lambda st: st['day']==definition['day'] and st['week']==definition['week'] and st['month']==definition['month']
+    samples=make_samples(rows,predicate,states)
+    episodes=cluster(samples)
+    first=[episode[0] for episode in episodes]
+    return {
+        'signal':definition['signal'],
+        'preferred':bool(definition.get('preferred')),
+        'signalDays':stats(samples),
+        'episodes':len(episodes),
+        'episodeFirst':stats(first),
+        'yearStats':year_stats(first),
+    }
 
 
 def state_matrix(rows):
@@ -179,17 +206,20 @@ def classify(s):
 
 def analyze(code,meta):
     rows,source=fetch(code,meta)
-    predicate=lambda st: st['day']=='下部' and st['week']=='下部' and st['month']=='中部'
-    samples=make_samples(rows,predicate); eps=cluster(samples)
-    primary={'signal':'周下+日下+月中','signalDays':stats(samples),'episodeFirst':stats([e[0] for e in eps]),'episodeDates':[[e[0]['signalDate'],e[-1]['signalDate'],len(e)] for e in eps],'yearStats':year_stats([e[0] for e in eps])}
-    result={'code':code,'name':meta['name'],'source':source,'sourceRows':len(rows),'sourceRange':[str(rows[0]['date']),str(rows[-1]['date'])],'primary':primary,'stateMatrix':state_matrix(rows)}
+    states=[state_for(rows,i) for i in range(len(rows))]
+    preferred=VARIANT_DEFS[0]
+    predicate=lambda st: st['day']==preferred['day'] and st['week']==preferred['week'] and st['month']==preferred['month']
+    samples=make_samples(rows,predicate,states); eps=cluster(samples)
+    first=[e[0] for e in eps]
+    primary={'signal':PREFERRED_SIGNAL,'signalDays':stats(samples),'episodeFirst':stats(first),'episodeDates':[[e[0]['signalDate'],e[-1]['signalDate'],len(e)] for e in eps],'yearStats':year_stats(first)}
+    result={'code':code,'name':meta['name'],'source':source,'sourceRows':len(rows),'sourceRange':[str(rows[0]['date']),str(rows[-1]['date'])],'primary':primary,'variantStudy':{'preferredSignal':PREFERRED_SIGNAL,'testedSignals':[item['signal'] for item in VARIANT_DEFS],'variants':[variant_summary(rows,states,item) for item in VARIANT_DEFS]},'stateMatrix':state_matrix(rows)}
     result['learnedClassification']=classify(result)
     result['latestState']=state_for(rows,len(rows)-1)
     return result
 
 
 def main():
-    result={'schemaVersion':1,'generatedAt':datetime.now().astimezone().isoformat(timespec='seconds'),'dataSource':'东方财富官方公开历史K线接口（前复权fqt=1）；东方财富妙想API本次因调用额度达到上限未返回数据','evaluationWindow':'2022-01-01至接口最新交易日','entryMethod':'信号日收盘后形成信号，下一交易日开盘进入；收益不含分红、费用、滑点','indicatorDefinition':{'day':'当日最高/最低区间内收盘价百分位','week':'当前ISO周截至信号日的最高/最低区间内收盘价百分位','month':'当前自然月截至信号日的最高/最低区间内收盘价百分位','zone':'下部<33.33%，中部为33.33%至<66.67%，上部≥66.67%','primarySignal':'日下+周下+月中','antiLookahead':'周/月只使用信号日及之前数据；收益从下一交易日开盘计算；连续4个自然日内的信号合并为同一观察窗口'},'stocks':[analyze(code,meta) for code,meta in STOCKS.items()]}
+    result={'schemaVersion':2,'generatedAt':datetime.now().astimezone().isoformat(timespec='seconds'),'dataSource':'东方财富官方公开历史K线接口（前复权fqt=1）；东方财富妙想API本次因调用额度达到上限未返回数据','evaluationWindow':'2022-01-01至接口最新交易日','entryMethod':'信号日收盘后形成信号，下一交易日开盘进入；收益不含分红、费用、滑点','indicatorDefinition':{'day':'当日最高/最低区间内收盘价百分位','week':'当前ISO周截至信号日的最高/最低区间内收盘价百分位','month':'当前自然月截至信号日的最高/最低区间内收盘价百分位','zone':'下部<33.33%，中部为33.33%至<66.67%，上部≥66.67%','primarySignal':PREFERRED_SIGNAL,'testedSignalSpace':'周中/下 + 日中/下 + 月中/下，共8种组合','antiLookahead':'周/月只使用信号日及之前数据；收益从下一交易日开盘计算；连续4个自然日内的信号合并为同一观察窗口'},'stocks':[analyze(code,meta) for code,meta in STOCKS.items()]}
     OUT.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'ok':True,'stocks':[(s['name'],s['sourceRange'],s['primary']['episodeFirst']['signals'],s['learnedClassification']['tier']) for s in result['stocks']],'output':str(OUT)},ensure_ascii=False,indent=2))
 

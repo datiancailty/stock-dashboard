@@ -42,7 +42,8 @@ jobs:
           fi
       - name: 补全历史位置并调用服务端模型学习
         env:
-          STRATEGY_MODEL_API_KEY: ${{ secrets.STRATEGY_MODEL_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5.6-luna
         run: python scripts/process_trade_records.py
       - name: 把补全后的操作记录和策略档案同步回 GitHub
         run: |

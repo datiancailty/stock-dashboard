@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-08T12:15:35+08:00",
+  "updatedAt": "2026-08-09T12:50:24+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -928,6 +928,42 @@
       "recommendationId": "brief-2026-08-08-601919",
       "recommendedAt": "2026-08-08T12:15:35+08:00",
       "date": "2026-08-08",
+      "code": "601919",
+      "name": "中远海控",
+      "action": "暂不买入",
+      "reason": "正式股息率6.48%，日线中部、周线中部。",
+      "condition": "等待日线回到下部后再分批。",
+      "confidence": 72.0,
+      "snapshot": {
+        "price": 15.43,
+        "dividendPerShare": 1.0,
+        "yield": 6.480881,
+        "day": "中部",
+        "week": "中部",
+        "month": "中部",
+        "weeklyBoll": {
+          "asOf": "2026-08-07",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 15.605,
+          "middle": 14.263,
+          "lower": 12.921
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "not_scored",
+        "reason": "非明确买入指令，不计入买入命中率"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-08-09-601919",
+      "recommendationId": "brief-2026-08-09-601919",
+      "recommendedAt": "2026-08-09T12:50:24+08:00",
+      "date": "2026-08-09",
       "code": "601919",
       "name": "中远海控",
       "action": "暂不买入",

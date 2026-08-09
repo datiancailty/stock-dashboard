@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": null,
+  "provider": "official-openai",
+  "model": "gpt-5.6-luna",
+  "check": "chat_completions",
+  "status": "unknown",
+  "httpStatus": null,
+  "reason": "尚未完成每日自检",
+  "secretConfigured": false
+}

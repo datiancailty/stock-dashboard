@@ -115,3 +115,8 @@ dialog{border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0
 @media(max-width:900px){.focused-study-row{grid-template-columns:minmax(160px,1.1fr) minmax(250px,1.9fr) minmax(120px,1fr);gap:.45rem}.focused-study-main{gap:.4rem}.focused-study-title b{font-size:.78rem}.focused-study-metrics span{font-size:.56rem}.focused-study-metrics b{font-size:.7rem}.focused-study-copy .focused-study-note{-webkit-line-clamp:2}}
 @media(max-width:650px){.focused-study-row{grid-template-columns:1fr 1.8fr}.focused-study-copy{grid-column:1/-1}.focused-study-main{align-items:flex-start}.focused-study-title b{white-space:normal}.focused-study-metrics{align-self:center}}
 @media(max-width:480px){.focused-study-row{grid-template-columns:1fr}.focused-study-metrics{margin-top:.35rem}.focused-study-copy{grid-column:auto}.focused-variant-row{grid-template-columns:1.25fr .45fr 1.1fr .8fr;font-size:.62rem}}
+
+/* Daily OpenAI strategy API health indicator */
+.strategy-api-health{margin:10px 0 14px;font-size:12px;font-weight:800;color:var(--muted)}
+.strategy-api-health.ok{color:var(--green)}
+.strategy-api-health.failed{color:var(--red)}

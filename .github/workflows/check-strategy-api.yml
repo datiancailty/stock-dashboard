@@ -1,0 +1,50 @@
+name: 策略 API 每日自检
+
+on:
+  schedule:
+    # GitHub Actions 使用 UTC；北京时间每天 08:30，早于 08:45 的策略更新。
+    - cron: '30 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: strategy-api-health
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: 检查 OpenAI 策略 API
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5.6-luna
+        run: python scripts/check_openai_api.py
+      - name: 发布自检结果到 live 分支
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          python scripts/publish_live.py data/strategy-api-health.json
+          strategy-api-health.json "strategy: publish API health"
+      - name: API 失效时标记本次自检失败
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          status = json.loads(Path('data/strategy-api-health.json').read_text()).get('status')
+          if status != 'ok':
+              raise SystemExit('OpenAI 策略 API 自检未通过；页面将显示红色状态。')
+          print('OpenAI 策略 API 自检通过。')
+          PY

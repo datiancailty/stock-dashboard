@@ -47,6 +47,8 @@ A股数据通过东方财富妙想 API 获取，`MX_APIKEY` 只保存在 GitHub 
 
 策略画像与操作复盘通过 GitHub Actions 服务端调用官方 OpenAI Luna Max（模型标识 `gpt-5.6-luna`），使用仓库 Secret `OPENAI_API_KEY`；项目代码不再调用 Fenno endpoint。未配置该 Secret 时，工作流会保留固定规则和确定性统计，不会伪造模型分析。
 
+策略 API 每天北京时间 08:30 进行一次轻量 Chat Completions 自检，结果发布到 `live/strategy-api-health.json`，策略页面显示一行状态：通过为绿色，认证失败、模型不可用、额度受限或未配置密钥为红色。自检只保存状态和脱敏原因，不保存 API 密钥。Hermes 的 ChatGPT/Codex OAuth 登录凭证与 OpenAI Platform API Key 是两套不同凭证，不能直接互换。
+
 自动任务采用大文件安全的 HTTP body 发布方式和重试机制。定时/股票变更触发的自动更新如果遇到临时网络或上游错误，会保留 `live` 上一版数据并显示工作流警告，但不会把整次运行标为失败，因此不会反复触发 GitHub Actions 失败邮件；手动测试运行仍保留严格失败状态，方便排错。
 
 ## 登录安全模型

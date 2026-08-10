@@ -1,17 +1,17 @@
 {
-  "updatedAt": "2026-08-10T18:04:30+08:00",
+  "updatedAt": "2026-08-10T18:40:02+08:00",
   "source": "东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
   "positionStrategy": "当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部",
   "weeklyBollStrategy": "前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)",
   "dividendWarning": null,
-  "dividendCursor": 9,
+  "dividendCursor": 14,
   "dividendBatch": [
-    "600690",
-    "601919",
-    "600887",
-    "600795",
-    "003816"
+    "600028",
+    "600938",
+    "000538",
+    "600863",
+    "600011"
   ],
   "stocks": [
     {
@@ -335,7 +335,7 @@
         "sampleCount": 20,
         "upper": 5.111,
         "middle": 4.777,
-        "lower": 4.442
+        "lower": 4.444
       },
       "fiscalYear": 2025,
       "annualDividend": 0.141,
@@ -415,8 +415,8 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 5.724,
-        "middle": 5.058,
+        "upper": 5.726,
+        "middle": 5.059,
         "lower": 4.392
       },
       "fiscalYear": 2025,
@@ -456,9 +456,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 41.124,
-        "middle": 33.415,
-        "lower": 25.706
+        "upper": 41.123,
+        "middle": 33.414,
+        "lower": 25.705
       },
       "fiscalYear": 2025,
       "annualDividend": 0.47881,
@@ -497,9 +497,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 55.177,
-        "middle": 51.041,
-        "lower": 46.906
+        "upper": 55.179,
+        "middle": 51.042,
+        "lower": 46.905
       },
       "fiscalYear": 2025,
       "annualDividend": 1.583,
@@ -774,9 +774,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 5.183,
-        "middle": 4.958,
-        "lower": 4.733
+        "upper": 5.182,
+        "middle": 4.955,
+        "lower": 4.727
       },
       "fiscalYear": 2025,
       "annualDividend": 0.0953,

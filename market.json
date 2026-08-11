@@ -1,17 +1,17 @@
 {
-  "updatedAt": "2026-08-11T17:45:10+08:00",
+  "updatedAt": "2026-08-11T18:14:44+08:00",
   "source": "东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
   "positionStrategy": "当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部",
   "weeklyBollStrategy": "前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)",
   "dividendWarning": null,
-  "dividendCursor": 7,
+  "dividendCursor": 12,
   "dividendBatch": [
-    "300157",
-    "000423",
-    "600690",
-    "601919",
-    "600887"
+    "600795",
+    "003816",
+    "600028",
+    "600938",
+    "000538"
   ],
   "stocks": [
     {
@@ -46,9 +46,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 40.089,
-        "middle": 37.592,
-        "lower": 35.094
+        "upper": 40.09,
+        "middle": 37.594,
+        "lower": 35.098
       },
       "fiscalYear": 2025,
       "annualDividend": 1.003,
@@ -169,7 +169,7 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 56.78,
+        "upper": 56.781,
         "middle": 50.583,
         "lower": 44.385
       },
@@ -335,7 +335,7 @@
         "sampleCount": 20,
         "upper": 5.12,
         "middle": 4.779,
-        "lower": 4.438
+        "lower": 4.439
       },
       "fiscalYear": 2025,
       "annualDividend": 0.141,
@@ -456,8 +456,8 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 41.181,
-        "middle": 33.5,
+        "upper": 41.179,
+        "middle": 33.499,
         "lower": 25.819
       },
       "fiscalYear": 2025,
@@ -497,9 +497,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 55.159,
-        "middle": 51.023,
-        "lower": 46.888
+        "upper": 55.161,
+        "middle": 51.024,
+        "lower": 46.887
       },
       "fiscalYear": 2025,
       "annualDividend": 1.583,
@@ -694,7 +694,7 @@
         "sampleCount": 20,
         "upper": 7.877,
         "middle": 7.38,
-        "lower": 6.884
+        "lower": 6.883
       },
       "fiscalYear": 2025,
       "annualDividend": 0.1689,
@@ -733,9 +733,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 5.288,
-        "middle": 4.971,
-        "lower": 4.655
+        "upper": 5.287,
+        "middle": 4.97,
+        "lower": 4.653
       },
       "fiscalYear": 2025,
       "annualDividend": 0.27799999999999997,
@@ -774,9 +774,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 5.183,
-        "middle": 4.958,
-        "lower": 4.733
+        "upper": 5.182,
+        "middle": 4.955,
+        "lower": 4.727
       },
       "fiscalYear": 2025,
       "annualDividend": 0.0953,

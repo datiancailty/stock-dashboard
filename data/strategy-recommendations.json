@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-12T14:03:01+08:00",
+  "updatedAt": "2026-08-13T14:05:11+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -40,14 +40,14 @@
         "targetPrice": 15.267,
         "observedTradingDays": 18,
         "maxGainPct": 8.597,
-        "latestReturnPct": 6.534,
+        "latestReturnPct": 6.052,
         "firstHitAt": "2026-07-23",
         "tradingDaysToHit": 4,
         "calendarDaysToHit": 5,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-08-12T14:02:52+08:00"
+        "evaluatedAt": "2026-08-13T14:04:37+08:00"
       }
     },
     {
@@ -88,14 +88,14 @@
         "targetPrice": 15.267,
         "observedTradingDays": 18,
         "maxGainPct": 8.597,
-        "latestReturnPct": 6.534,
+        "latestReturnPct": 6.052,
         "firstHitAt": "2026-07-23",
         "tradingDaysToHit": 4,
         "calendarDaysToHit": 4,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-12T14:02:52+08:00"
+        "evaluatedAt": "2026-08-13T14:04:38+08:00"
       }
     },
     {
@@ -136,14 +136,14 @@
         "targetPrice": 15.267,
         "observedTradingDays": 17,
         "maxGainPct": 8.597,
-        "latestReturnPct": 6.534,
+        "latestReturnPct": 6.052,
         "firstHitAt": "2026-07-23",
         "tradingDaysToHit": 3,
         "calendarDaysToHit": 3,
         "weeklyUpperFirstAt": "2026-07-22",
         "tradingDaysToWeeklyUpper": 2,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-08-12T14:02:53+08:00"
+        "evaluatedAt": "2026-08-13T14:04:42+08:00"
       }
     },
     {
@@ -220,14 +220,14 @@
         "targetPrice": 39.89,
         "observedTradingDays": 15,
         "maxGainPct": 6.739,
-        "latestReturnPct": 2.369,
+        "latestReturnPct": 1.869,
         "firstHitAt": "2026-07-29",
         "tradingDaysToHit": 5,
         "calendarDaysToHit": 7,
         "weeklyUpperFirstAt": "2026-07-23",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-12T14:02:54+08:00"
+        "evaluatedAt": "2026-08-13T14:04:44+08:00"
       }
     },
     {
@@ -383,13 +383,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 7.09,
         "targetPrice": 7.445,
-        "observedTradingDays": 13,
+        "observedTradingDays": 14,
         "maxGainPct": 3.808,
-        "latestReturnPct": -1.975,
+        "latestReturnPct": -1.834,
         "weeklyUpperFirstAt": "2026-07-27",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-12T14:02:55+08:00"
+        "evaluatedAt": "2026-08-13T14:04:48+08:00"
       }
     },
     {
@@ -428,13 +428,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 7.09,
         "targetPrice": 7.445,
-        "observedTradingDays": 12,
+        "observedTradingDays": 13,
         "maxGainPct": 3.808,
         "latestReturnPct": -1.975,
         "weeklyUpperFirstAt": "2026-07-28",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-12T14:02:56+08:00"
+        "evaluatedAt": "2026-08-13T14:04:50+08:00"
       }
     },
     {
@@ -475,11 +475,11 @@
         "targetPrice": 56.081,
         "observedTradingDays": 11,
         "maxGainPct": 4.475,
-        "latestReturnPct": -1.329,
+        "latestReturnPct": -1.517,
         "weeklyUpperFirstAt": "2026-07-29",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-12T14:02:57+08:00"
+        "evaluatedAt": "2026-08-13T14:04:52+08:00"
       }
     },
     {
@@ -520,14 +520,14 @@
         "targetPrice": 5.093,
         "observedTradingDays": 10,
         "maxGainPct": 6.186,
-        "latestReturnPct": 4.536,
+        "latestReturnPct": 3.918,
         "firstHitAt": "2026-08-03",
         "tradingDaysToHit": 3,
         "calendarDaysToHit": 5,
         "weeklyUpperFirstAt": "2026-07-30",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-12T14:02:57+08:00"
+        "evaluatedAt": "2026-08-13T14:04:56+08:00"
       }
     },
     {
@@ -793,8 +793,8 @@
         "targetPrice": 41.244,
         "observedTradingDays": 5,
         "maxGainPct": -0.025,
-        "latestReturnPct": -0.967,
-        "evaluatedAt": "2026-08-12T14:02:59+08:00"
+        "latestReturnPct": -1.477,
+        "evaluatedAt": "2026-08-13T14:05:01+08:00"
       }
     },
     {
@@ -835,8 +835,8 @@
         "targetPrice": 40.887,
         "observedTradingDays": 4,
         "maxGainPct": 0.847,
-        "latestReturnPct": -0.103,
-        "evaluatedAt": "2026-08-12T14:02:59+08:00"
+        "latestReturnPct": -0.616,
+        "evaluatedAt": "2026-08-13T14:05:05+08:00"
       }
     },
     {
@@ -1095,6 +1095,48 @@
           "upper": 15.736,
           "middle": 14.3,
           "lower": 12.865
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "no_data",
+        "criterion": "30个交易日内最高价达到指令价+5%",
+        "entryPrice": 15.48,
+        "targetPrice": 16.254,
+        "observedTradingDays": 0,
+        "maxGainPct": 0.0,
+        "latestReturnPct": 0.0,
+        "evaluatedAt": "2026-08-13T14:05:11+08:00"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-08-13-600011",
+      "recommendationId": "brief-2026-08-13-600011",
+      "recommendedAt": "2026-08-13T14:05:11+08:00",
+      "date": "2026-08-13",
+      "code": "600011",
+      "name": "华能国际",
+      "action": "分批买入",
+      "reason": "正式股息率5.76%，日线下部、周线下部。",
+      "condition": "仅在你确认仓位后小批执行，不一次买满。",
+      "confidence": 72.0,
+      "snapshot": {
+        "price": 6.95,
+        "dividendPerShare": 0.4,
+        "yield": 5.755396,
+        "day": "下部",
+        "week": "下部",
+        "month": "下部",
+        "weeklyBoll": {
+          "asOf": "2026-08-12",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 8.055,
+          "middle": 7.045,
+          "lower": 6.034
         },
         "marketUpdatedAt": null
       },

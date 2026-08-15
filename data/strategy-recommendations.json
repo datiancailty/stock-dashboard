@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-14T11:13:21+08:00",
+  "updatedAt": "2026-08-15T10:04:18+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -40,14 +40,14 @@
         "targetPrice": 15.267,
         "observedTradingDays": 20,
         "maxGainPct": 8.597,
-        "latestReturnPct": 6.19,
+        "latestReturnPct": 5.846,
         "firstHitAt": "2026-07-23",
         "tradingDaysToHit": 4,
         "calendarDaysToHit": 5,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-08-14T11:13:14+08:00"
+        "evaluatedAt": "2026-08-15T10:03:58+08:00"
       }
     },
     {
@@ -88,14 +88,14 @@
         "targetPrice": 15.267,
         "observedTradingDays": 20,
         "maxGainPct": 8.597,
-        "latestReturnPct": 6.19,
+        "latestReturnPct": 5.846,
         "firstHitAt": "2026-07-23",
         "tradingDaysToHit": 4,
         "calendarDaysToHit": 4,
         "weeklyUpperFirstAt": "2026-07-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-14T11:13:15+08:00"
+        "evaluatedAt": "2026-08-15T10:03:59+08:00"
       }
     },
     {
@@ -136,14 +136,14 @@
         "targetPrice": 15.267,
         "observedTradingDays": 19,
         "maxGainPct": 8.597,
-        "latestReturnPct": 6.19,
+        "latestReturnPct": 5.846,
         "firstHitAt": "2026-07-23",
         "tradingDaysToHit": 3,
         "calendarDaysToHit": 3,
         "weeklyUpperFirstAt": "2026-07-22",
         "tradingDaysToWeeklyUpper": 2,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-08-14T11:13:15+08:00"
+        "evaluatedAt": "2026-08-15T10:04:00+08:00"
       }
     },
     {
@@ -220,14 +220,14 @@
         "targetPrice": 39.89,
         "observedTradingDays": 17,
         "maxGainPct": 6.739,
-        "latestReturnPct": 1.685,
+        "latestReturnPct": 1.237,
         "firstHitAt": "2026-07-29",
         "tradingDaysToHit": 5,
         "calendarDaysToHit": 7,
         "weeklyUpperFirstAt": "2026-07-23",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-14T11:13:16+08:00"
+        "evaluatedAt": "2026-08-15T10:04:02+08:00"
       }
     },
     {
@@ -340,11 +340,11 @@
         "targetPrice": 7.445,
         "observedTradingDays": 15,
         "maxGainPct": 3.808,
-        "latestReturnPct": -3.385,
+        "latestReturnPct": -3.526,
         "weeklyUpperFirstAt": "2026-07-27",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-08-14T11:13:17+08:00"
+        "evaluatedAt": "2026-08-15T10:04:03+08:00"
       }
     },
     {
@@ -385,11 +385,11 @@
         "targetPrice": 7.445,
         "observedTradingDays": 15,
         "maxGainPct": 3.808,
-        "latestReturnPct": -3.385,
+        "latestReturnPct": -3.526,
         "weeklyUpperFirstAt": "2026-07-27",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-14T11:13:17+08:00"
+        "evaluatedAt": "2026-08-15T10:04:04+08:00"
       }
     },
     {
@@ -430,11 +430,11 @@
         "targetPrice": 7.445,
         "observedTradingDays": 14,
         "maxGainPct": 3.808,
-        "latestReturnPct": -3.385,
+        "latestReturnPct": -3.526,
         "weeklyUpperFirstAt": "2026-07-28",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-14T11:13:18+08:00"
+        "evaluatedAt": "2026-08-15T10:04:05+08:00"
       }
     },
     {
@@ -475,11 +475,11 @@
         "targetPrice": 56.081,
         "observedTradingDays": 13,
         "maxGainPct": 4.475,
-        "latestReturnPct": -2.434,
+        "latestReturnPct": -3.108,
         "weeklyUpperFirstAt": "2026-07-29",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-14T11:13:18+08:00"
+        "evaluatedAt": "2026-08-15T10:04:06+08:00"
       }
     },
     {
@@ -520,14 +520,14 @@
         "targetPrice": 5.093,
         "observedTradingDays": 12,
         "maxGainPct": 6.186,
-        "latestReturnPct": 4.536,
+        "latestReturnPct": 4.33,
         "firstHitAt": "2026-08-03",
         "tradingDaysToHit": 3,
         "calendarDaysToHit": 5,
         "weeklyUpperFirstAt": "2026-07-30",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-14T11:13:18+08:00"
+        "evaluatedAt": "2026-08-15T10:04:08+08:00"
       }
     },
     {
@@ -604,11 +604,11 @@
         "targetPrice": 7.529,
         "observedTradingDays": 10,
         "maxGainPct": 2.65,
-        "latestReturnPct": -4.463,
+        "latestReturnPct": -4.603,
         "weeklyUpperFirstAt": "2026-08-03",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 3,
-        "evaluatedAt": "2026-08-14T11:13:19+08:00"
+        "evaluatedAt": "2026-08-15T10:04:09+08:00"
       }
     },
     {
@@ -793,8 +793,8 @@
         "targetPrice": 41.244,
         "observedTradingDays": 7,
         "maxGainPct": -0.025,
-        "latestReturnPct": -1.68,
-        "evaluatedAt": "2026-08-14T11:13:19+08:00"
+        "latestReturnPct": -2.088,
+        "evaluatedAt": "2026-08-15T10:04:10+08:00"
       }
     },
     {
@@ -835,8 +835,8 @@
         "targetPrice": 40.887,
         "observedTradingDays": 6,
         "maxGainPct": 0.847,
-        "latestReturnPct": -0.822,
-        "evaluatedAt": "2026-08-14T11:13:20+08:00"
+        "latestReturnPct": -1.233,
+        "evaluatedAt": "2026-08-15T10:04:12+08:00"
       }
     },
     {
@@ -877,8 +877,8 @@
         "targetPrice": 7.361,
         "observedTradingDays": 6,
         "maxGainPct": 0.856,
-        "latestReturnPct": -2.282,
-        "evaluatedAt": "2026-08-14T11:13:20+08:00"
+        "latestReturnPct": -2.425,
+        "evaluatedAt": "2026-08-15T10:04:13+08:00"
       }
     },
     {
@@ -919,8 +919,8 @@
         "targetPrice": 7.361,
         "observedTradingDays": 5,
         "maxGainPct": 0.856,
-        "latestReturnPct": -2.282,
-        "evaluatedAt": "2026-08-14T11:13:21+08:00"
+        "latestReturnPct": -2.425,
+        "evaluatedAt": "2026-08-15T10:04:14+08:00"
       }
     },
     {
@@ -1104,9 +1104,9 @@
         "entryPrice": 15.48,
         "targetPrice": 16.254,
         "observedTradingDays": 2,
-        "maxGainPct": -0.194,
-        "latestReturnPct": -0.258,
-        "evaluatedAt": "2026-08-14T11:13:21+08:00"
+        "maxGainPct": 0.065,
+        "latestReturnPct": -0.581,
+        "evaluatedAt": "2026-08-15T10:04:15+08:00"
       }
     },
     {
@@ -1179,6 +1179,48 @@
           "upper": 15.688,
           "middle": 14.289,
           "lower": 12.89
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "no_data",
+        "criterion": "30个交易日内最高价达到指令价+5%",
+        "entryPrice": 15.25,
+        "targetPrice": 16.012,
+        "observedTradingDays": 0,
+        "maxGainPct": 0.0,
+        "latestReturnPct": 0.0,
+        "evaluatedAt": "2026-08-15T10:04:18+08:00"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-08-15-600011",
+      "recommendationId": "brief-2026-08-15-600011",
+      "recommendedAt": "2026-08-15T10:04:18+08:00",
+      "date": "2026-08-15",
+      "code": "600011",
+      "name": "华能国际",
+      "action": "分批买入",
+      "reason": "正式股息率5.85%，日线下部、周线下部。",
+      "condition": "仅在你确认仓位后小批执行，不一次买满。",
+      "confidence": 72.0,
+      "snapshot": {
+        "price": 6.84,
+        "dividendPerShare": 0.4,
+        "yield": 5.847953,
+        "day": "下部",
+        "week": "下部",
+        "month": "下部",
+        "weeklyBoll": {
+          "asOf": "2026-08-14",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 8.053,
+          "middle": 7.039,
+          "lower": 6.025
         },
         "marketUpdatedAt": null
       },

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-15T10:04:18+08:00",
+  "updatedAt": "2026-08-16T10:11:40+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -1198,6 +1198,48 @@
       "recommendationId": "brief-2026-08-15-600011",
       "recommendedAt": "2026-08-15T10:04:18+08:00",
       "date": "2026-08-15",
+      "code": "600011",
+      "name": "华能国际",
+      "action": "分批买入",
+      "reason": "正式股息率5.85%，日线下部、周线下部。",
+      "condition": "仅在你确认仓位后小批执行，不一次买满。",
+      "confidence": 72.0,
+      "snapshot": {
+        "price": 6.84,
+        "dividendPerShare": 0.4,
+        "yield": 5.847953,
+        "day": "下部",
+        "week": "下部",
+        "month": "下部",
+        "weeklyBoll": {
+          "asOf": "2026-08-14",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 8.053,
+          "middle": 7.039,
+          "lower": 6.025
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "no_data",
+        "criterion": "30个交易日内最高价达到指令价+5%",
+        "entryPrice": 6.84,
+        "targetPrice": 7.182,
+        "observedTradingDays": 0,
+        "maxGainPct": 0.0,
+        "latestReturnPct": 0.0,
+        "evaluatedAt": "2026-08-16T10:11:40+08:00"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-08-16-600011",
+      "recommendationId": "brief-2026-08-16-600011",
+      "recommendedAt": "2026-08-16T10:11:40+08:00",
+      "date": "2026-08-16",
       "code": "600011",
       "name": "华能国际",
       "action": "分批买入",

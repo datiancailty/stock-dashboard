@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-21T10:13:47+08:00",
+  "updatedAt": "2026-08-21T11:48:04+08:00",
   "records": [
     {
       "id": "recommendation-brief-2026-07-18-601919",
@@ -920,10 +920,10 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 7.01,
         "targetPrice": 7.361,
-        "observedTradingDays": 10,
+        "observedTradingDays": 9,
         "maxGainPct": 0.856,
-        "latestReturnPct": -6.419,
-        "evaluatedAt": "2026-08-21T10:13:36+08:00"
+        "latestReturnPct": -4.993,
+        "evaluatedAt": "2026-08-21T11:47:50+08:00"
       }
     },
     {
@@ -1154,10 +1154,10 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 6.95,
         "targetPrice": 7.298,
-        "observedTradingDays": 6,
+        "observedTradingDays": 5,
         "maxGainPct": -0.288,
-        "latestReturnPct": -5.612,
-        "evaluatedAt": "2026-08-21T10:13:40+08:00"
+        "latestReturnPct": -4.173,
+        "evaluatedAt": "2026-08-21T11:47:53+08:00"
       }
     },
     {
@@ -1196,16 +1196,16 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 15.25,
         "targetPrice": 16.012,
-        "observedTradingDays": 5,
-        "maxGainPct": 10.82,
-        "latestReturnPct": 10.623,
+        "observedTradingDays": 4,
+        "maxGainPct": 10.361,
+        "latestReturnPct": 9.115,
         "firstHitAt": "2026-08-18",
         "tradingDaysToHit": 2,
         "calendarDaysToHit": 4,
         "weeklyUpperFirstAt": "2026-08-17",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 3,
-        "evaluatedAt": "2026-08-21T10:13:41+08:00"
+        "evaluatedAt": "2026-08-21T11:47:55+08:00"
       }
     },
     {
@@ -1244,13 +1244,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 6.84,
         "targetPrice": 7.182,
-        "observedTradingDays": 5,
+        "observedTradingDays": 4,
         "maxGainPct": 1.17,
-        "latestReturnPct": -3.947,
+        "latestReturnPct": -2.632,
         "weeklyUpperFirstAt": "2026-08-17",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 2,
-        "evaluatedAt": "2026-08-21T10:13:41+08:00"
+        "evaluatedAt": "2026-08-21T11:47:56+08:00"
       }
     },
     {
@@ -1289,13 +1289,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 6.84,
         "targetPrice": 7.182,
-        "observedTradingDays": 5,
+        "observedTradingDays": 4,
         "maxGainPct": 1.17,
-        "latestReturnPct": -3.947,
+        "latestReturnPct": -2.632,
         "weeklyUpperFirstAt": "2026-08-17",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-21T10:13:42+08:00"
+        "evaluatedAt": "2026-08-21T11:47:58+08:00"
       }
     },
     {
@@ -1334,13 +1334,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 6.84,
         "targetPrice": 7.182,
-        "observedTradingDays": 4,
+        "observedTradingDays": 3,
         "maxGainPct": 1.17,
-        "latestReturnPct": -4.094,
+        "latestReturnPct": -2.632,
         "weeklyUpperFirstAt": "2026-08-18",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-21T10:13:43+08:00"
+        "evaluatedAt": "2026-08-21T11:47:59+08:00"
       }
     },
     {
@@ -1424,13 +1424,13 @@
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 51.32,
         "targetPrice": 53.886,
-        "observedTradingDays": 2,
-        "maxGainPct": 4.228,
-        "latestReturnPct": 3.41,
+        "observedTradingDays": 1,
+        "maxGainPct": 1.617,
+        "latestReturnPct": 1.598,
         "weeklyUpperFirstAt": "2026-08-20",
         "tradingDaysToWeeklyUpper": 1,
         "calendarDaysToWeeklyUpper": 1,
-        "evaluatedAt": "2026-08-21T10:13:46+08:00"
+        "evaluatedAt": "2026-08-21T11:48:02+08:00"
       }
     },
     {
@@ -1465,14 +1465,14 @@
         "marketUpdatedAt": null
       },
       "evaluation": {
-        "status": "pending",
+        "status": "no_data",
         "criterion": "30个交易日内最高价达到指令价+5%",
         "entryPrice": 6.68,
         "targetPrice": 7.014,
-        "observedTradingDays": 1,
-        "maxGainPct": -0.299,
-        "latestReturnPct": -1.796,
-        "evaluatedAt": "2026-08-21T10:13:47+08:00"
+        "observedTradingDays": 0,
+        "maxGainPct": 0.0,
+        "latestReturnPct": 0.0,
+        "evaluatedAt": "2026-08-21T11:48:03+08:00"
       }
     },
     {
@@ -1503,6 +1503,48 @@
           "upper": 8.045,
           "middle": 7.048,
           "lower": 6.05
+        },
+        "marketUpdatedAt": null
+      },
+      "evaluation": {
+        "status": "no_data",
+        "criterion": "30个交易日内最高价达到指令价+5%",
+        "entryPrice": 6.66,
+        "targetPrice": 6.993,
+        "observedTradingDays": 0,
+        "maxGainPct": 0.0,
+        "latestReturnPct": 0.0,
+        "evaluatedAt": "2026-08-21T11:48:04+08:00"
+      }
+    },
+    {
+      "id": "recommendation-brief-2026-08-21-000423",
+      "recommendationId": "brief-2026-08-21-000423",
+      "recommendedAt": "2026-08-21T11:48:04+08:00",
+      "date": "2026-08-21",
+      "code": "000423",
+      "name": "东阿阿胶",
+      "action": "分批买入",
+      "reason": "正式股息率5.55%，日线下部、周线下部。",
+      "condition": "仅在你确认仓位后小批执行，不一次买满。",
+      "confidence": 72.0,
+      "snapshot": {
+        "price": 48.71,
+        "dividendPerShare": 2.705582,
+        "yield": 5.55447,
+        "day": "下部",
+        "week": "下部",
+        "month": "下部",
+        "weeklyBoll": {
+          "asOf": "2026-08-21",
+          "basis": "前复权周K",
+          "period": 20,
+          "multiplier": 2,
+          "stddev": "sample",
+          "sampleCount": 20,
+          "upper": 55.981,
+          "middle": 50.198,
+          "lower": 44.414
         },
         "marketUpdatedAt": null
       },

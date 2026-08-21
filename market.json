@@ -1,17 +1,13 @@
 {
-  "updatedAt": "2026-08-21T11:54:26+08:00",
+  "updatedAt": "2026-08-21T11:58:09+08:00",
   "source": "东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
   "positionStrategy": "当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部",
   "weeklyBollStrategy": "前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)",
   "dividendWarning": null,
-  "dividendCursor": 5,
+  "dividendCursor": 0,
   "dividendBatch": [
-    "600036",
-    "601985",
-    "300157",
-    "000423",
-    "600690"
+    "600900"
   ],
   "stocks": [
     {
@@ -782,6 +778,47 @@
       "annualDividend": 0.0953,
       "interimDividend": 0.123,
       "source": "东方财富公开行情/前复权日K + mx-data"
+    },
+    {
+      "code": "600900",
+      "name": "长江电力",
+      "price": 28.04,
+      "positions": {
+        "asOf": "2026-08-21",
+        "day": {
+          "zone": "中部",
+          "percent": 36.7,
+          "low": 27.93,
+          "high": 28.23
+        },
+        "week": {
+          "zone": "下部",
+          "percent": 25.0,
+          "low": 27.91,
+          "high": 28.43
+        },
+        "month": {
+          "zone": "下部",
+          "percent": 31.4,
+          "low": 27.51,
+          "high": 29.2
+        }
+      },
+      "weeklyBoll": {
+        "asOf": "2026-08-21",
+        "basis": "前复权周K",
+        "period": 20,
+        "multiplier": 2,
+        "stddev": "sample",
+        "sampleCount": 20,
+        "upper": 29.115,
+        "middle": 26.917,
+        "lower": 24.719
+      },
+      "fiscalYear": 2025,
+      "annualDividend": 0.79,
+      "interimDividend": 0,
+      "source": "东方财富公开行情/前复权日K + mx-data"
     }
   ],
   "events": [
@@ -1456,6 +1493,30 @@
       "type": "派息日",
       "amount": null,
       "description": "2025年度分配 · 每股税前 0.89151元"
+    },
+    {
+      "date": "2026-07-16",
+      "code": "600900",
+      "name": "长江电力",
+      "type": "股权登记日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.79元"
+    },
+    {
+      "date": "2026-07-17",
+      "code": "600900",
+      "name": "长江电力",
+      "type": "除权除息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.79元"
+    },
+    {
+      "date": "2026-07-17",
+      "code": "600900",
+      "name": "长江电力",
+      "type": "派息日",
+      "amount": null,
+      "description": "2025年度分配 · 每股税前 0.79元"
     }
   ]
 }

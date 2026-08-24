@@ -1,17 +1,17 @@
 {
-  "updatedAt": "2026-08-24T15:36:36+08:00",
+  "updatedAt": "2026-08-24T15:57:58+08:00",
   "source": "东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
   "positionStrategy": "当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部",
   "weeklyBollStrategy": "前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)",
   "dividendWarning": null,
-  "dividendCursor": 5,
+  "dividendCursor": 10,
   "dividendBatch": [
-    "600036",
-    "601985",
-    "300157",
-    "000423",
-    "600690"
+    "601919",
+    "600887",
+    "600795",
+    "003816",
+    "600028"
   ],
   "stocks": [
     {
@@ -63,19 +63,19 @@
         "asOf": "2026-08-24",
         "day": {
           "zone": "上部",
-          "percent": 85.7,
+          "percent": 100.0,
           "low": 8.7,
           "high": 8.77
         },
         "week": {
           "zone": "上部",
-          "percent": 85.7,
+          "percent": 100.0,
           "low": 8.7,
           "high": 8.77
         },
         "month": {
           "zone": "下部",
-          "percent": 11.8,
+          "percent": 13.7,
           "low": 8.7,
           "high": 9.21
         }
@@ -104,19 +104,19 @@
         "asOf": "2026-08-24",
         "day": {
           "zone": "下部",
-          "percent": 25.0,
+          "percent": 31.2,
           "low": 3.77,
           "high": 3.93
         },
         "week": {
           "zone": "下部",
-          "percent": 25.0,
+          "percent": 31.2,
           "low": 3.77,
           "high": 3.93
         },
         "month": {
           "zone": "下部",
-          "percent": 5.4,
+          "percent": 6.5,
           "low": 3.76,
           "high": 4.68
         }
@@ -144,20 +144,20 @@
       "positions": {
         "asOf": "2026-08-24",
         "day": {
-          "zone": "中部",
-          "percent": 55.2,
+          "zone": "上部",
+          "percent": 69.0,
           "low": 47.2,
           "high": 48.36
         },
         "week": {
-          "zone": "中部",
-          "percent": 55.2,
+          "zone": "上部",
+          "percent": 69.0,
           "low": 47.2,
           "high": 48.36
         },
         "month": {
           "zone": "下部",
-          "percent": 7.0,
+          "percent": 8.8,
           "low": 47.2,
           "high": 56.29
         }
@@ -227,19 +227,19 @@
         "asOf": "2026-08-24",
         "day": {
           "zone": "上部",
-          "percent": 80.4,
+          "percent": 82.1,
           "low": 16.96,
           "high": 17.52
         },
         "week": {
           "zone": "上部",
-          "percent": 80.4,
+          "percent": 82.1,
           "low": 16.96,
           "high": 17.52
         },
         "month": {
           "zone": "上部",
-          "percent": 95.4,
+          "percent": 95.8,
           "low": 15.12,
           "high": 17.52
         }
@@ -391,19 +391,19 @@
         "asOf": "2026-08-24",
         "day": {
           "zone": "上部",
-          "percent": 96.0,
+          "percent": 92.0,
           "low": 5.1,
           "high": 5.35
         },
         "week": {
           "zone": "上部",
-          "percent": 96.0,
+          "percent": 92.0,
           "low": 5.1,
           "high": 5.35
         },
         "month": {
           "zone": "上部",
-          "percent": 97.6,
+          "percent": 95.1,
           "low": 4.94,
           "high": 5.35
         }
@@ -432,19 +432,19 @@
         "asOf": "2026-08-24",
         "day": {
           "zone": "上部",
-          "percent": 75.4,
+          "percent": 81.5,
           "low": 33.19,
           "high": 33.84
         },
         "week": {
           "zone": "上部",
-          "percent": 75.4,
+          "percent": 81.5,
           "low": 33.19,
           "high": 33.84
         },
         "month": {
           "zone": "上部",
-          "percent": 80.1,
+          "percent": 81.1,
           "low": 30.42,
           "high": 34.49
         }
@@ -750,19 +750,19 @@
         "asOf": "2026-08-24",
         "day": {
           "zone": "上部",
-          "percent": 100.0,
+          "percent": 88.9,
           "low": 4.96,
           "high": 5.05
         },
         "week": {
           "zone": "上部",
-          "percent": 100.0,
+          "percent": 88.9,
           "low": 4.96,
           "high": 5.05
         },
         "month": {
           "zone": "中部",
-          "percent": 51.7,
+          "percent": 48.3,
           "low": 4.9,
           "high": 5.19
         }
@@ -791,19 +791,19 @@
         "asOf": "2026-08-24",
         "day": {
           "zone": "上部",
-          "percent": 69.2,
+          "percent": 74.4,
           "low": 27.86,
           "high": 28.25
         },
         "week": {
           "zone": "上部",
-          "percent": 69.2,
+          "percent": 74.4,
           "low": 27.86,
           "high": 28.25
         },
         "month": {
           "zone": "中部",
-          "percent": 36.7,
+          "percent": 37.9,
           "low": 27.51,
           "high": 29.2
         }

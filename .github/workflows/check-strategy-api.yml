@@ -5,6 +5,12 @@ on:
     # GitHub Actions 使用 UTC；北京时间每天 08:30，早于 08:45 的策略更新。
     - cron: '30 0 * * *'
   workflow_dispatch:
+    inputs:
+      strict:
+        description: '严格模式：API 不可用时将本次手动检查标记为失败'
+        required: false
+        default: true
+        type: boolean
 
 permissions:
   contents: write
@@ -15,6 +21,9 @@ concurrency:
 
 jobs:
   check:
+    # 定时任务保留真实健康状态到页面，但不以失败工作流触发每日邮件；
+    # 手动触发默认严格失败，也可用 strict=false 演练定时任务的静默路径。
+    continue-on-error: ${{ github.event_name == 'schedule' || inputs.strict == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

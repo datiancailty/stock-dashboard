@@ -1,0 +1,8 @@
+# Local-only Supabase / VPS secrets. Never commit any of these.
+.env
+.env.*
+!.env.example
+*.secret
+*.pem
+*.key
+service-role-*.json

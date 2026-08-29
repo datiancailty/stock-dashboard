@@ -102,7 +102,7 @@ GitHub Pages → Edge Function: username-recovery-request
 
 ### 4.2 密码要求
 
-- 初始设置和重置密码至少 12 个字符；允许长口令/口令短语，不把“必须包含某几类字符”作为唯一安全依据；
+- 初始设置和重置密码至少 6 个字符；允许长口令/口令短语，不把“必须包含某几类字符”作为唯一安全依据；
 - 不在前端持久化或自行 hash 密码；密码只通过 TLS 发送到受控 Auth/Edge Function 路径；
 - 不在错误、分析、访问日志、审计导出或 URL 中记录密码；
 - 密码策略和泄露密码防护以 Supabase Auth 项目实际设置为准，正式接入前必须核对并记录；
@@ -241,7 +241,7 @@ HTTP `200`，返回供浏览器 `supabase.auth.setSession()` 使用的最小 ses
 - 页面只接受明确的 recovery callback；
 - 采用 `detectSessionInUrl:false`，对 `?code=` 或 Supabase recovery 回调做一次显式交换；
 - 成功建立 recovery session 后才显示新密码表单；
-- 新密码再次执行至少 12 字符校验；
+- 新密码再次执行至少 6 字符校验；
 - 完成后使用 Supabase Auth 更新密码，立即清除 URL 中的 code/token，使用 `history.replaceState`；
 - 找回链接、code、access token 不写入日志、Git、分析参数或业务表；
 - 没有找回邮箱时不能通过读取 GitHub 文件恢复密码；由项目管理员使用受控 Auth 管理路径重置，并随后验证旧 session 撤销情况。

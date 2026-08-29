@@ -4,7 +4,7 @@ const SUPABASE_URL=String(SUPABASE_CONFIG.url||'').replace(/\/$/,'');
 const SUPABASE_ANON_KEY=String(SUPABASE_CONFIG.anonKey||'');
 const SUPABASE_FUNCTIONS_BASE=SUPABASE_URL?`${SUPABASE_URL}/functions/v1`:'';
 let supabaseClient=null,authSession=null,currentUsername='',vpsAdmin=false,privatePortfolio=null,runtimeDisplay=null,whitelistControl=null,privateLoadState='not_loaded',privateLoadError='',privateRefreshTimer=null,privateLoadInFlight=false;
-const PRIVATE_DASHBOARD_REFRESH_MS=60*1000;
+const PRIVATE_DASHBOARD_REFRESH_MS=15*60*1000;
 let market={stocks:[],events:[],updatedAt:null};
 let newsMemory={items:[],updatedAt:null,lastScanAt:null};
 let catalog=[],trackedStocks=[];
@@ -163,7 +163,7 @@ function renderTodayBoard(){
   const runtime=model.runtime||{};
   const health=privateModel&&privateLoadState==='ready'?(runtime.healthStatus||'unknown'):'unknown';
   const privateBanner=privateModel
-    ?`<div><b>私有控制面</b>：当前通过 Supabase 用户会话读取获准脱敏投影；已登录且页面可见时每60秒自动重新读取私有 RPC，不会调用 VPS、行情或交易接口，也不会把私有持仓写入 GitHub 或浏览器本地存储。<span>${privateLoadState==='error'?'私有状态暂时未更新，请稍后重试。':`用户名：${escapeHtml(currentUsername||'已登录')}`}</span></div>`
+    ?`<div><b>私有控制面</b>：当前通过 Supabase 用户会话读取获准脱敏投影；已登录且页面可见时每15分钟自动重新读取私有 RPC，不会调用 VPS、行情或交易接口，也不会把私有持仓写入 GitHub 或浏览器本地存储。<span>${privateLoadState==='error'?'私有状态暂时未更新，请稍后重试。':`用户名：${escapeHtml(currentUsername||'已登录')}`}</span></div>`
     :`<div><b>公开安全状态</b>：当前不渲染真实 VPS 白名单、模拟盘持仓或运行明细；私有数据须经用户名/密码会话、RLS 和字段投影后才可显示。<span>公开页面不触发私有读取。</span></div>`;
   page.dataset.part0Mode=model.source;
   $('#part0PreviewBanner').innerHTML=local?`<div><b>本地 UI 预览</b>：当前只渲染 22 条固定布局示例（非实际白名单/非当日策略信号）和获准展示边界，未连接 Supabase、VPS、行情、模拟盘或订单接口。<span>界面渲染时间：${escapeHtml(part0PreviewRenderedLabel())}</span></div>`:privateBanner;

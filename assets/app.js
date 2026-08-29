@@ -3,7 +3,8 @@ const SUPABASE_CONFIG=window.STOCK_DASHBOARD_SUPABASE_CONFIG||{};
 const SUPABASE_URL=String(SUPABASE_CONFIG.url||'').replace(/\/$/,'');
 const SUPABASE_ANON_KEY=String(SUPABASE_CONFIG.anonKey||'');
 const SUPABASE_FUNCTIONS_BASE=SUPABASE_URL?`${SUPABASE_URL}/functions/v1`:'';
-let supabaseClient=null,authSession=null,currentUsername='',vpsAdmin=false,privatePortfolio=null,runtimeDisplay=null,whitelistControl=null,privateLoadState='not_loaded',privateLoadError='';
+let supabaseClient=null,authSession=null,currentUsername='',vpsAdmin=false,privatePortfolio=null,runtimeDisplay=null,whitelistControl=null,privateLoadState='not_loaded',privateLoadError='',privateRefreshTimer=null,privateLoadInFlight=false;
+const PRIVATE_DASHBOARD_REFRESH_MS=60*1000;
 let market={stocks:[],events:[],updatedAt:null};
 let newsMemory={items:[],updatedAt:null,lastScanAt:null};
 let catalog=[],trackedStocks=[];
@@ -162,7 +163,7 @@ function renderTodayBoard(){
   const runtime=model.runtime||{};
   const health=privateModel&&privateLoadState==='ready'?(runtime.healthStatus||'unknown'):'unknown';
   const privateBanner=privateModel
-    ?`<div><b>私有控制面</b>：当前通过 Supabase 用户会话读取获准脱敏投影；不会把私有持仓写入 GitHub 或浏览器本地存储。<span>${privateLoadState==='error'?'私有状态暂时未更新，请稍后重试。':`用户名：${escapeHtml(currentUsername||'已登录')}`}</span></div>`
+    ?`<div><b>私有控制面</b>：当前通过 Supabase 用户会话读取获准脱敏投影；已登录且页面可见时每60秒自动重新读取私有 RPC，不会调用 VPS、行情或交易接口，也不会把私有持仓写入 GitHub 或浏览器本地存储。<span>${privateLoadState==='error'?'私有状态暂时未更新，请稍后重试。':`用户名：${escapeHtml(currentUsername||'已登录')}`}</span></div>`
     :`<div><b>公开安全状态</b>：当前不渲染真实 VPS 白名单、模拟盘持仓或运行明细；私有数据须经用户名/密码会话、RLS 和字段投影后才可显示。<span>公开页面不触发私有读取。</span></div>`;
   page.dataset.part0Mode=model.source;
   $('#part0PreviewBanner').innerHTML=local?`<div><b>本地 UI 预览</b>：当前只渲染 22 条固定布局示例（非实际白名单/非当日策略信号）和获准展示边界，未连接 Supabase、VPS、行情、模拟盘或订单接口。<span>界面渲染时间：${escapeHtml(part0PreviewRenderedLabel())}</span></div>`:privateBanner;
@@ -409,14 +410,17 @@ function initSupabaseClient(){
     supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,flowType:'pkce'}});
     supabaseClient.auth.onAuthStateChange((event,session)=>{
       authSession=session||null;
-      if(!authSession){currentUsername='';vpsAdmin=false;privatePortfolio=null;runtimeDisplay=null;whitelistControl=null;privateLoadState='not_loaded';privateLoadError='';}
+      if(!authSession){stopPrivateAutoRefresh();currentUsername='';vpsAdmin=false;privatePortfolio=null;runtimeDisplay=null;whitelistControl=null;privateLoadState='not_loaded';privateLoadError='';}
       updateAuthUI();
       render();
-      if(authSession&&(event==='SIGNED_IN'||event==='TOKEN_REFRESHED'))queueMicrotask(()=>loadPrivateDashboard());
+      if(authSession&&(event==='SIGNED_IN'||event==='TOKEN_REFRESHED'))queueMicrotask(()=>{void loadPrivateDashboard();startPrivateAutoRefresh();});
     });
     return supabaseClient;
   }catch(error){supabaseClient=null;privateLoadState='error';privateLoadError='auth_client_unavailable';return null;}
 }
+function stopPrivateAutoRefresh(){if(privateRefreshTimer!==null){clearInterval(privateRefreshTimer);privateRefreshTimer=null;}}
+function startPrivateAutoRefresh(){if(privateRefreshTimer!==null||!authSession||!supabaseClient)return;privateRefreshTimer=window.setInterval(()=>{if(!authSession||document.visibilityState!=='visible')return;void loadPrivateDashboard();},PRIVATE_DASHBOARD_REFRESH_MS);}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&authSession)void loadPrivateDashboard();});
 function authErrorText(error){const code=error?.code||'';if(code==='invalid_credentials')return '用户名或密码错误';if(code==='rate_limited')return '登录尝试过于频繁，请稍后再试';if(code==='temporarily_unavailable')return '认证服务暂时不可用，请稍后再试';if(code==='auth_not_configured')return '认证配置尚未完成';return '登录未完成，请稍后重试';}
 function canonicalUsername(value){const username=String(value??'').normalize('NFKC').trim().toLowerCase();return /^[a-z0-9](?:[a-z0-9._-]{1,30}[a-z0-9])$/.test(username)?username:'';}
 async function callAuthFunction(name,body){if(!SUPABASE_FUNCTIONS_BASE)throw Object.assign(new Error('auth_not_configured'),{code:'auth_not_configured'});let response;try{response=await fetch(`${SUPABASE_FUNCTIONS_BASE}/${name}`,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},cache:'no-store',body:JSON.stringify(body)});}catch(error){throw Object.assign(new Error('temporarily_unavailable'),{code:'temporarily_unavailable'});}let payload=null;try{payload=await response.json();}catch(error){}if(response.ok)return payload||{};const code=payload?.error||response.status===401?'invalid_credentials':response.status===429?'rate_limited':'temporarily_unavailable';throw Object.assign(new Error(code),{code});}
@@ -425,11 +429,11 @@ function openLogin(){$('#loginError').textContent='';if(!$('#loginDialog').open)
 function updateAuthUI(){const logged=!!authSession;$('#authStatus').textContent=logged?(currentUsername?`已登录：${currentUsername}`:'已登录'):'未登录';$('#authStatus').classList.toggle('logged',logged);$('#loginButton').textContent=logged?'退出登录':'用户名/密码登录';document.body.classList.toggle('authenticated',logged);if($('#authStrip'))$('#authStrip').firstElementChild.textContent=logged?'当前浏览器会话已保持；Part 0—6 共用 Supabase 用户会话。':'公开浏览模式：登录后才能读取私有持仓、运行投影和管理员白名单控制。';}
 async function loginWithUsername(username,password){if(!supabaseClient)throw Object.assign(new Error('auth_not_configured'),{code:'auth_not_configured'});const normalized=canonicalUsername(username);if(!normalized||typeof password!=='string'||password.length<6)throw Object.assign(new Error('invalid_credentials'),{code:'invalid_credentials'});const session=await callAuthFunction('username-login',{username:normalized,password});if(!session?.access_token||!session?.refresh_token)throw Object.assign(new Error('temporarily_unavailable'),{code:'temporarily_unavailable'});const {error}=await supabaseClient.auth.setSession({access_token:session.access_token,refresh_token:session.refresh_token});if(error)throw Object.assign(new Error('temporarily_unavailable'),{code:'temporarily_unavailable'});}
 async function requestRecovery(username){const normalized=canonicalUsername(username);if(!normalized)throw Object.assign(new Error('temporarily_unavailable'),{code:'temporarily_unavailable'});return callAuthFunction('username-recovery-request',{username:normalized});}
-async function signOut(){if(supabaseClient)await supabaseClient.auth.signOut();authSession=null;currentUsername='';vpsAdmin=false;privatePortfolio=null;runtimeDisplay=null;whitelistControl=null;privateLoadState='not_loaded';updateAuthUI();render();}
+async function signOut(){if(supabaseClient)await supabaseClient.auth.signOut();stopPrivateAutoRefresh();authSession=null;currentUsername='';vpsAdmin=false;privatePortfolio=null;runtimeDisplay=null;whitelistControl=null;privateLoadState='not_loaded';updateAuthUI();render();}
 async function requireAuth(){if(authSession)return authSession;openLogin();throw Object.assign(new Error('auth_required'),{code:'auth_required'});}
 async function requireAdmin(){await requireAuth();if(!vpsAdmin){showMessage('权限不足','当前账号没有显式 VPS 管理员权限，不能提交白名单。');throw Object.assign(new Error('admin_required'),{code:'admin_required'});}return true;}
 function applyPrivatePortfolio(value){const scopes=Array.isArray(value)?value:[];privatePortfolio=scopes.find(item=>item&&item.scope_key==='primary')||null;const rows=Array.isArray(privatePortfolio?.positions)?privatePortfolio.positions:[];holdings=rows.map(item=>{const symbol=String(item.symbol||'').toUpperCase(),name=item.display_name||symbolDisplay(symbol);return {code:symbol.slice(0,6),symbol,name,shares:Number(item.held_quantity)||0,cost:item.average_cost_per_share,marketValue:item.market_value,privatePosition:item};});}
-async function loadPrivateDashboard(){if(!authSession||!supabaseClient)return;privateLoadState='loading';privateLoadError='';render();try{const [portfolio,runtime,admin,username]=await Promise.all([supabaseRpc('vps_private_get_portfolio'),supabaseRpc('vps_private_get_runtime_display'),supabaseRpc('vps_is_admin'),supabaseRpc('app_get_current_username')]);applyPrivatePortfolio(portfolio);runtimeDisplay=runtime&&typeof runtime==='object'?runtime:null;vpsAdmin=admin===true;currentUsername=typeof username==='string'?username:'';whitelistControl=vpsAdmin?await supabaseRpc('vps_get_whitelist_control_state'):null;privateLoadState='ready';}catch(error){privateLoadState='error';privateLoadError='private_read_failed';privatePortfolio=null;runtimeDisplay=null;whitelistControl=null;vpsAdmin=false;}updateAuthUI();render();}
+async function loadPrivateDashboard(){if(!authSession||!supabaseClient||privateLoadInFlight)return;const sessionAtStart=authSession;privateLoadInFlight=true;privateLoadState='loading';privateLoadError='';render();try{const [portfolio,runtime,admin,username]=await Promise.all([supabaseRpc('vps_private_get_portfolio'),supabaseRpc('vps_private_get_runtime_display'),supabaseRpc('vps_is_admin'),supabaseRpc('app_get_current_username')]);if(authSession!==sessionAtStart)return;applyPrivatePortfolio(portfolio);runtimeDisplay=runtime&&typeof runtime==='object'?runtime:null;vpsAdmin=admin===true;currentUsername=typeof username==='string'?username:'';whitelistControl=vpsAdmin?await supabaseRpc('vps_get_whitelist_control_state'):null;if(authSession!==sessionAtStart)return;privateLoadState='ready';}catch(error){if(authSession===sessionAtStart){privateLoadState='error';privateLoadError='private_read_failed';privatePortfolio=null;runtimeDisplay=null;whitelistControl=null;vpsAdmin=false;}}finally{privateLoadInFlight=false;}if(authSession!==sessionAtStart)return;updateAuthUI();render();}
 function fillWhitelistEditor(){if(!$('#whitelistSymbols'))return;const control=whitelistControl||{},symbols=Array.isArray(control.desired_symbols)&&control.desired_symbols.length?control.desired_symbols:(Array.isArray(control.active_symbols)?control.active_symbols:[]);$('#whitelistSymbols').value=symbols.join('\n');$('#whitelistBase').textContent=control.edit_base_revision_no?`提交基线：revision ${control.edit_base_revision_no}`:'提交基线：暂无';$('#whitelistCount').textContent=`${symbols.length} / 50`;
 }
 function openWhitelistEditor(){try{requireAdmin().then(()=>{fillWhitelistEditor();$('#whitelistDialog').showModal();}).catch(()=>{});}catch(error){}}
@@ -463,7 +467,7 @@ async function start(){
   const [marketData,newsData,catalogData]=await Promise.all([fetchLive('market.json','data/market.json'),fetchLive('news-memory.json','data/news-memory.json'),fetch('data/stock-catalog.json').then(response=>response.ok?response.json():[]).catch(()=>[])]);
   if(marketData)market=marketData;if(newsData)newsMemory=newsData;if(Array.isArray(catalogData))catalog=catalogData;
   trackedStocks=[];tradeRecords=[];strategyFeedback=[];part2Config={version:1,groups:[],extraStocks:[]};
-  if(authSession)await loadPrivateDashboard();
+  if(authSession){await loadPrivateDashboard();startPrivateAutoRefresh();}
   updateAuthUI();render();
 }
 start();

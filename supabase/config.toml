@@ -1,0 +1,10 @@
+project_id = "shfdpceuamzrftwufdwo"
+
+[functions.vps-sync]
+verify_jwt = false
+
+[functions.username-login]
+verify_jwt = false
+
+[functions.username-recovery-request]
+verify_jwt = false

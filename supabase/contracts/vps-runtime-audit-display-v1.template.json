@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "kind": "vps_runtime_audit_display",
+  "display_scope": "authenticated_admin_only",
+  "source_boundary": "Supabase RLS-projected and sanitized runtime summary only",
+  "generated_at_cn": null,
+  "trade_date_cn": "2026-08-31",
+  "overall": {
+    "state": "not_run",
+    "label": "等待合法 DRY_RUN 周期",
+    "detail": "模板；不是实时运行结果。",
+    "execution_mode": "DRY_RUN"
+  },
+  "desired_revision": {
+    "revision_no": 1,
+    "status": "sync_pending",
+    "symbol_count": 22,
+    "label": "已领取，等待 VPS 持久化处理",
+    "evidence_verified": null
+  },
+  "activation": {
+    "local_stage": "not_observed",
+    "active_revision_no": null,
+    "active_generation": null,
+    "sqlite_activation_verified": null,
+    "active_cache_published": null,
+    "ack_status": "not_queued",
+    "label": "尚无 VPS activation 证据"
+  },
+  "cycle": {
+    "expected_slots": 17,
+    "triggered_slots": null,
+    "completed_slots": null,
+    "failed_slots": null,
+    "eod_snapshot_status": "not_observed",
+    "label": "等待 17 个日期限定时点"
+  },
+  "market": {
+    "quote_provider": "hithink",
+    "requested_symbols": null,
+    "returned_symbols": null,
+    "fresh_symbols": null,
+    "missing_or_stale_symbols": null,
+    "coverage_status": "not_observed",
+    "market_cache_ready_symbols": 22,
+    "label": "等待合法周期的批量行情证据"
+  },
+  "account_readonly": {
+    "read_calls": null,
+    "status": "not_observed",
+    "label": "只统计只读核对；不展示账户、持仓、金额或订单内容"
+  },
+  "safety": {
+    "real_order_write_calls": null,
+    "real_cancel_write_calls": null,
+    "would_submit_intents": null,
+    "armed_mode": false,
+    "generic_timer_enabled": false,
+    "backup_timer_enabled": false,
+    "label": "模板；收盘后必须以审计事件和 quota 交叉核验"
+  },
+  "persistence": {
+    "sqlite_quick_check": "not_observed",
+    "inbox_status": "not_observed",
+    "active_cache_status": "not_observed",
+    "publish_receipt_status": "not_observed"
+  },
+  "events": [
+    {
+      "at_cn": null,
+      "severity": "info",
+      "category": "scheduled_cycle",
+      "message": "等待周一日期限定 DRY_RUN 运行结果",
+      "displayable": true
+    }
+  ],
+  "display_rules": {
+    "maximum_recent_events": 4,
+    "show_whitelist_symbols": false,
+    "show_hash_values": false,
+    "show_account_or_position_values": false,
+    "show_order_identifiers": false,
+    "show_raw_provider_payload": false,
+    "show_provider_or_hmac_credentials": false,
+    "show_vps_host_or_filesystem_paths": false,
+    "show_cost_market_value_or_pnl": false
+  }
+}

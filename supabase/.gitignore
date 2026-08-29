@@ -6,3 +6,5 @@
 *.pem
 *.key
 service-role-*.json
+# Supabase CLI link/cache metadata is machine-local; do not version it.
+.temp/

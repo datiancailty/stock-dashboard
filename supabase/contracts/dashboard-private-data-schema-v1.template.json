@@ -1,0 +1,131 @@
+{
+  "contract": "dashboard-private-data-schema",
+  "version": 1,
+  "status": "design_only",
+  "identity_mapping": {
+    "table": "app_usernames",
+    "native_identity": "auth.users.id",
+    "username_column": "username_norm",
+    "username_pattern": "^[a-z0-9]([a-z0-9._-]{1,30})[a-z0-9]$",
+    "min_length": 3,
+    "max_length": 32,
+    "public_signup": false,
+    "browser_direct_read": false,
+    "resolve_function": "app_resolve_username(text)",
+    "current_username_rpc": "app_get_current_username()"
+  },
+  "private_scope": {
+    "scope_table": "vps_private_scopes",
+    "membership_table": "vps_private_scope_members",
+    "authorization_key": "auth.uid()",
+    "device_binding": "target_device_id",
+    "automatic_admin_grant": false,
+    "automatic_membership_grant": false,
+    "default_scope_key": "primary"
+  },
+  "private_projection": {
+    "state_table": "vps_private_projection_state",
+    "positions_table": "vps_private_sim_positions",
+    "read_rpc": "vps_private_get_portfolio()",
+    "runtime_display_rpc": "vps_private_get_runtime_display()",
+    "write_rpc": "vps_sync_replace_private_projection(text,text,jsonb)",
+    "mode": "DRY_RUN",
+    "max_positions": 50,
+    "direct_browser_table_dml": false,
+    "derived_fields_database_computed": [
+      "cost_basis",
+      "market_value",
+      "unrealized_pnl",
+      "unrealized_pnl_pct"
+    ],
+    "source_price_basis": "current_unadjusted_price",
+    "pnl_percent_only_when": "cost_basis > 0",
+    "missing_data": "NULL_and_explicit_data_status",
+    "sort": "market_value_desc_nulls_last_then_symbol_asc"
+  },
+  "projection_payload": {
+    "top_level_allowed": [
+      "schema_version",
+      "scope_key",
+      "mode",
+      "health_status",
+      "projection_sequence",
+      "generated_at",
+      "account_as_of",
+      "quote_as_of",
+      "source_market_snapshot_id",
+      "source_market_snapshot_sha256",
+      "active_revision_no",
+      "active_generation",
+      "active_pack_sha256",
+      "active_control_payload_sha256",
+      "active_control_raw_contract_sha256",
+      "active_members_sha256",
+      "active_snapshot_id",
+      "active_snapshot_sha256",
+      "sanitized_error",
+      "positions"
+    ],
+    "position_allowed": [
+      "symbol",
+      "display_name",
+      "held_quantity",
+      "available_quantity",
+      "average_cost_per_share",
+      "current_unadjusted_price",
+      "price_as_of",
+      "data_status",
+      "quote_source_kind",
+      "position_state"
+    ],
+    "derived_fields_rejected": [
+      "cost_basis",
+      "market_value",
+      "unrealized_pnl",
+      "unrealized_pnl_pct"
+    ]
+  },
+  "whitelist": {
+    "control_state_rpc": "vps_get_whitelist_control_state()",
+    "submit_rpc": "vps_submit_whitelist_revision(text[],text,bigint)",
+    "legacy_submit_rpc_execute": false,
+    "expected_base_required": true,
+    "min_symbols": 1,
+    "max_symbols": 50,
+    "empty_list_allowed": false,
+    "direct_table_write": false,
+    "activation_requires_vps_evidence": true
+  },
+  "rls": {
+    "new_tables": [
+      "app_usernames",
+      "vps_private_scopes",
+      "vps_private_scope_members",
+      "vps_private_projection_state",
+      "vps_private_sim_positions"
+    ],
+    "anonymous_private_read": false,
+    "unauthorized_authenticated_private_read": false,
+    "service_role_arbitrary_table_dml": false
+  },
+  "forbidden_data": [
+    "account_id",
+    "order_id",
+    "fill_id",
+    "raw_provider_payload",
+    "service_role_key",
+    "vps_hmac_secret",
+    "provider_api_key",
+    "trading_credentials"
+  ],
+  "cutover_gates": [
+    "all_new_tables_rls_enabled",
+    "private_read_is_scope_membership_scoped",
+    "browser_has_only_narrow_read_and_revision_rpcs",
+    "private_write_is_same_transaction_as_v2_publish",
+    "database_computes_derived_amounts",
+    "legacy_whitelist_rpc_execute_revoked",
+    "anonymous_and_unauthorized_probes_return_no_private_rows",
+    "no_public_json_or_local_fallback_for_real_private_data"
+  ]
+}

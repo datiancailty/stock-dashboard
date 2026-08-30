@@ -125,6 +125,9 @@ def main() -> None:
     assert "research_match_percent_0_to_100" in app
     assert "typeof value!=='number'" in app
     assert "研究匹配度待刷新" in app
+    assert "RESEARCH_MATCH_MEANING='研究匹配度，不是涨跌概率、收益概率或自动下单依据'" in app
+    assert "analysis?.confidenceMeaning!==RESEARCH_MATCH_MEANING" in app
+    assert "confidenceMeaning:RESEARCH_MATCH_MEANING" in app
     assert "页面不会猜测 0.72、1" in app
     assert "legacyProbability" not in app
 

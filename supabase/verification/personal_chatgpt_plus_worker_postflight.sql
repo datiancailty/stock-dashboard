@@ -34,11 +34,16 @@ with checks(check_name, passed) as (
        and proc.prosecdef
   )
   union all
+  -- PostgreSQL stores a list-valued search_path setting canonically as
+  -- `search_path=pg_catalog, public` on many hosted versions. Normalize
+  -- whitespace before testing the exact trusted schema list so a display
+  -- space after the comma cannot produce a false negative.
   select 'worker_rpc_has_locked_search_path', exists (
     select 1
-      from pg_proc proc
+      from pg_proc proc,
+           unnest(coalesce(proc.proconfig, array[]::text[])) as setting(value)
      where proc.oid = 'public.personal_publish_strategy_worker_result(text,text,text,jsonb,jsonb)'::regprocedure
-       and array_to_string(proc.proconfig, E'\n') like 'search_path=pg_catalog,public%'
+       and regexp_replace(setting.value, '[[:space:]]+', '', 'g') = 'search_path=pg_catalog,public'
   )
   union all
   select 'worker_table_is_owner_scoped_and_rls_enabled', exists (

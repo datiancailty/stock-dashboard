@@ -4,6 +4,10 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "confidenceScale": {
+      "type": "string",
+      "enum": ["research_match_percent_0_to_100"]
+    },
     "profileSummary": {
       "type": "string"
     },
@@ -47,7 +51,9 @@
           "type": "string"
         },
         "confidence": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
         }
       },
       "required": ["code", "action", "reason", "condition", "confidence"]
@@ -79,12 +85,14 @@
             "type": "string"
           },
           "confidence": {
-            "type": "number"
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
           }
         },
         "required": ["code", "action", "reason", "confidence"]
       }
     }
   },
-  "required": ["profileSummary", "learnedRules", "recordInsights", "briefCommand", "advice"]
+  "required": ["confidenceScale", "profileSummary", "learnedRules", "recordInsights", "briefCommand", "advice"]
 }

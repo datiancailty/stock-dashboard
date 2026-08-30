@@ -50,6 +50,9 @@ WORKER_ID = "macos-local-codex"
 AUTH_MODE = "chatgpt_subscription"
 PROVIDER = "openai-codex"
 MODEL = os.environ.get("CODEX_STRATEGY_MODEL", "gpt-5.6-luna").strip() or "gpt-5.6-luna"
+ANALYSIS_SCHEMA_VERSION = 3
+CONFIDENCE_SCALE = "research_match_percent_0_to_100"
+CONFIDENCE_MEANING = "研究匹配度，不是涨跌概率、收益概率或自动下单依据"
 DEFAULT_WORKER_DIR = Path(
     os.environ.get(
         "STOCK_DASHBOARD_WORKER_DIR",
@@ -710,26 +713,29 @@ def prompt_for(context: dict[str, Any]) -> str:
         "固定原则不能被改写；learnedRules 只能描述观察到的偏好或待验证假设；"
         "不要承诺收益，不要输出思维链，不要自动交易，也不要建议修改程序参数。\n"
         "请严格只输出符合附带 JSON Schema 的 JSON 对象。briefCommand 只能选择一只当前股票；"
-        "如果没有充分证据，使用‘当前不买’。建议必须带条件或明确的人工确认边界。\n"
+        "如果没有充分证据，使用‘当前不买’。建议必须带条件或明确的人工确认边界。"
+        f"confidenceScale 必须精确为“{CONFIDENCE_SCALE}”；所有 confidence 必须为 0—100 的整数研究匹配度"
+        "（例如 72 表示 72%，0.72 不合法；1 只表示 1%，不表示 100%）。"
+        f"它仅表示当前建议与已确认规则、当前数据和有限样本的一致性，{CONFIDENCE_MEANING}。\n"
         "私有上下文如下：\n"
         + json.dumps(context, ensure_ascii=False, separators=(",", ":"))
     )
 
 
-def validate_confidence(value: Any) -> float:
+def validate_confidence(value: Any) -> int:
     if isinstance(value, bool):
         raise WorkerError("codex_output_invalid")
     number = finite_number(value)
-    if number is None or number < 0 or number > 100:
+    if number is None or number < 0 or number > 100 or not number.is_integer():
         raise WorkerError("codex_output_invalid")
-    return round(number, 3)
+    return int(number)
 
 
 def validate_model_output(value: Any, universe: set[str]) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise WorkerError("codex_output_invalid")
-    required = {"profileSummary", "learnedRules", "recordInsights", "briefCommand", "advice"}
-    if set(value) != required:
+    required = {"profileSummary", "learnedRules", "recordInsights", "briefCommand", "advice", "confidenceScale"}
+    if set(value) != required or value.get("confidenceScale") != CONFIDENCE_SCALE:
         raise WorkerError("codex_output_invalid")
     summary = short_text(value.get("profileSummary"), 1500, allow_empty=False)
     rules = value.get("learnedRules")
@@ -790,6 +796,7 @@ def validate_model_output(value: Any, universe: set[str]) -> dict[str, Any]:
         "recordInsights": normalized_insights,
         "briefCommand": normalized_brief,
         "advice": normalized_advice,
+        "confidenceScale": CONFIDENCE_SCALE,
     }
 
 
@@ -894,7 +901,7 @@ def analysis_payload(model_output: dict[str, Any], context: dict[str, Any], run_
     universe = {item["code"] for item in context["currentStocks"]}
     normalized = validate_model_output(model_output, universe)
     output = {
-        "schemaVersion": 2,
+        "schemaVersion": ANALYSIS_SCHEMA_VERSION,
         "updatedAt": iso_now(),
         "model": MODEL,
         "provider": PROVIDER,
@@ -907,6 +914,8 @@ def analysis_payload(model_output: dict[str, Any], context: dict[str, Any], run_
         "learnedRules": normalized["learnedRules"],
         "recordInsights": normalized["recordInsights"],
         "briefCommand": {**normalized["briefCommand"], "id": f"brief-{run_id}"},
+        "confidenceScale": normalized["confidenceScale"],
+        "confidenceMeaning": CONFIDENCE_MEANING,
         "feedbackStats": context["feedback"]["stats"],
         "recommendationPerformance": context["recommendations"]["performance"],
         "advice": normalized["advice"],

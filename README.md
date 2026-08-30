@@ -109,6 +109,7 @@ macOS 工作日调度
 - Dashboard 用户密码只在首次 `setup` 时输入，不写入配置；Supabase refresh token 只存放在 macOS Keychain。
 - 本机 Worker 通过已有认证用户的窄 RPC 读取 Part 4/Part 6 私有数据，不能直接对 `personal_*` 表做 DML。
 - Codex 输出必须通过固定 JSON Schema、股票白名单、动作枚举、长度和置信度校验；失败时保留上一次成功的策略分析。
+- 从 `20260830130000_personal_strategy_confidence_contract_v3.sql` 起，Part 6 的 `confidence` 固定为 `0—100` 的**整数研究匹配度**，且必须带 `confidenceScale=research_match_percent_0_to_100`。页面不再猜测旧版 `0.72` 或 `1` 的单位；需要先按 `supabase/contracts/personal-strategy-confidence-contract-v3-manual-runbook.md` 手工执行前向迁移和 `13/13` postflight，才可运行新的 v3 Worker。
 - Worker 结果包含运行日期、输入/输出哈希、模型、认证方式和脱敏状态，不包含密码、OAuth 文件或 Platform Key。
 - 旧版 `check-strategy-api.yml` 和 `update-strategy.yml` 已停用自动调度，避免继续显示“未配置 OPENAI_API_KEY”。首次 Worker 成功运行前，页面会把旧状态显示为“待切换”，而不是伪装成 AI 已成功。
 

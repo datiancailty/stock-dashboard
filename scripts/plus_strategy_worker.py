@@ -17,11 +17,15 @@ import hashlib
 import json
 import math
 import os
+import pty
 import re
+import select
 import shutil
 import subprocess
 import sys
 import tempfile
+import termios
+import time
 import unicodedata
 from datetime import datetime
 from getpass import getpass
@@ -217,26 +221,74 @@ def keychain_read(service: str, account: str) -> str:
 def keychain_write(service: str, account: str, value: str) -> None:
     if not value or "\n" in value or "\r" in value or "\x00" in value:
         raise WorkerError("worker_refresh_token_invalid")
-    # ``-w`` as the final option makes security prompt for the value. Feeding
-    # both prompts through stdin avoids putting the refresh token in argv,
-    # shell history, or a file. The post-write readback is authoritative on
-    # macOS versions that return a non-zero prompt status.
-    completed = subprocess.run(
-        ["security", "add-generic-password", "-U", "-a", account, "-s", service, "-w"],
-        input=f"{value}\n{value}\n",
-        capture_output=True,
-        text=True,
-        timeout=30,
-        check=False,
-    )
+    # ``security -w`` reads from its controlling terminal rather than ordinary
+    # stdin. It also consumes each value only after printing its corresponding
+    # prompt, so preloading a pipe/PTY can lose both values. ``pty.fork()``
+    # gives the child its own no-echo controlling terminal; the parent waits
+    # for each fixed prompt before supplying the opaque refresh token. Nothing
+    # is placed in argv, shell history, a file, or terminal output.
+    child_pid: int | None = None
+    master_fd: int | None = None
+    try:
+        child_pid, master_fd = pty.fork()
+        if child_pid == 0:
+            try:
+                attributes = termios.tcgetattr(0)
+                attributes[3] &= ~termios.ECHO
+                termios.tcsetattr(0, termios.TCSANOW, attributes)
+                os.execvp(
+                    "security",
+                    ["security", "add-generic-password", "-U", "-a", account, "-s", service, "-w"],
+                )
+            except BaseException:
+                os._exit(127)
+
+        prompt_buffer = bytearray()
+        first_sent = False
+        second_sent = False
+        deadline = time.monotonic() + 30
+        exit_status: int | None = None
+        while time.monotonic() < deadline:
+            ended_pid, status = os.waitpid(child_pid, os.WNOHANG)
+            if ended_pid == child_pid:
+                exit_status = status
+                break
+            readable, _, _ = select.select([master_fd], [], [], 0.25)
+            if not readable:
+                continue
+            try:
+                chunk = os.read(master_fd, 4096)
+            except OSError:
+                chunk = b""
+            if not chunk:
+                continue
+            prompt_buffer.extend(chunk.lower())
+            # Keep the detector bounded. With ECHO disabled, the token itself
+            # is never returned by the PTY; this buffer is never logged.
+            if len(prompt_buffer) > 4096:
+                del prompt_buffer[:-1024]
+            if not first_sent and b"password data for new item:" in prompt_buffer:
+                os.write(master_fd, (value + "\n").encode("utf-8"))
+                first_sent = True
+            if first_sent and not second_sent and b"retype password for new item:" in prompt_buffer:
+                os.write(master_fd, (value + "\n").encode("utf-8"))
+                second_sent = True
+        if exit_status is None:
+            os.kill(child_pid, 9)
+            _, exit_status = os.waitpid(child_pid, 0)
+        if not (first_sent and second_sent and os.WIFEXITED(exit_status) and os.WEXITSTATUS(exit_status) == 0):
+            raise WorkerError("worker_keychain_write_failed")
+    except (OSError, ValueError) as error:
+        raise WorkerError("worker_keychain_write_failed") from error
+    finally:
+        if master_fd is not None:
+            os.close(master_fd)
     try:
         stored = keychain_read(service, account)
     except WorkerError as error:
         raise WorkerError("worker_keychain_write_failed") from error
     if stored != value:
         raise WorkerError("worker_keychain_write_failed")
-    # Do not expose subprocess output even if the platform emitted a warning.
-    del completed
 
 
 def keychain_delete(service: str, account: str) -> None:

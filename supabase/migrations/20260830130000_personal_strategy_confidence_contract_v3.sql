@@ -4,15 +4,11 @@
 -- Scope:
 --   1. Replaces only the owner-scoped local Worker publish RPC so successful
 --      analysis writes require the v3 integer 0—100 research-match contract.
---   2. Conditionally upgrades only the current strategy_analysis document when
---      the complete legacy confidence batch is unambiguously 0—1 probability
---      scale (every value is numeric 0..1 and at least one is a true fraction).
+--   2. Leaves every existing strategy_analysis document untouched. Historical
+--      values such as 0.72 or 1 have no independently auditable scale marker,
+--      so they remain “待刷新” in the v3 UI instead of being guessed or rewritten.
 --   3. Keeps raw worker-run audit payloads, source provenance fields, personal
 --      trades, feedback, watchlists, VPS objects, and all trading paths intact.
---
--- A legacy value of exactly 1 with no true fractional companion is deliberately
--- NOT guessed as either 1% or 100%; it remains untouched and the v3 UI asks for
--- a fresh Worker result instead.
 
 begin;
 
@@ -173,6 +169,9 @@ begin
        or char_length(p_analysis->'briefCommand'->>'condition') not between 1 and 250 then
       raise exception 'worker_brief_text_invalid';
     end if;
+    if jsonb_typeof(p_analysis->'briefCommand'->'confidence') <> 'number' then
+      raise exception 'worker_brief_confidence_invalid';
+    end if;
     begin
       confidence_value := (p_analysis->'briefCommand'->>'confidence')::numeric;
     exception when others then
@@ -211,6 +210,9 @@ begin
       end if;
       if item->>'reason' is null or char_length(item->>'reason') not between 1 and 600 then
         raise exception 'worker_advice_reason_invalid';
+      end if;
+      if jsonb_typeof(item->'confidence') <> 'number' then
+        raise exception 'worker_advice_confidence_invalid';
       end if;
       begin
         confidence_value := (item->>'confidence')::numeric;
@@ -285,100 +287,9 @@ revoke all on function public.personal_publish_strategy_worker_result(text, text
 grant execute on function public.personal_publish_strategy_worker_result(text, text, text, jsonb, jsonb)
   to authenticated;
 
--- Safe current-document backfill only. The original Worker-run audit payloads
--- remain immutable evidence of the original response; source provenance fields
--- on the derived current document are intentionally retained.
-with legacy_documents as (
-  select d.owner_user_id,
-         d.document_key,
-         d.payload,
-         jsonb_build_array(d.payload #> '{briefCommand,confidence}')
-           || case when jsonb_typeof(d.payload->'advice') = 'array'
-                   then d.payload->'advice'
-                   else '[]'::jsonb
-              end as confidence_values
-    from public.personal_documents d
-   where d.document_key = 'strategy_analysis'
-     and d.payload->>'schemaVersion' = '2'
-     and d.payload->>'confidenceScale' is null
-     and jsonb_typeof(d.payload->'briefCommand') = 'object'
-     and jsonb_typeof(d.payload->'advice') = 'array'
-), eligible_documents as (
-  select legacy.*
-    from legacy_documents legacy
-   where jsonb_array_length(legacy.confidence_values) > 0
-     and not exists (
-       select 1
-         from jsonb_array_elements(legacy.confidence_values) as confidence_item(value)
-        where not coalesce(
-          case when jsonb_typeof(confidence_item.value) = 'number'
-                 then (confidence_item.value #>> '{}')::numeric between 0 and 1
-               else false
-          end,
-          false
-        )
-     )
-     and exists (
-       select 1
-         from jsonb_array_elements(legacy.confidence_values) as confidence_item(value)
-        where coalesce(
-          case when jsonb_typeof(confidence_item.value) = 'number'
-                 then (confidence_item.value #>> '{}')::numeric > 0
-                  and (confidence_item.value #>> '{}')::numeric < 1
-               else false
-          end,
-          false
-        )
-     )
-     and not exists (
-       select 1
-         from jsonb_array_elements(legacy.payload->'advice') as advice_item(value)
-        where jsonb_typeof(advice_item.value) <> 'object'
-     )
-)
-update public.personal_documents current_document
-   set payload = jsonb_set(
-         jsonb_set(
-           jsonb_set(
-             jsonb_set(
-               jsonb_set(
-                 current_document.payload,
-                 '{schemaVersion}',
-                 '3'::jsonb,
-                 true
-               ),
-               '{confidenceScale}',
-               to_jsonb('research_match_percent_0_to_100'::text),
-               true
-             ),
-             '{confidenceMeaning}',
-             to_jsonb('研究匹配度，不是涨跌概率、收益概率或自动下单依据'::text),
-             true
-           ),
-           '{briefCommand,confidence}',
-           to_jsonb(((current_document.payload #>> '{briefCommand,confidence}')::numeric * 100)),
-           false
-         ),
-         '{advice}',
-         coalesce((
-           select jsonb_agg(
-             jsonb_set(
-               advice_item.value,
-               '{confidence}',
-               to_jsonb(((advice_item.value->>'confidence')::numeric * 100)),
-               false
-             )
-             order by advice_item.ordinality
-           )
-             from jsonb_array_elements(current_document.payload->'advice')
-                    with ordinality as advice_item(value, ordinality)
-         ), '[]'::jsonb),
-         false
-       ),
-       updated_at = now()
-  from eligible_documents legacy
- where current_document.owner_user_id = legacy.owner_user_id
-   and current_document.document_key = legacy.document_key;
+-- Historical v2 analysis payloads deliberately remain unchanged. Their missing
+-- confidenceScale makes their numeric meaning unknowable, so the v3 browser
+-- renders “研究匹配度待刷新” until a new v3 Worker result is published.
 
 notify pgrst, 'reload schema';
 

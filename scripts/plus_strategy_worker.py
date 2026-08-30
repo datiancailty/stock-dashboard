@@ -723,10 +723,11 @@ def prompt_for(context: dict[str, Any]) -> str:
 
 
 def validate_confidence(value: Any) -> int:
-    if isinstance(value, bool):
+    """Accept only a JSON numeric integer on the explicit 0—100 v3 scale."""
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise WorkerError("codex_output_invalid")
-    number = finite_number(value)
-    if number is None or number < 0 or number > 100 or not number.is_integer():
+    number = float(value)
+    if not math.isfinite(number) or number < 0 or number > 100 or not number.is_integer():
         raise WorkerError("codex_output_invalid")
     return int(number)
 

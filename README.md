@@ -2,14 +2,15 @@
 
 GitHub Pages 是本项目的静态网页托管层，业务登录和私有数据不依赖 GitHub 日常登录。
 
-> Part 1—6 owner-scoped 私有迁移的 Hosted schema、导入和聚合 postflight 已由项目所有者手动执行并返回 `22/22` 通过；本轮前端候选仍待 commit、push、Pages 验证和用户浏览器验收。
+> Part 1—6 owner-scoped 私有迁移 Stage 1 已完成；本次 Stage 2 完整快照覆盖导入也已由项目所有者手动执行，Hosted 聚合 postflight `18/18` 通过。当前本地前端候选已恢复 20 只行情、87 条日历、452 条公告、384 条操作和 47 条建议，下一步进行 Pages 发布验证与用户浏览器验收。
 
 ## 页面结构
 
 - **Part 0 今日看板**：VPS 白名单、激活版本、DRY_RUN 运行投影和私有模拟盘持仓摘要。
-- **Part 1 自选股持仓**：认证后通过 Supabase 私有 RPC 读取 VPS 模拟盘投影；迁入的原自选清单单独显示，不等于实际持仓；网页只读。
-- **Part 2 周 BOLL 股息网格**：认证后按需读取私有板块配置和原自选清单；验收阶段不开放写入。
-- **Part 4 分红日历**、**Part 5 公告与 AI 分红预估**、**Part 6 操作与策略学习**：认证后分别按需读取 owner-scoped 私有 RPC；验收阶段不读取/写入公开 GitHub JSON，也不开放个人记录写入。
+- **Part 1 自选股持仓**：认证后读取 20 只原自选股、私有行情与正式分红；模拟盘投影如有则叠加展示，添加/删除只修改个人私有自选清单。
+- **Part 2 周 BOLL 股息网格**：认证后读取完整私有行情快照和板块配置，显示 20 只自选范围中的周 BOLL 状态。
+- **Part 3 股息率价格网格**：恢复 5.0% / 5.5% / 6.0% / 6.5% / 7.0% 目标价表。
+- **Part 4 分红日历**、**Part 5 公告与 AI 分红预估**、**Part 6 操作与策略学习**：认证后分别读取完整私有历史；当前候选恢复日历 87 条、公告 452 条、操作 384 条和建议 47 条；Part 6 提供私有 CSV 导出、CSV 导入、新增和删除。
 
 ## 认证与数据边界
 
@@ -82,7 +83,8 @@ python3 -m http.server 8765 --bind 127.0.0.1
 - Stage 1 VPS 控制面、Stage 2 gateway/protocol v2/ACL closure 已执行并完成验证。
 - Stage 3 私有用户名、scope、持仓投影和 Auth 限流 migration 已由项目所有者在 Supabase SQL Editor 执行；对应 postflight 分别为 `24/24`、`10/10` 通过。
 - `20260829005000_vps_sync_private_projection_bridge.sql` 已由项目所有者手动执行，对应 Hosted postflight 为 `9/9` 通过。
-- `20260830000000_personal_dashboard_legacy_stage1.sql` 和受控的一次性私有导入已由项目所有者手动执行；Part 1—6 owner-scoped 聚合 postflight 为 `22/22` 通过。
+- `20260830000000_personal_dashboard_legacy_stage1.sql` 和受控的一次性私有导入已由项目所有者手动执行；Stage 1 聚合 postflight 为 `22/22` 通过。
+- `20260830010000_personal_live_archive_stage2.sql`、10 个私有覆盖导入分片和 `personal_live_archive_stage2_postflight.sql` 已由项目所有者手动执行；Stage 2 聚合 postflight 为 `18/18` 通过。
 - `username-login`、`username-recovery-request` 和 `vps-sync` Edge Functions 已部署并处于 `ACTIVE`；allowed origin、恢复跳转地址和服务端限流 secret 已配置。
 - Auth user、用户名映射、`primary` scope membership、VPS admin 权限已由项目所有者分别显式配置；不会自动创建或授予。
 - VPS 保持 `DRY_RUN`；本轮 Pages 私有历史读取不会触发 VPS、行情 Provider、账户、订单或策略执行路径。

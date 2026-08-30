@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-29T15:14:49+08:00",
+  "checkedAt": "2026-08-30T13:38:02+08:00",
   "provider": "official-openai",
   "model": "gpt-5.6-luna",
   "check": "chat_completions",

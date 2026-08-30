@@ -2,7 +2,7 @@
 
 GitHub Pages 是本项目的静态网页托管层，业务登录和私有数据不依赖 GitHub 日常登录。
 
-> Part 1—6 owner-scoped 私有迁移 Stage 1 和 Stage 2 已完成；基础 Stage 2 快照的 Hosted 聚合 postflight `18/18` 通过。当前正在执行一次前向修复：补入 Part 4 的当前年度已实施分红事件，并修复 Part 6 三个反馈按钮的私有 RPC。修复后的 Part 4 目标为 20 只行情、90 条日历、452 条公告、384 条操作和 47 条建议；Hosted SQL 仍须由项目所有者手动执行并单独 postflight 验证。
+> Part 1—6 owner-scoped 私有迁移 Stage 1 和 Stage 2 已完成；基础 Stage 2 快照的 Hosted 聚合 postflight `18/18` 通过。Part 4 当前年度已实施分红事件补丁已完成；Part 6 反馈 RPC 发现真实浏览器写入路径的 SQLSTATE `42702` 字段歧义，已新增 `20260830120000_personal_feedback_rpc_ambiguity_repair.sql` 前向修复及 `11/11` aggregate-only postflight。该 Hosted SQL 仍须由项目所有者手动执行，不能用静态检查、Worker 成功或旧版 RPC postflight 替代。
 
 > 本次已核实东阿阿胶（000423）2026 中期权益分派：股权登记日 `2026-08-28`，除权除息日/派息日 `2026-08-31`，每股税前现金分红 `1.344811` 元。该当前年度事件只补入 Part 4 日历，不叠加到上一完整年度正式股息率分子。
 

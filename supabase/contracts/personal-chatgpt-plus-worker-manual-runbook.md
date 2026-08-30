@@ -78,7 +78,7 @@ python3 scripts/plus_strategy_worker.py run --force
 - 策略状态显示 `通过`，并标明 `ChatGPT Plus/Codex 本机 Worker`；
 - `最后检查`时间已更新；
 - 策略摘要/规则/建议来自新的私有结果；
-- Part 6 三个反馈按钮仍能写入；
+- Part 6 三个反馈按钮仍能写入（若页面曾出现 SQLSTATE `42702` 对应的反馈失败，须先执行 `supabase/contracts/personal-feedback-rpc-ambiguity-repair-manual-runbook.md` 中的前向修复及 `11/11` postflight）；
 - 页面、浏览器 Network、GitHub 仓库和 Release 中都没有密码、token、模型提示词或个人结果 JSON。
 
 若 Codex、网络或 Supabase 临时失败，Worker 输出脱敏 `category`，不会输出 stderr、提示词或私有数据。

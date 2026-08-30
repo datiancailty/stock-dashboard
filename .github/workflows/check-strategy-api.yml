@@ -1,59 +1,18 @@
-name: 策略 API 每日自检
+name: 旧版策略 API 自检（已停用）
 
+# ChatGPT Plus/Codex 路线不使用 GitHub-hosted runner，也不读取
+# Platform 凭证。策略健康状态由本机 private worker 写入 Supabase。
 on:
-  schedule:
-    # GitHub Actions 使用 UTC；北京时间每天 08:30，早于 08:45 的策略更新。
-    - cron: '30 0 * * *'
   workflow_dispatch:
-    inputs:
-      strict:
-        description: '严格模式：API 不可用时将本次手动检查标记为失败'
-        required: false
-        default: true
-        type: boolean
 
 permissions:
-  contents: write
-
-concurrency:
-  group: strategy-api-health
-  cancel-in-progress: true
+  contents: read
 
 jobs:
-  check:
-    # 定时任务保留真实健康状态到页面，但不以失败工作流触发每日邮件；
-    # 手动触发默认严格失败，也可用 strict=false 演练定时任务的静默路径。
-    continue-on-error: ${{ github.event_name == 'schedule' || inputs.strict == false }}
+  retired:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: pip install requests
-      - name: 检查 OpenAI 策略 API
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: gpt-5.6-luna
-        run: python scripts/check_openai_api.py
-      - name: 发布自检结果到 live 分支
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: >-
-          python scripts/publish_live.py data/strategy-api-health.json
-          strategy-api-health.json "strategy: publish API health"
-      - name: API 失效时标记本次自检失败
-        if: always()
+      - name: 说明当前策略更新入口
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          status = json.loads(Path('data/strategy-api-health.json').read_text()).get('status')
-          if status != 'ok':
-              raise SystemExit('OpenAI 策略 API 自检未通过；页面将显示红色状态。')
-          print('OpenAI 策略 API 自检通过。')
-          PY
+          echo '旧版 GitHub Actions/OpenAI Platform 自检已停用。'
+          echo '请使用本机 ChatGPT Plus/Codex private worker。'

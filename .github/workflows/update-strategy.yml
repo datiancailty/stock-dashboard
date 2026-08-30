@@ -1,63 +1,19 @@
-name: 操作记录历史补全与策略学习
+name: 旧版公开策略更新（已停用）
 
+# 个人操作、反馈、策略结果已迁入 Supabase personal_* 私有空间。
+# ChatGPT Plus/Codex 结果由本机 private worker 生成；不再由 GitHub-hosted
+# runner 读取个人记录，也不再向 GitHub main/live 写入策略结果。
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'data/trade-records.json'
-      - 'data/strategy-feedback.json'
-  schedule:
-    # 北京时间每天 08:45，使用最新行情重新生成个人策略建议
-    - cron: '45 0 * * *'
   workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  group: personal-trade-strategy
-  cancel-in-progress: true
+  contents: read
 
 jobs:
-  analyze:
-    # 工作流自己补全历史记录产生的提交不再次分析，避免循环和重复模型调用。
-    if: github.event_name != 'push' || github.actor != 'github-actions[bot]'
+  retired:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: pip install requests
-      - name: 读取 live 分支最新行情
+      - name: 说明当前策略更新入口
         run: |
-          git fetch origin live || true
-          if git show origin/live:market.json > /tmp/market.json 2>/dev/null; then
-            mv /tmp/market.json data/market.json
-          else
-            rm -f /tmp/market.json
-          fi
-      - name: 补全历史位置并调用服务端模型学习
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: gpt-5.6-luna
-        run: python scripts/process_trade_records.py
-      - name: 把补全后的操作记录和策略档案同步回 GitHub
-        run: |
-          if git diff --quiet -- data/trade-records.json data/strategy-recommendations.json; then
-            echo "没有待补全的操作记录或策略档案"
-            exit 0
-          fi
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add data/trade-records.json data/strategy-recommendations.json
-          git commit -m "strategy: update records and recommendation outcomes"
-          git push origin HEAD:main
-      - name: 发布最新AI策略画像到 live 分支
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: >-
-          python scripts/publish_live.py data/strategy-analysis.json strategy-analysis.json "strategy: update personal analysis"
+          echo '旧版 GitHub Actions 策略更新已停用。'
+          echo '请使用本机 ChatGPT Plus/Codex private worker。'

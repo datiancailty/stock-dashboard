@@ -363,12 +363,17 @@ function renderStrategyApiHealth(){
   const el=$('#strategyApiHealth');
   if(!el)return;
   const health=strategyApiHealth||{};
-  const status=health.status==='ok'?'ok':health.status==='failed'?'failed':'unknown';
-  const label=status==='ok'?'通过':status==='failed'?'失效':'尚未完成';
-  const reason=health.reason||(status==='unknown'?'私有策略健康记录尚无结论':'未返回原因');
+  const legacyPlatformMissing=health.provider==='official-openai'&&!health.authMode&&health.reason==='未配置 OPENAI_API_KEY';
+  const status=legacyPlatformMissing?'unknown':health.status==='ok'?'ok':health.status==='failed'?'failed':'unknown';
+  const plusWorker=health.authMode==='chatgpt_subscription';
+  const label=status==='ok'?'通过':legacyPlatformMissing?'待切换':status==='failed'?'本次失败':'尚未完成';
+  const reason=legacyPlatformMissing
+    ?'旧版 GitHub Actions Platform API 未启用，等待 ChatGPT Plus/Codex 本机 Worker 首次运行'
+    :(health.reason||(status==='unknown'?'私有策略健康记录尚无结论':'未返回原因'));
+  const channel=plusWorker?'ChatGPT Plus/Codex 本机 Worker':health.provider==='official-openai'?'旧版 GitHub Actions/OpenAI Platform':'私有策略 Worker';
   const checked=health.checkedAt?` · 最后检查 ${formatTime(health.checkedAt)}`:'';
   el.className=`strategy-api-health ${status}`;
-  el.textContent=`策略自我更新 API：${label}（${reason}${checked}）`;
+  el.textContent=`策略自我更新 API：${label}（${channel} · ${reason}${checked}）`;
 }
 function focusedVariantDetails(stock){
   const variants=stock?.variantStudy?.variants||[];

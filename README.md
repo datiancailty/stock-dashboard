@@ -12,7 +12,7 @@ GitHub Pages 是本项目的静态网页托管层，业务登录和私有数据�
 - **Part 1 自选股持仓**：认证后读取 20 只原自选股、私有行情与正式分红；模拟盘投影如有则叠加展示，添加/删除只修改个人私有自选清单。
 - **Part 2 周 BOLL 股息网格**：认证后读取完整私有行情快照和板块配置，显示 20 只自选范围中的周 BOLL 状态。
 - **Part 3 股息率价格网格**：恢复 5.0% / 5.5% / 6.0% / 6.5% / 7.0% 目标价表。
-- **Part 4 分红日历**、**Part 5 公告与 AI 分红预估**、**Part 6 操作与策略学习**：认证后分别读取完整私有历史；当前候选恢复日历 87 条、公告 452 条、操作 384 条和建议 47 条；Part 6 提供私有 CSV 导出、CSV 导入、新增和删除。
+- **Part 4 分红日历**、**Part 5 公告与 AI 分红预估**、**Part 6 操作与策略学习**：认证后分别读取完整私有历史；Part 6 提供私有 CSV 导出、CSV 导入、新增和删除。
 
 ## 认证与数据边界
 
@@ -91,7 +91,35 @@ python3 -m http.server 8765 --bind 127.0.0.1
 - Auth user、用户名映射、`primary` scope membership、VPS admin 权限已由项目所有者分别显式配置；不会自动创建或授予。
 - VPS 保持 `DRY_RUN`；本轮 Pages 私有历史读取不会触发 VPS、行情 Provider、账户、订单或策略执行路径。
 
-## GitHub Pages 发布
+## Part 6 ChatGPT Plus/Codex 策略更新
+
+策略画像与操作复盘已切换为**本机私有 Worker**路线，不再依赖 GitHub Actions 的 OpenAI Platform API Key：
+
+```text
+macOS 工作日调度
+  → scripts/plus_strategy_worker.py
+  → 本机已登录的 Codex CLI（ChatGPT Plus/Codex）
+  → 严格 JSON Schema 校验
+  → personal_publish_strategy_worker_result
+  → Supabase personal_* 私有空间
+  → Part 6 登录后读取最新结果
+```
+
+- Worker 只使用本机 Codex CLI 的 ChatGPT 订阅登录，不读取或接收 `OPENAI_API_KEY`。
+- Dashboard 用户密码只在首次 `setup` 时输入，不写入配置；Supabase refresh token 只存放在 macOS Keychain。
+- 本机 Worker 通过已有认证用户的窄 RPC 读取 Part 4/Part 6 私有数据，不能直接对 `personal_*` 表做 DML。
+- Codex 输出必须通过固定 JSON Schema、股票白名单、动作枚举、长度和置信度校验；失败时保留上一次成功的策略分析。
+- Worker 结果包含运行日期、输入/输出哈希、模型、认证方式和脱敏状态，不包含密码、OAuth 文件或 Platform Key。
+- 旧版 `check-strategy-api.yml` 和 `update-strategy.yml` 已停用自动调度，避免继续显示“未配置 OPENAI_API_KEY”。首次 Worker 成功运行前，页面会把旧状态显示为“待切换”，而不是伪装成 AI 已成功。
+
+Hosted migration 执行并完成本机 setup 后，手动测试命令为：
+
+```bash
+python3 scripts/plus_strategy_worker.py run --force
+```
+
+工作日调度由单独的 `install-schedule` 步骤安装；在 Hosted postflight、本机 Codex 登录和一次真实私有 Worker 成功运行前，不会自动加载调度。
+
 
 GitHub Pages 可以免费托管此类静态 HTML/CSS/JS 页面，但它不能保护浏览器里的秘密，也不能替代 Supabase 认证和 RLS。发布前必须完成：
 

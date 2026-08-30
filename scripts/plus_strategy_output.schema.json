@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Private ChatGPT Plus strategy worker output",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "profileSummary": {
+      "type": "string"
+    },
+    "learnedRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recordInsights": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "insight": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "insight"]
+      }
+    },
+    "briefCommand": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string",
+          "enum": ["分批买入", "暂不买入", "当前不买"]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "condition": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number"
+        }
+      },
+      "required": ["code", "action", "reason", "condition", "confidence"]
+    },
+    "advice": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "继续观察",
+              "等待接近5%",
+              "可分批买入",
+              "高性价比分批买",
+              "小仓分批/等待",
+              "做T卖出观察",
+              "卖出区提醒",
+              "暂不追入",
+              "等待正式数据"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number"
+          }
+        },
+        "required": ["code", "action", "reason", "confidence"]
+      }
+    }
+  },
+  "required": ["profileSummary", "learnedRules", "recordInsights", "briefCommand", "advice"]
+}

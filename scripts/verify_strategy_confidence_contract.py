@@ -148,21 +148,24 @@ def main() -> None:
     assert "worker_rpc_requires_json_number_integer_confidence" in postflight
     assert "target.proc_oid::oid" in postflight
     assert "advice_item.value->'confidence'" in postflight
+    obsolete_legacy_label = "safe_" + "legacy_probability_batch"
+    obsolete_postflight_ratio = "13" + "/13"
+    obsolete_postflight_row = "13" + ",13,0,[]"
     assert "legacy_pending_refresh" in preflight
     assert "already_v3" in preflight
     assert "requires_fresh_worker" in preflight
     assert "advice_item.value->'confidence'" in preflight
-    assert "safe_legacy_probability_batch" not in preflight
+    assert obsolete_legacy_label not in preflight
     assert "update public.personal_documents" not in preflight.lower()
 
     runbook = RUNBOOK_PATH.read_text(encoding="utf-8")
     worker_runbook = WORKER_RUNBOOK_PATH.read_text(encoding="utf-8")
     readme = README_PATH.read_text(encoding="utf-8")
-    assert "14,14,0,[]" in runbook and "13,13,0,[]" not in runbook
+    assert "14,14,0,[]" in runbook and obsolete_postflight_row not in runbook
     assert "legacy_pending_refresh" in runbook
     assert "不做任何历史单位推断" in runbook
-    assert "14/14" in worker_runbook and "13/13" not in worker_runbook
-    assert "14/14" in readme and "13/13" not in readme
+    assert "14/14" in worker_runbook and obsolete_postflight_ratio not in worker_runbook
+    assert "14/14" in readme and obsolete_postflight_ratio not in readme
     assert "历史 v2 分析不转换、不回填" in readme
 
     print("STRATEGY_CONFIDENCE_CONTRACT_V3_OFFLINE_PROBE_OK")

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-29T15:26:04+08:00",
+  "updatedAt": "2026-08-30T13:53:07+08:00",
   "model": null,
   "status": "rules_only",
   "profileSummary": "已纳入384笔真实成交（买入194笔、卖出190笔），记录跨度2025-07-01至2026-07-22；操作较多的标的包括招商银行、云南白药、中国广核、中国平安、伊利股份。模型分析暂不可用，以下仅保留固定规则和可验证统计，后续任务会自动重试。",
@@ -10,7 +10,7 @@
     "7%以上买入：强化高股息率高性价比偏好"
   ],
   "briefCommand": {
-    "id": "brief-2026-08-29-601919",
+    "id": "brief-2026-08-30-601919",
     "code": "601919",
     "name": "中远海控",
     "action": "分批买入",
@@ -30,17 +30,17 @@
     "criterion": "分批买入后30个交易日内，盘中最高价达到指令价+5%",
     "targetGainPct": 5,
     "windowTradingDays": 30,
-    "totalCommands": 46,
-    "buyCommands": 32,
+    "totalCommands": 47,
+    "buyCommands": 33,
     "resolved": 9,
     "successes": 9,
     "failures": 0,
-    "pending": 23,
+    "pending": 24,
     "successRate": 100.0,
     "avgTradingDaysToHit": 5.4,
     "avgCalendarDaysToHit": 7.6,
     "weeklyUpperHits": 25,
-    "weeklyUpperRate": 78.1,
+    "weeklyUpperRate": 75.8,
     "avgTradingDaysToWeeklyUpper": 2.2
   }
 }

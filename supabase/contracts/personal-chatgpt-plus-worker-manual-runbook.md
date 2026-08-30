@@ -76,11 +76,12 @@ python3 scripts/plus_strategy_worker.py run --force
 在运行新的 v3 Worker 前，必须先完成：
 
 ```text
-supabase/migrations/20260830130000_personal_strategy_confidence_contract_v3.sql
-→ supabase/verification/personal_strategy_confidence_contract_v3_postflight.sql（预期 13/13）
+supabase/verification/personal_strategy_confidence_contract_v3_preflight.sql
+→ supabase/migrations/20260830130000_personal_strategy_confidence_contract_v3.sql
+→ supabase/verification/personal_strategy_confidence_contract_v3_postflight.sql（预期 14/14）
 ```
 
-Worker 保存的 `confidence` 统一为 `0—100` 的**整数研究匹配度**：`72` 表示 `72%`，`0.72` 会被拒绝。输出还必须携带 `confidenceScale=research_match_percent_0_to_100`；它仅表示当前建议与固定规则、当前数据和有限样本的一致性，**不是**涨跌概率、收益概率或自动下单依据。对旧版没有可验证刻度的结果，页面显示“研究匹配度待刷新”，不会自动猜测 `0.72` 或 `1` 的含义。详细顺序见 `supabase/contracts/personal-strategy-confidence-contract-v3-manual-runbook.md`。
+Worker 保存的 `confidence` 统一为 `0—100` 的**整数研究匹配度**：`72` 表示 `72%`，`0.72` 会被拒绝。输出还必须携带 `confidenceScale=research_match_percent_0_to_100`；它仅表示当前建议与固定规则、当前数据和有限样本的一致性，**不是**涨跌概率、收益概率或自动下单依据。对旧版没有可验证刻度的结果，页面显示“研究匹配度待刷新”，不会自动猜测、换算、回填 `0.72` 或 `1` 的含义。详细顺序见 `supabase/contracts/personal-strategy-confidence-contract-v3-manual-runbook.md`。
 
 然后在真实浏览器退出后重新登录 Dashboard，进入 Part 6，确认：
 

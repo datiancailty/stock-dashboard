@@ -2,7 +2,7 @@
 
 GitHub Pages 是本项目的静态网页托管层，业务登录和私有数据不依赖 GitHub 日常登录。
 
-> Part 1—6 owner-scoped 私有迁移 Stage 1 和 Stage 2 已完成；基础 Stage 2 快照的 Hosted 聚合 postflight `18/18` 通过。Part 4 当前年度已实施分红事件补丁已完成；Part 6 反馈 RPC 发现真实浏览器写入路径的 SQLSTATE `42702` 字段歧义，已新增 `20260830120000_personal_feedback_rpc_ambiguity_repair.sql` 前向修复及 `11/11` aggregate-only postflight。该 Hosted SQL 仍须由项目所有者手动执行，不能用静态检查、Worker 成功或旧版 RPC postflight 替代。
+> Part 1—6 owner-scoped 私有迁移 Stage 1 和 Stage 2 已完成；基础 Stage 2 快照的 Hosted 聚合 postflight `18/18` 通过。Part 4 当前年度已实施分红事件补丁已完成；Part 6 反馈 RPC 曾在真实浏览器写入路径出现 SQLSTATE `42702` 字段歧义，项目所有者已手工执行 `20260830120000_personal_feedback_rpc_ambiguity_repair.sql` 前向修复，对应 aggregate-only postflight `11/11` 通过。该修复不能由静态检查、Worker 成功或旧版 RPC postflight 替代。
 
 > 本次已核实东阿阿胶（000423）2026 中期权益分派：股权登记日 `2026-08-28`，除权除息日/派息日 `2026-08-31`，每股税前现金分红 `1.344811` 元。该当前年度事件只补入 Part 4 日历，不叠加到上一完整年度正式股息率分子。
 
@@ -87,6 +87,7 @@ python3 -m http.server 8765 --bind 127.0.0.1
 - `20260829005000_vps_sync_private_projection_bridge.sql` 已由项目所有者手动执行，对应 Hosted postflight 为 `9/9` 通过。
 - `20260830000000_personal_dashboard_legacy_stage1.sql` 和受控的一次性私有导入已由项目所有者手动执行；Stage 1 聚合 postflight 为 `22/22` 通过。
 - `20260830010000_personal_live_archive_stage2.sql`、10 个私有覆盖导入分片和 `personal_live_archive_stage2_postflight.sql` 已由项目所有者手动执行；Stage 2 聚合 postflight 为 `18/18` 通过。
+- `20260830130000_personal_strategy_confidence_contract_v3.sql` 已由项目所有者手动执行；对应 v3 聚合 postflight 为 `14/14` 通过。该前向升级只收紧未来 Worker 写入，历史 v2 分析不转换、不回填，页面显示“研究匹配度待刷新”直到一次成功的 v3 Worker 刷新。
 - `username-login`、`username-recovery-request` 和 `vps-sync` Edge Functions 已部署并处于 `ACTIVE`；allowed origin、恢复跳转地址和服务端限流 secret 已配置。
 - Auth user、用户名映射、`primary` scope membership、VPS admin 权限已由项目所有者分别显式配置；不会自动创建或授予。
 - VPS 保持 `DRY_RUN`；本轮 Pages 私有历史读取不会触发 VPS、行情 Provider、账户、订单或策略执行路径。
@@ -109,7 +110,7 @@ macOS 工作日调度
 - Dashboard 用户密码只在首次 `setup` 时输入，不写入配置；Supabase refresh token 只存放在 macOS Keychain。
 - 本机 Worker 通过已有认证用户的窄 RPC 读取 Part 4/Part 6 私有数据，不能直接对 `personal_*` 表做 DML。
 - Codex 输出必须通过固定 JSON Schema、股票白名单、动作枚举、长度和置信度校验；失败时保留上一次成功的策略分析。
-- 从 `20260830130000_personal_strategy_confidence_contract_v3.sql` 起，Part 6 的 `confidence` 固定为 `0—100` 的**整数研究匹配度**，且必须带 `confidenceScale=research_match_percent_0_to_100`。页面不再猜测旧版 `0.72` 或 `1` 的单位；需要先按 `supabase/contracts/personal-strategy-confidence-contract-v3-manual-runbook.md` 手工执行前向迁移和 `13/13` postflight，才可运行新的 v3 Worker。
+- 从 `20260830130000_personal_strategy_confidence_contract_v3.sql` 起，Part 6 的 `confidence` 固定为 `0—100` 的**整数研究匹配度**，且必须带 `confidenceScale=research_match_percent_0_to_100`。页面不再猜测旧版 `0.72` 或 `1` 的单位；必须按 `supabase/contracts/personal-strategy-confidence-contract-v3-manual-runbook.md` 依次完成 preflight、前向迁移和 `14/14` postflight，才可运行新的 v3 Worker。该迁移不转换或回填历史分析；无明确尺度的旧结果显示“研究匹配度待刷新”。
 - Worker 结果包含运行日期、输入/输出哈希、模型、认证方式和脱敏状态，不包含密码、OAuth 文件或 Platform Key。
 - 旧版 `check-strategy-api.yml` 和 `update-strategy.yml` 已停用自动调度，避免继续显示“未配置 OPENAI_API_KEY”。首次 Worker 成功运行前，页面会把旧状态显示为“待切换”，而不是伪装成 AI 已成功。
 

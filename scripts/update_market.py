@@ -19,7 +19,7 @@ def number(v):
 
 def api_query(names, year):
     # 分红查询控制在小批量，避免股票较多时妙想结果表被截断。
-    q=f"{names}{year}年度分红明细，列出年度分配和中期分配的方案进度、每股股利税前、分红方案、股权登记日、除权除息日、派息日"
+    q=f"{names}{year}年度及{year+1}年中期现金分红明细，列出年度分配和中期分配的方案进度、每股股利税前、分红方案、股权登记日、除权除息日、派息日"
     r=requests.post(API,headers={'apikey':os.environ['MX_APIKEY'],'Content-Type':'application/json'},json={'toolQuery':q},timeout=45)
     r.raise_for_status(); data=r.json()
     if data.get('status')!=0: raise RuntimeError(f"妙想API错误: {data.get('status')} {data.get('message')}")
@@ -200,10 +200,38 @@ def dividend_batch(stocks, previous):
 def result_dtos(payload):
     return payload.get('data',{}).get('data',{}).get('searchDataResultDTO',{}).get('dataTableDTOList',[])
 
+
+def table_values(dto, *labels):
+    """Read a named MX table column from either literal or coded keys."""
+    table=dto.get('table') or {}
+    for label in labels:
+        value=table.get(label)
+        if isinstance(value,list): return value
+    name_map=dto.get('nameMap') or {}
+    if isinstance(name_map,list): name_map={str(i):value for i,value in enumerate(name_map)}
+    if isinstance(name_map,dict):
+        wanted={str(label).strip() for label in labels}
+        for key,mapped in name_map.items():
+            if str(mapped).strip() in wanted and key in table and isinstance(table[key],list):
+                return table[key]
+    return []
+
+
 def code_from_label(label, stocks):
     for s in stocks:
         if s['name'] in str(label) or s['code'] in str(label): return s['code']
     return None
+
+
+def dividend_period(label):
+    """Normalize MX period labels such as 2025年度分配/2025年报/2026中报."""
+    text=re.sub(r'\s+','',str(label or ''))
+    match=re.search(r'(20\d{2})(年度分配|年报|年度|中期分配|中报|半年度|中期)',text)
+    if not match: return None
+    period_year=int(match.group(1)); suffix=match.group(2)
+    period_kind='annual' if suffix in ('年度分配','年报','年度') else 'interim'
+    return period_year,period_kind
+
 
 def parse(payload, stocks, year, previous, prices, positions, weekly_boll):
     old={s['code']:s for s in previous.get('stocks',[])}
@@ -212,25 +240,33 @@ def parse(payload, stocks, year, previous, prices, positions, weekly_boll):
     for dto in result_dtos(payload):
         table=dto.get('table') or {}; field=(dto.get('field') or {}).get('returnName',''); title=dto.get('title') or ''
         heads=table.get('headName') or []
-        pretax=table.get('每股股利(税前,元)') or table.get('每股股利(税前)')
-        plans=table.get('分红方案') or []
+        pretax=table_values(dto,'每股股利(税前,元)','每股股利(税前)')
+        plans=table_values(dto,'分红方案')
         if not isinstance(pretax,list): continue
-        progress=table.get('方案进度') or ['']*len(heads)
-        reg=table.get('股权登记日') or ['']*len(heads)
-        exd=table.get('除权除息日') or ['']*len(heads)
-        pay=table.get('派息日') or ['']*len(heads)
+        progress=table_values(dto,'方案进度','分红方案进度') or ['']*len(heads)
+        reg=table_values(dto,'股权登记日') or ['']*len(heads)
+        exd=table_values(dto,'除权除息日') or ['']*len(heads)
+        pay=table_values(dto,'派息日') or ['']*len(heads)
         code=code_from_label(title,stocks) or code_from_label(dto.get('code',''),stocks)
         if not code: continue
         for i,label in enumerate(heads):
-            label=str(label); value=number(pretax[i] if i<len(pretax) else 0)
+            label=str(label); period=dividend_period(label)
+            if not period: continue
+            period_year,period_kind=period
+            # Keep the formal Part 1—3 numerator on the previous complete
+            # fiscal year, while retaining the current-year implemented
+            # distribution events for the Part 4 calendar.
+            if period_year < year: continue
+            value=number(pretax[i] if i<len(pretax) else 0)
             # 分红方案中的“10派X元”通常比展示型每股字段保留更多精度，优先使用。
             if i<len(plans):
                 pm=re.search(r'10派\s*([0-9]+(?:\.[0-9]+)?)\s*元',str(plans[i]))
                 if pm: value=float(pm.group(1))/10
             implemented=(i>=len(progress) or not progress[i] or '实施' in str(progress[i]))
-            if label==f'{year}年度分配' and implemented: by[code]['annualDividend']=value
-            if label==f'{year}中期分配' and implemented: by[code]['interimDividend']=value
-            if label in (f'{year}年度分配',f'{year}中期分配') and value>0:
+            if period_year == year and implemented:
+                if period_kind=='annual': by[code]['annualDividend']=value
+                else: by[code]['interimDividend']=value
+            if implemented and value>0:
                 for datev,typ in ((reg[i] if i<len(reg) else '','股权登记日'),(exd[i] if i<len(exd) else '','除权除息日'),(pay[i] if i<len(pay) else '','派息日')):
                     if re.fullmatch(r'\d{4}-\d{2}-\d{2}',str(datev)):
                         events.append({'date':datev,'code':code,'name':by[code]['name'],'type':typ,'amount':None,'description':f'{label} · 每股税前 {value:g}元'})

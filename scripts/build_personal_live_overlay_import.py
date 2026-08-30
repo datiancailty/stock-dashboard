@@ -153,6 +153,15 @@ def parse_sources(raw_sources: dict[str, bytes]) -> tuple[dict[str, Any], dict[s
         if actual != expected:
             raise SystemExit(f"unexpected source count: {source_path}={actual}, expected={expected}")
 
+    market=objects.get('live/market.json')
+    if not isinstance(market,dict) or not isinstance(market.get('stocks'),list) or not isinstance(market.get('events'),list):
+        raise SystemExit('invalid live market document shape')
+    if len(market['stocks']) != 20:
+        raise SystemExit(f"unexpected live market stock count: {len(market['stocks'])}")
+    event_keys=[f"{row.get('date')}|{row.get('code')}|{row.get('type')}" for row in market['events'] if isinstance(row,dict)]
+    if len(event_keys) != len(market['events']) or len(event_keys) != len(set(event_keys)):
+        raise SystemExit('live market events must have unique date/code/type keys')
+
     return objects, rows_by_source, digests, metas
 
 
@@ -169,6 +178,9 @@ def build_sql(
         source_path: (live_commit if source_path.startswith("live/") else main_commit)
         for source_path in metas
     }
+    market_payload=objects['live/market.json']
+    market_stock_count=len(market_payload['stocks'])
+    market_event_count=len(market_payload['events'])
     lines = [
         "-- PRIVATE DATA: do not commit, upload, or share this file.",
         "-- Manual Supabase SQL Editor execution only.",
@@ -256,10 +268,10 @@ def build_sql(
             "  end if;",
         ]
     lines += [
-        "  if (select jsonb_array_length(payload->'stocks') from public.personal_documents where owner_user_id = target_owner and document_key = 'market') <> 20 then",
+        f"  if (select jsonb_array_length(payload->'stocks') from public.personal_documents where owner_user_id = target_owner and document_key = 'market') <> {market_stock_count} then",
         "    raise exception 'Post-overlay market stock count mismatch';",
         "  end if;",
-        "  if (select jsonb_array_length(payload->'events') from public.personal_documents where owner_user_id = target_owner and document_key = 'market') <> 87 then",
+        f"  if (select jsonb_array_length(payload->'events') from public.personal_documents where owner_user_id = target_owner and document_key = 'market') <> {market_event_count} then",
         "    raise exception 'Post-overlay calendar event count mismatch';",
         "  end if;",
         "end;",
@@ -311,8 +323,8 @@ def main() -> int:
     print(f"main_commit={main_commit}")
     print(f"live_commit={live_commit}")
     print("source_files=13")
-    print("market_stocks=20")
-    print("calendar_events=87")
+    print(f"market_stocks={len(objects['live/market.json']['stocks'])}")
+    print(f"calendar_events={len(objects['live/market.json']['events'])}")
     print("news_items=452")
     print("trade_records=384")
     print("feedback_records=9")

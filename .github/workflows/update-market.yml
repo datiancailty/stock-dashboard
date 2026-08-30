@@ -18,6 +18,7 @@ on:
       - 'data/stocks.json'
       - 'data/part2-config.json'
       - 'data/market-refresh-request.json'
+      - 'scripts/update_market.py'
   workflow_dispatch:
     inputs:
       calls:

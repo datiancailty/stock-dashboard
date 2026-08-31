@@ -2,7 +2,7 @@
 
 GitHub Pages 是本项目的静态网页托管层，业务登录和私有数据不依赖 GitHub 日常登录。
 
-> Part 1—6 owner-scoped 私有迁移 Stage 1 和 Stage 2 已完成；基础 Stage 2 快照的 Hosted 聚合 postflight `18/18` 通过。Part 4 当前年度已实施分红事件补丁已完成；Part 6 反馈 RPC 曾在真实浏览器写入路径出现 SQLSTATE `42702` 字段歧义，项目所有者已手工执行 `20260830120000_personal_feedback_rpc_ambiguity_repair.sql` 前向修复，对应 aggregate-only postflight `11/11` 通过。该修复不能由静态检查、Worker 成功或旧版 RPC postflight 替代。
+> Part 1—6 owner-scoped 私有迁移 Stage 1 和 Stage 2 已完成；基础 Stage 2 快照的 Hosted 聚合 postflight `18/18` 通过。Part 4 已补入东阿阿胶当前年度已实施事件；但旧私有日历仍只包含登记/除权/派息等实施日期，尚未具备官方“公告日”账本。新的 `20260831010000_personal_part4_official_dividend_notices.sql` 采用当前私有自选股逐只官方公告分页扫描、稳定公告号去重、覆盖失败不写入的前向路径；在项目所有者手工执行 Hosted SQL 并完成同步验收前，不应把它描述为已生效。Part 6 反馈 RPC 曾在真实浏览器写入路径出现 SQLSTATE `42702` 字段歧义，项目所有者已手工执行 `20260830120000_personal_feedback_rpc_ambiguity_repair.sql` 前向修复，对应 aggregate-only postflight `11/11` 通过。该修复不能由静态检查、Worker 成功或旧版 RPC postflight 替代。
 
 > 本次已核实东阿阿胶（000423）2026 中期权益分派：股权登记日 `2026-08-28`，除权除息日/派息日 `2026-08-31`，每股税前现金分红 `1.344811` 元。该当前年度事件只补入 Part 4 日历，不叠加到上一完整年度正式股息率分子。
 
@@ -87,6 +87,7 @@ python3 -m http.server 8765 --bind 127.0.0.1
 - `20260829005000_vps_sync_private_projection_bridge.sql` 已由项目所有者手动执行，对应 Hosted postflight 为 `9/9` 通过。
 - `20260830000000_personal_dashboard_legacy_stage1.sql` 和受控的一次性私有导入已由项目所有者手动执行；Stage 1 聚合 postflight 为 `22/22` 通过。
 - `20260830010000_personal_live_archive_stage2.sql`、10 个私有覆盖导入分片和 `personal_live_archive_stage2_postflight.sql` 已由项目所有者手动执行；Stage 2 聚合 postflight 为 `18/18` 通过。
+- `20260831010000_personal_part4_official_dividend_notices.sql` 尚待项目所有者在 Supabase SQL Editor 手工执行。它新增的是独立私有公告账本和窄同步 RPC：官方公告日与实施日期分开、正式股息率分子不变、当前私有自选股必须全覆盖后才允许写入。执行顺序与验收见 `supabase/contracts/personal-part4-official-dividend-notices-runbook.md`。
 - `20260830130000_personal_strategy_confidence_contract_v3.sql` 已由项目所有者手动执行；对应 v3 聚合 postflight 为 `14/14` 通过。该前向升级只收紧未来 Worker 写入，历史 v2 分析不转换、不回填，页面显示“研究匹配度待刷新”直到一次成功的 v3 Worker 刷新。
 - `username-login`、`username-recovery-request` 和 `vps-sync` Edge Functions 已部署并处于 `ACTIVE`；allowed origin、恢复跳转地址和服务端限流 secret 已配置。
 - Auth user、用户名映射、`primary` scope membership、VPS admin 权限已由项目所有者分别显式配置；不会自动创建或授予。

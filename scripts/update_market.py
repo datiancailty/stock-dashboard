@@ -9,8 +9,28 @@ import requests
 ROOT=Path(__file__).resolve().parents[1]
 API='https://mkapi2.dfcfs.com/finskillshub/api/claw/query'
 BJ=ZoneInfo('Asia/Shanghai')
-DIVIDEND_BATCH_SIZE=5
+DIVIDEND_QUERY_BATCH_SIZE=5
 KLINE_API='https://push2his.eastmoney.com/api/qt/stock/kline/get'
+
+# These fields are used only by Part 2/3 forward-looking grids.  They never
+# change Part 1's formal dividend display or any strategy/formal-yield rule.
+IMPLEMENTED_PROGRESS_ALLOWLIST={'实施分配','已实施','实施完成','已完成'}
+# Only these explicit disclosed plan stages may enter Part 2/3 future grids.
+# Unknown wording fails closed; Part 4 remains the factual notice ledger.
+DISCLOSED_FUTURE_PROGRESS_ALLOWLIST={'董事会预案','董事会通过','股东大会通过','预案通过','方案通过','待实施'}
+NON_IMPLEMENTED_PROGRESS_TERMS=('不实施','未实施','取消','终止','预案','拟','待实施','预披露','董事会','股东大会')
+
+def implementation_status(progress):
+    """Return True only for an explicit, non-negated implementation state."""
+    normalized=re.sub(r'\s+','',str(progress or ''))
+    if not normalized or any(term in normalized for term in NON_IMPLEMENTED_PROGRESS_TERMS):
+        return False
+    return normalized in IMPLEMENTED_PROGRESS_ALLOWLIST
+
+def planned_status(progress):
+    """Accept only explicitly approved/disclosed future-plan states."""
+    normalized=re.sub(r'\s+','',str(progress or ''))
+    return normalized in DISCLOSED_FUTURE_PROGRESS_ALLOWLIST
 
 def number(v):
     if v in (None,'','-'): return 0.0
@@ -184,18 +204,14 @@ def fetch_weekly_boll(stocks, previous):
             if value: result[code]=value
     return result
 
-def dividend_batch(stocks, previous):
-    """优先补新股票，其余按游标轮转；每次仍只消耗一次妙想调用。"""
-    old_codes={s.get('code') for s in previous.get('stocks',[])}
-    new=[s for s in stocks if s['code'] not in old_codes]
-    if new:
-        selected=new[:DIVIDEND_BATCH_SIZE]
-        start=stocks.index(selected[-1])+1
-    else:
-        start=int(previous.get('dividendCursor',0))%max(len(stocks),1)
-        selected=[stocks[(start+i)%len(stocks)] for i in range(min(DIVIDEND_BATCH_SIZE,len(stocks)))] if stocks else []
-        start+=len(selected)
-    return selected,start%max(len(stocks),1)
+def dividend_query_batches(stocks):
+    """Return every current symbol once; query-size batching is not scan rotation.
+
+    A batch is only an upstream transport bound.  A successful market refresh
+    must cover every symbol, otherwise it preserves prior dividend values and
+    marks the dividend section degraded instead of claiming a fresh snapshot.
+    """
+    return [stocks[index:index+DIVIDEND_QUERY_BATCH_SIZE] for index in range(0,len(stocks),DIVIDEND_QUERY_BATCH_SIZE)]
 
 def result_dtos(payload):
     return payload.get('data',{}).get('data',{}).get('searchDataResultDTO',{}).get('dataTableDTOList',[])
@@ -223,10 +239,29 @@ def code_from_label(label, stocks):
     return None
 
 
+def assert_dividend_dto_coverage(dtos, stocks):
+    """Fail closed unless upstream returned an identifiable DTO per symbol.
+
+    A zero future dividend is valid; a missing stock response is not proof of
+    zero.  Callers must therefore verify source coverage before rebuilding any
+    forward-dividend snapshot.
+    """
+    expected={str(stock['code']) for stock in stocks}
+    observed=set()
+    for dto in dtos:
+        if not isinstance(dto,dict):
+            continue
+        code=code_from_label(dto.get('title',''),stocks) or code_from_label(dto.get('code',''),stocks)
+        if code:
+            observed.add(code)
+    if observed != expected:
+        raise RuntimeError('dividend_source_coverage_incomplete')
+
+
 def dividend_period(label):
-    """Normalize MX period labels such as 2025年度分配/2025年报/2026中报."""
+    """Normalize MX period labels such as 2025年度分配/2025年报/2026年中期分配."""
     text=re.sub(r'\s+','',str(label or ''))
-    match=re.search(r'(20\d{2})(年度分配|年报|年度|中期分配|中报|半年度|中期)',text)
+    match=re.search(r'(20\d{2})(?:年)?(年度分配|年报|年度|中期分配|中报|半年度|中期)',text)
     if not match: return None
     period_year=int(match.group(1)); suffix=match.group(2)
     period_kind='annual' if suffix in ('年度分配','年报','年度') else 'interim'
@@ -235,7 +270,7 @@ def dividend_period(label):
 
 def parse(payload, stocks, year, previous, prices, positions, weekly_boll):
     old={s['code']:s for s in previous.get('stocks',[])}
-    by={s['code']:{**s,'price':prices.get(s['code'],old.get(s['code'],{}).get('price',0)),'positions':positions.get(s['code'],old.get(s['code'],{}).get('positions')),'weeklyBoll':weekly_boll.get(s['code'],old.get(s['code'],{}).get('weeklyBoll')),'fiscalYear':year,'annualDividend':old.get(s['code'],{}).get('annualDividend',0),'interimDividend':old.get(s['code'],{}).get('interimDividend',0),'source':'东方财富公开行情/前复权日K + mx-data'} for s in stocks}
+    by={s['code']:{**s,'price':prices.get(s['code'],old.get(s['code'],{}).get('price',0)),'positions':positions.get(s['code'],old.get(s['code'],{}).get('positions')),'weeklyBoll':weekly_boll.get(s['code'],old.get(s['code'],{}).get('weeklyBoll')),'fiscalYear':year,'annualDividend':old.get(s['code'],{}).get('annualDividend',0),'interimDividend':old.get(s['code'],{}).get('interimDividend',0),'futureDividend':old.get(s['code'],{}).get('futureDividend',0),'futureDividendStatus':old.get(s['code'],{}).get('futureDividendStatus'),'source':'东方财富公开行情/前复权日K + mx-data'} for s in stocks}
     events=[]
     for dto in result_dtos(payload):
         table=dto.get('table') or {}; field=(dto.get('field') or {}).get('returnName',''); title=dto.get('title') or ''
@@ -262,16 +297,28 @@ def parse(payload, stocks, year, previous, prices, positions, weekly_boll):
             if i<len(plans):
                 pm=re.search(r'10派\s*([0-9]+(?:\.[0-9]+)?)\s*元',str(plans[i]))
                 if pm: value=float(pm.group(1))/10
-            implemented=(i>=len(progress) or not progress[i] or '实施' in str(progress[i]))
+            progress_value=str(progress[i] if i<len(progress) else '').strip()
+            # An implementation event needs an explicit non-negated source
+            # status.  A disclosed future plan is recorded separately for the
+            # Part 2/3 forward grid and never changes formal dividends.
+            implemented=implementation_status(progress_value)
+            future_plan=period_year > year and planned_status(progress_value)
             if period_year == year and implemented:
                 if period_kind=='annual': by[code]['annualDividend']=value
                 else: by[code]['interimDividend']=value
+            if future_plan and value>0:
+                by[code]['futureDividend']=round(float(by[code].get('futureDividend') or 0)+value,6)
+                by[code]['futureDividendStatus']='已公告待实施'
             if implemented and value>0:
                 for datev,typ in ((reg[i] if i<len(reg) else '','股权登记日'),(exd[i] if i<len(exd) else '','除权除息日'),(pay[i] if i<len(pay) else '','派息日')):
                     if re.fullmatch(r'\d{4}-\d{2}-\d{2}',str(datev)):
-                        events.append({'date':datev,'code':code,'name':by[code]['name'],'type':typ,'amount':None,'description':f'{label} · 每股税前 {value:g}元'})
-    merged_events={f"{e.get('date')}|{e.get('code')}|{e.get('type')}":e for e in previous.get('events',[])}
-    for event in events: merged_events[f"{event.get('date')}|{event.get('code')}|{event.get('type')}"]=event
+                        events.append({'id':f'mx-implementation:{code}:{period_year}-{period_kind}:{typ}:{datev}','date':datev,'code':code,'name':by[code]['name'],'type':typ,'amount':None,'description':f'{label} · 每股税前 {value:g}元'})
+    def event_key(event):
+        # Preserve two different annual/interim distributions that legitimately
+        # share a stock, date and event type; only merge exact semantic copies.
+        return '|'.join(str(event.get(key,'')) for key in ('date','code','type','description'))
+    merged_events={event_key(e):e for e in previous.get('events',[])}
+    for event in events: merged_events[event_key(event)]=event
     return list(by.values()),list(merged_events.values())
 
 def main():
@@ -284,16 +331,42 @@ def main():
     prices=fetch_prices(stocks)
     positions=fetch_positions(stocks,prices,previous)
     weekly_boll=fetch_weekly_boll(stocks,previous)
-    batch,next_cursor=dividend_batch(stocks,previous)
+    dividend_batches=dividend_query_batches(stocks)
     dividend_warning=None
-    try:
-        payload=api_query('、'.join(s['name'] for s in batch),year)
-    except (requests.RequestException,RuntimeError,ValueError,KeyError) as error:
-        # 分红明细接口偶发不可用时，仍发布价格、位置和周BOLL；旧正式分红由 parse 保留。
-        payload={'result':[]}; dividend_warning=f'分红明细暂不可用，已保留上次正式数据：{type(error).__name__}'
-    parsed,events=parse(payload,stocks,year,previous,prices,positions,weekly_boll)
-    result={'updatedAt':now.isoformat(timespec='seconds'),'source':'东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细','strategy':'上一完整年度已实施的年报与中报税前每股股利之和','positionStrategy':'当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部','weeklyBollStrategy':'前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)','dividendWarning':dividend_warning,'dividendCursor':next_cursor,'dividendBatch':[s['code'] for s in batch],'stocks':parsed,'events':events}
+    payloads=[]
+    failed_batches=[]
+    for batch in dividend_batches:
+        try:
+            payloads.append(api_query('、'.join(s['name'] for s in batch),year))
+        except (requests.RequestException,RuntimeError,ValueError,KeyError) as error:
+            failed_batches.append(type(error).__name__)
+    if failed_batches:
+        # Never publish a partially refreshed dividend universe as complete.
+        # Quotes/BOLL may still advance, but all formal and forward dividend
+        # values remain from the last full coverage snapshot.
+        payload={'result':[]}
+        dividend_warning=f'分红明细覆盖不完整，已保留上次完整快照：{len(failed_batches)}/{len(dividend_batches)}批失败'
+    else:
+        merged_dtos=[]
+        for payload_item in payloads:
+            merged_dtos.extend(result_dtos(payload_item))
+        try:
+            assert_dividend_dto_coverage(merged_dtos, stocks)
+        except RuntimeError as error:
+            failed_batches.append(str(error))
+            payload={'result':[]}
+            dividend_warning='分红明细覆盖不完整，已保留上次完整快照：源结果未覆盖全部股票'
+        else:
+            payload={'data':{'data':{'searchDataResultDTO':{'dataTableDTOList':merged_dtos}}}}
+    previous_for_parse=previous
+    if not failed_batches:
+        # Full coverage means both formal and future dividend values are rebuilt
+        # from the current structured source, rather than silently retaining a
+        # stale value that disappeared or was corrected upstream.
+        previous_for_parse={**previous,'stocks':[{**item,'annualDividend':0,'interimDividend':0,'futureDividend':0,'futureDividendStatus':None} for item in previous.get('stocks',[])]}
+    parsed,events=parse(payload,stocks,year,previous_for_parse,prices,positions,weekly_boll)
+    result={'updatedAt':now.isoformat(timespec='seconds'),'source':'东方财富公开批量行情 + 东方财富/腾讯公开日K + mx-data','strategy':'正式口径：上一完整年度已实施的年报与中报税前每股股利之和；Part 2/3 另列已公告待实施分红，仅用于未来测算','positionStrategy':'当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部','weeklyBollStrategy':'前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)','dividendWarning':dividend_warning,'dividendCoverage':{'expected':len(stocks),'covered':0 if failed_batches else len(stocks),'complete':not failed_batches,'queryBatches':len(dividend_batches)},'stocks':parsed,'events':events}
     out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps({'ok':True,'updatedAt':result['updatedAt'],'stocks':len(parsed),'prices':len(prices),'positions':len(positions),'weeklyBoll':len(weekly_boll),'dividendBatch':result['dividendBatch'],'events':len(events)},ensure_ascii=False))
+    print(json.dumps({'ok':True,'updatedAt':result['updatedAt'],'stocks':len(parsed),'prices':len(prices),'positions':len(positions),'weeklyBoll':len(weekly_boll),'dividendCoverage':result['dividendCoverage'],'events':len(events)},ensure_ascii=False))
 
 if __name__=='__main__': main()

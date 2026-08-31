@@ -1,17 +1,17 @@
 {
-  "updatedAt": "2026-08-31T16:46:08+08:00",
+  "updatedAt": "2026-08-31T17:32:46+08:00",
   "source": "东方财富公开批量行情 + 东方财富/腾讯公开日K + 妙想分红明细",
   "strategy": "上一完整年度已实施的年报与中报税前每股股利之和",
   "positionStrategy": "当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部",
   "weeklyBollStrategy": "前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)",
   "dividendWarning": null,
-  "dividendCursor": 15,
+  "dividendCursor": 0,
   "dividendBatch": [
-    "600938",
-    "000538",
-    "600863",
-    "600011",
-    "601318"
+    "688825",
+    "601398",
+    "601169",
+    "601658",
+    "600900"
   ],
   "stocks": [
     {
@@ -210,9 +210,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 22.078,
-        "middle": 20.278,
-        "lower": 18.478
+        "upper": 22.076,
+        "middle": 20.275,
+        "lower": 18.473
       },
       "fiscalYear": 2025,
       "annualDividend": 0.89151,
@@ -334,8 +334,8 @@
         "stddev": "sample",
         "sampleCount": 20,
         "upper": 5.272,
-        "middle": 4.856,
-        "lower": 4.439
+        "middle": 4.855,
+        "lower": 4.438
       },
       "fiscalYear": 2025,
       "annualDividend": 0.141,
@@ -775,8 +775,8 @@
         "stddev": "sample",
         "sampleCount": 20,
         "upper": 5.233,
-        "middle": 4.97,
-        "lower": 4.706
+        "middle": 4.973,
+        "lower": 4.712
       },
       "fiscalYear": 2025,
       "annualDividend": 0.0953,

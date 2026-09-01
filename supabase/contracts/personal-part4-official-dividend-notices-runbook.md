@@ -142,4 +142,24 @@ python3 scripts/personal_future_dividend_grid_sync.py
 
 推荐每次使用一个滚动重扫窗口，而非仅从“上次成功时刻”开始，以覆盖周末公告、延迟入库和短暂网络失败。例如下一次手工核对可使用最近 35 天的日期范围。
 
-脚本已经是可调度的本机安全组件，但**没有创建或加载任何 LaunchAgent**。若要每日自动运行，必须在本轮 Hosted、真实同步和浏览器验收全部通过后，再取得单独授权；届时应每日一次、使用重叠回扫和覆盖门禁，不使用高频轮询或强制唤醒。
+### 每日自动同步（已获单独授权后）
+
+本机调度入口为：
+
+```bash
+python3 scripts/part4_daily_sync.py install-schedule --load
+```
+
+它创建并加载 `com.datiancailty.stock-dashboard.part4-daily` LaunchAgent，规则固定为：
+
+- Asia/Shanghai **工作日 18:05 后**每天最多一次；
+- 登录或从睡眠唤醒后会尝试补跑，但绝不强制唤醒 Mac；
+- 每次用最近 35 个自然日滚动重扫 Part 4 官方公告，再顺序刷新私有行情快照和未来分红网格；
+- 任一来源、分页、覆盖或私有 RPC 写入失败时不写入当天成功状态，下一次周期再完整重试；
+- 不调用 Codex、GitHub 写入、VPS、交易、订单或策略参数；日志和日期状态仅存于权限 `0700` 的本机私有运行目录。
+
+停用命令：
+
+```bash
+python3 scripts/part4_daily_sync.py remove-schedule
+```

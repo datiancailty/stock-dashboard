@@ -262,6 +262,8 @@ def main() -> None:
     future_worker = FUTURE_WORKER_PATH.read_text(encoding="utf-8")
     quote_worker = QUOTE_WORKER_PATH.read_text(encoding="utf-8")
     assert "assert_dividend_dto_coverage" in future_worker
+    assert "official_pre_disclosure_codes" in future_worker
+    assert "中期分红预披露" in future_worker
     assert "personal_sync_future_dividend_grid" in future_worker
     assert "personal_sync_market_snapshot" in quote_worker
     assert "market_quote_coverage_incomplete" in quote_worker

@@ -58,6 +58,19 @@ def main() -> int:
             {"data": {"data": {"searchDataResultDTO": {"dataTableDTOList": dtos}}}},
             [{"code": s.code, "name": s.name} for s in watchlist], year, previous, prices, {}, {}
         )
+        # A structured “预披露” may feed the future grid only when this same
+        # private Part 4 read already contains the matching official, explicitly
+        # labelled pre-disclosure fact.  Otherwise retain it in Part 4 research
+        # only; do not manufacture a numeric forward-grid value.
+        official_pre_disclosure_codes = {
+            str(event.get("code"))
+            for event in base.get("events", [])
+            if isinstance(event, dict) and event.get("type") == "中期分红预披露"
+        }
+        for item in parsed:
+            if item.get("futureDividendStatus") == "已公告预披露" and str(item.get("code")) not in official_pre_disclosure_codes:
+                item["futureDividend"] = 0
+                item["futureDividendStatus"] = None
         by_code = {str(item.get("code")): item for item in parsed}
         records = [{"code": s.code, "futureDividend": float(by_code[s.code].get("futureDividend") or 0), "status": by_code[s.code].get("futureDividendStatus")} for s in watchlist]
         as_of = datetime.now(BEIJING).isoformat(timespec="seconds")

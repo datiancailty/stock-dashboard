@@ -112,7 +112,8 @@ with owner as (
          or f.future_dividend < 0
          or f.as_of < now() - interval '3 days'
          or (f.future_dividend = 0 and f.status is not null)
-         or (f.future_dividend > 0 and f.status <> '已公告待实施'))
+         or (f.future_dividend > 0 and f.status not in ('已公告待实施', '已公告预披露'))
+       )
   )
 )
 select count(*) as total_checks,

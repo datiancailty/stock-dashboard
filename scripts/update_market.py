@@ -15,9 +15,10 @@ KLINE_API='https://push2his.eastmoney.com/api/qt/stock/kline/get'
 # These fields are used only by Part 2/3 forward-looking grids.  They never
 # change Part 1's formal dividend display or any strategy/formal-yield rule.
 IMPLEMENTED_PROGRESS_ALLOWLIST={'实施分配','已实施','实施完成','已完成'}
-# Only these explicit disclosed plan stages may enter Part 2/3 future grids.
-# Unknown wording fails closed; Part 4 remains the factual notice ledger.
-DISCLOSED_FUTURE_PROGRESS_ALLOWLIST={'董事会预案','董事会通过','股东大会通过','预案通过','方案通过','待实施'}
+# `预披露` is included only because the owner explicitly treats an official,
+# quantitative pre-disclosure as a future-grid input.  Its distinct label is
+# preserved end-to-end; it never becomes formal/implemented dividend data.
+DISCLOSED_FUTURE_PROGRESS_ALLOWLIST={'董事会预案','董事会通过','股东大会通过','预案通过','方案通过','待实施','预披露'}
 NON_IMPLEMENTED_PROGRESS_TERMS=('不实施','未实施','取消','终止','预案','拟','待实施','预披露','董事会','股东大会')
 
 def implementation_status(progress):
@@ -308,7 +309,7 @@ def parse(payload, stocks, year, previous, prices, positions, weekly_boll):
                 else: by[code]['interimDividend']=value
             if future_plan and value>0:
                 by[code]['futureDividend']=round(float(by[code].get('futureDividend') or 0)+value,6)
-                by[code]['futureDividendStatus']='已公告待实施'
+                by[code]['futureDividendStatus']='已公告预披露' if re.sub(r'\s+','',progress_value)=='预披露' else '已公告待实施'
             if implemented and value>0:
                 for datev,typ in ((reg[i] if i<len(reg) else '','股权登记日'),(exd[i] if i<len(exd) else '','除权除息日'),(pay[i] if i<len(pay) else '','派息日')):
                     if re.fullmatch(r'\d{4}-\d{2}-\d{2}',str(datev)):

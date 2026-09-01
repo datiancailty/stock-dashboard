@@ -92,11 +92,11 @@ create table if not exists public.personal_future_dividend_grid_snapshots (
   owner_user_id uuid not null references auth.users(id) on delete cascade,
   stock_code text not null check (stock_code ~ '^[0-9]{6}$'),
   future_dividend numeric(18,6) not null check (future_dividend >= 0 and future_dividend < 1000000),
-  status text check (status is null or status = '已公告待实施'),
+  status text check (status is null or status in ('已公告待实施', '已公告预披露')),
   as_of timestamptz not null,
   updated_at timestamptz not null default now(),
   primary key (owner_user_id, stock_code),
-  check ((future_dividend = 0 and status is null) or (future_dividend > 0 and status = '已公告待实施'))
+  check ((future_dividend = 0 and status is null) or (future_dividend > 0 and status in ('已公告待实施', '已公告预披露')))
 );
 alter table public.personal_future_dividend_grid_snapshots enable row level security;
 revoke all on table public.personal_future_dividend_grid_snapshots from PUBLIC, anon, authenticated, service_role;
@@ -676,7 +676,7 @@ begin
        or v_code = any(v_seen_codes)
        or v_value < 0 or v_value >= 1000000
        or (v_value = 0 and v_status is not null)
-       or (v_value > 0 and v_status <> '已公告待实施')
+       or (v_value > 0 and v_status not in ('已公告待实施', '已公告预披露'))
        or not exists (
          select 1 from public.personal_watchlist_items w
           where w.owner_user_id = auth.uid() and w.stock_code = v_code

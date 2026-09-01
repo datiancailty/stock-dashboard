@@ -174,8 +174,8 @@ def main() -> None:
     assert not market.implementation_status("预案")
     assert market.planned_status("股东大会通过")
     assert market.planned_status("董事会预案")
-    assert not market.planned_status("审核中")
-    assert not market.planned_status("预披露")
+    assert market.planned_status("审核中") is False
+    assert market.planned_status("预披露") is True
     assert not market.planned_status("取消分配")
 
     payload_two_periods = mx_payload(
@@ -205,7 +205,12 @@ def main() -> None:
     rebuilt_previous={"stocks":[{**future_stocks[0],"futureDividend":0,"futureDividendStatus":None}],"events":[]}
     rebuilt_stocks, _ = market.parse(future_payload, [{"code":"000333","name":"合成标的"}], 2026, rebuilt_previous, {"000333":10}, {}, {})
     assert rebuilt_stocks[0]["futureDividend"] == 0.3, "repeated complete snapshot must not double future dividend"
-    market.assert_dividend_dto_coverage(market.result_dtos(future_payload), [{"code":"000333","name":"合成标的"}])
+    pre_disclosure_payload = mx_payload(
+        [{"title":"合成标的 000333","table":{"headName":["2027年中期分配"],"每股股利(税前,元)":["0.3"],"分红方案":["10派3元"],"方案进度":["预披露"]}}]
+    )
+    pre_disclosure_stocks, _ = market.parse(pre_disclosure_payload, [{"code":"000333","name":"合成标的"}], 2026, {"stocks":[],"events":[]}, {"000333":10}, {}, {})
+    assert pre_disclosure_stocks[0]["futureDividend"] == 0.3
+    assert pre_disclosure_stocks[0]["futureDividendStatus"] == "已公告预披露"
     try:
         market.assert_dividend_dto_coverage([], [{"code":"000333","name":"合成标的"}])
     except RuntimeError as exc:
@@ -250,7 +255,7 @@ def main() -> None:
     assert "personal_sync_future_dividend_grid" in migration
     assert "future_dividend_record_shape_invalid" in migration
     assert "future_dividend_time_regression" in migration
-    assert "status = '已公告待实施'" in migration
+    assert "已公告待实施', '已公告预披露" in migration
     assert "future_dividend = 0 and status is null" in migration
     assert "personal_sync_market_snapshot" in migration
     assert QUOTE_WORKER_PATH.exists() and FUTURE_WORKER_PATH.exists()

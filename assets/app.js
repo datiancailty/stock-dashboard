@@ -191,7 +191,7 @@ function importPortfolioFromHash(){
 function syncTradeRecordsToHoldings(){return;}
 function stock(code){const auto=market.stocks.find(s=>s.code===code)||{};const o=overrides[code]||{};const annual=o.annual??auto.annualDividend??0,interim=o.interim??auto.interimDividend??0,future=o.future??auto.futureDividend??0,price=o.price??auto.price??0;return {...auto,...o,code,name:auto.name||holdings.find(h=>h.code===code)?.name||(part2Config.extraStocks||[]).find(h=>h.code===code)?.name||code,annualDividend:+annual,interimDividend:+interim,futureDividend:+future,price:+price,totalDividend:+annual+ +interim,manual:!!overrides[code]};}
 function forwardGridDividend(s){const future=Number(s?.futureDividend);return Number.isFinite(future)&&future>0?future:Number(s?.totalDividend)||0;}
-function forwardGridSource(s){return Number(s?.futureDividend)>0?'已公告待实施 · 未来测算':'正式已实施 · 历史口径';}
+function forwardGridSource(s){const status=String(s?.futureDividendStatus||'');return Number(s?.futureDividend)>0?(status==='已公告预披露'?'已公告预披露 · 未来测算':'已公告待实施 · 未来测算'):'正式已实施 · 历史口径';}
 
 function sortedHoldingsByMarketValue(){return [...holdings].sort((a,b)=>{const aValue=Number(a.marketValue??a.privatePosition?.market_value??0),bValue=Number(b.marketValue??b.privatePosition?.market_value??0);return bValue-aValue||a.code.localeCompare(b.code);});}
 function showMessage(title,text){$('#messageTitle').textContent=title;$('#messageText').textContent=text;$('#messageDialog').showModal();}

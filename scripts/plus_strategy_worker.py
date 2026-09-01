@@ -898,6 +898,29 @@ def health_payload(status: str, reason: str, run_id: str, input_sha: str, output
     }
 
 
+def brief_command_id(run_id: str, brief: dict[str, Any]) -> str:
+    """Bind feedback to one concrete recommendation, not merely a calendar run.
+
+    A forced re-run can legitimately choose another stock on the same China
+    date.  The prior `brief-{run_id}` form made its saved feedback lock the
+    unrelated replacement recommendation.  The content digest is derived from
+    the validated, non-secret recommendation fields only.
+    """
+    material = json.dumps(
+        {
+            "code": brief.get("code", ""),
+            "action": brief.get("action", ""),
+            "reason": brief.get("reason", ""),
+            "condition": brief.get("condition", ""),
+            "confidence": brief.get("confidence"),
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return f"brief-{run_id}-{hashlib.sha256(material.encode('utf-8')).hexdigest()[:16]}"
+
+
 def analysis_payload(model_output: dict[str, Any], context: dict[str, Any], run_id: str, input_sha: str) -> dict[str, Any]:
     universe = {item["code"] for item in context["currentStocks"]}
     normalized = validate_model_output(model_output, universe)
@@ -914,7 +937,7 @@ def analysis_payload(model_output: dict[str, Any], context: dict[str, Any], run_
         "profileSummary": normalized["profileSummary"],
         "learnedRules": normalized["learnedRules"],
         "recordInsights": normalized["recordInsights"],
-        "briefCommand": {**normalized["briefCommand"], "id": f"brief-{run_id}"},
+        "briefCommand": {**normalized["briefCommand"], "id": brief_command_id(run_id, normalized["briefCommand"])},
         "confidenceScale": normalized["confidenceScale"],
         "confidenceMeaning": CONFIDENCE_MEANING,
         "feedbackStats": context["feedback"]["stats"],

@@ -153,9 +153,14 @@ with target as (
     false
   ) from function_info
   union all
+  -- The RPC enforces the official identifier and URL with anchored regexes.
+  -- Probe stable exception markers rather than a rendered regex fragment: PostgreSQL
+  -- preserves backslash escaping in pg_get_functiondef(), so literal URL substring
+  -- probes are not portable across Hosted formatting versions.
   select 'sync_rpc_definition_enforces_official_source_identity', coalesce(
-    position('eastmoney:AN' in function_info.sync_definition) > 0
-      and position('data.eastmoney.com/notices/detail/' in function_info.sync_definition) > 0,
+    position('part4_sync_event_id_invalid' in function_info.sync_definition) > 0
+      and position('part4_sync_event_source_invalid' in function_info.sync_definition) > 0
+      and position('part4_sync_event_source_url_invalid' in function_info.sync_definition) > 0,
     false
   ) from function_info
   union all

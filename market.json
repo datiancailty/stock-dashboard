@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-04T14:43:45+08:00",
+  "updatedAt": "2026-09-04T15:19:50+08:00",
   "source": "东方财富公开批量行情 + 东方财富/腾讯公开日K + mx-data",
   "strategy": "正式口径：上一完整年度已实施的年报与中报税前每股股利之和；Part 2/3 另列已公告待实施分红，仅用于未来测算",
   "positionStrategy": "当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部",
@@ -15,24 +15,24 @@
     {
       "code": "600036",
       "name": "招商银行",
-      "price": 41.65,
+      "price": 41.69,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "上部",
-          "percent": 84.3,
+          "percent": 89.2,
           "low": 40.95,
           "high": 41.78
         },
         "week": {
           "zone": "上部",
-          "percent": 94.3,
+          "percent": 96.1,
           "low": 39.5,
           "high": 41.78
         },
         "month": {
           "zone": "上部",
-          "percent": 93.1,
+          "percent": 95.2,
           "low": 39.9,
           "high": 41.78
         }
@@ -44,9 +44,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 40.955,
-        "middle": 37.807,
-        "lower": 34.659
+        "upper": 40.964,
+        "middle": 37.808,
+        "lower": 34.652
       },
       "fiscalYear": 2025,
       "annualDividend": 1.003,
@@ -87,9 +87,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 9.13,
-        "middle": 8.859,
-        "lower": 8.588
+        "upper": 9.132,
+        "middle": 8.86,
+        "lower": 8.587
       },
       "fiscalYear": 2025,
       "annualDividend": 0.16,
@@ -144,24 +144,24 @@
     {
       "code": "000423",
       "name": "东阿阿胶",
-      "price": 48.49,
+      "price": 48.55,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "上部",
-          "percent": 79.3,
+          "percent": 83.6,
           "low": 47.38,
           "high": 48.78
         },
         "week": {
           "zone": "上部",
-          "percent": 82.2,
+          "percent": 85.9,
           "low": 47.15,
           "high": 48.78
         },
         "month": {
           "zone": "上部",
-          "percent": 82.2,
+          "percent": 85.9,
           "low": 47.15,
           "high": 48.78
         }
@@ -173,9 +173,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 53.977,
-        "middle": 48.489,
-        "lower": 43.001
+        "upper": 53.979,
+        "middle": 48.491,
+        "lower": 43.004
       },
       "fiscalYear": 2025,
       "annualDividend": 1.4354904,
@@ -187,24 +187,24 @@
     {
       "code": "600690",
       "name": "海尔智家",
-      "price": 22.01,
+      "price": 22.0,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "上部",
-          "percent": 71.4,
+          "percent": 69.4,
           "low": 21.66,
           "high": 22.15
         },
         "week": {
           "zone": "上部",
-          "percent": 88.3,
+          "percent": 87.5,
           "low": 20.95,
           "high": 22.15
         },
         "month": {
           "zone": "上部",
-          "percent": 86.9,
+          "percent": 86.0,
           "low": 21.08,
           "high": 22.15
         }
@@ -230,24 +230,24 @@
     {
       "code": "601919",
       "name": "中远海控",
-      "price": 16.05,
+      "price": 16.06,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "下部",
-          "percent": 22.7,
+          "percent": 24.0,
           "low": 15.88,
           "high": 16.63
         },
         "week": {
           "zone": "下部",
-          "percent": 12.6,
+          "percent": 13.3,
           "low": 15.88,
           "high": 17.23
         },
         "month": {
           "zone": "下部",
-          "percent": 12.6,
+          "percent": 13.3,
           "low": 15.88,
           "high": 17.23
         }
@@ -259,9 +259,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 16.878,
+        "upper": 16.88,
         "middle": 14.611,
-        "lower": 12.344
+        "lower": 12.343
       },
       "fiscalYear": 2025,
       "annualDividend": 0.44000000000000006,
@@ -273,24 +273,24 @@
     {
       "code": "600887",
       "name": "伊利股份",
-      "price": 26.8,
+      "price": 26.86,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
-          "zone": "中部",
-          "percent": 66.1,
+          "zone": "上部",
+          "percent": 76.3,
           "low": 26.41,
           "high": 27.0
         },
         "week": {
           "zone": "上部",
-          "percent": 67.2,
+          "percent": 77.0,
           "low": 26.39,
           "high": 27.0
         },
         "month": {
           "zone": "上部",
-          "percent": 67.2,
+          "percent": 77.0,
           "low": 26.39,
           "high": 27.0
         }
@@ -302,9 +302,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 27.711,
-        "middle": 25.799,
-        "lower": 23.887
+        "upper": 27.721,
+        "middle": 25.802,
+        "lower": 23.883
       },
       "fiscalYear": 2025,
       "annualDividend": 0.9,
@@ -316,24 +316,24 @@
     {
       "code": "600795",
       "name": "国电电力",
-      "price": 5.36,
+      "price": 5.37,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "下部",
-          "percent": 10.0,
+          "percent": 20.0,
           "low": 5.35,
           "high": 5.45
         },
         "week": {
           "zone": "中部",
-          "percent": 63.6,
+          "percent": 66.7,
           "low": 5.15,
           "high": 5.48
         },
         "month": {
           "zone": "中部",
-          "percent": 62.5,
+          "percent": 65.6,
           "low": 5.16,
           "high": 5.48
         }
@@ -359,24 +359,24 @@
     {
       "code": "003816",
       "name": "中国广核",
-      "price": 4.35,
+      "price": 4.37,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
-          "zone": "下部",
-          "percent": 22.2,
+          "zone": "中部",
+          "percent": 44.4,
           "low": 4.33,
           "high": 4.42
         },
         "week": {
           "zone": "中部",
-          "percent": 53.8,
+          "percent": 61.5,
           "low": 4.21,
           "high": 4.47
         },
         "month": {
           "zone": "中部",
-          "percent": 40.0,
+          "percent": 50.0,
           "low": 4.27,
           "high": 4.47
         }
@@ -388,8 +388,8 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 4.759,
-        "middle": 4.176,
+        "upper": 4.766,
+        "middle": 4.179,
         "lower": 3.592
       },
       "fiscalYear": 2025,
@@ -431,9 +431,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 5.546,
-        "middle": 5.01,
-        "lower": 4.474
+        "upper": 5.545,
+        "middle": 5.009,
+        "lower": 4.473
       },
       "fiscalYear": 2025,
       "annualDividend": 0.11200000000000002,
@@ -445,24 +445,24 @@
     {
       "code": "600938",
       "name": "中国海油",
-      "price": 33.45,
+      "price": 33.41,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "中部",
-          "percent": 47.2,
+          "percent": 39.6,
           "low": 33.2,
           "high": 33.73
         },
         "week": {
           "zone": "下部",
-          "percent": 11.2,
+          "percent": 9.4,
           "low": 33.2,
           "high": 35.43
         },
         "month": {
           "zone": "下部",
-          "percent": 11.2,
+          "percent": 9.4,
           "low": 33.2,
           "high": 35.43
         }
@@ -474,9 +474,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 39.639,
-        "middle": 32.864,
-        "lower": 26.088
+        "upper": 39.637,
+        "middle": 32.862,
+        "lower": 26.087
       },
       "fiscalYear": 2025,
       "annualDividend": 0.47881,
@@ -488,24 +488,24 @@
     {
       "code": "000538",
       "name": "云南白药",
-      "price": 51.0,
+      "price": 51.02,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "中部",
-          "percent": 62.5,
+          "percent": 65.6,
           "low": 50.6,
           "high": 51.24
         },
         "week": {
           "zone": "上部",
-          "percent": 80.6,
+          "percent": 82.3,
           "low": 50.0,
           "high": 51.24
         },
         "month": {
           "zone": "上部",
-          "percent": 78.9,
+          "percent": 80.7,
           "low": 50.1,
           "high": 51.24
         }
@@ -517,9 +517,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 53.682,
-        "middle": 50.404,
-        "lower": 47.126
+        "upper": 53.683,
+        "middle": 50.405,
+        "lower": 47.127
       },
       "fiscalYear": 2025,
       "annualDividend": 1.583,
@@ -531,24 +531,24 @@
     {
       "code": "600863",
       "name": "华能蒙电",
-      "price": 4.71,
+      "price": 4.72,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "下部",
-          "percent": 11.1,
+          "percent": 22.2,
           "low": 4.7,
           "high": 4.79
         },
         "week": {
           "zone": "中部",
-          "percent": 57.9,
+          "percent": 63.2,
           "low": 4.6,
           "high": 4.79
         },
         "month": {
           "zone": "中部",
-          "percent": 57.9,
+          "percent": 63.2,
           "low": 4.6,
           "high": 4.79
         }
@@ -574,24 +574,24 @@
     {
       "code": "600011",
       "name": "华能国际",
-      "price": 6.85,
+      "price": 6.86,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "下部",
-          "percent": 12.5,
+          "percent": 25.0,
           "low": 6.84,
           "high": 6.92
         },
         "week": {
           "zone": "上部",
-          "percent": 70.8,
+          "percent": 75.0,
           "low": 6.68,
           "high": 6.92
         },
         "month": {
           "zone": "上部",
-          "percent": 70.8,
+          "percent": 75.0,
           "low": 6.68,
           "high": 6.92
         }
@@ -617,24 +617,24 @@
     {
       "code": "601318",
       "name": "中国平安",
-      "price": 58.16,
+      "price": 58.24,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "下部",
-          "percent": 25.2,
+          "percent": 32.4,
           "low": 57.88,
           "high": 58.99
         },
         "week": {
           "zone": "上部",
-          "percent": 76.8,
+          "percent": 79.1,
           "low": 55.41,
           "high": 58.99
         },
         "month": {
           "zone": "上部",
-          "percent": 76.8,
+          "percent": 79.1,
           "low": 55.41,
           "high": 58.99
         }
@@ -646,9 +646,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 59.356,
-        "middle": 53.12,
-        "lower": 46.884
+        "upper": 59.378,
+        "middle": 53.125,
+        "lower": 46.872
       },
       "fiscalYear": 2025,
       "annualDividend": 1.75,
@@ -660,24 +660,24 @@
     {
       "code": "688825",
       "name": "C长鑫",
-      "price": 54.78,
+      "price": 54.8,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "下部",
-          "percent": 1.6,
-          "low": 54.75,
+          "percent": 15.9,
+          "low": 54.45,
           "high": 56.65
         },
         "week": {
           "zone": "下部",
-          "percent": 13.2,
+          "percent": 13.6,
           "low": 54.0,
           "high": 59.9
         },
         "month": {
           "zone": "下部",
-          "percent": 16.0,
+          "percent": 16.4,
           "low": 54.0,
           "high": 58.88
         }
@@ -722,9 +722,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 8.098,
+        "upper": 8.1,
         "middle": 7.479,
-        "lower": 6.859
+        "lower": 6.858
       },
       "fiscalYear": 2025,
       "annualDividend": 0.1689,
@@ -736,24 +736,24 @@
     {
       "code": "601169",
       "name": "北京银行",
-      "price": 5.59,
+      "price": 5.6,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "中部",
-          "percent": 53.8,
+          "percent": 61.5,
           "low": 5.52,
           "high": 5.65
         },
         "week": {
           "zone": "上部",
-          "percent": 83.3,
+          "percent": 85.4,
           "low": 5.19,
           "high": 5.67
         },
         "month": {
           "zone": "上部",
-          "percent": 77.1,
+          "percent": 80.0,
           "low": 5.32,
           "high": 5.67
         }
@@ -765,9 +765,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 5.389,
-        "middle": 4.986,
-        "lower": 4.583
+        "upper": 5.399,
+        "middle": 4.987,
+        "lower": 4.575
       },
       "fiscalYear": 2025,
       "annualDividend": 0.27799999999999997,
@@ -779,24 +779,24 @@
     {
       "code": "601658",
       "name": "邮储银行",
-      "price": 5.41,
+      "price": 5.42,
       "positions": {
         "asOf": "2026-09-04",
         "day": {
           "zone": "下部",
-          "percent": 0.0,
+          "percent": 12.5,
           "low": 5.41,
           "high": 5.49
         },
         "week": {
           "zone": "中部",
-          "percent": 64.9,
+          "percent": 66.7,
           "low": 5.04,
           "high": 5.61
         },
         "month": {
           "zone": "中部",
-          "percent": 47.4,
+          "percent": 50.0,
           "low": 5.23,
           "high": 5.61
         }
@@ -808,9 +808,9 @@
         "multiplier": 2,
         "stddev": "sample",
         "sampleCount": 20,
-        "upper": 5.284,
-        "middle": 4.978,
-        "lower": 4.671
+        "upper": 5.285,
+        "middle": 4.981,
+        "lower": 4.676
       },
       "fiscalYear": 2025,
       "annualDividend": 0.0953,

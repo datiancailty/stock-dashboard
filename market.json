@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-09-07T18:59:47+08:00",
+  "updatedAt": "2026-09-07T20:54:41+08:00",
   "source": "东方财富公开批量行情 + 东方财富/腾讯公开日K + mx-data",
   "strategy": "正式口径：上一完整年度已实施的年报与中报税前每股股利之和；Part 2/3 另列已公告待实施分红，仅用于未来测算",
   "positionStrategy": "当前价在最近交易日、当前交易周、当前交易月最高最低价区间的位置；下部<33.33%，中部<66.67%，其余为上部",
   "weeklyBollStrategy": "前复权日K按ISO周取周收盘；最近20周；BOLL(20,2)；样本标准差(n-1)",
-  "dividendWarning": null,
+  "dividendWarning": "分红明细覆盖不完整，已保留上次完整快照：源结果未覆盖全部股票",
   "dividendCoverage": {
     "expected": 20,
-    "covered": 20,
-    "complete": true,
+    "covered": 0,
+    "complete": false,
     "queryBatches": 4
   },
   "stocks": [

@@ -5,7 +5,7 @@ const source=fs.readFileSync(path.join(__dirname,'../assets/app.js'),'utf8');
 function context(names,extra={}){
   const c=vm.createContext({console,...extra});
   for(const name of names){
-    const start=source.indexOf(`function ${name}(`);assert.ok(start>=0,`missing ${name}`);
+    const start=source.search(new RegExp(`^(?:async )?function ${name}\\(`,'m'));assert.ok(start>=0,`missing ${name}`);
     const rest=source.slice(start);const stop=rest.slice(1).search(/^(?:async )?function |^(?:const|let) /m);
     vm.runInContext(stop<0?rest:rest.slice(0,stop+1),c);
   }return c;
@@ -187,6 +187,125 @@ test('Part2 new watchlist symbols share one other group without mutating saved c
  assert.equal(groups.filter(g=>g.name==='其他').length,1);
  assert.equal(JSON.stringify(saved),before);
  assert.equal(JSON.stringify(c.normalizedPart2Groups()),JSON.stringify(groups));
+});
+// Offline lifecycle harness: real app functions, controlled RPC promises/timers,
+// synthetic sessions only; no browser storage, network, or account credentials.
+function deferred(){let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});return {promise,resolve,reject};}
+async function flushMicrotasks(){for(let i=0;i<30;i++)await Promise.resolve();}
+function lifecycle(rpcOverride){
+ const timers=[],intervals=new Map(),events={},calls=[],applied=[];let authCallback,nextTimer=0;
+ const client={auth:{onAuthStateChange:callback=>{authCallback=callback;}}};
+ const setTimeout=(fn,ms=0)=>{timers.push({fn,ms});return ++nextTimer;};
+ const document={visibilityState:'visible',querySelector:()=>({id:'today'}),addEventListener:(name,fn)=>{events[name]=fn;}};
+ let c;
+ const names=['initSupabaseClient','stopPrivateAutoRefresh','startPrivateAutoRefresh','clearPersonalData','personalRpcForPage','personalCount','loadPrivateDashboard'];
+ if(source.includes('function loadPrivateDashboardOnce('))names.push('loadPrivateDashboardOnce');
+ c=context(names,{PART0_LOCAL_ONLY_PREVIEW:false,SUPABASE_URL:'https://synthetic.invalid',SUPABASE_ANON_KEY:'synthetic-public-placeholder',
+  supabaseClient:client,authSession:{user:{id:'synthetic-owner'},generation:1},privateLoadInFlight:null,privateRefreshTimer:null,
+  privateLoadState:'not_loaded',privateLoadError:'',personalMigrationState:null,refreshHealth:null,refreshHealthReadFailed:false,
+  currentUsername:'',vpsAdmin:false,privatePortfolio:null,runtimeDisplay:null,whitelistControl:null,holdings:[],
+  PRIVATE_DASHBOARD_REFRESH_MS:vm.runInNewContext(source.match(/^const PRIVATE_DASHBOARD_REFRESH_MS=(.+);$/m)[1]),
+  setTimeout,queueMicrotask,clearInterval:id=>intervals.delete(id),document,
+  window:{setTimeout,setInterval:(fn,ms)=>{const id=++nextTimer;intervals.set(id,{fn,ms});return id;},supabase:{createClient:()=>client}},
+  render(){},updateAuthUI(){},loadPersonalPart:async()=>{},
+  applyPrivatePortfolio:value=>{applied.push(value);c.privatePortfolio=value;},
+  supabaseRpc:async name=>{const session=c.authSession;calls.push({name,session});
+   if(rpcOverride){const value=rpcOverride(name,session,calls);if(value!==undefined)return value;}
+   if(name==='vps_private_get_portfolio')return {generation:session.generation};
+   if(name==='vps_is_admin')return false;
+   if(name==='app_get_current_username')return 'synthetic';
+   if(name==='personal_get_migration_state')return {source_files:1};
+   return {generation:session.generation};
+  }});
+ c.initSupabaseClient();
+ return {c,calls,applied,timers,intervals,events,auth:(event,session)=>authCallback(event,session),
+  async runTimers(){const batch=timers.splice(0);for(const timer of batch)timer.fn();await flushMicrotasks();}};
+}
+test('session object replacement discards old batch and reads latest without waiting for polling',async()=>{
+ const gate=deferred();let firstPortfolio=true;
+ const h=lifecycle(name=>{if(name==='vps_private_get_portfolio'&&firstPortfolio){firstPortfolio=false;return gate.promise;}});
+ const first=h.c.loadPrivateDashboard();
+ h.c.authSession={user:{id:'synthetic-owner'},generation:2};
+ h.c.loadPrivateDashboard();
+ gate.resolve({generation:1});await first;await flushMicrotasks();
+ assert.equal(h.applied.length,0,'old session response must be discarded even for the same UID');
+ await h.runTimers();
+ assert.equal(h.calls.filter(x=>x.name==='vps_private_get_portfolio').length,2,'latest session must receive a catch-up read');
+ assert.deepEqual(h.applied,[{generation:2}]);
+ assert.equal(h.timers.length,0,'catch-up must be bounded, not another polling loop');
+});
+test('same session concurrent calls reuse one promise through health and the current Part',async()=>{
+ const health=deferred(),part=deferred();const h=lifecycle(name=>name==='personal_get_refresh_health'?health.promise:undefined);
+ h.c.document.querySelector=()=>({id:'strategy'});let partReads=0;
+ h.c.loadPersonalPart=async(page,force)=>{assert.equal(page,'strategy');assert.equal(force,true);partReads++;await part.promise;};
+ const first=h.c.loadPrivateDashboard(),second=h.c.loadPrivateDashboard();
+ assert.equal(second,first,'same-session callers share completion, not a resolved busy return');
+ await flushMicrotasks();let completed=false;first.then(()=>{completed=true;});
+ assert.equal(h.c.loadPrivateDashboard(),first,'health must still own the flight');
+ assert.equal(h.calls.filter(x=>x.name==='vps_private_get_portfolio').length,1);
+ assert.equal(completed,false);assert.equal(partReads,0);
+ health.resolve({status:'ok'});await flushMicrotasks();
+ assert.equal(partReads,1);assert.equal(h.c.loadPrivateDashboard(),first,'current Part must still own the flight');
+ assert.equal(completed,false);part.resolve();await first;
+ assert.equal(completed,true);assert.equal(h.c.privateLoadInFlight,null);assert.equal(h.timers.length,0);
+});
+test('default holdings read also remains inside the shared flight',async()=>{
+ const part=deferred();const h=lifecycle();let partReads=0;
+ h.c.loadPersonalPart=async page=>{assert.equal(page,'holdings');partReads++;await part.promise;};
+ const first=h.c.loadPrivateDashboard();await flushMicrotasks();
+ assert.equal(partReads,1);assert.equal(h.c.loadPrivateDashboard(),first);
+ part.resolve();await first;assert.equal(h.c.privateLoadInFlight,null);
+});
+test('sign out during health clears private state and does not retry or start a Part read',async()=>{
+ const health=deferred();const h=lifecycle(name=>name==='personal_get_refresh_health'?health.promise:undefined);let partReads=0;
+ h.c.loadPersonalPart=async()=>{partReads++;};h.c.startPrivateAutoRefresh();
+ const first=h.c.loadPrivateDashboard();await flushMicrotasks();
+ h.auth('SIGNED_OUT',null);health.resolve({status:'ok'});await first;await h.runTimers();
+ assert.equal(h.c.authSession,null);assert.equal(h.c.privatePortfolio,null);assert.equal(h.c.personalMigrationState,null);
+ assert.equal(h.c.refreshHealth,null);assert.equal(h.c.privateLoadState,'not_loaded');assert.equal(partReads,0);
+ assert.equal(h.intervals.size,0);assert.equal(h.timers.length,0);
+ assert.equal(h.calls.filter(x=>x.name==='vps_private_get_portfolio').length,1);
+});
+test('sign out then same UID sign in never accepts the previous session response',async()=>{
+ const gate=deferred();const h=lifecycle((name,session)=>name==='vps_private_get_portfolio'&&session.generation===1?gate.promise:undefined);
+ const first=h.c.loadPrivateDashboard();h.auth('SIGNED_OUT',null);
+ h.auth('SIGNED_IN',{user:{id:'synthetic-owner'},generation:2});await h.runTimers();
+ gate.resolve({generation:1});await first;assert.equal(h.applied.length,0);await h.runTimers();
+ assert.deepEqual(h.applied,[{generation:2}]);assert.equal(h.c.refreshHealth.generation,2);
+});
+test('replacement during migration skips stale health and catches up for latest session',async()=>{
+ const gate=deferred();const h=lifecycle((name,session)=>name==='personal_get_migration_state'&&session.generation===1?gate.promise:undefined);
+ const first=h.c.loadPrivateDashboard();await flushMicrotasks();
+ h.c.authSession={user:{id:'synthetic-other-owner'},generation:2};h.c.loadPrivateDashboard();
+ gate.resolve({source_files:99});await first;
+ assert.equal(h.c.personalMigrationState,null);
+ assert.equal(h.calls.filter(x=>x.name==='personal_get_refresh_health').length,0);
+ await h.runTimers();assert.equal(h.c.personalMigrationState.source_files,1);assert.equal(h.c.refreshHealth.generation,2);
+});
+test('hidden session replacement waits for visibility without adding a polling loop',async()=>{
+ const gate=deferred();const h=lifecycle((name,session)=>name==='vps_private_get_portfolio'&&session.generation===1?gate.promise:undefined);
+ h.c.startPrivateAutoRefresh();const first=h.c.loadPrivateDashboard();
+ h.c.document.visibilityState='hidden';h.c.authSession={user:{id:'synthetic-owner'},generation:2};h.c.loadPrivateDashboard();
+ gate.resolve({generation:1});await first;
+ assert.equal(h.timers.length,0);assert.equal(h.intervals.size,1);
+ for(const timer of h.intervals.values())timer.fn();h.events.visibilitychange();await flushMicrotasks();
+ assert.equal(h.calls.filter(x=>x.name==='vps_private_get_portfolio').length,1);
+ h.c.document.visibilityState='visible';h.events.visibilitychange();await flushMicrotasks();
+ assert.deepEqual(h.applied,[{generation:2}]);assert.equal(h.intervals.size,1);
+});
+test('auth callback schedules reads as a macrotask and retains one visible-only 15-minute poll',async()=>{
+ for(const event of ['SIGNED_IN','TOKEN_REFRESHED']){
+  const h=lifecycle();const session={user:{id:'synthetic-owner'},generation:2};
+  assert.equal(h.auth(event,session),undefined,'callback must not return an awaited RPC promise');
+  assert.equal(h.calls.length,0);await flushMicrotasks();
+  assert.equal(h.calls.length,0,'RPC must not run in callback or its microtask checkpoint');
+  assert.equal(h.timers.length,1);assert.equal(h.timers[0].ms,0);await h.runTimers();
+  assert.ok(h.calls.length>0);h.c.startPrivateAutoRefresh();assert.equal(h.intervals.size,1);
+  const poll=[...h.intervals.values()][0];assert.equal(poll.ms,15*60*1000);
+  const before=h.calls.length;h.c.document.visibilityState='hidden';poll.fn();h.events.visibilitychange();await flushMicrotasks();
+  assert.equal(h.calls.length,before);assert.equal(h.intervals.size,1);assert.equal(h.timers.length,0);
+  h.c.document.visibilityState='visible';poll.fn();await flushMicrotasks();assert.ok(h.calls.length>before);
+ }
 });
 test('market read and recommendations use new private contracts',()=>{
  assert.ok(/supabaseRpc\('personal_get_part4_v4'\)/.test(source));

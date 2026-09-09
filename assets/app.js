@@ -3,7 +3,7 @@ const SUPABASE_CONFIG=window.STOCK_DASHBOARD_SUPABASE_CONFIG||{};
 const SUPABASE_URL=String(SUPABASE_CONFIG.url||'').replace(/\/$/,'');
 const SUPABASE_ANON_KEY=String(SUPABASE_CONFIG.anonKey||'');
 const SUPABASE_FUNCTIONS_BASE=SUPABASE_URL?`${SUPABASE_URL}/functions/v1`:'';
-let supabaseClient=null,authSession=null,currentUsername='',vpsAdmin=false,privatePortfolio=null,runtimeDisplay=null,whitelistControl=null,privateLoadState='not_loaded',privateLoadError='',privateRefreshTimer=null,privateLoadInFlight=false;
+let supabaseClient=null,authSession=null,currentUsername='',vpsAdmin=false,privatePortfolio=null,runtimeDisplay=null,whitelistControl=null,privateLoadState='not_loaded',privateLoadError='',privateRefreshTimer=null,privateLoadInFlight=null;
 let personalMigrationState=null,personalLoadedParts=new Set(),personalPartLoads=new Map(),personalPartErrors=new Map();
 const PRIVATE_DASHBOARD_REFRESH_MS=15*60*1000;
 let market={stocks:[],events:[],updatedAt:null},marketLoaded=false;
@@ -570,7 +570,7 @@ function initSupabaseClient(){
       if(!authSession){stopPrivateAutoRefresh();currentUsername='';vpsAdmin=false;privatePortfolio=null;runtimeDisplay=null;whitelistControl=null;privateLoadState='not_loaded';privateLoadError='';holdings=[];clearPersonalData();}
       updateAuthUI();
       render();
-      if(authSession&&(event==='SIGNED_IN'||event==='TOKEN_REFRESHED'))queueMicrotask(()=>{void loadPrivateDashboard();startPrivateAutoRefresh();});
+      if(authSession&&(event==='SIGNED_IN'||event==='TOKEN_REFRESHED'))setTimeout(()=>{if(!authSession)return;if(document.visibilityState==='visible')void loadPrivateDashboard();startPrivateAutoRefresh();},0);
     });
     return supabaseClient;
   }catch(error){supabaseClient=null;privateLoadState='error';privateLoadError='auth_client_unavailable';return null;}
@@ -600,7 +600,40 @@ async function signOut(){if(supabaseClient)await supabaseClient.auth.signOut();s
 async function requireAuth(){if(authSession)return authSession;openLogin();throw Object.assign(new Error('auth_required'),{code:'auth_required'});}
 async function requireAdmin(){await requireAuth();if(!vpsAdmin){showMessage('权限不足','当前账号没有显式 VPS 管理员权限，不能提交白名单。');throw Object.assign(new Error('admin_required'),{code:'admin_required'});}return true;}
 function applyPrivatePortfolio(value){const scopes=Array.isArray(value)?value:[];privatePortfolio=scopes.find(item=>item&&item.scope_key==='primary')||null;const rows=Array.isArray(privatePortfolio?.positions)?privatePortfolio.positions:[];holdings=rows.map(item=>{const symbol=String(item.symbol||'').toUpperCase(),name=item.display_name||symbolDisplay(symbol);return {code:symbol.slice(0,6),symbol,name,shares:Number(item.held_quantity)||0,cost:item.average_cost_per_share,marketValue:item.market_value,privatePosition:item};});}
-async function loadPrivateDashboard(){if(!authSession||!supabaseClient||privateLoadInFlight)return;const sessionAtStart=authSession;privateLoadInFlight=true;privateLoadState='loading';privateLoadError='';render();try{const [portfolio,runtime,admin,username]=await Promise.all([supabaseRpc('vps_private_get_portfolio'),supabaseRpc('vps_private_get_runtime_display'),supabaseRpc('vps_is_admin'),supabaseRpc('app_get_current_username')]);if(authSession!==sessionAtStart)return;applyPrivatePortfolio(portfolio);runtimeDisplay=runtime&&typeof runtime==='object'?runtime:null;vpsAdmin=admin===true;currentUsername=typeof username==='string'?username:'';whitelistControl=vpsAdmin?await supabaseRpc('vps_get_whitelist_control_state'):null;if(authSession!==sessionAtStart)return;privateLoadState='ready';}catch(error){if(authSession===sessionAtStart){privateLoadState='error';privateLoadError='private_read_failed';privatePortfolio=null;runtimeDisplay=null;whitelistControl=null;vpsAdmin=false;}}finally{privateLoadInFlight=false;}if(authSession!==sessionAtStart)return;try{const migrationState=await supabaseRpc('personal_get_migration_state');if(authSession===sessionAtStart)personalMigrationState=migrationState&&typeof migrationState==='object'?migrationState:null;}catch(error){if(authSession===sessionAtStart)personalMigrationState=null;}try{const health=await supabaseRpc('personal_get_refresh_health');if(authSession===sessionAtStart){refreshHealth=health&&typeof health==='object'?health:null;refreshHealthReadFailed=false;}}catch(error){if(authSession===sessionAtStart)refreshHealthReadFailed=true;}updateAuthUI();render();const activePage=document.querySelector('.page.active')?.id||'today';if(personalRpcForPage(activePage))await loadPersonalPart(activePage,true);else if(personalCount(personalMigrationState?.source_files)>0)void loadPersonalPart('holdings');}
+function loadPrivateDashboard(){
+  if(!authSession||!supabaseClient)return Promise.resolve();
+  if(privateLoadInFlight)return privateLoadInFlight;
+  const sessionAtStart=authSession;
+  const flight=loadPrivateDashboardOnce(sessionAtStart).finally(()=>{
+    if(privateLoadInFlight===flight)privateLoadInFlight=null;
+    // A replaced session invalidates old results, but must not lose its read.
+    if(authSession&&authSession!==sessionAtStart&&document.visibilityState==='visible')setTimeout(()=>{
+      if(authSession&&document.visibilityState==='visible')void loadPrivateDashboard();
+    },0);
+  });
+  privateLoadInFlight=flight;
+  return flight;
+}
+async function loadPrivateDashboardOnce(sessionAtStart){
+  privateLoadState='loading';privateLoadError='';render();
+  try{
+    const [portfolio,runtime,admin,username]=await Promise.all([supabaseRpc('vps_private_get_portfolio'),supabaseRpc('vps_private_get_runtime_display'),supabaseRpc('vps_is_admin'),supabaseRpc('app_get_current_username')]);
+    if(authSession!==sessionAtStart)return;
+    applyPrivatePortfolio(portfolio);runtimeDisplay=runtime&&typeof runtime==='object'?runtime:null;vpsAdmin=admin===true;currentUsername=typeof username==='string'?username:'';
+    const control=vpsAdmin?await supabaseRpc('vps_get_whitelist_control_state'):null;
+    if(authSession!==sessionAtStart)return;
+    whitelistControl=control;privateLoadState='ready';
+  }catch(error){if(authSession===sessionAtStart){privateLoadState='error';privateLoadError='private_read_failed';privatePortfolio=null;runtimeDisplay=null;whitelistControl=null;vpsAdmin=false;}}
+  if(authSession!==sessionAtStart)return;
+  try{const migrationState=await supabaseRpc('personal_get_migration_state');if(authSession===sessionAtStart)personalMigrationState=migrationState&&typeof migrationState==='object'?migrationState:null;}catch(error){if(authSession===sessionAtStart)personalMigrationState=null;}
+  if(authSession!==sessionAtStart)return;
+  try{const health=await supabaseRpc('personal_get_refresh_health');if(authSession===sessionAtStart){refreshHealth=health&&typeof health==='object'?health:null;refreshHealthReadFailed=false;}}catch(error){if(authSession===sessionAtStart)refreshHealthReadFailed=true;}
+  if(authSession!==sessionAtStart)return;
+  updateAuthUI();render();
+  const activePage=document.querySelector('.page.active')?.id||'today';
+  if(personalRpcForPage(activePage))await loadPersonalPart(activePage,true);
+  else if(personalCount(personalMigrationState?.source_files)>0)await loadPersonalPart('holdings');
+}
 function fillWhitelistEditor(){if(!$('#whitelistSymbols'))return;const control=whitelistControl||{},symbols=Array.isArray(control.desired_symbols)&&control.desired_symbols.length?control.desired_symbols:(Array.isArray(control.active_symbols)?control.active_symbols:[]);$('#whitelistSymbols').value=symbols.join('\n');$('#whitelistBase').textContent=control.edit_base_revision_no?`提交基线：revision ${control.edit_base_revision_no}`:'提交基线：暂无';$('#whitelistCount').textContent=`${symbols.length} / 50`;
 }
 function openWhitelistEditor(){try{requireAdmin().then(()=>{fillWhitelistEditor();$('#whitelistDialog').showModal();}).catch(()=>{});}catch(error){}}

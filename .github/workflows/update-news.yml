@@ -1,58 +1,13 @@
-name: 分红公告增量记忆与AI预估
-
+name: 旧版 GitHub live 公告更新（已退休）
+# Superseded by the authorized local deterministic Supabase refresh worker.
+# Do not re-enable public live data writes or MX/AI searches here.
 on:
-  schedule:
-    # UTC 00:30 = 北京时间每天 08:30；每天只消耗 1 次妙想资讯调用
-    - cron: '30 0 * * *'
   workflow_dispatch:
-
 permissions:
-  contents: write
-
-concurrency:
-  group: dividend-news-memory
-  # 连续添加多只股票时只保留最新一次，避免重复排队和重复通知。
-  cancel-in-progress: true
-
+  contents: read
 jobs:
-  scan:
-    # 自动任务采用静默容错，避免 GitHub 对偶发平台故障发送失败邮件；
-    # workflow_dispatch 手动测试仍保持严格失败。
-    continue-on-error: ${{ github.event_name != 'workflow_dispatch' }}
+  retired:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: pip install requests
-      - name: 读取 live 分支已有公告记忆
-        run: |
-          git fetch origin live || true
-          mkdir -p data
-          if git show origin/live:news-memory.json > /tmp/news-memory.json 2>/dev/null; then
-            mv /tmp/news-memory.json data/news-memory.json
-          else
-            rm -f /tmp/news-memory.json
-          fi
-      - name: 增量检查公告并保存AI结构化结果
-        id: scan_news
-        continue-on-error: ${{ github.event_name != 'workflow_dispatch' }}
-        env:
-          MX_APIKEY: ${{ secrets.MX_APIKEY }}
-        run: python scripts/update_news.py
-      - name: 写入 live 分支
-        id: publish_news
-        if: steps.scan_news.outcome == 'success'
-        continue-on-error: ${{ github.event_name != 'workflow_dispatch' }}
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: >-
-          python scripts/publish_live.py data/news-memory.json news-memory.json "news: incremental dividend scan"
-      - name: 自动任务异常仅记录警告（避免高频失败邮件）
-        if: always() && github.event_name != 'workflow_dispatch' && (steps.scan_news.outcome == 'failure' || steps.publish_news.outcome == 'failure')
-        run: |
-          echo "::warning::公告自动更新本次未完成；已保留 live 分支上一版数据，将在下次定时任务重试。"
+      - name: Explain private refresh destination
+        run: printf '%s\n' 'Retired. Part 1-6 data is refreshed by the local Mac worker into authenticated Supabase RPCs. No data/provider calls performed.'

@@ -1,90 +1,13 @@
-name: 东方财富交易时段数据更新
-
+name: 旧版 GitHub live 行情更新（已退休）
+# Superseded by the authorized local deterministic Supabase refresh worker.
+# Do not re-enable public live data writes or MX/AI searches here.
 on:
-  schedule:
-    # GitHub Actions 使用 UTC；以下为北京时间工作日 09:30—11:30、13:30—15:00，半小时一次。
-    # 共 9 个时点：09:30/10:00/10:30/11:00/11:30 与 13:30/14:00/14:30/15:00。
-    - cron: '30 1 * * 1-5' # 09:30
-    - cron: '0 2 * * 1-5'  # 10:00
-    - cron: '30 2 * * 1-5' # 10:30
-    - cron: '0 3 * * 1-5'  # 11:00
-    - cron: '30 3 * * 1-5' # 11:30
-    - cron: '30 5 * * 1-5' # 13:30
-    - cron: '0 6 * * 1-5'  # 14:00
-    - cron: '30 6 * * 1-5' # 14:30
-    - cron: '0 7 * * 1-5'  # 15:00
   workflow_dispatch:
-    inputs:
-      calls:
-        description: '测试调用次数（建议1）'
-        required: false
-        default: '1'
-
 permissions:
-  contents: write
-
-concurrency:
-  # 定时刷新和网页手动刷新使用不同队列，双线并行；连续手动点击只保留最新一次。
-  group: market-data-update-${{ github.event_name }}
-  cancel-in-progress: ${{ github.event_name == 'push' }}
-
+  contents: read
 jobs:
-  update:
-    # 自动任务采用静默容错，避免 GitHub 对偶发平台故障发送失败邮件；
-    # workflow_dispatch 手动测试仍保持严格失败。
-    continue-on-error: ${{ github.event_name != 'workflow_dispatch' }}
+  retired:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: pip install requests
-      - name: 计算本时段调用计划
-        id: plan
-        shell: bash
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "calls=${{ inputs.calls }}" >> "$GITHUB_OUTPUT"
-            echo "interval=0" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            echo "calls=1" >> "$GITHUB_OUTPUT"
-            echo "interval=0" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event_name }}" = "schedule" ]; then
-            # 每个半小时工作流只做一次行情/分红批次查询；不再在单次运行中循环消耗额度。
-            echo "calls=1" >> "$GITHUB_OUTPUT"
-            echo "interval=0" >> "$GITHUB_OUTPUT"
-          fi
-      - name: 确保 live 数据分支存在
-        run: |
-          git fetch origin live || true
-          if ! git ls-remote --exit-code --heads origin live >/dev/null 2>&1; then
-            git push origin HEAD:refs/heads/live
-          fi
-      - name: 读取 live 上一次成功数据
-        run: |
-          git show origin/live:market.json > data/market.json || true
-      - name: 按交易时段半小时更新（工作日每日最多9次）
-        id: update_market
-        continue-on-error: ${{ github.event_name != 'workflow_dispatch' }}
-        env:
-          MX_APIKEY: ${{ secrets.MX_APIKEY }}
-          GH_TOKEN: ${{ github.token }}
-          CALLS: ${{ steps.plan.outputs.calls }}
-          INTERVAL: ${{ steps.plan.outputs.interval }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          for ((i=1; i<=CALLS; i++)); do
-            python scripts/update_market.py
-            python scripts/publish_live.py data/market.json market.json "data: update ${i}/${CALLS}"
-            echo "完成 ${i}/${CALLS}"
-            if [ "$i" -lt "$CALLS" ] && [ "$INTERVAL" -gt 0 ]; then sleep "$INTERVAL"; fi
-          done
-      - name: 自动任务异常仅记录警告（避免高频失败邮件）
-        if: always() && github.event_name != 'workflow_dispatch' && steps.update_market.outcome == 'failure'
-        run: |
-          echo "::warning::行情自动更新本次提前结束；已保留 live 分支最近成功数据，将在下个时段重试。"
+      - name: Explain private refresh destination
+        run: printf '%s\n' 'Retired. Part 1-6 data is refreshed by the local Mac worker into authenticated Supabase RPCs. No data/provider calls performed.'

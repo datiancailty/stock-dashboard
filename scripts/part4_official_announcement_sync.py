@@ -138,8 +138,10 @@ def load_private_worker_module() -> Any:
 def load_private_session() -> tuple[Any, dict[str, str], str]:
     worker = load_private_worker_module()
     try:
-        config = worker.load_config(worker.DEFAULT_WORKER_DIR)
-        access_token = worker.refresh_session(config)
+        from dashboard_private_session import session_lock
+        with session_lock():
+            config = worker.load_config(worker.DEFAULT_WORKER_DIR)
+            access_token = worker.refresh_session(config)
     except Exception as error:
         category = getattr(error, "category", "private_session_unavailable")
         raise SyncError(str(category)) from error
@@ -568,7 +570,8 @@ def extract_structured_interim_pre_disclosure(stock: Stock, payload: dict[str, A
 
 
 def structured_pre_disclosures(
-    candidates: list[dict[str, Any]], window_end: date, *, enabled: bool, requested_codes: set[str]
+    candidates: list[dict[str, Any]], window_end: date, *, enabled: bool, requested_codes: set[str],
+    strict: bool = False,
 ) -> tuple[list[dict[str, Any]], int, int]:
     if not enabled:
         return [], 0, 0
@@ -597,7 +600,12 @@ def structured_pre_disclosures(
         except SyncError as error:
             raise SyncError("structured_dividend_corroboration_failed") from error
         if not plan:
-            raise SyncError("structured_dividend_corroboration_missing")
+            if strict:
+                raise SyncError("structured_dividend_corroboration_missing")
+            # No corroboration is not a negative dividend fact. Omit only this
+            # supplement; the RPC upserts supplied events, retaining absent IDs.
+            failures += 1
+            continue
         results.append(
             {
                 "id": f"eastmoney:{source_item['art_code']}",
@@ -664,6 +672,8 @@ def aggregate_summary(
         "structuredPreDisclosureCount": len(supplements),
         "structuredCandidateCount": structured_checked,
         "structuredFailureCount": structured_failures,
+        "warnings": ([{"category": "structured_dividend_corroboration_missing", "count": structured_failures}]
+                     if structured_failures else []),
         "selectedByType": type_counts,
         "source": "eastmoney_official_announcement_api",
     }
@@ -688,6 +698,10 @@ def parse_args() -> argparse.Namespace:
         help="six-digit code to explicitly corroborate as a structured interim pre-disclosure; repeatable",
     )
     parser.add_argument("--dry-run", action="store_true", help="scan only; never invoke the private write RPC")
+    parser.add_argument(
+        "--strict-structured-pre-disclosures", action="store_true",
+        help="manual verification: fail if optional structured corroboration is missing",
+    )
     return parser.parse_args()
 
 
@@ -695,7 +709,7 @@ def main() -> int:
     args = parse_args()
     try:
         if args.command == "init-writer":
-            if args.window_start or args.window_end or args.structured_code or args.include_structured_pre_disclosures or args.dry_run:
+            if args.window_start or args.window_end or args.structured_code or args.include_structured_pre_disclosures or args.strict_structured_pre_disclosures or args.dry_run:
                 raise SyncError("part4_writer_init_arguments_invalid")
             worker = load_private_worker_module()
             try:
@@ -714,7 +728,7 @@ def main() -> int:
         requested_structured_codes = {str(code).strip() for code in args.structured_code}
         if any(not CODE_RE.fullmatch(code) for code in requested_structured_codes):
             raise SyncError("structured_code_invalid")
-        if requested_structured_codes and not args.include_structured_pre_disclosures:
+        if (requested_structured_codes or args.strict_structured_pre_disclosures) and not args.include_structured_pre_disclosures:
             raise SyncError("structured_flag_required")
         if args.include_structured_pre_disclosures and not requested_structured_codes:
             raise SyncError("structured_codes_required")
@@ -727,6 +741,7 @@ def main() -> int:
             window_end,
             enabled=bool(args.include_structured_pre_disclosures),
             requested_codes=requested_structured_codes,
+            strict=bool(args.strict_structured_pre_disclosures),
         )
         events = merge_events(direct, supplements)
         summary = aggregate_summary(

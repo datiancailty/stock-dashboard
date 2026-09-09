@@ -4,10 +4,6 @@ on:
   schedule:
     # UTC 00:30 = 北京时间每天 08:30；每天只消耗 1 次妙想资讯调用
     - cron: '30 0 * * *'
-  push:
-    paths:
-      - 'data/stocks.json'
-      - 'data/news-refresh-request.json'
   workflow_dispatch:
 
 permissions:

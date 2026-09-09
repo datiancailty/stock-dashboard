@@ -43,7 +43,14 @@ def api_query(names, year):
     q=f"{names}{year}年度及{year+1}年中期现金分红明细，列出年度分配和中期分配的方案进度、每股股利税前、分红方案、股权登记日、除权除息日、派息日"
     r=requests.post(API,headers={'apikey':os.environ['MX_APIKEY'],'Content-Type':'application/json'},json={'toolQuery':q},timeout=45)
     r.raise_for_status(); data=r.json()
-    if data.get('status')!=0: raise RuntimeError(f"妙想API错误: {data.get('status')} {data.get('message')}")
+    if not isinstance(data,dict) or type(data.get('status')) is not int or data['status']!=0:
+        raise RuntimeError('mx_provider_business_failure')
+    node=data
+    for _ in range(4):
+        if not isinstance(node,dict): break
+        if any(re.search(r'达到上限|已达上限|额度|限流|quota|rate.?limit',str(node.get(k,'')),re.I) for k in ('message','msg')):
+            raise RuntimeError('mx_provider_quota_exhausted')
+        node=node.get('data')
     return data
 
 def fetch_prices(stocks):

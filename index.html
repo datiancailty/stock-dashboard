@@ -6,7 +6,7 @@
   <meta name="description" content="今日监控、自选股私有持仓、周BOLL股息网格、分红日历与策略复盘" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://shfdpceuamzrftwufdwo.supabase.co; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" />
   <title>我的分红工具</title>
-  <link rel="stylesheet" href="assets/app.css?v=20260901-feedback-locked-1" />
+  <link rel="stylesheet" href="assets/app.css?v=20260910-stability-5" />
 </head>
 <body>
   <main class="shell">
@@ -14,7 +14,7 @@
       <div><h1>我的分红工具</h1><p>正式分红、策略复盘与 Supabase 私有持仓</p></div>
       <div class="top-actions">
         <div class="update"><span class="live-dot"></span><span id="updateText">正在读取数据…</span></div>
-        <button class="ghost" id="refreshMarket">↻ 手动刷新行情</button>
+        <button class="ghost" id="refreshMarket">↻ 重新读取行情快照</button>
         <button class="ghost" id="loginButton">登录查看私有历史</button>
       </div>
     </header>
@@ -24,6 +24,8 @@
       <strong id="authStatus">未登录</strong>
     </div>
     <div class="private-history-strip" id="privateHistoryStrip" role="status" aria-live="polite"></div>
+
+    <details class="refresh-health" id="dashboardRefreshHealth" data-state="unknown"><summary id="dashboardRefreshSummary">Part 1—6 自动更新 · 登录后查看</summary><div id="dashboardRefreshDetails"></div></details>
 
     <nav class="tabs" aria-label="功能切换">
       <button class="tab active" data-tab="today"><b>0</b><span><strong>今日看板</strong><small>VPS · 模拟盘</small></span></button>
@@ -90,10 +92,11 @@
       <div id="bollGroups"></div>
     </section>
     <section id="grid" class="page dividend-grid-page">
-      <div class="page-head"><div><h2>股息率价格网格</h2><p>年度每股分红 = 上一完整年度已实施的年报与中报现金分红（税前）；目标价按正式分红计算。</p></div><span class="source-pill">私有历史恢复</span></div>
-      <div class="formula"><b>目标价 = 年度每股分红 ÷ 目标股息率。</b> 当前页面恢复历史网格展示；正式数据、当前价和周 BOLL 来自已迁入的私有行情快照，AI 预估不会覆盖正式值。</div>
+      <div class="page-head"><div><h2>股息率价格网格</h2><p>有可靠前瞻时使用最新年度＋最新中期；没有可靠前瞻时，使用近12个月已实施现金分红（人民币税前）。</p></div><span class="source-pill">私有历史恢复</span></div>
+      <div class="formula"><b>参考目标价＝计算每股分红 ÷ 目标股息率。</b> 各期来源与状态分别展示；前瞻参考不会覆盖历史已实施分红，AI 政策预估不作为本表分子。</div>
       <div class="grid-summary" id="gridSummary"></div>
-      <div class="table-scroll"><table class="dividend-grid-table"><thead><tr><th>股票</th><th>年度分红构成</th><th>每股分红</th><th>当前价 / 股息率</th><th>5.0%</th><th>5.5%</th><th>6.0%</th><th>6.5%</th><th>7.0%</th></tr></thead><tbody id="gridBody"></tbody></table></div>
+      <p class="muted">前瞻参考＝最新年度分红＋最新中期分红；新中期替换旧中期，不将历史合计再加未来分红。已公告未实施不等于承诺兑现；明确属于本期半年报分配的特别分红可计入，并标注“含特别分红、非经常性”；尚无方案不等于零分红；此时回退到已核实的近12个月实际分红并明确标注。两种口径都未确认时才不生成网格。</p>
+      <div class="table-scroll"><table class="dividend-grid-table"><thead><tr><th>股票</th><th>分红构成 / 计算口径</th><th>每股分红</th><th>当前价 / 股息率</th><th>5.0%</th><th>5.5%</th><th>6.0%</th><th>6.5%</th><th>7.0%</th></tr></thead><tbody id="gridBody"></tbody></table></div>
     </section>
     <section id="calendar" class="page">
       <div class="page-head"><div><h2>分红日历</h2><p>展示云端自选股票的登记日、除息日和派息日。</p></div><div class="month-nav"><button class="ghost" id="prevMonth">‹</button><strong id="monthTitle"></strong><button class="ghost" id="nextMonth">›</button></div></div>
@@ -111,7 +114,8 @@
       <div class="page-head"><div><h2>我的操作与策略学习</h2><p>个人操作记录与策略复盘已迁入 Supabase 私有数据层；登录后恢复查看、导出和私有记录维护。</p></div><div class="top-actions"><button class="ghost" id="exportTradesCsv">↓ 导出操作CSV</button><button class="ghost protected" id="importTradesCsv">↑ CSV批量导入</button><input class="hidden" id="tradeCsvFile" type="file" accept=".csv,text/csv" /><button class="ghost" id="refreshStrategy">↻ 刷新私有记录</button><button class="primary" id="showTradeRecord">＋ 记录一笔操作</button></div></div>
       <div class="notice"><b>你的基础框架：</b>正式股息率约 5% 开始分批买入，持有期间结合日/周/月位置做T；接近 7% 时性价比较高；股息率降至 4%～4.5% 时倾向全部卖出。你只填写日期、股票、操作、成交价格和成交股数，其他环境由系统自动补充。</div>
       <div class="private-history-inline" id="strategyPrivateStatus" role="status" aria-live="polite" hidden></div>
-      <p id="strategyApiHealth" class="strategy-api-health" role="status">策略自我更新 API：每日自检等待中…</p>
+      <p id="strategyApiHealth" class="strategy-api-health" role="status">AI 历史检查：等待私有记录…</p>
+      <div id="strategyFreshness" class="strategy-freshness" aria-live="polite"></div>
       <div class="strategy-layout">
         <section class="strategy-panel strategy-audit-panel"><details class="strategy-audit-details"><summary class="strategy-head"><div><h3>画像策略审计层</h3><small>外部学习规则、本人行为证据与固定底线分开保存；建议只供人工复核，不会自动下单</small></div><strong id="profileAuditStatus">读取中</strong></summary><div class="strategy-audit-grid"><div><h4>外部学习规则</h4><div id="externalRules"></div></div><div><h4>本人行为证据</h4><div id="behaviorEvidence"></div></div><div><h4>暂不可执行建议与缺口</h4><div id="nonExecutableSuggestions"></div></div></div></details></section>
         <section class="strategy-panel strategy-evolution-panel"><div class="strategy-head"><div><h3>策略进化 · 读完你的操作后我的想法</h3><small>把外部策略与你的真实成交交叉验证，形成下一阶段可观察、可升降级的行为规则</small></div><strong id="evolutionStatus">OpenAI Luna Max综合分析</strong></div><h4 id="evolutionHeadline">正在读取真实操作并形成结论…</h4><p class="evolution-overall" id="evolutionOverall"></p><details class="evolution-collapsible evolution-thoughts-panel"><summary>想法<span>点击展开</span></summary><div class="evolution-thoughts" id="evolutionThoughts"></div></details><div class="evolution-grid"><details class="evolution-collapsible"><summary>我从操作中看到什么<span>点击展开</span></summary><div id="evolutionEvidence"></div></details><details class="evolution-collapsible"><summary>下一阶段进化规则<span>点击展开</span></summary><div id="evolvedRules"></div></details><details class="evolution-collapsible"><summary>接下来持续观察<span>点击展开</span></summary><div id="nextObservations"></div></details></div><div class="focused-study"><div class="focused-study-head"><div><h4>重点学习</h4><small>每只股票一行紧凑显示；默认偏好周下＋日下＋月中，同时回测周中/下、日中/下、月中/下的8种组合，卡片内可展开查看结果</small></div><span id="focusedStudyMeta">读取中</span></div><div id="focusedStudyGrid"></div></div><p class="strategy-risk" id="evolutionDisclaimer"></p></section>
@@ -135,6 +139,6 @@
   <dialog id="tradeRecordDialog"><form id="tradeRecordForm"><h3>记录一笔真实操作</h3><p class="muted">只需填写成交信息；保存到 Supabase 私有空间后，系统保留历史股息率、日/周/月位置等已存在字段。</p><div class="trade-form-grid"><label>日期<input id="tradeDate" type="date" required /></label><label>股票<select id="tradeStock" required></select></label><label>操作<select id="tradeAction" required><option>买入</option><option>卖出</option><option>做T买入</option><option>做T卖出</option></select></label><label>成交价格<input id="tradePrice" type="number" min="0.001" step="0.001" inputmode="decimal" required /></label><label>成交股数<input id="tradeShares" type="number" min="1" step="1" inputmode="numeric" required /></label><div class="trade-auto-note"><b>系统保留：</b>正式每股分红、历史股息率、日线/周线/月线位置、操作来源和创建时间；不会调用交易接口。</div></div><div class="dialog-actions"><button type="button" class="ghost" id="cancelTradeRecord">取消</button><button type="submit" class="primary">保存操作</button></div></form></dialog>
   <script src="assets/runtime-config.js?v=20260829-private-cutover-1"></script>
   <script src="assets/supabase-js.v2.112.4.js"></script>
-  <script src="assets/app.js?v=20260901-feedback-locked-1"></script>
+  <script src="assets/app.js?v=20260910-stability-5"></script>
 </body>
 </html>

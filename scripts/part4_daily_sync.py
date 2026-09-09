@@ -2,16 +2,19 @@
 """Daily local-only Part 1–4 private-data refresh with fail-closed gates.
 
 This worker performs one weekday Asia/Shanghai refresh after 18:05: a rolling
-35-day official Part 4 announcement scan, then complete private quote and
-future-dividend snapshots. It does not access GitHub write paths, Codex, VPS,
-orders, accounts, or strategy parameters. A failed stage prevents the daily
-success state from advancing, preserving previously successful Hosted data.
+35-day official Part 4 announcement scan and an independent private quote
+refresh. Future-dividend snapshots require this run's announcement success.
+It does not access GitHub write paths, Codex, VPS, orders, accounts, or strategy
+parameters. A failed stage prevents the daily success state from advancing;
+independent successful stages may still publish their own complete snapshots.
 """
 from __future__ import annotations
 
 import argparse
 import json
 import os
+import re
+import stat
 import subprocess
 import sys
 from datetime import datetime, timedelta
@@ -60,9 +63,41 @@ def load_state() -> dict[str, Any]:
         return {}
 
 
+def read_mx_credential() -> str:
+    """Read only a current-user-owned, private, non-symlink credential.
+
+    Open relative to a verified directory fd, then validate the file fd before
+    reading: pathname replacement must not bypass permissions or symlink checks.
+    """
+    path = Path.home() / ".hermes/workspace/stock-dashboard-private-runtime/credentials/mx-apikey"
+    try:
+        directory = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        try:
+            info = os.fstat(directory)
+            if info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) != 0o700:
+                raise DailySyncError("daily_mx_credential_invalid")
+            fd = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=directory)
+            with os.fdopen(fd, "r", encoding="utf-8") as stream:
+                info = os.fstat(stream.fileno())
+                if not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) != 0o600:
+                    raise DailySyncError("daily_mx_credential_invalid")
+                value = stream.read().strip()
+                if not value or "\x00" in value:
+                    raise DailySyncError("daily_mx_credential_invalid")
+                return value
+        finally:
+            os.close(directory)
+    except (OSError, UnicodeError):
+        raise DailySyncError("daily_mx_credential_invalid") from None
+
+
 def run_checked(args: list[str]) -> dict[str, Any]:
+    env = os.environ.copy()
+    needs_mx = Path(args[0]).name == "personal_future_dividend_grid_sync.py" or "--include-structured-pre-disclosures" in args
+    if needs_mx and not env.get("MX_APIKEY"):
+        env["MX_APIKEY"] = read_mx_credential()
     completed = subprocess.run(
-        [sys.executable, *args], cwd=ROOT, capture_output=True, text=True, timeout=600, check=False
+        [sys.executable, *args], cwd=ROOT, capture_output=True, text=True, timeout=600, check=False, env=env
     )
     # Child workers emit only their documented sanitized JSON summaries. Never
     # forward raw stdout/stderr into state or output.
@@ -70,8 +105,14 @@ def run_checked(args: list[str]) -> dict[str, Any]:
         payload = json.loads(completed.stdout.strip())
     except (json.JSONDecodeError, TypeError):
         raise DailySyncError("daily_child_response_invalid") from None
-    if completed.returncode != 0 or not isinstance(payload, dict) or payload.get("status") != "ok":
-        raise DailySyncError(str(payload.get("category", "daily_child_failed")))
+    if not isinstance(payload, dict):
+        raise DailySyncError("daily_child_response_invalid")
+    if completed.returncode != 0 or payload.get("status") != "ok":
+        category = payload.get("category")
+        secret = env.get("MX_APIKEY")
+        if not isinstance(category, str) or not re.fullmatch(r"[a-z][a-z0-9_]{0,119}", category) or (secret and secret in category):
+            category = "daily_child_failed"
+        raise DailySyncError(category)
     if payload.get("coverageComplete") is not True or payload.get("published") is not True:
         raise DailySyncError("daily_child_coverage_or_publish_incomplete")
     return payload
@@ -93,28 +134,52 @@ def sync_once(automatic: bool) -> int:
             return 0
     start = (now.date() - timedelta(days=34)).isoformat()
     end = day
-    try:
-        notices = run_checked([
+    stages: dict[str, dict[str, Any]] = {}
+    payloads: dict[str, dict[str, Any]] = {}
+    commands = {
+        "notices": [
             "scripts/part4_official_announcement_sync.py", "sync", "--from", start, "--to", end,
-            "--include-structured-pre-disclosures", "--structured-code", "600036",
-        ])
-        quotes = run_checked(["scripts/personal_market_snapshot_sync.py"])
-        future = run_checked(["scripts/personal_future_dividend_grid_sync.py"])
-    except subprocess.TimeoutExpired:
-        print(json.dumps({"status": "error", "category": "daily_child_timeout", "date": day}, ensure_ascii=False))
-        return 2
-    except DailySyncError as error:
-        print(json.dumps({"status": "error", "category": str(error), "date": day}, ensure_ascii=False))
-        return 2
+        ],
+        "quotes": ["scripts/personal_market_snapshot_sync.py", "--publish"],
+        "future": ["scripts/personal_future_dividend_grid_sync.py"],
+    }
+    for name, command in commands.items():
+        if name == "future" and stages["notices"]["status"] != "ok":
+            stages[name] = {"status": "skipped", "category": "notice_dependency_failed_preserving"}
+            continue
+        try:
+            payloads[name] = run_checked(command)
+        except subprocess.TimeoutExpired:
+            stages[name] = {"status": "error", "category": "daily_child_timeout"}
+        except DailySyncError as error:
+            stages[name] = {"status": "error", "category": str(error)}
+        except OSError:
+            stages[name] = {"status": "error", "category": "daily_child_execution_failed"}
+        except Exception:
+            # Isolate an unexpected stage fault, but never count it as success
+            # or print exception text (which may contain private child output).
+            stages[name] = {"status": "error", "category": "daily_child_unexpected_error"}
+        else:
+            stages[name] = {"status": "ok", "category": "complete"}
 
-    atomic_write(STATE_PATH, json.dumps({"successfulDate": day, "completedAt": now.isoformat(timespec="seconds")}, ensure_ascii=False) + "\n")
+    complete = all(stage["status"] == "ok" for stage in stages.values())
+    category = "complete" if complete else "daily_partial_failure"
+    if complete:
+        try:
+            atomic_write(STATE_PATH, json.dumps({"successfulDate": day, "completedAt": now.isoformat(timespec="seconds")}, ensure_ascii=False) + "\n")
+        except OSError:
+            category = "daily_state_write_failed"
+    succeeded = category == "complete"
+    notices, quotes, future = (payloads.get(name, {}) for name in commands)
     print(json.dumps({
-        "status": "ok", "date": day, "windowStart": start, "windowEnd": end,
+        "status": "ok" if succeeded else "error", "category": category,
+        "date": day, "windowStart": start, "windowEnd": end, "stages": stages,
+        "quoteSucceeded": stages["quotes"]["status"] == "ok",
         "noticeWatchlistCount": notices.get("watchlistCount"), "noticeStored": notices.get("privateWrite", {}).get("stored"),
         "quoteStored": quotes.get("stored"), "futureGridStored": future.get("stored"),
-        "coverageComplete": True, "published": True, "private_payload_not_emitted": True,
+        "coverageComplete": complete, "published": complete, "private_payload_not_emitted": True,
     }, ensure_ascii=False))
-    return 0
+    return 0 if succeeded else 2
 
 
 def plist_text() -> str:

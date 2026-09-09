@@ -285,7 +285,8 @@ def main() -> None:
     index = INDEX_PATH.read_text(encoding="utf-8")
     assert "原公告 ↗" in app
     assert "data\\.eastmoney\\.com\\/notices\\/detail" in app
-    assert "assets/app.js?v=20260831-part4-official-notice-1" in index
+    # Cache-busting versions advance independently of the notice contract.
+    assert '<script src="assets/app.js?v=' in index
 
     print("PART4_OFFICIAL_ANNOUNCEMENT_SYNC_OFFLINE_PROBE_OK")
     print("official_title_and_column_classification=true")

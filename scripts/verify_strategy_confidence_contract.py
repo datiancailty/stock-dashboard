@@ -127,7 +127,9 @@ def main() -> None:
     assert "研究匹配度待刷新" in app
     assert "RESEARCH_MATCH_MEANING='研究匹配度，不是涨跌概率、收益概率或自动下单依据'" in app
     assert "analysis?.confidenceMeaning!==RESEARCH_MATCH_MEANING" in app
-    assert "confidenceMeaning:RESEARCH_MATCH_MEANING" in app
+    # No browser-generated fallback may pretend to be a fresh model result.
+    assert "没有可绑定的真实建议，不能提交反馈。" in app
+    assert "analysisForCommand={schemaVersion:" not in app
     assert "页面不会猜测 0.72、1" in app
     assert "legacyProbability" not in app
 

@@ -15,6 +15,16 @@ class PublicBasisTests(unittest.TestCase):
   assert path.exists(), 'public forward adapter not implemented'
   spec=importlib.util.spec_from_file_location('public_forward_basis',path);cls.mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(cls.mod)
  def build(self,rows,reports):return self.mod.build_records(rows,reports,STOCKS,ASOF)[0]
+ def test_foreign_body_codes_are_never_silently_suppressed(self):
+  doc=report('公司计划不派发现金红利。')
+  cover='合成甲股份有限公司2026年半年度报告摘要证券代码：600000证券简称：合成甲公告编号：2026-001'
+  for issuer in ['合成乙股份有限公司','本公司合成甲股份有限公司','关于合成甲股份有限公司']:
+   bad=copy.deepcopy(doc)
+   bad['pages']=[cover+'一、'+bad['pages'][0]+'三、重要事项。'+issuer+'（股票简称：合成丙，股票代码：000002）。']
+   before=copy.deepcopy(bad)
+   with self.assertRaisesRegex(ValueError,'body_identity_conflict'):self.build([row()],[bad])
+   self.assertEqual(bad,before)
+
  def test_precise_per_ten_and_latest_interim_replacement(self):
   rows=[row(),row('2025-06-30','5'),row('2026-06-30','5','董事会决议通过','2026-08-21')]
   before=copy.deepcopy(rows);r=self.build(rows,[report('每10股派发现金5元（含税）。')])

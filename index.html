@@ -7,6 +7,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://shfdpceuamzrftwufdwo.supabase.co; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" />
   <title>我的分红工具</title>
   <link rel="stylesheet" href="assets/app.css?v=20260910-stability-6" />
+  <link rel="stylesheet" href="assets/unified-watchlist.css?v=20260911-unified-1" />
 </head>
 <body>
   <main class="shell">
@@ -29,7 +30,7 @@
 
     <nav class="tabs" aria-label="功能切换">
       <button class="tab active" data-tab="today"><b>0</b><span><strong>今日看板</strong><small>VPS · 模拟盘</small></span></button>
-      <button class="tab" data-tab="holdings"><b>1</b><span><strong>自选股持仓</strong><small>私有投影 · 历史自选</small></span></button>
+      <button class="tab" data-tab="holdings"><b>1</b><span><strong>自选股管理</strong><small>统一维护 · 联动更新</small></span></button>
       <button class="tab" data-tab="positions"><b>2</b><span><strong>周BOLL股息网格</strong><small>私有历史网格</small></span></button>
       <button class="tab" data-tab="grid"><b>3</b><span><strong>股息率价格网格</strong><small>5%—7%目标价</small></span></button>
       <button class="tab" data-tab="calendar"><b>4</b><span><strong>分红日历</strong><small>私有登记、除息、派息</small></span></button>
@@ -37,52 +38,27 @@
       <button class="tab" data-tab="strategy"><b>6</b><span><strong>操作与策略</strong><small>私有记录 · 学习 · 建议</small></span></button>
     </nav>
 
-    <section id="today" class="page active monitor-page" data-part0-mode="safe-public" aria-labelledby="todayTitle">
-      <div class="page-head">
-        <div><h2 id="todayTitle">今日看板</h2><p>VPS 白名单、私有模拟盘摘要与脚本运行状态；公开页面不展示真实 VPS 或账户数据。</p></div>
-        <div class="monitor-actions"><button class="ghost" type="button" id="reloadPart0Preview">↻ 重新载入本地预览</button><button class="primary" type="button" id="openPart1FromPart0">查看 Part 1（本地模式不载入）</button></div>
-      </div>
-
-      <div id="part0PreviewBanner" class="part0-preview-banner" role="status" aria-live="polite"></div>
-      <div id="part0Health" class="monitor-health" role="status" aria-live="polite"></div>
-
-      <section class="part0-control-section" aria-labelledby="part0ControlTitle">
-        <div class="monitor-section-head"><div><h3 id="part0ControlTitle">白名单状态</h3><p>目标白名单和 VPS 已激活白名单分开显示；目标提交不等于策略已生效。</p></div><span id="part0ControlAccess" class="monitor-subtle">公开安全状态 · 私有数据待授权接入</span></div>
-        <div id="part0RevisionCards" class="part0-revision-grid"></div>
-      </section>
-
-      <section class="part0-monitor-section" aria-labelledby="part0MonitorTitle">
-        <div class="monitor-section-head"><div><h3 id="part0MonitorTitle">今日监控</h3><p id="part0MonitorIntro">VPS 独立股票池与模拟盘摘要分开显示；公开页面不展示真实股票或账户数据。</p></div><span id="part0TargetCount" class="monitor-subtle">目标白名单：登录后显示</span></div>
-        <div id="part0MonitorGrid" class="monitor-main-grid"></div>
-      </section>
-
-      <section class="runtime-block" aria-labelledby="part0RuntimeTitle">
-        <div class="monitor-section-head"><div><h3 id="part0RuntimeTitle">VPS 脚本运行</h3><p>将来仅展示脱敏运行状态；页面刷新不会触发 VPS、行情或模拟盘读取。</p></div><span class="monitor-subtle">正式周期仍为 15 分钟</span></div>
-        <div id="part0RuntimeGrid" class="runtime-grid"></div>
-      </section>
-
-      <section class="run-log" aria-labelledby="part0LogTitle">
-        <div class="run-log-top"><div><h3 id="part0LogTitle">最近运行记录</h3><small>只显示限长、脱敏的运行事件；不展示原始日志或 Provider 响应。</small></div><span id="part0PreviewKey" class="part0-preview-key">公开安全状态</span></div>
-        <div id="part0RunLog"></div>
-      </section>
-      <p id="part0SafetyNote" class="part0-safety-note">公开页面不展示账户、交易或 Provider 原始内容，也不包含密钥；正式版本仅投影获准的脱敏摘要。</p>
+    <section id="today" class="page active monitor-page unified-monitor" data-part0-mode="safe-public" aria-labelledby="todayTitle">
+      <div class="page-head"><div><h2 id="todayTitle">今日看板</h2><p>查看监控、模拟盘与运行回执；自选股统一在 Part 1 维护。</p></div><div class="monitor-actions"><button class="ghost" type="button" id="reloadPart0Preview">↻ 重新读取监控</button><button class="primary" type="button" id="openPart1FromPart0">管理自选股 →</button></div></div>
+      <div id="part0PreviewBanner" class="part0-preview-banner" role="status" hidden></div>
+      <div class="unified-monitor-bar"><div id="part0Health" class="unified-health" role="status" aria-live="polite"></div><div id="part0RevisionCards" class="unified-revisions"></div></div>
+      <div id="part0MonitorGrid" class="unified-monitor-grid"></div>
+      <section class="unified-runtime"><div class="unified-section-head"><h3>VPS 脚本运行</h3><small>只显示已有回执，不触发脚本</small></div><div id="part0RuntimeGrid" class="unified-runtime-grid"></div></section>
+      <section class="unified-run-log"><div class="unified-section-head"><h3>最近运行记录</h3><small>最近4条脱敏事件 · 北京时间</small></div><div id="part0RunLog"></div></section>
+      <p class="unified-safety">本页刷新仅重新读取 Supabase 回执；不触发行情采集、VPS运行、目标提交或交易。VPS目标提交与脚本接入单独验收。</p>
     </section>
 
-    <section id="holdings" class="page">
-      <div class="page-head"><div><h2>自选股持仓</h2><p>恢复原来的自选股卡片、当前行情、正式分红和持仓摘要；个人数据只保存在 Supabase 私有空间。</p></div><button class="primary protected" id="showAdd">＋ 添加自选股</button></div>
-      <div class="summary" id="summaryCards"></div>
-      <form class="add-form hidden" id="addForm">
-        <div class="search-box">
-          <input id="stockSearch" autocomplete="off" placeholder="输入 zgpa、平安、中国平安或 601318" />
-          <div class="suggestions hidden" id="suggestions"></div>
-          <small id="selectedStock">支持股票代码、中文名称、完整拼音和拼音首字母</small>
-        </div>
-        <input id="addShares" type="number" min="0" step="100" placeholder="持仓股数（可选）" />
-        <input id="addCost" type="number" min="0" step="0.001" placeholder="成本价（可选）" />
-        <button class="primary" type="submit">加入云端自选股</button>
+    <section id="holdings" class="page unified-page">
+      <div class="page-head"><div><h2>自选股管理</h2><p>一份清单，联动 Part 2—6；VPS 目标接入与实际激活单独验收。</p></div><div class="unified-actions"><button class="ghost" id="refreshWatchlist">↻ 重新读取清单</button><button class="ghost" id="returnToday">← 返回今日看板</button></div></div>
+      <div class="unified-scope"><b>统一添加／移除，保存后联动</b><span>Part 2 · 周BOLL</span><span>Part 3 · 股息网格</span><span>Part 4—6 · 日历／公告／策略</span></div>
+      <form class="unified-search" id="addForm">
+        <div class="search-box"><label class="sr-only" for="stockSearch">搜索自选股票</label><input id="stockSearch" autocomplete="off" placeholder="输入股票名称、代码或拼音" /><div class="suggestions hidden" id="suggestions"></div><small id="selectedStock">支持中文、代码、拼音；选择后加入草稿</small></div>
+        <button class="ghost" id="showAdd" type="submit">＋ 添加</button><span class="muted">仅管理名单，不填写股数或成本</span>
       </form>
-      <div class="notice"><b>数据边界：</b>自选清单、当前行情、正式分红和模拟盘持仓分开保存；添加/删除只修改当前账号的私有自选清单，不会修改 VPS 白名单，也不会自动买卖或删除模拟盘持仓。</div>
-      <div class="holding-list" id="holdingList"></div>
+      <div id="holdingList"></div>
+      <div class="unified-footer"><div><b id="changeTitle">登录后管理自选股</b><small id="changeDetail"></small></div><div class="unified-actions"><button class="ghost" id="cancelChanges" disabled>取消修改</button><button class="primary" id="saveChanges" disabled>保存并联动 →</button></div></div>
+      <div id="watchlistSync" class="unified-sync" role="status" aria-live="polite"></div>
+      <p class="unified-safety"><b>保存不等于新数据立即就绪。</b>移除只调整自选范围，不自动卖出，不删除持仓、操作或历史记录。VPS 目标提交与脚本接入另行处理。</p>
     </section>
 
     <section id="positions" class="page boll-page">
@@ -130,15 +106,15 @@
 
   <dialog id="loginDialog"><form method="dialog" id="loginForm"><h3>用户名 / 密码登录</h3><p class="muted">GitHub 仅用于托管网页，不参与日常业务登录。认证由 Supabase 完成；同一浏览器在未退出、未清除站点数据且会话未被撤销时会自动保持。</p><label>用户名<input id="loginUsername" autocomplete="username" autocapitalize="none" spellcheck="false" required /></label><label>密码<input id="loginPassword" type="password" autocomplete="current-password" minlength="6" required /></label><p class="form-error" id="loginError"></p><div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button type="button" class="link-button" id="recoverLink">忘记密码？</button><button type="submit" class="primary">登录</button></div></form></dialog>
   <dialog id="recoveryDialog"><form method="dialog" id="recoveryForm"><h3>申请找回密码</h3><p class="muted">输入用户名后，如果该账户允许找回，系统会向已登记的找回邮箱发送邮件。页面不会显示邮箱地址。</p><label>用户名<input id="recoveryUsername" autocomplete="username" autocapitalize="none" spellcheck="false" required /></label><p class="form-error" id="recoveryMessage" role="status"></p><div class="dialog-actions"><button type="button" class="ghost" id="cancelRecovery">取消</button><button type="submit" class="primary">发送找回邮件</button></div></form></dialog>
-  <dialog id="whitelistDialog"><form id="whitelistForm"><div class="dialog-title"><h3>管理 VPS 白名单</h3><button type="button" class="dialog-x" id="cancelWhitelist">×</button></div><p class="muted">仅 VPS 管理员可用。每次保存都会提交完整 immutable revision；必须经过 VPS 合法周期拉取、暂存、SQLite 激活、active-cache 和 ACK 后才可能生效。</p><label>完整白名单（每行一个）<textarea id="whitelistSymbols" rows="10" spellcheck="false" autocapitalize="characters" placeholder="601318.SH&#10;600036.SH"></textarea></label><div class="whitelist-editor-meta"><span id="whitelistBase">提交基线：暂无</span><b id="whitelistCount">0 / 50</b></div><div class="dialog-actions"><button type="button" class="ghost" data-close-dialog="whitelistDialog">取消</button><button type="submit" class="primary">提交新 revision</button></div></form></dialog>
   <dialog id="holdingDialog"><form id="holdingForm"><h3>持仓为只读</h3><input type="hidden" id="holdingCode" /><p class="muted" id="holdingStockName">持仓、成本、现价和盈亏只从 VPS→Supabase 私有投影读取。</p><div class="dialog-actions"><button type="button" class="primary" id="cancelHolding">知道了</button></div></form></dialog>
 
+  <dialog id="watchlistSaveDialog" class="unified-save-dialog"><h3>确认保存并联动？</h3><p id="watchlistSaveDetail"></p><ul><li>更新当前账号的自选清单，Part 2—6 随之关联。</li><li>新股票的数据仍需采集，没有记录时显示待更新或无记录。</li><li>不自动买卖，不删除持仓、操作或历史数据。</li><li><b>本次不提交 VPS 目标；实际接入与激活单独处理。</b></li></ul><div class="dialog-actions"><button type="button" class="ghost" id="closeWatchlistSave">再检查一下</button><button type="button" class="primary" id="confirmWatchlistSave">确认保存</button></div></dialog>
   <dialog id="messageDialog"><form method="dialog"><h3 id="messageTitle">提示</h3><p id="messageText"></p><button class="primary">知道了</button></form></dialog>
   <dialog id="bollSettingsDialog"><form id="bollSettingsForm"><div class="dialog-title"><h3>网格设置</h3><button type="button" class="dialog-x" data-close-dialog="bollSettingsDialog">×</button></div><div class="boll-setting buy"><h4>买入网格</h4><label>步长<select id="bollBuyStep"><option value="0.25">0.25%</option><option value="0.5">0.5%</option></select></label><label>档数<select id="bollBuyCount"><option>2</option><option>4</option><option>6</option><option>8</option></select></label></div><div class="boll-setting sell"><h4>卖出网格</h4><label>步长<select id="bollSellStep"><option value="0.25">0.25%</option><option value="0.5">0.5%</option></select></label><label>档数<select id="bollSellCount"><option>2</option><option>4</option><option>6</option><option>8</option></select></label></div><div class="boll-setting"><h4>周轨附近偏差</h4><label>下轨偏差（±%）<input id="bollLowDev" type="number" min="0" step="0.1"></label><label>上轨偏差（±%）<input id="bollHighDev" type="number" min="0" step="0.1"></label></div><div class="boll-setting"><h4>买卖点股息率浮动</h4><label>上下浮动（±百分点）<input id="bollYieldDev" type="number" min="0" step="0.05"></label></div><p class="muted">浮动仅用于信号筛选，不改变正式网格目标价。</p><div class="dialog-actions"><button type="button" class="ghost" data-close-dialog="bollSettingsDialog">取消</button><button type="submit" class="primary">保存设置</button></div></form></dialog>
   <dialog id="bollManageDialog"><form id="bollManageForm"><div class="dialog-title"><h3>编辑大板块与标的</h3><button type="button" class="dialog-x" data-close-dialog="bollManageDialog">×</button></div><p class="muted">Part 2 配置迁移到私有 RPC 后再开放写入；当前仅保留安全占位。</p><label>新板块名称<input id="bollNewGroup" placeholder="例如：水电"></label><label class="check-label"><input id="bollNewHydro" type="checkbox"> 该板块使用水电阈值</label><button type="button" class="ghost" id="bollAddGroup">添加板块</button><hr><label>搜索并添加Part 2标的<input id="bollStockSearch" list="bollStockOptions" placeholder="输入股票代码或名称"><datalist id="bollStockOptions"></datalist></label><label>放入板块<select id="bollGroupSelect"></select></label><button type="button" class="primary" id="bollAddStock">添加标的</button><div class="boll-manage-list" id="bollManageList"></div><div class="dialog-actions"><button type="button" class="primary" data-close-dialog="bollManageDialog">完成</button></div></form></dialog>
   <dialog id="tradeRecordDialog"><form id="tradeRecordForm"><h3>记录一笔真实操作</h3><p class="muted">只需填写成交信息；保存到 Supabase 私有空间后，系统保留历史股息率、日/周/月位置等已存在字段。</p><div class="trade-form-grid"><label>日期<input id="tradeDate" type="date" required /></label><label>股票<select id="tradeStock" required></select></label><label>操作<select id="tradeAction" required><option>买入</option><option>卖出</option><option>做T买入</option><option>做T卖出</option></select></label><label>成交价格<input id="tradePrice" type="number" min="0.001" step="0.001" inputmode="decimal" required /></label><label>成交股数<input id="tradeShares" type="number" min="1" step="1" inputmode="numeric" required /></label><div class="trade-auto-note"><b>系统保留：</b>正式每股分红、历史股息率、日线/周线/月线位置、操作来源和创建时间；不会调用交易接口。</div></div><div class="dialog-actions"><button type="button" class="ghost" id="cancelTradeRecord">取消</button><button type="submit" class="primary">保存操作</button></div></form></dialog>
   <script src="assets/runtime-config.js?v=20260829-private-cutover-1"></script>
   <script src="assets/supabase-js.v2.112.4.js"></script>
-  <script src="assets/app.js?v=20260910-stability-6"></script>
+  <script src="assets/app.js?v=20260911-unified-1"></script>
 </body>
 </html>

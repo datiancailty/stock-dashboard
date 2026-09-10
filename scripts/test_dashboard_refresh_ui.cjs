@@ -6,7 +6,7 @@ function context(names,extra={}){
   const c=vm.createContext({console,...extra});
   for(const name of names){
     const start=source.search(new RegExp(`^(?:async )?function ${name}\\(`,'m'));assert.ok(start>=0,`missing ${name}`);
-    const rest=source.slice(start);const stop=rest.slice(1).search(/^(?:async )?function |^(?:const|let) /m);
+    const rest=source.slice(start);const stop=rest.slice(1).search(/^(?:async )?function |^(?:const|let) |^if\(|^\$\(/m);
     vm.runInContext(stop<0?rest:rest.slice(0,stop+1),c);
   }return c;
 }

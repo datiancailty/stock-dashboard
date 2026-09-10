@@ -15,6 +15,46 @@ import public_forward_basis as forward_basis
 import confirmed_dividend_basis as confirmed_basis
 BJ=ZoneInfo('Asia/Shanghai')
 
+def isolated_forward_records(rows,docs,stocks,as_of):
+    """Never weaken report identity validation or retain a disputed numerator."""
+    codes={s['code'] for s in stocks}
+    if any(r.get('SECURITY_CODE') not in codes for r in rows) or any(d.get('code') not in codes for d in docs):
+        raise ValueError('forward_basis_public_identity_invalid')
+    try:
+        return forward_basis.build_records(rows,docs,stocks,as_of),[]
+    except ValueError as error:
+        if str(error)!='forward_basis_public_notice_body_identity_conflict':raise
+    records=[];quarantined=[]
+    for stock in stocks:
+        code=stock['code'];indexes=[i for i,r in enumerate(rows) if r.get('SECURITY_CODE')==code]
+        try:
+            batch=forward_basis.build_records([rows[i] for i in indexes],
+                    [d for d in docs if d.get('code')==code],[stock],as_of)
+        except ValueError as error:
+            if str(error)!='forward_basis_public_notice_body_identity_conflict':raise
+            # An explicit negative marker, using the Hosted nullable DTO contract.
+            # No amounts, periods or source evidence from the disputed report survive.
+            reason='public_report_identity_quarantined'
+            batch=[{'code':code,'asOf':as_of,'amount':None,'status':'missing','reason':reason,
+                    'components':{kind:{'year':None,'kind':kind,'amount':None,'status':'missing',
+                      'reason':reason,'amount_scope':'unknown','published_at':None,'source':None,'evidence':[]}
+                      for kind in ('annual','interim')}}]
+            quarantined.append(code)
+        # Restore table provenance to the ORIGINAL complete input, not the subset.
+        seen_sources=set()
+        for record in batch:
+            for component in record.get('components',{}).values():
+                for source in [component.get('source'),*component.get('evidence',[])]:
+                    if not isinstance(source,dict) or id(source) in seen_sources:continue
+                    seen_sources.add(id(source))
+                    if source.get('field',{}).get('provider')!='eastmoney_public_dividend_table':continue
+                    index=source.get('row_index')
+                    if type(index) is not int or not 0<=index<len(indexes) or source['field'].get('raw')!=rows[indexes[index]]:
+                        raise ValueError('dividend_source_index_invalid')
+                    source['row_index']=indexes[index]
+        records.extend(batch)
+    return records,quarantined
+
 def sync(*,adapter=None,publish=False,now=None,collect_forward=None,collect_actual=None,evidence_root=None):
     if adapter is None:
         import part4_official_announcement_sync as adapter
@@ -27,10 +67,12 @@ def sync(*,adapter=None,publish=False,now=None,collect_forward=None,collect_actu
     if not isinstance(actual_meta,dict) or not isinstance(actual_meta.get('confirmedCoverage'),dict) or actual_meta['confirmedCoverage'].get('complete') is not True:
         raise ValueError('dividend_actual_scan_incomplete')
     as_of=(now or datetime.now(BJ)).isoformat(timespec='seconds')
-    records=forward_basis.build_records(rows,docs,stocks,as_of)
+    records,quarantined=isolated_forward_records(rows,docs,stocks,as_of)
     actual_asof=actual_meta['asOf']
     actual=confirmed_basis.build_confirmed_records(actual_rows,stocks,actual_asof,
             coverage=actual_meta.get('confirmedCoverage'),notices=actual_docs,payment_rows=actual_meta.get('paymentRows',[]))
+    ready_cash={r['code'] for r in actual if r.get('status')=='ready'}
+    if any(code not in ready_cash for code in quarantined):raise ValueError('dividend_quarantine_without_confirmed_cash')
     codes={s['code'] for s in stocks}
     if any(len(batch)!=len(codes) or {r.get('code') for r in batch}!=codes for batch in (records,actual)):
         raise ValueError('dividend_coverage_incomplete')
@@ -56,7 +98,7 @@ def sync(*,adapter=None,publish=False,now=None,collect_forward=None,collect_actu
             if {s.get('code'):s.get(field) for s in back['stocks']}!=expected:raise ValueError('dividend_readback_mismatch')
     fc=dict(Counter(r['status'] for r in records));ac=dict(Counter(r['status'] for r in actual))
     usable={r['code'] for r in [*records,*actual] if r.get('status')=='ready'}
-    return {'status':'ok','published':publish,'readbackVerified':publish,'coverageComplete':True,'watchlistCount':len(codes),
+    return {'status':'ok','category':'fallback_used' if quarantined else 'complete','quarantinedCount':len(quarantined),'published':publish,'readbackVerified':publish,'coverageComplete':True,'watchlistCount':len(codes),
       'readyCount':fc.get('ready',0),'statusCounts':fc,'confirmedReadyCount':ac.get('ready',0),'confirmedStatusCounts':ac,
       'usableCount':len(usable),'asOf':as_of,'confirmedAsOf':actual_asof,'source':'eastmoney_public',
       'mxInvoked':False,'aiInvoked':False,'private_payload_not_emitted':True}

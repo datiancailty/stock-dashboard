@@ -7,13 +7,27 @@ outcomes independently. No Codex, profile mutation, GitHub writes or trading.
 Existing part4-daily schedule is not changed by creating/running this file.
 """
 from __future__ import annotations
-import argparse,json,os,re,subprocess,sys
+import argparse,json,os,re,signal,subprocess,sys
 from datetime import datetime,timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 from dashboard_refresh_health import HealthReporter,current_release
 ROOT=Path(__file__).resolve().parents[1]
 BJ=ZoneInfo('Asia/Shanghai')
+STAGE_TIMEOUT_SECONDS=900
+
+def _run_child(command,env):
+ # A stage owns its process group: killing only Python can leave curl or other
+ # descendants running after the orchestrator has already recorded a timeout.
+ with subprocess.Popen(command,cwd=ROOT,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,
+                       text=True,start_new_session=True) as child:
+  try:stdout,stderr=child.communicate(timeout=STAGE_TIMEOUT_SECONDS)
+  except BaseException:
+   try:os.killpg(child.pid,signal.SIGKILL)
+   except ProcessLookupError:pass
+   child.wait(timeout=5)
+   raise
+  return subprocess.CompletedProcess(command,child.returncode,stdout,stderr)
 
 def run_stage(name,args,publish):
  env=os.environ.copy()
@@ -22,7 +36,7 @@ def run_stage(name,args,publish):
  env.pop('MX_APIKEY',None)
  mode=[] if publish and name == 'notices' else ['--publish'] if publish else ['--dry-run']
  try:
-  result=subprocess.run([sys.executable,*args,*mode],cwd=ROOT,env=env,capture_output=True,text=True,timeout=900,check=False)
+  result=_run_child([sys.executable,*args,*mode],env)
   payload=json.loads(result.stdout)
   if not isinstance(payload,dict):raise ValueError()
   # Accept only documented sanitized aggregate stage summary; never pass payload
@@ -46,7 +60,7 @@ def run_stage(name,args,publish):
  except subprocess.TimeoutExpired:return {'status':'error','category':'stage_timeout','published':False}
  except Exception:return {'status':'error','category':'stage_response_or_execution_failed','published':False}
 
-def run_refresh(publish=False,health_reporter=None):
+def run_refresh(publish=False,health_reporter=None,stage_callback=None):
  now=datetime.now(BJ);start=(now.date()-timedelta(days=34)).isoformat()
  commands={
  'notices':['scripts/part4_official_announcement_sync.py','sync','--from',start,'--to',now.date().isoformat()],
@@ -59,10 +73,18 @@ def run_refresh(publish=False,health_reporter=None):
  stages={}
  if health_reporter is not None:health_reporter.start()
  for name,args in commands.items():
-  if health_reporter is not None:health_reporter.stage(name,{'status':'running','category':'running','published':False})
+  running={'status':'running','category':'running','published':False}
+  if stage_callback is not None:stage_callback(name,running)
+  if health_reporter is not None:health_reporter.stage(name,running)
   # Public forward collector now proves its own full official-source scan;
   # it no longer consumes the Part4 notice writer's result.
-  stages[name]=run_stage(name,args,publish)
+  try:
+   value=run_stage(name,args,publish)
+   if not isinstance(value,dict) or value.get('status') not in ('ok','error','skipped'):raise ValueError()
+   stages[name]=value
+  except subprocess.TimeoutExpired:stages[name]={'status':'error','category':'stage_timeout','published':False}
+  except Exception:stages[name]={'status':'error','category':'stage_response_or_execution_failed','published':False}
+  if stage_callback is not None:stage_callback(name,stages[name])
   if health_reporter is not None:health_reporter.stage(name,stages[name])
  complete=all(s['status']=='ok' for s in stages.values())
  published=publish and complete and all(s.get('published') is True for s in stages.values())

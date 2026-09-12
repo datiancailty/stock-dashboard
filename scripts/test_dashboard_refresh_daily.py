@@ -25,6 +25,51 @@ class DailyTests(unittest.TestCase):
    saved=json.loads((state/'state.json').read_text());self.assertNotIn('successfulDate',saved);self.assertEqual(saved['attemptedDate'],'2026-09-09')
    again=self.m.run_once(state_dir=state,refresh_fn=call,publish=True,automatic=True,now=now,release_check=lambda:'synthetic-release')
    self.assertEqual(again['category'],'already_attempted');self.assertEqual(call.call_count,1)
+ def test_abrupt_exit_preserves_current_stage_checkpoints_without_auto_replay(self):
+  import subprocess,sys
+  with tempfile.TemporaryDirectory() as directory:
+   state=Path(directory)/'state';self.m.private_dir(state)
+   old={'attemptedDate':'2026-09-10','successfulDate':'2026-09-10','lastStatus':'ok',
+        'finishedAt':'2026-09-10T18:38:30+08:00','result':{'status':'ok','published':True,
+        'stages':{k:{'status':'ok','published':True,'stored':999} for k in self.m.STAGES}}}
+   self.m.save_state(state/'state.json',old)
+   code='''import sys,os
+from datetime import datetime
+sys.path.insert(0, SCRIPTS)
+import dashboard_refresh_daily as daily
+import dashboard_refresh_sync as sync
+import dashboard_refresh_health as health
+class MemoryHealth(health.HealthReporter):
+ def __init__(self,**kwargs):super().__init__(adapter=object(),**kwargs)
+ def emit(self):pass
+health.HealthReporter=MemoryHealth
+def stage(name,args,publish):
+ if name=='news':os._exit(23)
+ return {'status':'ok','category':'complete','published':True,'stored':1}
+sync.run_stage=stage
+daily.run_once(state_dir=STATE,publish=True,now=datetime.fromisoformat('2026-09-11T18:05:06+08:00'))
+'''.replace('SCRIPTS',repr(str(Path(__file__).resolve().parent))).replace('STATE',repr(str(state)))
+   child=subprocess.run([sys.executable,'-c',code],capture_output=True,text=True,timeout=10)
+   self.assertEqual(child.returncode,23,'synthetic abrupt exit must occur after the first three stages')
+   saved=self.m.read_state(state/'state.json')
+   self.assertIsNone(saved.get('finishedAt'),'new run must not inherit prior finishedAt')
+   self.assertEqual(saved['lastStatus'],'running');self.assertEqual(saved['successfulDate'],'2026-09-10')
+   self.assertEqual(saved['result']['status'],'running');self.assertFalse(saved['result']['published'])
+   for name in ('notices','quotes','technical'):
+    self.assertEqual(saved['result']['stages'][name],{'status':'ok','category':'complete','published':True,'stored':1})
+   self.assertEqual(saved['result']['stages']['news']['status'],'running')
+   self.assertEqual(saved['result']['stages']['forward']['status'],'pending')
+   replay=Mock();now=datetime.fromisoformat('2026-09-11T18:16:00+08:00')
+   result=self.m.run_once(state_dir=state,refresh_fn=replay,publish=True,automatic=True,now=now,release_check=lambda:'synthetic-release')
+   replay.assert_not_called()
+   self.assertEqual(result['status'],'error');self.assertEqual(result['category'],'daily_previous_attempt_interrupted')
+   recovered=self.m.read_state(state/'state.json')
+   self.assertEqual(recovered['lastStatus'],'error');self.assertEqual(recovered['successfulDate'],'2026-09-10')
+   self.assertIsNone(recovered.get('finishedAt'),'detection time is not the unknown interruption time')
+   self.assertEqual(recovered['interruptedDetectedAt'],now.isoformat(timespec='seconds'))
+   self.assertEqual(result['stages']['quotes']['stored'],1)
+   self.assertEqual(result['stages']['news']['status'],'error')
+   self.assertEqual(result['stages']['forward']['status'],'skipped')
  def test_completed_real_publish_advances_success_date(self):
   with tempfile.TemporaryDirectory() as d:
    now=datetime.fromisoformat('2026-09-09T18:06:00+08:00')
@@ -62,4 +107,16 @@ class DailyTests(unittest.TestCase):
    with self.assertRaisesRegex(ValueError,'state_invalid'):
     self.m.run_once(state_dir=state,refresh_fn=call,publish=True,automatic=False)
    call.assert_not_called()
+ def test_legacy_interruption_does_not_relabel_previous_day_success_as_current(self):
+  with tempfile.TemporaryDirectory() as directory:
+   state=Path(directory)
+   self.m.save_state(state/'state.json',{'attemptedDate':'2026-09-11','successfulDate':'2026-09-10',
+    'lastStatus':'running','finishedAt':'2026-09-10T18:38:30+08:00',
+    'result':{'status':'ok','published':True,'stages':{k:{'status':'ok','published':True} for k in self.m.STAGES}}})
+   refresh=Mock()
+   result=self.m.run_once(state_dir=state,refresh_fn=refresh,publish=True,automatic=True,
+    now=datetime.fromisoformat('2026-09-11T18:16:00+08:00'),release_check=lambda:'synthetic-release')
+   self.assertEqual(result['status'],'error');self.assertFalse(result['published'])
+   self.assertEqual(result['category'],'daily_previous_attempt_interrupted');self.assertEqual(result['stages'],{})
+   refresh.assert_not_called();self.assertEqual(self.m.read_state(state/'state.json')['successfulDate'],'2026-09-10')
 if __name__=='__main__':unittest.main()

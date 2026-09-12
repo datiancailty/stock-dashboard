@@ -90,14 +90,33 @@ def run_once(*,state_dir=None,refresh_fn=None,publish=False,automatic=False,now=
   except BlockingIOError:return {'status':'skipped','category':'already_running','published':False}
   path=state_dir/'state.json';state=read_state(path)
   reason=due_reason(now,state) if automatic else None
+  if reason and state.get('lastStatus')=='running':
+   # The exclusive lock is free, so the old attempt is no longer executing.
+   # Do not replay any writers or mistake the legacy previous-day result for
+   # this run's checkpoints. Hosted reconciliation remains a separate action.
+   prior=state.get('result',{}) if state.get('checkpointVersion')==1 else {}
+   stages=prior.get('stages',{}) if isinstance(prior,dict) else {}
+   stages={k:(v if v.get('status') in ('ok','error') else
+               {'status':'error' if v.get('status')=='running' else 'skipped','category':'refresh_interrupted','published':False})
+           for k,v in stages.items() if k in STAGES and isinstance(v,dict)} if isinstance(stages,dict) else {}
+   result={'status':'error','category':'daily_previous_attempt_interrupted','published':False,'stages':stages}
+   state.update(lastStatus='error',finishedAt=None,interruptedDetectedAt=now.isoformat(timespec='seconds'),result=result)
+   save_state(path,state)
+   return result
   if reason:return {'status':'skipped','category':reason,'published':False,'date':now.date().isoformat()}
-  state={**state,'attemptedDate':target_slot(now),'startedAt':now.isoformat(timespec='seconds'),'sourceRelease':release,'lastStatus':'running'}
+  state={**state,'attemptedDate':target_slot(now),'startedAt':now.isoformat(timespec='seconds'),'sourceRelease':release,'lastStatus':'running',
+         'finishedAt':None,'checkpointVersion':1,'result':{'status':'running','published':False,
+         'stages':{k:{'status':'pending','category':'pending','published':False} for k in STAGES}}}
+  state.pop('interruptedDetectedAt',None)
   save_state(path,state)
   if refresh_fn is None:
    from dashboard_refresh_sync import run_refresh
    from dashboard_refresh_health import HealthReporter,current_release
    reporter=HealthReporter(release=current_release(ROOT),now=now)
-   refresh_fn=lambda publish:run_refresh(publish,reporter)
+   def checkpoint(name,value):
+    state['result']['stages'][name]=dict(value)
+    save_state(path,state)
+   refresh_fn=lambda publish:run_refresh(publish,reporter,checkpoint)
   try:result=refresh_fn(True)
   except Exception:result={'status':'error','category':'refresh_exception','published':False,'stages':{}}
   if not isinstance(result,dict):result={'status':'error','category':'refresh_result_invalid','published':False,'stages':{}}

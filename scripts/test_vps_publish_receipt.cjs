@@ -36,6 +36,19 @@ async function run(namespace){
   await db.query('insert into public.vps_sync_devices(device_id,enabled) values($1,true) on conflict(device_id) do update set enabled=true',[device]);
   const report=await seed(3);const before=await state();
   if(candidate)await db.exec(candidate);
+  const followupFlag=process.argv.indexOf('--followup');
+  const followup=followupFlag<0?null:fs.readFileSync(process.argv[followupFlag+1],'utf8');
+  if(followup)await db.exec(followup);
+  if(process.argv.includes('--require-qualified-snapshot-deletes')){
+   // Source-level counterpart of pg-safeupdate's post-parse WHERE gate.
+   // PGlite does not load that native extension; do not claim it does.
+   const body=(await db.query("select prosrc from pg_proc where oid='public.vps_sync_ingest_report_legacy(text,jsonb)'::regprocedure")).rows[0].prosrc;
+   for(const table of ['vps_symbol_states','vps_sim_positions']){
+    const deletes=[...body.matchAll(new RegExp('delete\\s+from\\s+public\\.'+table+'\\b[^;]*;','gi'))];
+    check(deletes.length===1,'exact snapshot DELETE count for '+table);
+    check(/\bwhere\b/i.test(deletes[0][0]),'Hosted WHERE safety gate rejects unconditional snapshot DELETE: '+table);
+   }
+  }
   if(process.argv.includes('--ack-only-diagnostic')){
    const def=(await db.query("select pg_get_functiondef('public.vps_sync_ingest_report_v2_base(text,jsonb)'::regprocedure) as def")).rows[0].def;
    const changed=def.replace('on conflict (device_id, ack_id) do nothing','on conflict on constraint vps_sync_ack_receipts_pkey do nothing');assert.notEqual(changed,def);await db.exec(changed);
@@ -73,11 +86,50 @@ async function run(namespace){
   for(const role of ['anon','authenticated']){
    await db.exec('set role '+role);await reject(publish,args,'42501');await db.exec('reset role');
   }
+  if(followup){
+   const snapshots=async()=> (await db.query("select jsonb_build_object('symbols',(select jsonb_agg(to_jsonb(s) order by symbol) from public.vps_symbol_states s),'positions',(select jsonb_agg(to_jsonb(p) order by symbol) from public.vps_sim_positions p),'events',(select jsonb_agg(to_jsonb(e) order by id) from public.vps_runtime_events e)) as value")).rows[0].value;
+   const scopedPublish=async(label,value)=>{
+    await db.exec('set role service_role');
+    try{return (await db.query(publish,[device,sha(label),sha(JSON.stringify(value)),JSON.stringify(value)])).rows[0].result;}
+    finally{await db.exec('reset role');}
+   };
+   // These are display snapshots, not holdings authority or historical ledgers.
+   // Assert the existing whole-snapshot contract: stale rows and old omitted
+   // fields disappear, duplicates still fail, and invalid input rolls back.
+   await db.query("update public.vps_symbol_states set display_name='synthetic stale name' where symbol=$1",[report.symbol_states[0].symbol]);
+   const reduced=structuredClone(report);reduced.symbol_states=reduced.symbol_states.slice(0,26);
+   const pos=(symbol)=>({symbol,held_quantity:100,available_quantity:100,position_state:'held',source_generated_at_cn:report.generated_at_cn,active_revision_no:3});
+   reduced.paper_positions=[pos(report.symbol_states[0].symbol),pos(report.symbol_states[1].symbol)];
+   await scopedPublish('snapshot-reduced',reduced);
+   let view=await snapshots();check(view.symbols.length===26&&view.positions.length===2,'nonempty snapshot replacement');
+   check(view.symbols.every(x=>x.display_name===null),'omitted field cannot retain prior snapshot value');
+   const replaced=structuredClone(reduced);replaced.symbol_states=report.symbol_states.slice(2);replaced.paper_positions=[pos(report.symbol_states[2].symbol)];
+   await scopedPublish('snapshot-same-count-new-members',replaced);view=await snapshots();
+   assert.deepEqual(view.symbols.map(x=>x.symbol),replaced.symbol_states.map(x=>x.symbol).sort());checks++;
+   check(view.positions.length===1&&view.positions[0].symbol===report.symbol_states[2].symbol,'stale position snapshot row removed');
+   for(const badKind of ['duplicate-symbol','duplicate-position','invalid-position']){
+    const bad=structuredClone(replaced);
+    if(badKind==='duplicate-symbol')bad.symbol_states.push(structuredClone(bad.symbol_states[0]));
+    if(badKind==='duplicate-position')bad.paper_positions.push(structuredClone(bad.paper_positions[0]));
+    if(badKind==='invalid-position')bad.paper_positions[0].available_quantity=101;
+    const priorState=await state(),priorSnapshots=await snapshots();
+    await db.exec('set role service_role');
+    try{await reject(publish,[device,sha(badKind),sha(JSON.stringify(bad)),JSON.stringify(bad)],badKind==='invalid-position'?'P0001':'23505');}
+    finally{await db.exec('reset role');}
+    assert.deepEqual(await state(),priorState);assert.deepEqual(await snapshots(),priorSnapshots);checks+=2;
+   }
+   const empty=structuredClone(report);empty.symbol_states=[];empty.paper_positions=[];
+   await scopedPublish('empty-display-snapshot',empty);view=await snapshots();
+   check(view.symbols===null&&view.positions===null,'explicit empty display snapshot clears old rows');
+   check((await counts()).active===3,'empty display snapshot does not remove active control revision');
+   await scopedPublish('snapshot-restored',report);check((await snapshots()).symbols.length===28,'later snapshot replaces empty display');
+  }
   if(candidate){
-   const beforeRepeat=await state();await db.exec(candidate);assert.deepEqual(await state(),beforeRepeat);checks++;
+   const repairToRepeat=followup||candidate;
+   const beforeRepeat=await state();await db.exec(repairToRepeat);assert.deepEqual(await state(),beforeRepeat);checks++;
    const sig='public.vps_sync_ingest_report_v2_base(text,jsonb)';const original=(await db.query('select pg_get_functiondef($1::regprocedure) as def',[sig])).rows[0].def;
    const altered=original.replace(/declare/i,'declare\n-- synthetic drift');check(altered!==original,'drift probe changed body');await db.exec(altered);
-   let blocked;try{await db.exec(candidate);}catch(e){blocked=e;}await db.exec('rollback');check(blocked?.code==='P0001'&&/source changed/.test(blocked.message),'unexpected source drift fails closed');
+   let blocked;try{await db.exec(repairToRepeat);}catch(e){blocked=e;}await db.exec('rollback');check(blocked?.code==='P0001'&&/source changed/.test(blocked.message),'unexpected source drift fails closed');
   }
   return {namespace,passed:true};
  }finally{await db.close();}

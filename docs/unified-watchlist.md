@@ -14,7 +14,7 @@
 
 - The real `vps_private_get_portfolio` contract is one `primary` object. The UI also accepts the older array envelope, but an initialized envelope without a positive projection sequence and valid source timestamp is not treated as an observed account or empty holdings.
 - Process state and indicator success have no dedicated fields in the current runtime RPC. The page says `未接入`; a strategy-cycle timestamp must not be interpreted as a self-check or successful indicator calculation.
-- A runtime receipt older than 30 minutes is labelled `回执较旧`, not a claim that the VPS has failed. Future-dated receipts are untrusted for health. A recent `health_status=ok` is labelled as a receipt report, not a promise of future execution or order capability.
+- The reporter schedule is now weekdays 10:05/11:55/15:20 Asia/Shanghai. The unchanged UI still labels a runtime receipt older than 30 minutes `回执较旧`; long planned gaps/weekends therefore produce this known display mismatch, not a claim that the VPS has failed. Future-dated receipts are untrusted for health. A recent `health_status=ok` is labelled as a receipt report, not a promise of future execution or order capability.
 - All displayed runtime timestamps use Beijing time. The browser re-reads private RPCs every 15 minutes only while visible. It never contacts the VPS, providers or trading APIs.
 - Signed-out pages are empty of private records; a private Part opens login. Sign-out clears draft labels, search and confirmation dialogs.
 

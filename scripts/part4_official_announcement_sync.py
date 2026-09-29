@@ -359,7 +359,7 @@ def normalize_generic_candidate(stock: Stock, raw: dict[str, Any], window_start:
     return None
 
 
-def fetch_notice_page(code: str, page: int) -> dict[str, Any]:
+def fetch_notice_page(code: str, page: int, *, window_start: date | None = None, window_end: date | None = None) -> dict[str, Any]:
     params = {
         "sr": "-1",
         "page_size": str(NOTICE_PAGE_SIZE),
@@ -370,6 +370,8 @@ def fetch_notice_page(code: str, page: int) -> dict[str, Any]:
         "s_node": "0",
         "stock_list": code,
     }
+    if window_start is not None and window_end is not None:
+        params.update(begin_time=window_start.isoformat(), end_time=window_end.isoformat())
     payload = safe_curl_json(f"{NOTICE_API}?{urlencode(params)}")
     if payload.get("success") not in (1, True, "1"):
         raise SyncError("official_notice_response_failed")
@@ -391,7 +393,7 @@ def scan_stock(stock: Stock, window_start: date, window_end: date) -> tuple[list
     previous_page_oldest: date | None = None
     try:
         while page <= MAX_PAGES_PER_STOCK:
-            data = fetch_notice_page(stock.code, page)
+            data = fetch_notice_page(stock.code, page, window_start=window_start, window_end=window_end)
             rows = data.get("list") or []
             if not isinstance(rows, list):
                 raise SyncError("official_notice_page_rows_invalid")
@@ -431,6 +433,8 @@ def scan_stock(stock: Stock, window_start: date, window_end: date) -> tuple[list
                 if text_date is None:
                     raise SyncError("official_notice_row_date_invalid")
                 row_date = date.fromisoformat(text_date)
+                if not window_start <= row_date <= window_end:
+                    raise SyncError("official_notice_window_mismatch")
                 page_dates.append(row_date)
                 if window_start <= row_date <= window_end:
                     official_notice_count += 1

@@ -1,0 +1,11 @@
+{
+  "version": "v2026.09.29.1",
+  "document_sha256": "9e3004df402fb9f5a1b8bad5a082ae3281fd5ce89d3b715cab9d670de0ce427e",
+  "scope": "calendar_window_worker_only",
+  "files": {
+    "scripts/part4_official_announcement_sync.py": "0876e6184ba45f94e9d78a0861c3425d41f631c41be3ed1a93caf7e6de86babe",
+    "scripts/test_part4_notice_window.py": "6738152a35d3c42d617eb54c505e1d30894d00b2c21768bd17b3eca5bb3c61b5",
+    "scripts/verify_part4_official_announcement_sync.py": "54bb8a8690d417afb221506bc6b3b473eef25909ef0282c1136e031abd6533cf",
+    "dashboard-refresh-release.json": "e253da80c650b82288ceb6e4f06f8e2da21974f78b1a972882d7eac470e98ce4"
+  }
+}

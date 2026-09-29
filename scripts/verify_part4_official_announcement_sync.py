@@ -85,7 +85,7 @@ def main() -> None:
     old_fetch = getattr(sync, "fetch_notice_page")
     calls: list[int] = []
 
-    def fake_fetch(code: str, page: int) -> dict:
+    def fake_fetch(code: str, page: int, **window) -> dict:
         calls.append(page)
         if page == 1:
             return {
@@ -94,7 +94,7 @@ def main() -> None:
                 "total_hits": 2,
             }
         return {
-            "list": [direct_raw("AN202607010000000001", "合成标的:旧公告", [], "2026-07-01")],
+            "list": [direct_raw("AN202608010000000001", "合成标的:普通公告", [], "2026-08-01")],
             "page_size": 1,
             "total_hits": 2,
         }
@@ -104,18 +104,18 @@ def main() -> None:
     setattr(sync, "fetch_notice_page", old_fetch)
     assert calls == [1, 2]
     assert coverage.complete and coverage.error is None and coverage.pages == 2
-    assert len(events) == 1 and not candidates and count == 1
+    assert len(events) == 1 and not candidates and count == 2
 
-    def fake_unordered_fetch(code: str, page: int) -> dict:
+    def fake_unordered_fetch(code: str, page: int, **window) -> dict:
         if page == 1:
-            return {"list":[direct_raw("AN202607010000000001","合成标的:旧公告",[],"2026-07-01")],"page_size":1,"total_hits":2}
+            return {"list":[direct_raw("AN202608010000000001","合成标的:普通公告",[],"2026-08-01")],"page_size":1,"total_hits":2}
         return {"list":[direct_raw("AN202608281828644258","合成标的:关于中期利润分配方案的公告",["分配预案"])],"page_size":1,"total_hits":2}
     setattr(sync, "fetch_notice_page", fake_unordered_fetch)
     _, _, unordered_coverage, _ = sync.scan_stock(stock, start, end)
     setattr(sync, "fetch_notice_page", old_fetch)
     assert not unordered_coverage.complete and unordered_coverage.error == "official_notice_cross_page_order_invalid", "unordered pages must fail closed"
 
-    def fake_duplicate_fetch(code: str, page: int) -> dict:
+    def fake_duplicate_fetch(code: str, page: int, **window) -> dict:
         if page == 1:
             return {"list":[direct_raw("AN202608281828644258","合成标的:关于中期利润分配方案的公告",["分配预案"]),direct_raw("AN202608281828644257","合成标的:分红方案公告",["分配预案"])],"page_size":2,"total_hits":4}
         return {"list":[direct_raw("AN202608281828644257","合成标的:分红方案公告",["分配预案"]),direct_raw("AN202608281828644256","合成标的:权益分派实施公告",["权益分派"])],"page_size":2,"total_hits":4}
@@ -266,7 +266,8 @@ def main() -> None:
     assert "中期分红预披露" in future_worker
     assert "personal_sync_future_dividend_grid" in future_worker
     assert "personal_sync_market_snapshot" in quote_worker
-    assert "market_quote_coverage_incomplete" in quote_worker
+    assert "sources.fetch_quotes" in quote_worker
+    assert "data_coverage_incomplete" in (ROOT / "scripts" / "dashboard_data_sources.py").read_text(encoding="utf-8")
     assert "market_snapshot_coverage_incomplete" in migration
     assert "archived_at" in migration
     assert "update public.personal_documents" not in migration.lower()

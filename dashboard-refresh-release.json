@@ -1,12 +1,11 @@
 {
-  "version": "v2026.09.13.2",
-  "sourceBase": "3b12a97c6b24989a26b809d2ccf278559ef44711",
+  "version": "v2026.09.29.1",
+  "sourceBase": "0d3f3f1a8bb12ceb40ca59da26b946d3accf4ad2",
   "scope": "immutable_python_data_worker_only",
   "dataPlane": "authenticated_supabase",
   "aiInvoked": false,
   "mxDataRequired": false,
   "frontendBuild": "20260911-unified-1",
-  "runtimeBundleManifestSha256": "5a1f3d1cd9563e309566bd4f45e71b65ed23d7b3720a5c33d23647b8274d7b35",
   "files": {
     "assets/app.js": "298dc018347bbc0c89efb70723a4fda03826a0191f8c71de7aac4dec26e6c6d1",
     "assets/runtime-config.js": "0d8ae6ce2af54bcc661cafefb2c72913da0e55d4e767dc83dc2597f143ab7bb7",
@@ -19,7 +18,7 @@
     "scripts/dashboard_technical_indicators.py": "357fa184c7d567f44f2553e78fab19a5ee8488b65c8bbbddd73a7ce9eac722aa",
     "scripts/forward_dividend_basis.py": "fdf5e1e1cc5a169dc033f25c1746248ff1431c52cde036f7a76f79a334574135",
     "scripts/part4_daily_sync.py": "48044916d7968de168678f0ace4eb823c02aabae68679dcd183a1439fe086e2a",
-    "scripts/part4_official_announcement_sync.py": "aae4007535362c088d0415e1c7fc7fc8baf5d69fae9130f879f2db5712c7d49e",
+    "scripts/part4_official_announcement_sync.py": "0876e6184ba45f94e9d78a0861c3425d41f631c41be3ed1a93caf7e6de86babe",
     "scripts/personal_dividend_refresh_sync.py": "0c523ed72033ea9a460efe185d4008c081ee22186ea85af3bd4245fba49e6cbb",
     "scripts/personal_forward_basis_sync.py": "a5d60f3a231995b8af70edbebbcbd55e8ce5c94201904fb0786179acfdc8839b",
     "scripts/personal_future_dividend_grid_sync.py": "bee52de65cd54f6c3027a67d17b3118980fefc8db21cb38fa15ab87a0a778842",

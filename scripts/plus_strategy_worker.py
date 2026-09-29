@@ -7,7 +7,8 @@ same authenticated Supabase session boundary as the browser, and publishes
 only validated derived results through one owner-scoped RPC.
 
 It never reads, accepts, or emits an OpenAI Platform API key. The refresh token
-is kept in the macOS Keychain; the user's password is used only by ``setup``
+is kept in the macOS Keychain by default, or an explicitly configured POSIX
+file store (DASHBOARD_SECRET_DIR); the user's password is used only by ``setup``
 and is never written to disk.
 """
 from __future__ import annotations
@@ -208,6 +209,12 @@ def load_config(worker_dir: Path) -> dict[str, str]:
 
 
 def keychain_read(service: str, account: str) -> str:
+    if "DASHBOARD_SECRET_DIR" in os.environ:
+        from dashboard_secret_store import SecretStoreError, read
+        try:
+            return read(service, account)
+        except SecretStoreError as error:
+            raise WorkerError(str(error)) from None
     completed = subprocess.run(
         ["security", "find-generic-password", "-a", account, "-s", service, "-w"],
         capture_output=True,
@@ -222,6 +229,13 @@ def keychain_read(service: str, account: str) -> str:
 
 
 def keychain_write(service: str, account: str, value: str) -> None:
+    if "DASHBOARD_SECRET_DIR" in os.environ:
+        from dashboard_secret_store import SecretStoreError, write
+        try:
+            write(service, account, value)
+        except SecretStoreError as error:
+            raise WorkerError(str(error)) from None
+        return
     if not value or "\n" in value or "\r" in value or "\x00" in value:
         raise WorkerError("worker_refresh_token_invalid")
     # ``security -w`` reads from its controlling terminal rather than ordinary
@@ -295,6 +309,13 @@ def keychain_write(service: str, account: str, value: str) -> None:
 
 
 def keychain_delete(service: str, account: str) -> None:
+    if "DASHBOARD_SECRET_DIR" in os.environ:
+        from dashboard_secret_store import SecretStoreError, delete
+        try:
+            delete(service, account)
+        except SecretStoreError as error:
+            raise WorkerError(str(error)) from None
+        return
     subprocess.run(
         ["security", "delete-generic-password", "-a", account, "-s", service],
         capture_output=True,

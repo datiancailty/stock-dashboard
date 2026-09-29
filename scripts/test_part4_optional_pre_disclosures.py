@@ -109,7 +109,7 @@ class OptionalPreDisclosureTests(unittest.TestCase):
                 [direct], [self.candidate], [sync.ScanCoverage(self.stock.code, 1, True, None)], 2)))
             stack.enter_context(patch.object(sync, "structured_dividend_payload", return_value=self.payload))
             stack.enter_context(patch.object(sync, "part4_writer_secret", return_value="synthetic"))
-            rpc = stack.enter_context(patch.object(sync, "private_rpc", return_value={"requested": 1, "stored": 1}))
+            rpc = stack.enter_context(patch.object(sync, "private_rpc", side_effect=[{"requested": 1, "stored": 1}, {"events": [direct]}]))
             stack.enter_context(contextlib.redirect_stdout(output))
             self.assertEqual(sync.main(), 0)
         result = json.loads(output.getvalue())
@@ -118,7 +118,7 @@ class OptionalPreDisclosureTests(unittest.TestCase):
         self.assertEqual(result["warnings"], [{"category": "structured_dividend_corroboration_missing",
                                                "count": 1}])
         self.assertTrue(result["coverageComplete"])
-        self.assertEqual(rpc.call_args.args[4]["p_events"], [direct])
+        self.assertEqual(rpc.call_args_list[0].args[4]["p_events"], [direct])
 
 
 if __name__ == "__main__":

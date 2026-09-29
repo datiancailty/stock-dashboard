@@ -1,0 +1,9 @@
+[Unit]
+Description=Dashboard cloud archive at 20:00 and 22:00 Asia/Shanghai
+[Timer]
+OnCalendar=Mon..Fri *-*-* 20,22:00:00 Asia/Shanghai
+Persistent=true
+AccuracySec=1min
+Unit=stock-dashboard-archive.service
+[Install]
+WantedBy=timers.target

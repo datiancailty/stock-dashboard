@@ -37,7 +37,17 @@ def request_json(url, params, headers, *, get=None, sleep=time.sleep, monotonic=
             raise DataSourceError('data_retry_budget_exhausted')
         retry_after = None
         try:
-            response = get(url, params=params, headers=headers, timeout=min(20, remaining), allow_redirects=False)
+            from dashboard_diagnostics import emit
+            import uuid
+            diagnostic = {'host': parsed.hostname, 'attempt': attempt + 1, 'request_id': uuid.uuid4().hex}
+            request_started = time.monotonic()
+            emit('http_start', **diagnostic)
+            try:
+                response = get(url, params=params, headers=headers, timeout=min(20, remaining), allow_redirects=False)
+            except BaseException:
+                emit('http_error', **diagnostic, elapsed_ms=int((time.monotonic()-request_started)*1000))
+                raise
+            emit('http_end', **diagnostic, elapsed_ms=int((time.monotonic()-request_started)*1000), returncode=response.status_code)
             if response.status_code == 429 or 500 <= response.status_code <= 599:
                 retry_after = response.headers.get('Retry-After')
                 raise DataSourceError('data_rate_limited' if response.status_code==429 else 'data_transient_failure')

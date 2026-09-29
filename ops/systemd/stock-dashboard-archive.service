@@ -1,0 +1,22 @@
+[Unit]
+Description=Archive sanitized Dashboard logs only, never replay data jobs
+Wants=network-online.target
+After=network-online.target
+[Service]
+Type=oneshot
+User=dashboard
+Group=dashboard
+Environment=HOME=/var/lib/stock-dashboard
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 -B /opt/stock-dashboard/current/ops/dashboard_vps.py archive
+TimeoutStartSec=10min
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/stock-dashboard
+MemoryMax=128M
+CPUQuota=25%
+TasksMax=16
+Restart=no

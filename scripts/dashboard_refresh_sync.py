@@ -34,6 +34,7 @@ def run_stage(name,args,publish):
  # Default Dashboard data jobs never receive MX credentials. Broker/account
  # integration lives in a separate VPS process and is not modified here.
  env.pop('MX_APIKEY',None)
+ env['DASHBOARD_DIAGNOSTICS_STAGE']=name
  mode=[] if publish and name == 'notices' else ['--publish'] if publish else ['--dry-run']
  try:
   result=_run_child([sys.executable,*args,*mode],env)
@@ -49,6 +50,8 @@ def run_stage(name,args,publish):
   if publish and not published:ok=False
   if ok and payload.get('fallbackReasons'):category='fallback_used'
   out={'status':'ok' if ok else 'error','category':category,'published':published}
+  if 'readbackVerified' in payload or 'verified' in payload:
+   out['readbackVerified']=payload.get('readbackVerified') is True or payload.get('verified') is True
   source=payload.get('source')
   if isinstance(source,str) and source in {'hithink_snapshot','eastmoney_public_snapshot','hithink_daily','public_company_notice_index','eastmoney_public_dividend_table_and_official_reports','eastmoney_public','legacy_public_daily'}:out['source']=source
   for key in ('stored','watchlistCount','readyCount','missingCount','itemCount','recordCount','new','successfulBatchCount','confirmedReadyCount','usableCount'):

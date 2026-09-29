@@ -1,0 +1,20 @@
+[Unit]
+Description=Preserve existing Part3 projection receiver after Dashboard refresh
+After=stock-dashboard-daily.service
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/bin/python3 -B /opt/stock-dashboard/current/ops/dashboard_vps.py mirror
+Environment=PYTHONDONTWRITEBYTECODE=1
+TimeoutStartSec=120
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateNetwork=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/stock-dashboard /var/lib/stock-sim-v31f-15m/display-yield-snapshots /var/lib/stock-sim-v31f-15m/active
+MemoryMax=128M
+CPUQuota=25%
+TasksMax=16
+Restart=no

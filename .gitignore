@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 .DS_Store
+# Frozen strategy bridge dependency belongs only to the private VPS bundle.
+bridge/

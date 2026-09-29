@@ -1,0 +1,30 @@
+[Unit]
+Description=Private Dashboard daily refresh (independent of trading)
+Wants=network-online.target
+After=network-online.target
+OnSuccess=stock-dashboard-part3.service
+OnFailure=stock-dashboard-part3.service
+
+[Service]
+Type=oneshot
+User=dashboard
+Group=dashboard
+WorkingDirectory=/opt/stock-dashboard/current
+Environment=HOME=/var/lib/stock-dashboard
+Environment=PATH=/opt/stock-dashboard/toolchain/bin:/usr/bin:/bin
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=DASHBOARD_SECRET_DIR=/var/lib/stock-dashboard/secrets
+Environment=DASHBOARD_DIAGNOSTICS_DIR=/var/lib/stock-dashboard/diagnostics
+ExecStart=/usr/bin/python3 -B /opt/stock-dashboard/current/ops/dashboard_vps.py daily
+TimeoutStartSec=100min
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/stock-dashboard
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+MemoryMax=320M
+CPUQuota=50%
+TasksMax=32
+Restart=no

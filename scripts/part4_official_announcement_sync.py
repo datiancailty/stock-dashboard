@@ -185,6 +185,16 @@ def private_rpc(worker: Any, config: dict[str, str], access_token: str, name: st
         raise SyncError(str(category)) from error
 
 
+def verify_notice_readback(events, payload):
+    rows = payload.get('events') if isinstance(payload, dict) else None
+    if not isinstance(rows, list) or any(not isinstance(e, dict) for e in rows):
+        raise SyncError('calendar_readback_failed')
+    identified = [e for e in rows if isinstance(e.get('id'), str)]
+    by_id = {e['id']: e for e in identified}
+    if len(by_id) != len(identified) or any(e.get('id') not in by_id or any(by_id[e['id']].get(k) != v for k, v in e.items()) for e in events):
+        raise SyncError('calendar_readback_failed')
+
+
 def private_watchlist(worker: Any, config: dict[str, str], access_token: str) -> list[Stock]:
     payload = private_rpc(worker, config, access_token, "personal_get_part1", {})
     if not isinstance(payload, dict) or not isinstance(payload.get("watchlist"), list):
@@ -213,6 +223,12 @@ def safe_curl_json(url: str) -> dict[str, Any]:
     try:
         last_error: str | None = None
         for attempt in range(1, 4):
+            from dashboard_diagnostics import emit
+            from urllib.parse import urlsplit
+            import uuid
+            diagnostic = {'host': urlsplit(url).hostname, 'attempt': attempt, 'request_id': uuid.uuid4().hex}
+            started = time.monotonic()
+            emit('http_start', **diagnostic)
             try:
                 completed = subprocess.run(
                     [
@@ -238,6 +254,7 @@ def safe_curl_json(url: str) -> dict[str, Any]:
                     timeout=55,
                     check=False,
                 )
+                emit('http_end', **diagnostic, elapsed_ms=int((time.monotonic()-started)*1000), returncode=completed.returncode if completed.returncode >= 0 else None)
                 if completed.returncode == 0:
                     payload = json.loads(target.read_text(encoding="utf-8"))
                     if isinstance(payload, dict):
@@ -246,6 +263,7 @@ def safe_curl_json(url: str) -> dict[str, Any]:
                 else:
                     last_error = f"curl_{completed.returncode}"
             except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+                emit('http_error', **diagnostic, elapsed_ms=int((time.monotonic()-started)*1000))
                 last_error = "transport_or_json"
             if attempt < 3:
                 time.sleep(attempt)
@@ -372,12 +390,25 @@ def fetch_notice_page(code: str, page: int, *, window_start: date | None = None,
     }
     if window_start is not None and window_end is not None:
         params.update(begin_time=window_start.isoformat(), end_time=window_end.isoformat())
-    payload = safe_curl_json(f"{NOTICE_API}?{urlencode(params)}")
-    if payload.get("success") not in (1, True, "1"):
-        raise SyncError("official_notice_response_failed")
-    data = payload.get("data")
-    if not isinstance(data, dict) or not isinstance(data.get("list"), list):
-        raise SyncError("official_notice_response_shape_invalid")
+    from dashboard_diagnostics import emit
+    import uuid
+    diagnostic = {'code': code, 'page': page, 'request_id': uuid.uuid4().hex,
+                  'window_start': window_start.isoformat() if window_start else None,
+                  'window_end': window_end.isoformat() if window_end else None}
+    started = time.monotonic()
+    emit('notice_page_start', **diagnostic)
+    try:
+        payload = safe_curl_json(f"{NOTICE_API}?{urlencode(params)}")
+        if payload.get("success") not in (1, True, "1"):
+            raise SyncError("official_notice_response_failed")
+        data = payload.get("data")
+        if not isinstance(data, dict) or not isinstance(data.get("list"), list):
+            raise SyncError("official_notice_response_shape_invalid")
+    except BaseException:
+        emit('notice_page_error', **diagnostic, elapsed_ms=int((time.monotonic()-started)*1000))
+        raise
+    total = data.get('total_hits')
+    emit('notice_page_end', **diagnostic, elapsed_ms=int((time.monotonic()-started)*1000), rows=len(data['list']), total_hits=total if type(total) is int and 0<=total<=10**12 else None)
     return data
 
 
@@ -796,12 +827,14 @@ def main() -> int:
         )
         if not isinstance(written, dict):
             raise SyncError("private_sync_response_invalid")
+        verify_notice_readback(events, private_rpc(worker, config, access_token, 'personal_get_part4', {}))
         print(
             json.dumps(
                 {
                     "status": "ok",
                     **summary,
                     "published": True,
+                    "readbackVerified": True,
                     "privateWrite": {
                         "requested": written.get("requested"),
                         "stored": written.get("stored"),

@@ -1,0 +1,27 @@
+{
+  "version": "v2026.09.29.2",
+  "document_sha256": "2677475ca29944f7624295430caf7aff30a67bfdcb15d07ee820974cdde200f8",
+  "scope": "public_sanitized_migration_source_only",
+  "files": {
+    ".gitignore": "3956770a0b8d1698c11f8a2692e4fe02060cf1d44145eb376ac09ca1265ad80b",
+    "dashboard-refresh-release.json": "5d899cf8115e04c97e38fa75b29b2fac4e3f2281b16e3fd06ff393d3b7805001",
+    "scripts/dashboard_data_sources.py": "69ec9ea4cd9f46f92d975e8c247ba364125f821d1250a9167b8db3513c03fd39",
+    "scripts/dashboard_refresh_sync.py": "84cbe355546069035264f21a64bb362840e439c6fe8c00071ea3970414471ce6",
+    "scripts/part4_official_announcement_sync.py": "e524512774bc4f2cd13c5f3ee6a53add7cd0411255a2784b4acc891754a47c7c",
+    "scripts/plus_strategy_worker.py": "7e24e4b3602e300f4ae42a08fee3955d832c056ca031bb7671f5d731ceef8171",
+    "scripts/dashboard_secret_store.py": "d3d195eed620691619612f49bb90179bc2c87c04f83a6a614f64fe0cf0e755c6",
+    "scripts/dashboard_diagnostics.py": "9360698e6558db12c67ce22093a152b3cf2b74b04499863fbe1a6dd424dbab63",
+    "scripts/test_dashboard_archive.py": "e557463a95e1c47fae296e608ac9515cf88b212743abf48065c3cddc3752ec4b",
+    "scripts/test_dashboard_diagnostics.py": "2898a02a180b7c1c643e65b20880b4acad8fade56bc7a5ed0f6c5948d8f22a5f",
+    "scripts/test_dashboard_secret_store.py": "696d375596be23df10c82754ba5a659d04813375fa7dc66cee644e109f979fa7",
+    "scripts/test_dashboard_vps.py": "b9222ec6700183ecf5929980385c7818f557873757d3c5e09ef1b77d15ec1583",
+    "scripts/test_calendar_readback.py": "68fcdeffbf34ecc33ce8842747040436926c7000b301a829f0753a143cfb1ef5",
+    "scripts/test_part4_optional_pre_disclosures.py": "4f9be2fee76aaa85fcfadbc7356d6875c0a6e4294aed4639b130528be3eff6b4",
+    "ops/dashboard_vps.py": "47992bdea6af68d925ef54c9dd9fdec0ccdc23b8b349b785543db877a4f2136c",
+    "ops/systemd/stock-dashboard-archive.service": "078710305e965174e8fa5a7a3d1e1d1d86a4a26c259b005548e0cd4c08da6cba",
+    "ops/systemd/stock-dashboard-archive.timer": "e4cafd29adab758a5ce33bb73052848adadbbe3ff6fa799cf7f3aef02ebe52e5",
+    "ops/systemd/stock-dashboard-daily.service": "f8ff88ba867a238771089b9f119b90e59a42ad9e7c190e7b784e79bfe29d5cad",
+    "ops/systemd/stock-dashboard-daily.timer": "57671bfc89a2e6cf11acdc9c54d5316efd661784a4ca9199dc5c659e34f70a42",
+    "ops/systemd/stock-dashboard-part3.service": "1097e04cc66fc110947b99976bfc6dd864b2148a6ea54f15c6a37f8951627ce1"
+  }
+}

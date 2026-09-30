@@ -1,0 +1,14 @@
+[Unit]
+Description=Read-only Part0 telemetry three times per weekday, no provider polling
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 09:40:00 Asia/Shanghai
+OnCalendar=Mon..Fri *-*-* 11:30:00 Asia/Shanghai
+OnCalendar=Mon..Fri *-*-* 15:10:00 Asia/Shanghai
+AccuracySec=10s
+RandomizedDelaySec=0
+Persistent=false
+Unit=stock-dashboard-part0-collect.service
+
+[Install]
+WantedBy=timers.target

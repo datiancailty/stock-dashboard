@@ -137,7 +137,7 @@ test('strategy card keeps unknown confirmed yield distinct from genuine zero',()
 test('new record snapshot preserves unknown dividend and omits unknown yield',async()=>{
  const nodes={};let saved;
  const s={price:10,totalDividend:null};
- const c=vm.createContext({stock:()=>s,personalStockUniverse:()=>[{code:'600000',name:'合成甲'}],
+ const c=context(['personalOperationContext','personalOperationCurrent'],{authSession:{user:{id:'synthetic'}},personalOperationGeneration:0,stock:()=>s,personalStockUniverse:()=>[{code:'600000',name:'合成甲'}],
   $:id=>nodes[id]??={value:'',close(){}},crypto:{randomUUID:()=> 'synthetic'},
   mutateTradeRecords:async update=>{saved=update([])[0];},renderStrategy(){},showMessage(){}});
  const handler=source.split('\n').find(line=>line.startsWith("$('#tradeRecordForm').onsubmit="));
@@ -196,14 +196,14 @@ function lifecycle(rpcOverride){
  const timers=[],intervals=new Map(),events={},calls=[],applied=[];let authCallback,nextTimer=0;
  const client={auth:{onAuthStateChange:callback=>{authCallback=callback;}}};
  const setTimeout=(fn,ms=0)=>{timers.push({fn,ms});return ++nextTimer;};
- const document={visibilityState:'visible',querySelector:()=>({id:'today'}),addEventListener:(name,fn)=>{events[name]=fn;}};
+ const document={visibilityState:'visible',querySelector:()=>({id:'today',querySelectorAll:()=>[]}),addEventListener:(name,fn)=>{events[name]=fn;}};
  let c;
- const names=['initSupabaseClient','stopPrivateAutoRefresh','startPrivateAutoRefresh','clearPersonalData','personalRpcForPage','personalCount','loadPrivateDashboard'];
+ const names=['initSupabaseClient','stopPrivateAutoRefresh','startPrivateAutoRefresh','clearPersonalData','personalRpcForPage','personalCount','loadPrivateDashboard','loadPart0Monitor','validPart0Monitor'];
  if(source.includes('function loadPrivateDashboardOnce('))names.push('loadPrivateDashboardOnce');
  c=context(names,{PART0_LOCAL_ONLY_PREVIEW:false,SUPABASE_URL:'https://synthetic.invalid',SUPABASE_ANON_KEY:'synthetic-public-placeholder',
-  supabaseClient:client,authSession:{user:{id:'synthetic-owner'},generation:1},privateLoadInFlight:null,privateRefreshTimer:null,
+  supabaseClient:client,authSession:{user:{id:'synthetic-owner'},generation:1},personalOperationGeneration:0,privateLoadInFlight:null,privateRefreshTimer:null,
   privateLoadState:'not_loaded',privateLoadError:'',personalMigrationState:null,refreshHealth:null,refreshHealthReadFailed:false,
-  currentUsername:'',vpsAdmin:false,privatePortfolio:null,runtimeDisplay:null,whitelistControl:null,holdings:[],
+  part0Monitor:null,part0MonitorState:'not_loaded',part0TradeDate:'',part0FillFilter:'all',currentUsername:'',vpsAdmin:false,privatePortfolio:null,runtimeDisplay:null,whitelistControl:null,holdings:[],
   PRIVATE_DASHBOARD_REFRESH_MS:vm.runInNewContext(source.match(/^const PRIVATE_DASHBOARD_REFRESH_MS=(.+);$/m)[1]),
   setTimeout,queueMicrotask,clearInterval:id=>intervals.delete(id),document,
   window:{setTimeout,setInterval:(fn,ms)=>{const id=++nextTimer;intervals.set(id,{fn,ms});return id;},supabase:{createClient:()=>client}},
@@ -212,6 +212,7 @@ function lifecycle(rpcOverride){
   supabaseRpc:async name=>{const session=c.authSession;calls.push({name,session});
    if(rpcOverride){const value=rpcOverride(name,session,calls);if(value!==undefined)return value;}
    if(name==='vps_private_get_portfolio')return {generation:session.generation};
+   if(name==='personal_get_part0_monitor')return null;
    if(name==='vps_is_admin')return false;
    if(name==='app_get_current_username')return 'synthetic';
    if(name==='personal_get_migration_state')return {source_files:1};
@@ -233,6 +234,12 @@ test('session object replacement discards old batch and reads latest without wai
  assert.equal(h.calls.filter(x=>x.name==='vps_private_get_portfolio').length,2,'latest session must receive a catch-up read');
  assert.deepEqual(h.applied,[{generation:2}]);
  assert.equal(h.timers.length,0,'catch-up must be bounded, not another polling loop');
+});
+test('different UID clears cached private data synchronously even while hidden',async()=>{
+ const h=lifecycle();h.c.document.visibilityState='hidden';h.c.part0Monitor={owner:'A'};h.c.holdings=[{code:'synthetic-private'}];h.c.currentUsername='A';
+ h.auth('SIGNED_IN',{user:{id:'different-owner'},generation:2});
+ assert.equal(h.c.part0Monitor,null);assert.equal(h.c.currentUsername,'');assert.equal(h.c.holdings.length,0);
+ await h.runTimers();assert.equal(h.calls.length,0,'hidden account switch does not fetch');
 });
 test('same session concurrent calls reuse one promise through health and the current Part',async()=>{
  const health=deferred(),part=deferred();const h=lifecycle(name=>name==='personal_get_refresh_health'?health.promise:undefined);

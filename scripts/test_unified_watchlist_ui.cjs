@@ -101,8 +101,8 @@ test('Part0 is monitoring-only and never infers a self-check or indicators from 
   assert.equal(document.querySelector('#whitelistDialog'),null);
   assert.match(document.querySelector('#openPart1FromPart0').textContent,/管理自选股/);
   assert.doesNotMatch(document.querySelector('#part0RuntimeGrid').textContent,/09:00 自检/);
-  assert.match(document.querySelector('#part0RuntimeGrid').textContent,/指标计算.*未接入/);
-  assert.match(document.querySelector('#part0Health').textContent,/较旧|过期/);
+  assert.match(document.querySelector('#part0RuntimeGrid').textContent,/策略执行.*未确认/);
+  assert.match(document.querySelector('#part0Health').textContent,/等待新的私有监控回执/);
   assert.doesNotMatch(document.querySelector('#part0Health').textContent,/数据链路.*正常/);
   document.querySelector('#openPart1FromPart0').click();
   assert.equal(document.querySelector('.page.active').id,'holdings');

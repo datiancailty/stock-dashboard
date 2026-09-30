@@ -1,0 +1,26 @@
+[Unit]
+Description=Publish existing private Part0 snapshot, never run strategy
+Wants=network-online.target
+After=network-online.target stock-dashboard-part0-collect.service
+
+[Service]
+Type=oneshot
+User=dashboard
+Group=dashboard
+UMask=0077
+Environment=HOME=/var/lib/stock-dashboard
+Environment=DASHBOARD_SECRET_DIR=/var/lib/stock-dashboard/secrets
+Environment=PYTHONPATH=/opt/stock-dashboard/current/scripts
+ExecStart=/usr/bin/python3 -B /opt/stock-dashboard-part0/current/scripts/part0_snapshot_sync.py --input /var/lib/stock-dashboard/part0-source/snapshot.json --publish
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/stock-dashboard
+ReadOnlyPaths=/var/lib/stock-dashboard/part0-source
+InaccessiblePaths=-/var/lib/stock-sim-v31f-15m -/var/lib/stock-sim-trial-20260929-30
+MemoryMax=128M
+CPUQuota=20%
+TasksMax=16
+TimeoutStartSec=180
+Restart=no

@@ -36,7 +36,7 @@ class NoticeWindowTests(unittest.TestCase):
         def transport(url):
             q=parse_qs(urlparse(url).query);calls.append(q)
             p=int(q['page_index'][0]);day=['2026-09-29','2026-08-26'][p-1]
-            return {'success':1,'data':{'list':[{'art_code':f'AN20260929000000000{p}','notice_date':day,'title':'合成分红公告','columns':[]}],'total_hits':2,'page_size':1}}
+            return {'success':1,'data':{'list':[{'art_code':f'AN20260929000000000{p}','notice_date':day,'title':'合成分红公告','columns':[],'codes':[{'stock_code':'000001'}]}],'total_hits':2,'page_size':1}}
         with patch.object(m,'safe_curl_json',side_effect=transport):
             events,_,coverage,count=m.scan_stock(m.Stock('000001','合成标的'),date(2026,8,26),date(2026,9,29))
         self.assertTrue(coverage.complete)
@@ -45,12 +45,33 @@ class NoticeWindowTests(unittest.TestCase):
         self.assertTrue(all(q['begin_time']==['2026-08-26'] and q['end_time']==['2026-09-29'] for q in calls))
 
     def test_failed_second_page_cannot_publish_partial_coverage(self):
-        row={'art_code':'AN202609290000000001','notice_date':'2026-09-29','title':'合成分红公告','columns':[]}
+        row={'art_code':'AN202609290000000001','notice_date':'2026-09-29','title':'合成分红公告','columns':[],'codes':[{'stock_code':'000001'}]}
         with patch.object(m,'fetch_notice_page',side_effect=[{'list':[row],'total_hits':2,'page_size':1},m.SyncError('official_notice_transport_failed')]):
             _,_,coverage,_=m.scan_stock(m.Stock('000001','合成标的'),date(2026,8,26),date(2026,9,29))
         self.assertFalse(coverage.complete)
         with self.assertRaises(m.SyncError):
             m.ensure_complete_coverage([m.Stock('000001','合成标的')],[coverage])
+
+    def test_nonfinal_short_page_cannot_reach_any_writer(self):
+        import contextlib,io,json
+        row=lambda i:{'art_code':f'AN20260920000000{i:04d}','notice_date':'2026-09-20','title':'合成甲:2026年中期利润分配预案公告','columns':[],'codes':[{'stock_code':'600000','short_name':'合成甲'}]}
+        output=io.StringIO();written=[]
+        def rpc(worker,config,token,name,body):
+            if name=='personal_sync_part4_dividend_notices':written.extend(body['p_events']);return {'stored':len(written)}
+            if name=='personal_sync_part4_dividend_dates':return {'stored':len(body['p_events'])}
+            if name=='personal_get_part4':return {'events':written}
+            self.fail('unexpected RPC')
+        with contextlib.ExitStack() as stack:
+            stack.enter_context(patch('sys.argv',['sync','sync','--from','2026-09-01','--to','2026-09-30','--include-implementation-dates']))
+            stack.enter_context(patch.object(m,'load_private_session',return_value=(None,None,None)))
+            stack.enter_context(patch.object(m,'private_watchlist',return_value=[m.Stock('600000','合成甲')]))
+            stack.enter_context(patch.object(m,'fetch_notice_page',side_effect=[{'total_hits':101,'page_size':100,'list':[row(1)]},{'total_hits':101,'page_size':100,'list':[row(101)]}]))
+            secret=stack.enter_context(patch.object(m,'part4_writer_secret',return_value='synthetic'))
+            calls=stack.enter_context(patch.object(m,'private_rpc',side_effect=rpc))
+            stack.enter_context(contextlib.redirect_stdout(output))
+            self.assertEqual(m.main(),2,'a short middle page must not be reported complete')
+            secret.assert_not_called();calls.assert_not_called()
+        self.assertEqual(json.loads(output.getvalue())['status'],'error')
 
 if __name__ == '__main__':
     unittest.main()

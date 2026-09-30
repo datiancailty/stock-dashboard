@@ -1,0 +1,23 @@
+[Unit]
+Description=Part0 read-only SQLite and runtime projection (no broker)
+OnSuccess=stock-dashboard-part0-publish.service
+
+[Service]
+Type=oneshot
+User=root
+Group=dashboard
+UMask=0077
+ExecStart=/usr/bin/python3 -B /opt/stock-dashboard-part0/current/ops/part0_read_model.py --config /etc/stock-dashboard/part0-monitor.json --output /var/lib/stock-dashboard/part0-source/snapshot.json
+NoNewPrivileges=true
+PrivateNetwork=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/stock-dashboard/part0-source
+InaccessiblePaths=-/var/lib/stock-dashboard/secrets
+RestrictAddressFamilies=AF_UNIX
+MemoryMax=96M
+CPUQuota=20%
+TasksMax=16
+TimeoutStartSec=60
+Restart=no

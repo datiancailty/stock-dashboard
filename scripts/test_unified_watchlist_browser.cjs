@@ -3,6 +3,7 @@
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict');
 const {chromium}=require('playwright');
+const {fixture}=require('./part0_test_fixture.cjs');
 const ROOT=path.resolve(__dirname,'..');
 const OUT=process.env.DASHBOARD_TEST_OUTPUT;
 if(!OUT||!path.isAbsolute(OUT))throw new Error('Set an absolute DASHBOARD_TEST_OUTPUT outside the repository');
@@ -20,7 +21,7 @@ const check=(label,value)=>{assert.ok(value,label);checks.push(label);};
 async function main(){
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
  const origin=`http://127.0.0.1:${server.address().port}`;
- browser=await chromium.launch({headless:true});
+ browser=await chromium.launch({headless:true,...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE?{executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE}:{})});
  const context=await browser.newContext({viewport:{width:1500,height:1080},deviceScaleFactor:1});
  await context.route('**/*',async route=>{
   const url=new URL(route.request().url());
@@ -36,7 +37,7 @@ async function main(){
  await page.locator('[data-tab=holdings]').click();
  check('signed-out private tab opens login',await page.locator('#loginDialog').evaluate(x=>x.open));
  await page.evaluate(()=>document.querySelector('#loginDialog').close());
- await page.evaluate(()=>{
+ await page.evaluate(p0Fixture=>{
   const rows=Array.from({length:8},(_,i)=>({code:String(600000+i),name:'合成标的'+String(i+1).padStart(2,'0'),shares:i===0?100:0,cost:i===0?9:0}));
   const symbols=rows.slice(0,3).map(x=>x.code+'.SH');
   const dates='2026-09-10';
@@ -44,7 +45,7 @@ async function main(){
   const projection={scope_key:'primary',projection_sequence:null,source_generated_at:null,positions:[]};
   let saved=structuredClone(rows);
   window.syntheticCalls=[];
-  authSession={user:{id:'synthetic-only'}};
+  authSession={user:{id:'synthetic-only'}};part0Monitor=p0Fixture;part0MonitorState='ready';part0TradeDate='2026-09-30';
   catalog=[...rows.map(x=>({...x,market:'SH'})),{code:'600008',name:'合成追加',market:'SH',pinyin:'hechengzhuijia',initials:'hczj'}];
   trackedStocks=structuredClone(rows);market=snapshot;marketLoaded=true;
   currentUsername='本地合成验收';vpsAdmin=true;privateLoadState='ready';
@@ -54,13 +55,13 @@ async function main(){
   personalLoadedParts=new Set(['holdings','positions','grid','calendar','news','strategy']);
   supabaseClient={rpc:async(name,args={})=>{
    window.syntheticCalls.push(name);
-   const responses={personal_get_part1:{watchlist:saved},personal_get_part2:{groups:[],extraStocks:[]},personal_get_part4_v4:snapshot,personal_get_part5:{items:[],lastScanAt:null},personal_get_part6:{trades:{records:[]},feedback:{records:[]},analysis:{status:'waiting'},recommendations:{records:[]}},vps_is_admin:true,app_get_current_username:'本地合成验收',vps_private_get_portfolio:projection,vps_private_get_runtime_display:runtimeDisplay,vps_get_whitelist_control_state:whitelistControl,personal_get_migration_state:personalMigrationState,personal_get_refresh_health:null};
+   const responses={personal_get_part0_monitor:p0Fixture,personal_get_part1:{watchlist:saved},personal_get_part2:{groups:[],extraStocks:[]},personal_get_part4_v4:snapshot,personal_get_part5:{items:[],lastScanAt:null},personal_get_part6:{trades:{records:[]},feedback:{records:[]},analysis:{status:'waiting'},recommendations:{records:[]}},vps_is_admin:true,app_get_current_username:'本地合成验收',vps_private_get_portfolio:projection,vps_private_get_runtime_display:runtimeDisplay,vps_get_whitelist_control_state:whitelistControl,personal_get_migration_state:personalMigrationState,personal_get_refresh_health:null};
    if(name==='personal_replace_watchlist'){saved=structuredClone(args.p_items);return {data:{count:saved.length},error:null};}
    if(!(name in responses))throw new Error('Unexpected synthetic RPC: '+name);
    return {data:structuredClone(responses[name]),error:null};
   },auth:{signOut:async()=>{}}};
   updateAuthUI();render();document.querySelector('#updateText').textContent='本地合成数据交互验收 · 非线上账户';
- });
+ },fixture());
  await page.locator('[data-tab=today]').click();
  await page.screenshot({path:path.join(OUT,'part0-synthetic.png'),fullPage:true});
  await page.locator('#openPart1FromPart0').click();

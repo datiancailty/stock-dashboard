@@ -66,6 +66,7 @@ RUN_ID_RE = re.compile(r"^[A-Za-z0-9._:-]{1,160}$")
 DIVIDEND_TITLE_TERMS = (
     "分红",
     "利润分配",
+    "利润分派",
     "权益分派",
     "派息",
     "派发现金",
@@ -73,7 +74,7 @@ DIVIDEND_TITLE_TERMS = (
     "现金股利",
     "股利分配",
 )
-DIVIDEND_COLUMN_TERMS = ("分配预案", "权益分派", "分红")
+DIVIDEND_COLUMN_TERMS = ("分配预案", "权益分派", "分红", "分配方案实施", "分配方案决议公告")
 GENERIC_INTERIM_DISCLOSURE_TERMS = ("半年度报告", "董事会", "监事会")
 IMPLEMENTATION_TITLE_REJECT_TERMS = ("不实施", "未实施", "取消", "终止", "预案", "拟", "待实施", "预披露")
 DIRECT_SOURCE = "东方财富公司公告"
@@ -297,6 +298,9 @@ def official_notice_date(raw: dict[str, Any]) -> str | None:
 
 
 def is_direct_dividend_notice(title: str, columns: Iterable[str]) -> bool:
+    # Discussion of an existing distribution is not a new plan/resolution.
+    if any(term in title for term in ("投资者关系活动记录", "调研纪要")):
+        return False
     return any(term in title for term in DIVIDEND_TITLE_TERMS) or any(
         any(term in column for term in DIVIDEND_COLUMN_TERMS) for column in columns
     )
@@ -307,12 +311,34 @@ def event_type_for(title: str, columns: Iterable[str]) -> tuple[str, str]:
     implementation = "实施" in title and not any(term in title for term in IMPLEMENTATION_TITLE_REJECT_TERMS)
     if "权益分派" in title or "权益分派" in column_text:
         return "权益分派公告", "implementation" if implementation else "proposal"
-    if "董事会" in title or "监事会" in title:
+    if any(term in title for term in ("董事会", "监事会", "股东会决议", "股东大会决议")):
         return "分红相关决议", "proposal"
     return "分红方案公告", "implementation" if implementation else "proposal"
 
 
-def source_evidence_hash(stock: Stock, art_code: str, event_date: str, title: str, columns: list[str]) -> str:
+def notice_belongs_to_stock(stock: Stock, raw: dict[str, Any]) -> bool:
+    """Require provider security identity; do not relabel a related issuer."""
+    codes = raw.get('codes')
+    if (not isinstance(codes, list) or not codes
+            or any(not isinstance(item, dict) or not isinstance(item.get('stock_code'), str) for item in codes)
+            or stock.code not in {item['stock_code'] for item in codes}):
+        raise SyncError('official_notice_security_identity_invalid')
+    import unicodedata
+    def compact(value):
+        if value is not None and not isinstance(value, str):
+            raise SyncError('official_notice_security_identity_invalid')
+        return re.sub(r'\s+', '', unicodedata.normalize('NFKC', value or '')).casefold()
+    own_names = {compact(item.get('short_name')) for item in codes if item['stock_code'] == stock.code} - {''}
+    others = [item for item in codes if item['stock_code'] != stock.code]
+    # Never infer a business issuer from Chinese title grammar. Distinct or
+    # unknown related issuers require source review, regardless of publisher.
+    # Same provider name on another listing remains the same known issuer.
+    if others and (len(own_names) != 1 or any(compact(item.get('short_name')) not in own_names for item in others)):
+        raise SyncError('official_notice_subject_ambiguous')
+    return True
+
+
+def source_evidence_hash(stock: Stock, art_code: str, event_date: str, title: str, columns: list[str], source_codes: list[dict[str, Any]]) -> str:
     """Stable hash of the source-index fields used for this calendar record."""
     return sha256_json(
         {
@@ -322,6 +348,7 @@ def source_evidence_hash(stock: Stock, art_code: str, event_date: str, title: st
             "noticeDate": event_date,
             "title": title,
             "columns": columns,
+            "sourceSecurities": source_codes,
         }
     )
 
@@ -340,6 +367,8 @@ def normalize_direct_event(stock: Stock, raw: dict[str, Any], window_start: date
         return None
     if not is_direct_dividend_notice(title, columns):
         return None
+    if not notice_belongs_to_stock(stock, raw):
+        return None
     event_type, stage = event_type_for(title, columns)
     return {
         "id": f"eastmoney:{art_code}",
@@ -352,7 +381,7 @@ def normalize_direct_event(stock: Stock, raw: dict[str, Any], window_start: date
         "description": f"官方公告 · {title}",
         "source": DIRECT_SOURCE,
         "sourceUrl": announcement_url(stock.code, art_code),
-        "sourceHash": source_evidence_hash(stock, art_code, event_date, title, columns),
+        "sourceHash": source_evidence_hash(stock, art_code, event_date, title, columns, raw['codes']),
     }
 
 
@@ -366,13 +395,15 @@ def normalize_generic_candidate(stock: Stock, raw: dict[str, Any], window_start:
         return None
     columns = normalize_columns(raw.get("columns"))
     if any(term in title for term in GENERIC_INTERIM_DISCLOSURE_TERMS):
+        if not notice_belongs_to_stock(stock, raw):
+            return None
         return {
             "code": stock.code,
             "name": stock.name,
             "date": event_date,
             "art_code": art_code,
             "title": title,
-            "source_hash": source_evidence_hash(stock, art_code, event_date, title, columns),
+            "source_hash": source_evidence_hash(stock, art_code, event_date, title, columns, raw['codes']),
         }
     return None
 
@@ -444,7 +475,7 @@ def scan_stock(stock: Stock, window_start: date, window_end: date) -> tuple[list
                 raise SyncError("official_notice_page_cap_exceeded")
             if page < expected_pages and not rows:
                 raise SyncError("official_notice_page_missing")
-            if page == expected_pages and len(rows) != max(0, declared_total_hits - declared_page_size * (page - 1)):
+            if len(rows) != max(0, min(page_size, total_hits - page_size * (page - 1))):
                 raise SyncError("official_notice_page_count_mismatch")
             identifiers = [str(item.get("art_code") or item.get("artCode") or "") for item in rows if isinstance(item, dict)]
             if len(identifiers) != len(rows) or any(not ART_CODE_RE.fullmatch(value) for value in identifiers):
@@ -469,6 +500,8 @@ def scan_stock(stock: Stock, window_start: date, window_end: date) -> tuple[list
                 page_dates.append(row_date)
                 if window_start <= row_date <= window_end:
                     official_notice_count += 1
+                if not notice_belongs_to_stock(stock, raw):
+                    continue
                 event = normalize_direct_event(stock, raw, window_start, window_end)
                 if event is not None:
                     direct.append(event)
@@ -482,6 +515,8 @@ def scan_stock(stock: Stock, window_start: date, window_end: date) -> tuple[list
             if page_dates:
                 previous_page_oldest = page_dates[-1]
             if page == expected_pages:
+                if len(seen_art_codes) != declared_total_hits or official_notice_count != declared_total_hits:
+                    raise SyncError("official_notice_page_count_mismatch")
                 return direct, generic, ScanCoverage(stock.code, page, True, None), official_notice_count
             page += 1
         return direct, generic, ScanCoverage(stock.code, MAX_PAGES_PER_STOCK, False, "page_cap_reached"), official_notice_count
@@ -719,6 +754,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("command", choices=("audit", "sync", "init-writer"))
     parser.add_argument("--from", dest="window_start", help="YYYY-MM-DD inclusive")
     parser.add_argument("--to", dest="window_end", help="YYYY-MM-DD inclusive")
+    parser.add_argument("--include-implementation-dates", action="store_true", help="collect and verify registration/ex-dividend/payment dates; requires the forward date-ledger migration")
     parser.add_argument("--rotate-writer", action="store_true", help="replace the local Keychain writer capability")
     parser.add_argument(
         "--include-structured-pre-disclosures",
@@ -744,7 +780,7 @@ def main() -> int:
     args = parse_args()
     try:
         if args.command == "init-writer":
-            if args.window_start or args.window_end or args.structured_code or args.include_structured_pre_disclosures or args.strict_structured_pre_disclosures or args.dry_run:
+            if args.window_start or args.window_end or args.structured_code or args.include_structured_pre_disclosures or args.strict_structured_pre_disclosures or args.dry_run or args.include_implementation_dates:
                 raise SyncError("part4_writer_init_arguments_invalid")
             worker = load_private_worker_module()
             try:
@@ -779,6 +815,13 @@ def main() -> int:
             strict=bool(args.strict_structured_pre_disclosures),
         )
         events = merge_events(direct, supplements)
+        date_events = []
+        if args.include_implementation_dates:
+            from part4_date_sync import collect_dates
+            try:
+                date_events = collect_dates(events)['events']
+            except (ValueError, TypeError, KeyError, OSError) as error:
+                raise SyncError('part4_date_source_invalid') from error
         summary = aggregate_summary(
             stocks,
             coverage,
@@ -790,6 +833,8 @@ def main() -> int:
             window_start,
             window_end,
         )
+        if args.include_implementation_dates:
+            summary['implementationDateCount'] = len(date_events)
         if args.command == "audit" or args.dry_run:
             print(json.dumps({"status": "audit_ok", **summary, "private_payload_not_emitted": True}, ensure_ascii=False))
             return 0
@@ -828,6 +873,15 @@ def main() -> int:
         if not isinstance(written, dict):
             raise SyncError("private_sync_response_invalid")
         verify_notice_readback(events, private_rpc(worker, config, access_token, 'personal_get_part4', {}))
+        if args.include_implementation_dates:
+            date_written = private_rpc(worker, config, access_token, 'personal_sync_part4_dividend_dates', {
+                'p_run_id': run_id, 'p_as_of': now_bj().isoformat(timespec='seconds'),
+                'p_events': date_events, 'p_watchlist_codes': [stock.code for stock in stocks],
+                'p_writer_secret': writer_secret,
+            })
+            if not isinstance(date_written, dict) or type(date_written.get('stored')) is not int or date_written['stored'] != len(date_events):
+                raise SyncError('part4_date_write_unconfirmed')
+            verify_notice_readback(events + date_events, private_rpc(worker, config, access_token, 'personal_get_part4', {}))
         print(
             json.dumps(
                 {

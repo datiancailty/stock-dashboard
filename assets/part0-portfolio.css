@@ -1,0 +1,56 @@
+/* A / holdings-first. Scoped to Part0; existing Part1–6 styles stay unchanged. */
+#today .part0-card{border:1px solid var(--line,#eae2d8);border-radius:16px;background:#fff;min-width:0;overflow:hidden}
+#today .part0-card-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;border-bottom:1px solid #f0e9e0}
+#today .part0-card-head h3{margin:0;font-size:19px;display:flex;align-items:center;gap:9px}
+#today .part0-card-head p{margin:6px 0 0;font-size:11px;color:var(--muted)}
+#today .part0-card-head>small{text-align:right;font-size:10px;line-height:1.8;color:var(--muted)}
+#today .part0-card-head>small b{color:#75695e;font-weight:550}
+#today .part0-account-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:#faf8f4;border-bottom:1px solid #eee6dc;padding:15px 20px;gap:12px}
+#today .part0-account-metrics small{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}
+#today .part0-account-metrics b{font-size:21px;letter-spacing:-.45px;font-variant-numeric:tabular-nums}
+#today .part0-table-wrap{width:100%;overflow:auto}
+#today .part0-holdings-table{width:100%;min-width:0;max-width:100%;border-collapse:collapse;table-layout:auto;font-variant-numeric:tabular-nums}
+#today .part0-holdings-table th{font-size:11px;color:#8b7b6b;background:#fdfbf8;font-weight:550;padding:13px 16px;text-align:right;white-space:nowrap}
+#today .part0-holdings-table td{padding:17px 16px;border-top:1px solid #f0e9e0;text-align:right;font-size:13px;white-space:nowrap}
+#today .part0-holdings-table th:first-child,#today .part0-holdings-table td:first-child{text-align:left;padding-left:20px}
+#today .part0-holdings-table td small{display:block;color:#9b8b7c;font-size:10px;margin-top:4px;font-weight:400}
+#today .part0-stock{display:flex;gap:11px;align-items:center}
+#today .part0-stock b{font-size:14px}
+#today .part0-avatar{width:33px;height:33px;border-radius:10px;background:#f3eee7;color:#92745b;display:grid;place-items:center;flex:none;font-size:14px;font-weight:600}
+#today .part0-positive,#today .part0-tone-good{color:var(--green,#23845c)}
+#today .part0-negative,#today .part0-tone-error{color:var(--red,#c94b45)}
+#today .part0-tone-blue{color:var(--blue,#436ea4)}
+#today .part0-tone-neutral{color:#958573}
+#today .part0-card-foot{padding:11px 18px;background:#fdfbf8;border-top:1px solid #eee7de;color:#988879;font-size:10px;line-height:1.8;display:flex;flex-wrap:wrap;justify-content:space-between;gap:5px 15px}
+#today .part0-detail-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:20px;margin-top:20px;align-items:start}
+#today .part0-detail-grid .unified-runtime{margin:0;padding:0;min-width:0}
+#today .part0-detail-grid .unified-runtime-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#today .part0-detail-grid .unified-runtime-card{grid-column:auto;min-height:111px;padding:15px}
+#today .part0-detail-grid .unified-runtime-card b{font-size:17px;margin:10px 0 7px}
+#today .part0-detail-grid .unified-runtime-card span{font-size:10px;overflow-wrap:anywhere}
+#today .unified-section-head{gap:8px;align-items:center}
+#today .unified-section-head small{font-size:10px}
+#today .part0-date{color:#9b8c7c;font-size:10px;text-align:right}
+#today .part0-date input{display:block;margin-top:4px;border:1px solid #eee4d8;border-radius:7px;padding:5px 7px;color:#75695e;background:#fdfbf8;font:inherit;font-size:11px;width:130px;max-width:100%}
+#today .part0-filters{display:flex;gap:5px;padding:12px 18px;border-bottom:1px solid #f1eae2}
+#today .part0-filters button{border:0;border-radius:8px;background:#f7f3ed;color:#8d7c6c;padding:6px 11px;cursor:pointer;font:inherit;font-size:11px}
+#today .part0-filters button.active{background:#eee0ce;color:#9c642d;font-weight:650}
+#today .part0-fill{display:grid;grid-template-columns:28px minmax(80px,1fr) minmax(110px,1fr);gap:10px;align-items:center;padding:16px 18px;border-bottom:1px solid #f1eae2;font-size:12px}
+#today .part0-fill>div:last-child{grid-column:2/4;display:flex;justify-content:space-between;align-items:center;gap:8px}
+#today .part0-fill>div:nth-child(3){text-align:right}
+#today .part0-fill small{display:block;color:#978676;font-size:10px;margin-top:4px}
+#today .part0-fill b{font-size:12px}
+#today .part0-side{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:#fcece4;color:#c46642;font-size:12px;font-weight:700}
+#today .part0-side.sell{background:#e9f3ed;color:#3c8a61}
+#today .part0-empty{padding:30px 20px;text-align:center;color:#9b8b7b;font-size:12px;line-height:1.9}
+#today .part0-past-error{border:1px solid #efd9cc;border-radius:12px;background:#fff9f5;margin-top:12px;color:#a16c4b;font-size:11px;padding:12px 14px}
+#today .part0-past-error summary{cursor:pointer;font-weight:600}
+#today .part0-past-error summary small{float:right;font-size:10px}
+#today .part0-past-error p{margin:12px 0 0;font-size:11px;line-height:1.8;color:#947a68}
+#today .part0-monitor-details{border:1px solid #eee5d9;border-radius:13px;padding:14px 16px;margin-top:18px;background:#fcfaf7;color:#8f7e6c;font-size:12px}
+#today .part0-monitor-details summary{cursor:pointer}
+#today .part0-monitor-details .unified-monitor-grid{display:block;margin:15px 0 0}
+#today .unified-run-log{margin-top:21px}
+#today .unified-monitor-bar{margin-bottom:18px}
+@media(max-width:1100px){#today .part0-detail-grid{grid-template-columns:1fr}#today .part0-detail-grid .unified-runtime-grid{grid-template-columns:repeat(4,minmax(0,1fr))}#today .part0-fill{grid-template-columns:28px 1fr 1fr 1.2fr}#today .part0-fill>div:last-child{grid-column:auto;display:block;text-align:right}#today .part0-holdings-table td,#today .part0-holdings-table th{padding-left:10px;padding-right:10px}}
+@media(max-width:900px){#today .part0-card-head{padding:14px 12px;align-items:flex-start;gap:10px}#today .part0-card-head h3{font-size:16px}#today .part0-card-head p{font-size:9px}#today .part0-card-head>small{font-size:9px;max-width:118px}#today .part0-account-metrics{grid-template-columns:repeat(2,minmax(0,1fr));padding:13px;gap:14px}#today .part0-account-metrics b{font-size:18px}#today .part0-account-metrics small{font-size:10px}#today .part0-holdings-table thead{display:none}#today .part0-holdings-table,#today .part0-holdings-table tbody{display:block}#today .part0-holdings-table tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding:14px 13px;gap:10px;border-bottom:1px solid #eee7de}#today .part0-holdings-table td{display:block;padding:0!important;border:0;font-size:13px;white-space:normal;text-align:right}#today .part0-holdings-table td:first-child{grid-column:1/-1;padding-bottom:5px!important;text-align:left}#today .part0-holdings-table td[data-label]:before{content:attr(data-label);display:block;font-size:10px;color:#aa9787;margin-bottom:4px}#today .part0-detail-grid{gap:18px}#today .part0-detail-grid .unified-runtime-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#today .part0-detail-grid .unified-runtime-card{padding:12px;min-height:110px}#today .part0-detail-grid .unified-runtime-card b{font-size:15px}#today .part0-fill{grid-template-columns:24px minmax(0,1fr) minmax(0,1fr);padding:13px 12px;gap:8px}#today .part0-fill>div:last-child{grid-column:2/4;display:flex}#today .part0-fill b{font-size:11px}#today .part0-fill small{font-size:9px}#today .part0-card-foot{padding:10px 12px;font-size:9px}#today .unified-section-head small{font-size:9px}#today .part0-date input{width:115px}#today .part0-stock b{font-size:14px}#today .unified-revisions{display:none}}

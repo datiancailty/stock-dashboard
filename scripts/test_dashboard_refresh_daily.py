@@ -119,4 +119,29 @@ daily.run_once(state_dir=STATE,publish=True,now=datetime.fromisoformat('2026-09-
    self.assertEqual(result['status'],'error');self.assertFalse(result['published'])
    self.assertEqual(result['category'],'daily_previous_attempt_interrupted');self.assertEqual(result['stages'],{})
    refresh.assert_not_called();self.assertEqual(self.m.read_state(state/'state.json')['successfulDate'],'2026-09-10')
+ def test_explicit_manual_release_check_is_honored_before_writes(self):
+  with tempfile.TemporaryDirectory() as d:
+   state=Path(d)/'state';refresh=Mock(return_value={'status':'ok','published':True,'stages':{k:{'status':'ok','published':True} for k in self.m.STAGES}})
+   check=Mock(return_value='verified-manual-release')
+   out=self.m.run_once(state_dir=state,refresh_fn=refresh,publish=True,automatic=False,release_check=check)
+   self.assertTrue(out['published']);check.assert_called_once_with()
+   self.assertEqual(self.m.read_state(state/'state.json')['sourceRelease'],'verified-manual-release')
+  with tempfile.TemporaryDirectory() as d:
+   refresh=Mock()
+   with self.assertRaisesRegex(ValueError,'hash_mismatch'):
+    self.m.run_once(state_dir=Path(d)/'state',refresh_fn=refresh,publish=True,release_check=Mock(side_effect=ValueError('hash_mismatch')))
+   refresh.assert_not_called();self.assertFalse((Path(d)/'state').exists())
+ def test_release_requires_date_pipeline_dependencies(self):
+  import hashlib
+  from unittest.mock import patch
+  names=set(json.loads((self.m.ROOT/'dashboard-refresh-release.json').read_text())['files'])
+  required={'scripts/part4_date_sync.py','scripts/part4_dividend_date_materializer.py'}
+  for missing in required:
+   with self.subTest(missing=missing),tempfile.TemporaryDirectory() as d:
+    root=Path(d);manifest={'version':'synthetic-release','files':{}}
+    for name in (names|required)-{missing}:
+     p=root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text('# synthetic\n');manifest['files'][name]=hashlib.sha256(p.read_bytes()).hexdigest()
+    (root/'dashboard-refresh-release.json').write_text(json.dumps(manifest))
+    with patch.object(self.m,'ROOT',root),self.assertRaisesRegex(ValueError,'coverage_incomplete'):
+     self.m.verify_release()
 if __name__=='__main__':unittest.main()

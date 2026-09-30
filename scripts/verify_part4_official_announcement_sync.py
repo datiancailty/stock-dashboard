@@ -44,6 +44,7 @@ def direct_raw(art_code: str, title: str, columns: list[str], day: str = "2026-0
         "title": title,
         "notice_date": f"{day} 00:00:00",
         "columns": [{"column_name": item} for item in columns],
+        "codes": [{"stock_code": "000333", "short_name": "合成标的"}],
     }
 
 

@@ -66,7 +66,7 @@ def run_stage(name,args,publish):
 def run_refresh(publish=False,health_reporter=None,stage_callback=None):
  now=datetime.now(BJ);start=(now.date()-timedelta(days=34)).isoformat()
  commands={
- 'notices':['scripts/part4_official_announcement_sync.py','sync','--from',start,'--to',now.date().isoformat()],
+ 'notices':['scripts/part4_official_announcement_sync.py','sync','--from',start,'--to',now.date().isoformat(),'--include-implementation-dates'],
  'quotes':['scripts/personal_market_snapshot_sync.py'],
  'technical':['scripts/personal_technical_snapshot_sync.py'],
  'news':['scripts/personal_news_sync.py'],

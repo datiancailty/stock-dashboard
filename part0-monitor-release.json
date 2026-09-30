@@ -1,0 +1,18 @@
+{
+  "candidateVersion": "v2026.09.30.1",
+  "scope": "Part0 source, UI and schedule; not a production state receipt",
+  "sourceStatus": "candidate_pending_final_review",
+  "monitorSchedule": "Mon..Fri 09:40,11:30,15:10 Asia/Shanghai",
+  "files": {
+    "ops/part0_read_model.py": "d43b134ffdb84c6d49a19512c66f758df60a115c4ef57fe19e0b1fc2068a31d1",
+    "scripts/part0_snapshot_sync.py": "87632126677889b8903ffe28393de49fb708fda11baaea1c53f750c9a9cb8bec",
+    "supabase/staged/20260930010000_part0_monitor.sql": "d673e7b73b6a74a209541ebd1de09dd6e6dd1aab0270929e27e66434491bbf14",
+    "supabase/staged/20260930010000_part0_monitor_postflight.sql": "a703b9f5afd746b50b12fd1c290effa71a8520063dfac241a381b9422a8719e7",
+    "ops/systemd/stock-dashboard-part0-collect.service": "b91ae691fb2aa9b612f3417e206cdda5b18473d4d943b7d5f7a1cf90f92e7e27",
+    "ops/systemd/stock-dashboard-part0-publish.service": "b3d242a87445d5f2804c2e676942e5f1d409c7ab3b352c4462e5e90ca23377fb",
+    "ops/systemd/stock-dashboard-part0.timer": "0d5d48d163da6adba433bf1811cd9747c4a36f0f42a5e6b217b0ebcfe5a59f21",
+    "assets/part0-portfolio.css": "29cdca20651a8b388a45a20259aa6c46690358d849f7cf854752a6525e8044ff",
+    "assets/app.js": "4058b79ab95908a579a02a6eaec57867b1ff6d614d578ac342b138b7fb2f334f",
+    "index.html": "346c0b4a7a23d362ed8df56606979510d73da74c054a3623253734a25b262221"
+  }
+}

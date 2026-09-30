@@ -1,0 +1,24 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const {JSDOM}=require('jsdom');const ROOT=path.resolve(__dirname,'..');
+for(const replacement of [false,true])test(`auth callback clears all private dialogs and selectors: ${replacement?'A to B':'sign-out'}`,async t=>{
+ const dom=new JSDOM(fs.readFileSync(path.join(ROOT,'index.html'),'utf8'),{url:'https://synthetic.invalid',runScripts:'outside-only',pretendToBeVisual:true});
+ t.after(()=>dom.window.close());const w=dom.window;let callback;
+ w.fetch=async url=>{assert.equal(url,'data/stock-catalog.json');return {ok:true,json:async()=>[]};};
+ w.STOCK_DASHBOARD_SUPABASE_CONFIG={url:'https://synthetic.invalid',anonKey:'synthetic'};
+ w.supabase={createClient:()=>({auth:{onAuthStateChange:f=>{callback=f;},getSession:async()=>({data:{session:null}})},rpc:async()=>({data:null,error:{code:'synthetic_refusal'}})})};
+ w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
+ const run=s=>vm.runInContext(s,dom.getInternalVMContext());await run(fs.readFileSync(path.join(ROOT,'assets/app.js'),'utf8'));
+ run("authSession={user:{id:'A'}};personalLoadedParts=new Set(['holdings','news']);trackedStocks=[{code:'600000',name:'SYNTH_A_PRIVATE'}];newsMemory={items:[]};render();");
+ const d=w.document;
+ for(const [id,value] of Object.entries({tradePrice:'123.456',tradeShares:'789',tradeDate:'2026-09-30',holdingCode:'600000',bollNewGroup:'SYNTH_A_PRIVATE_GROUP',bollStockSearch:'SYNTH_A_PRIVATE_SEARCH'}))d.getElementById(id).value=value;
+ for(const id of ['tradeRecordDialog','bollManageDialog','holdingDialog'])d.getElementById(id).showModal();
+ d.getElementById('bollGroupSelect').innerHTML='<option>SYNTH_A_PRIVATE_GROUP</option>';
+ d.getElementById('bollManageList').textContent='SYNTH_A_PRIVATE_LIST';d.getElementById('holdingStockName').textContent='SYNTH_A_PRIVATE_HOLDING';
+ Object.defineProperty(d.getElementById('tradeCsvFile'),'value',{value:'SYNTH_A_PRIVATE.csv',writable:true});
+ callback(replacement?'SIGNED_IN':'SIGNED_OUT',replacement?{user:{id:'B'}}:null);
+ for(const id of ['tradeRecordDialog','bollManageDialog','holdingDialog'])assert.equal(d.getElementById(id).open,false,id+' must close immediately');
+ for(const id of ['tradePrice','tradeShares','tradeDate','holdingCode','bollNewGroup','bollStockSearch','tradeCsvFile'])assert.equal(d.getElementById(id).value,'',id+' must clear');
+ assert.ok(!d.body.textContent.includes('SYNTH_A_PRIVATE'),'no former-owner text in any DOM, including hidden selectors');
+ assert.equal(run('trackedStocks.length'),0);
+});

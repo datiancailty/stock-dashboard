@@ -33,6 +33,18 @@ NONCASH_F10_EVENTS = (MappingProxyType({
     'pdfUrl': 'https://pdf.dfcfw.com/pdf/H2_AN201202260003958582_1.pdf?1645883719000.pdf',
     'pdfSha256': '58ad25531a1ae7ee01c214cda1713d74103a099270276ad9f9a823eb41e9fa2d',
     'facts': '中国长江电力认股权证发行公告(2006-014)：每10股派发1.5份认股权证；发行价格人民币0元/份；登记日2006-05-17。',
+}), MappingProxyType({
+    # Original single-page API notice text, signed 2006-11-02; published 11-03.
+    # Hash is raw notice_content UTF-8, including the provider's trailing NUL.
+    # This is a reviewed warrant identity, not an inference from age or totals.
+    'SECURITY_CODE': '600887', 'SECUCODE': '600887.SH',
+    'sourceUrl': 'https://emweb.securities.eastmoney.com/PC_HSF10/BonusFinancing/Index?type=web&code=SH600887',
+    'NOTICE_DATE': '2006-11-03', 'EQUITY_RECORD_DATE': '2006-11-08',
+    'REPORT_DATE': '2006其他分配', 'ASSIGN_PROGRESS': '实施方案', 'IS_PAYCASH': '0',
+    'announcementUrl': 'https://data.eastmoney.com/notices/detail/600887/AN201202260003906600.html',
+    'contentUrl': 'https://np-cnotice-stock.eastmoney.com/api/content/ann?art_code=AN201202260003906600&client_source=web&page_index=1',
+    'contentSha256': '1e94703d65162811c60f55d7caf0d2e6433e1cd299c5df158a873e0df347836c',
+    'facts': '伊利股份认股权证发行公告(2006-39)：每10股派发3份认股权证；发行价格0元/份；免费派发；登记日2006-11-08。',
 }),)
 
 

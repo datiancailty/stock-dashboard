@@ -8,6 +8,7 @@ let personalMigrationState=null,personalLoadedParts=new Set(),personalPartLoads=
 const PRIVATE_DASHBOARD_REFRESH_MS=15*60*1000;
 let market={stocks:[],events:[],updatedAt:null},marketLoaded=false;
 let refreshHealth=null,refreshHealthReadFailed=false;
+let personalOperationGeneration=0;
 let newsMemory={items:[],updatedAt:null,lastScanAt:null};
 let catalog=[],trackedStocks=[];
 let watchlistDraft=null,watchlistBase=null,watchlistSaving=false,watchlistMessage='',watchlistUncertain=false,watchlistOperation=null;
@@ -79,55 +80,10 @@ const part0StateTag=state=>{const view=PART0_STATUS_PRESENTATION[state]||PART0_S
 function isPrivatePart0Model(model){return model?.source==='private-authenticated';}
 function symbolDisplay(symbol,fallback=''){const code=String(symbol||'').slice(0,6),found=catalog.find(item=>item.code===code);return found?.name||fallback||code||'—';}
 function privateStatusTag(item){const labels={active:'已激活',continue_hold:'继续观察',buy_candidate:'候选买入',exit_candidate:'退出候选',watch:'观察',data_preparing:'数据准备中',quote_unavailable:'行情待更新',cold_removed:'已移出策略池'};const label=labels[item?.status_key]||'状态待接收';return `<span class="state-tag pending" title="DRY_RUN运行状态投影，不代表已成交或自动下单"><span>${escapeHtml(label)}</span><small>运行态</small></span>`;}
-function part0RuntimeState(runtime,now=new Date()){
-  const generated=Date.parse(runtime?.generated_at||'');
-  if(!Number.isFinite(generated))return {tone:'unknown',label:'等待VPS运行回执',note:'尚未收到有效投影，不代表空仓或服务停止'};
-  const age=now.getTime()-generated;
-  if(age < -60000)return {tone:'warning',label:'回执时间待核对',note:'投影时间晚于当前时间，不能判为正常'};
-  if(age>30*60*1000)return {tone:'warning',label:'VPS回执较旧',note:'投影距今超过30分钟；当前服务状态待核对'};
-  if(runtime?.health_status==='ok')return {tone:'good',label:'VPS回执报告正常',note:'仅表示最近投影状态，不代替交易或未来周期验收'};
-  if(['error','failed','degraded'].includes(runtime?.health_status))return {tone:'error',label:'VPS回执报告异常',note:'以最近脱敏运行记录为准'};
-  return {tone:'unknown',label:'VPS健康状态待核对',note:'已收到投影，但健康状态未确认'};
-}
 function renderPart0RevisionCards(model){
-  const local=model.isLocalPreview,logged=isPrivatePart0Model(model),control=whitelistControl;
-  const saved=logged&&personalLoadedParts.has('holdings');
-  const desired=logged&&vpsAdmin&&control?control.desired_revision_no:null;
-  const active=logged&&vpsAdmin&&control?control.active_revision_no:null;
-  const rows=local?[['Part 1 自选清单','本地预览'],['VPS 目标名单','未提交示例'],['VPS 激活回执','未连接']]:[
-    ['Part 1 自选清单',saved?`已保存 · ${trackedStocks.length}只`:logged?'等待读取':'登录后查看'],
-    ['VPS 旧目标名单',desired?`版本 ${desired} · ${(control.desired_symbols||[]).length}只`:'暂无目标回执'],
-    ['VPS 激活回执',active?`版本 ${active} · ${(control.active_symbols||[]).length}只`:'尚未确认激活']
-  ];
+  const p=authSession&&validPart0Monitor(part0Monitor)?part0Monitor:null;
+  const rows=[['Part 1 自选清单',authSession&&personalLoadedParts.has('holdings')?`已保存 · ${trackedStocks.length}只`:'待读取'],['VPS 运行名单',p?`${p.runtime.activeSymbols.length}只 · 独立运行池`:'待读取'],['下一次自动交易',p&&['expired','paused'].includes(p.runtime.authorization.status)?'未安排':'未确认']];
   $('#part0RevisionCards').innerHTML=rows.map(([label,value])=>`<div><small>${escapeHtml(label)}</small><b>${escapeHtml(value)}</b></div>`).join('');
-}
-function renderPart0SimPositions(positions, model){
-  const privateModel=isPrivatePart0Model(model);
-  if(!positions.length){
-    const copy=privateModel
-      ?(privatePortfolio?'最近一次私有投影未包含持仓行；以同步时间为准。':'当前登录账户没有可读取的 primary 持仓投影，可能尚未授予 scope membership。')
-      :(model.isLocalPreview?'本地布局不读取模拟盘账户，因此这里不是“空仓”结论。未来仅显示获准的股票、持有数量、状态和同步时间。':'公开页面不展示模拟盘账户摘要；获准字段将在私有授权后显示。');
-    return `<div class="sim-body"><div class="empty-icon">○</div><div class="sim-empty-title">${privateModel&&privatePortfolio?'当前投影未包含持仓':'尚未接收持仓摘要'}</div><div class="sim-empty-text">${escapeHtml(copy)}</div><div class="sim-detail-empty"><b>当前显示边界</b>${privateModel?'仅显示认证 RPC 允许的股数、成本、现价、市值和浮动盈亏；金额由数据库计算。':model.isLocalPreview?'本地预览不载入受限账户和交易字段或 Provider 原始响应。':'真实账户、订单和 Provider 原始响应不会进入公开页面。'}</div></div>`;
-  }
-  const valueLabel=(value,kind='money')=>value===null||value===undefined||value===''?'暂无':kind==='cost'?costMoney(value):money(value);
-  const rows=positions.map(item=>{
-    const symbol=item.symbol||item.code||'';
-    const name=item.displayName||item.display_name||symbolDisplay(symbol);
-    const held=item.heldQuantity??item.held_quantity;
-    const available=item.availableQuantity??item.available_quantity;
-    const cost=item.averageCostPerShare??item.average_cost_per_share;
-    const price=item.currentUnadjustedPrice??item.current_unadjusted_price;
-    const marketValue=item.marketValue??item.market_value;
-    const pnl=item.unrealizedPnl??item.unrealized_pnl;
-    const pnlPct=item.unrealizedPnlPct??item.unrealized_pnl_pct;
-    const state=item.positionState||item.position_state||'—';
-    const sync=item.sourceGeneratedAt||item.source_generated_at||model.runtime?.generated_at||'—';
-    const status=item.dataStatus||item.data_status||'—';
-    const cold=state==='removed_cold';
-    const pnlText=`${valueLabel(pnl)}${pnlPct===null||pnlPct===undefined?'':` · ${Number(pnlPct).toFixed(2)}%`}`;
-    return `<article class="sim-position-row ${cold?'cold':''}"><div class="sim-position-head"><b>${escapeHtml(name)} · ${escapeHtml(symbol)}</b><span class="position-state ${cold?'cold':''}">${escapeHtml(cold?'已不在策略白名单':state)}</span></div><div class="sim-position-metrics"><span>持有 <b>${Number(held)||0}股</b></span><span>可用 <b>${Number(available)||0}股</b></span><span>成本 <b>${valueLabel(cost,'cost')}</b></span><span>现价 <b>${valueLabel(price)}</b></span><span>市值 <b>${valueLabel(marketValue)}</b></span><span>浮动盈亏 <b>${pnlText}</b></span></div><small>数据状态：${escapeHtml(status)} · 最近同步 ${escapeHtml(formatTime(sync))}</small>${cold?'<em>移出白名单不等于卖出或删除持仓</em>':''}</article>`;
-  }).join('');
-  return `<div class="sim-body"><div class="sim-position-list">${rows}</div></div>`;
 }
 function renderPart0Monitor(model){
   const local=model.isLocalPreview,logged=isPrivatePart0Model(model);
@@ -136,45 +92,97 @@ function renderPart0Monitor(model){
     return `<tr><td><b>${escapeHtml(item.displayName||symbolDisplay(item.symbol))}</b><small>${escapeHtml(item.symbol)}</small></td><td><span class="unified-pill ${data.tone}">${escapeHtml(data.label)}</span></td><td><span class="unified-pill neutral">${local?'运行态示例':'待逐股运行回执'}</span></td></tr>`;
   }).join('');
   const empty=!logged?'<b>登录后查看今日监控</b><p>真实名单与账户数据不公开。</p>':privateLoadState==='error'?'<b>运行回执读取失败</b><p>请重新读取；当前不能判断实际VPS状态。</p>':'<b>尚未收到已激活名单回执</b><p>Part 1 已保存清单不等于 VPS 已生效。旧目标提交与实际接入在 VPS 修复时核对。</p>';
-  $('#part0MonitorGrid').innerHTML=`<article class="unified-monitor-card"><div class="unified-card-head"><div><h3>今日监控</h3><p>以VPS激活回执为准；自选统一在 Part 1 维护</p></div><span class="unified-pill neutral">${local?'本地示例':'只读监控'}</span></div>${rows?`<div class="unified-monitor-table-wrap"><table class="unified-monitor-table"><thead><tr><th>股票 / 代码</th><th>Dashboard 数据</th><th>VPS 运行状态</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="unified-monitor-empty">${empty}</div>`}<div class="unified-card-foot">${logged&&model.activeRevisionNo?`已激活版本 ${escapeHtml(model.activeRevisionNo)}；逐股信号缺少回执时不推断买卖。`:'等待真实激活证据，不用目标名单代替。'}</div></article><article class="unified-monitor-card"><div class="unified-card-head"><div><h3>模拟盘持仓</h3><p>独立账户投影，不与自选清单混同</p></div><span class="unified-pill neutral">只读</span></div>${renderPart0SimPositions(model.simPositions||[],model)}<div class="unified-card-foot"><b>移除自选 ≠ 卖出持仓</b><span>${logged&&privatePortfolio?`最近投影：${formatBasisTime(privatePortfolio.source_generated_at)}`:'未读取不代表空仓；本页面不调用账户或交易接口。'}</span></div></article>`;
+  $('#part0MonitorGrid').innerHTML=`<article class="unified-monitor-card"><div class="unified-card-head"><div><h3>今日监控</h3><p>以VPS激活回执为准；自选统一在 Part 1 维护</p></div><span class="unified-pill neutral">${local?'本地示例':'只读监控'}</span></div>${rows?`<div class="unified-monitor-table-wrap"><table class="unified-monitor-table"><thead><tr><th>股票 / 代码</th><th>Dashboard 数据</th><th>VPS 运行状态</th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="unified-monitor-empty">${empty}</div>`}<div class="unified-card-foot">${logged&&model.whitelist.length?'名单来自VPS当前账本；逐股信号缺少回执时不推断买卖。':'等待真实运行名单，不用Part1自选代替。'}</div></article>`;
 }
 function currentPart0Model(){
   if(PART0_LOCAL_ONLY_PREVIEW)return PART0_LOCAL_PREVIEW;
   if(!authSession)return PART0_SAFE_PUBLIC;
   const runtime=runtimeDisplay?.runtime||{};
-  const activeSymbols=whitelistControl?.active_revision_no&&Array.isArray(whitelistControl.active_symbols)?whitelistControl.active_symbols:[];
+  const activeSymbols=validPart0Monitor(part0Monitor)?part0Monitor.runtime.activeSymbols:[];
   const events=Array.isArray(runtimeDisplay?.events)?runtimeDisplay.events.slice(0,4).map(item=>({time:item.occurred_at||'',message:item.message||'已记录脱敏事件',note:item.event_code||'运行回执',severity:item.severity})):[];
   return {source:'private-authenticated',isLocalPreview:false,isPrivate:true,desiredRevisionNo:whitelistControl?.desired_revision_no||null,activeRevisionNo:whitelistControl?.active_revision_no||null,whitelist:activeSymbols.map(symbol=>({symbol,displayName:symbolDisplay(symbol)})),simPositions:privatePortfolio?.positions||[],runtime,events};
-}
-function renderPart0Runtime(model){
-  const observed=isPrivatePart0Model(model),r=observed?model.runtime||{}:{},health=part0RuntimeState(r);
-  const quote=Number.isFinite(Date.parse(r.last_quote_snapshot_at||''));
-  const received=Number.isFinite(Date.parse(r.generated_at||''));
-  const cards=[
-    ['脚本进程','未接入','当前投影不含systemd进程状态'],
-    ['行情采集',quote?'收到快照回执':'未接入',quote?formatBasisTime(r.last_quote_snapshot_at):'等待行情采集回执'],
-    ['指标计算','未接入','不能用策略周期时间推断指标通过'],
-    ['结果回传',received?(health.tone==='warning'?'回执待核对':'已收到'):'未接入',received?formatBasisTime(r.generated_at):'等待有效运行投影'],
-    ['执行模式',received&&['DRY_RUN','ARMED','DISABLED'].includes(r.mode)?r.mode:'未确认',received?'最近回执报告的模式':'配置模式不等于实际运行']
-  ];
-  $('#part0RuntimeGrid').innerHTML=cards.map(([label,value,note])=>`<article class="unified-runtime-card"><small>${escapeHtml(label)}</small><b>${escapeHtml(value)}</b><span>${escapeHtml(note)}</span></article>`).join('');
-}
-function renderPart0Log(model){
-  const events=Array.isArray(model.events)&&model.source!=='safe-public'?model.events.slice(0,4):[];
-  $('#part0RunLog').innerHTML=events.length?events.map(item=>`<div class="unified-log-row ${item.severity==='error'?'error':item.severity==='warn'?'warning':''}"><i></i><time>${escapeHtml(Number.isFinite(Date.parse(item.time))?formatBasisTime(item.time):item.time||'未标注时间')}</time><span>${escapeHtml(String(item.message).slice(0,180))}</span><small>${escapeHtml(String(item.note).slice(0,60))}</small></div>`).join(''):'<p class="muted">尚无可显示的运行回执。没有记录，不代表脚本已停止或正常运行。</p>';
 }
 function renderTodayBoard(){
   if(!$('#today'))return;
   const model=currentPart0Model(),local=model.isLocalPreview,logged=isPrivatePart0Model(model);
-  let state=logged?part0RuntimeState(model.runtime):{tone:'unknown',label:local?'本地监控布局预览':'登录后查看运行回执',note:local?'示例数据，不连接真实系统':'公开链接不显示真实名单或账户'};
-  if(logged&&privateLoadState==='error')state={tone:'error',label:'私有回执读取失败',note:'当前不能判断VPS实际状态，请重新读取'};
-  if(logged&&privateLoadState==='loading')state={tone:'unknown',label:'正在读取运行回执',note:'只重新读取 Supabase 私有投影'};
+  const state=part0ReceiptHealth();
   $('#today').dataset.part0Mode=model.source;
   $('#part0Health').dataset.tone=state.tone;
   $('#part0Health').innerHTML=`<i class="unified-health-dot"></i><div><b>${escapeHtml(state.label)}</b><small>${escapeHtml(state.note)}</small></div>`;
   $('#part0PreviewBanner').hidden=!local;
   $('#part0PreviewBanner').textContent=local?'本地 UI 预览：固定合成名单，不代表实时数据，不访问任何私有接口。':'';
-  renderPart0RevisionCards(model);renderPart0Monitor(model);renderPart0Runtime(model);renderPart0Log(model);
+  renderPart0RevisionCards(model);renderPart0Monitor(model);renderPart0Portfolio();
+}
+let part0Monitor=null,part0MonitorState='not_loaded',part0TradeDate='',part0FillFilter='all';
+const part0Number=(v,digits=2)=>typeof v==='number'&&Number.isFinite(v)?v.toLocaleString('zh-CN',{minimumFractionDigits:digits,maximumFractionDigits:digits}):'—';
+const part0Signed=v=>typeof v==='number'&&Number.isFinite(v)?`${v>0?'+':''}${part0Number(v)}`:'—';
+const part0Time=v=>Number.isFinite(Date.parse(v||''))?new Date(v).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}):'未接收';
+function part0Day(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());}
+function validPart0Monitor(p){
+  const time=v=>typeof v==='string'&&Number.isFinite(Date.parse(v)),number=v=>typeof v==='number'&&Number.isFinite(v),optional=v=>v===null||number(v),symbol=v=>typeof v==='string'&&/^\d{6}\.(SH|SZ)$/.test(v),state=v=>['ok','error','running','unknown'].includes(v);
+  if(p?.schemaVersion!==1||!time(p.observedAt)||!Array.isArray(p.trades)||p.trades.length>100||!Array.isArray(p.events)||p.events.length>40)return false;
+  const a=p.account,r=p.runtime;
+  if(a!==null&&(!a||!time(a.asOf)||!Array.isArray(a.positions)||a.positions.length>50||!['totalAssets','availableCash','positionValue'].every(k=>number(a[k]))||!optional(a.totalProfit)||!a.positions.every(x=>x&&symbol(x.symbol)&&Number.isInteger(x.quantity)&&x.quantity>0&&Number.isInteger(x.availableQuantity)&&x.availableQuantity>=0&&x.availableQuantity<=x.quantity&&['averageCost','marketValue','price','pnl','pnlPct'].every(k=>optional(x[k])))))return false;
+  if(!r||!['expired','paused','requires_review','unknown'].includes(r.authorization?.status)||!time(r.authorization.expiresAt)||!state(r.strategy?.status)||!state(r.dashboard?.status)||!Array.isArray(r.activeSymbols)||!r.activeSymbols.every(symbol))return false;
+  return p.trades.every(x=>x&&symbol(x.symbol)&&['buy','sell'].includes(x.side)&&Number.isInteger(x.quantity)&&x.quantity>0&&number(x.price)&&x.price>0&&number(x.amount)&&typeof x.tradeDate==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x.tradeDate)&&time(x.confirmedAt)&&['reconciled','fill_observed'].includes(x.state))&&p.events.every(x=>x&&time(x.at)&&['strategy','dashboard'].includes(x.kind)&&state(x.status)&&['cycle_succeeded','cycle_failed','daily_refresh'].includes(x.code));
+}
+function part0ExpectedMonitorSlot(now){
+  // A slot is late only after a five-minute collection/upload grace period.
+  // This is the approved weekday telemetry calendar, not a trading calendar.
+  const cutoff=now.getTime()-5*60*1000,cn=new Date(cutoff+8*60*60*1000);
+  const midnight=Date.UTC(cn.getUTCFullYear(),cn.getUTCMonth(),cn.getUTCDate())-8*60*60*1000;
+  for(let days=0;days<7;days++){
+    const day=midnight-days*24*60*60*1000,weekday=new Date(day+8*60*60*1000).getUTCDay();
+    if(weekday===0||weekday===6)continue;
+    for(const minutes of [15*60+10,11*60+30,9*60+40]){
+      const slot=day+minutes*60*1000;if(slot<=cutoff)return slot;
+    }
+  }
+  return NaN;
+}
+function part0ReceiptHealth(now=new Date()){
+  if(!authSession)return {tone:'unknown',label:PART0_LOCAL_ONLY_PREVIEW?'本地监控布局预览':'登录后查看模拟账户',note:PART0_LOCAL_ONLY_PREVIEW?'合成布局，不读取账户':'持仓、成交与运行数据不公开'};
+  if(part0MonitorState==='error')return {tone:'error',label:'监控回执读取失败',note:'当前状态不能确认；不会触发VPS重跑'};
+  if(!part0Monitor)return {tone:'unknown',label:'等待新的私有监控回执',note:'尚未接收不等于空仓、停机或运行正常'};
+  const observed=Date.parse(part0Monitor.observedAt),expected=part0ExpectedMonitorSlot(now);
+  if(!Number.isFinite(observed)||!Number.isFinite(expected)||observed>now.getTime()+60000)return {tone:'warning',label:'监控回执时间异常',note:'无法确认监控时段；不据异常时间判断当前状态'};
+  if(observed<expected)return {tone:'warning',label:'监控回执较旧：本时段尚未更新',note:`应更新 ${part0Time(new Date(expected).toISOString())} · 最近监控 ${part0Time(part0Monitor.observedAt)} · 不据旧记录判断当前状态`};
+  const status=part0Monitor.runtime.authorization.status;
+  const labels={expired:'模拟交易已到期停用',paused:'自动交易已暂停',requires_review:'交易调度待独立核对',unknown:'交易授权状态未确认'};
+  return {tone:['expired','paused'].includes(status)?'unknown':'warning',label:labels[status]||labels.unknown,note:`最近监控 ${part0Time(part0Monitor.observedAt)} · 工作日09:40／11:30／15:10同步 · 非账户实时查询`};
+}
+function renderPart0Portfolio(){
+  const p=authSession&&validPart0Monitor(part0Monitor)?part0Monitor:null,a=p?.account,r=p?.runtime;
+  const escape=escapeHtml;
+  const empty=PART0_LOCAL_ONLY_PREVIEW?'本地 UI 预览不读取账户或成交；这里不是空仓结论。':!authSession?'登录后查看私有模拟账户；公开页面不展示账户数据。':part0MonitorState==='error'?'私有监控读取失败，请重新读取。':'尚未收到新的私有账户投影，不能据此判断空仓。';
+  const rows=[...(a?.positions||[])].sort((x,y)=>(y.marketValue??-1)-(x.marketValue??-1)||x.symbol.localeCompare(y.symbol));
+  const body=rows.map(x=>`<tr><td><div class="part0-stock"><span class="part0-avatar">${escape(symbolDisplay(x.symbol).slice(0,1))}</span><div><b>${escape(symbolDisplay(x.symbol))}</b><small>${escape(x.symbol)}</small>${r&&!r.activeSymbols.includes(x.symbol)?'<small>已不在策略白名单</small>':''}</div></div></td><td data-label="持仓 / 可用"><b>${part0Number(x.quantity,0)} 股</b><small>可用 ${part0Number(x.availableQuantity,0)}</small></td><td data-label="平均成本">${part0Number(x.averageCost,3)}</td><td data-label="快照参考价">${part0Number(x.price)}</td><td data-label="持仓市值">${part0Number(x.marketValue)}</td><td data-label="浮盈亏" class="${x.pnl>0?'part0-positive':x.pnl<0?'part0-negative':''}">${part0Signed(x.pnl)}</td><td data-label="浮盈亏率" class="${x.pnlPct>0?'part0-positive':x.pnlPct<0?'part0-negative':''}">${x.pnlPct===null||x.pnlPct===undefined?'—':part0Signed(x.pnlPct)+'%'}</td></tr>`).join('');
+  const metrics=a?[['总资产',a.totalAssets],['可用资金',a.availableCash],['持仓市值',a.positionValue],['账户总盈亏',a.totalProfit]]:[];
+  $('#part0Account').innerHTML=`<div class="part0-card-head"><div><h3>当前持仓 <span class="unified-pill neutral">${a?rows.length+' 只':'待读取'}</span></h3><p>妙想模拟账户 · VPS已保存快照 · 按市值排序</p></div><small>账户快照时间<br><b>${escape(part0Time(a?.asOf))}</b></small></div>${a?`<div class="part0-account-metrics">${metrics.map(([k,v])=>`<div><small>${k}（元）</small><b>${part0Number(v)}</b></div>`).join('')}</div><div class="part0-table-wrap"><table class="part0-holdings-table"><thead><tr><th>股票</th><th>持仓 / 可用</th><th>平均成本</th><th>快照参考价*</th><th>市值（元）</th><th>浮盈亏（元）</th><th>浮盈亏率</th></tr></thead><tbody id="part0PositionsBody">${body||'<tr><td colspan="7" class="empty">该账户快照确认无持仓</td></tr>'}</tbody></table></div><div class="part0-card-foot"><span>* 同次账户快照市值 ÷ 股数，非实时行情。成本缺失时不推算盈亏。</span><span>持仓浮盈亏不是账户总收益；可用股数以账户快照时点为准。</span></div>`:`<div class="part0-empty">${escape(empty)}</div>`}`;
+  const viewStatus=s=>({ok:['最近一次成功','good'],error:['最近一次失败','error'],running:['采集时运行中','blue'],unknown:['未接入','neutral']}[s]||['未确认','neutral']);
+  const [sLabel,sTone]=viewStatus(r?.strategy.status);
+  const dailyView=authSession&&refreshHealthReadFailed?{title:'日更状态读取失败',tone:'error'}:refreshHealthView(refreshHealth,!!authSession);
+  const dTone=({ok:'good',error:'error',running:'blue',warning:'warning'})[dailyView.tone]||'neutral';
+  const dailyAt=authSession&&!refreshHealthReadFailed?(refreshHealth?.finishedAt||refreshHealth?.startedAt||refreshHealth?.lastSuccessAt):null;
+  const authLabel={expired:'已到期停用',paused:'已暂停',requires_review:'待核对',unknown:'未确认'}[r?.authorization.status]||'未确认';
+  const cards=[['策略执行',sLabel,sTone,part0Time(r?.strategy.asOf)],['账户快照',a?'已保存快照':'未接入','neutral',part0Time(a?.asOf)],['自动交易',authLabel,'neutral',r?`授权截止 ${part0Time(r.authorization.expiresAt)} · 状态采集 ${part0Time(p.observedAt)}`:'不据旧DRY_RUN投影推断'],['Dashboard日更',dailyView.title,dTone,`独立日更回执 · ${part0Time(dailyAt)}`]];
+  $('#part0RuntimeGrid').innerHTML=cards.map(([label,value,tone,note])=>`<article class="unified-runtime-card"><small>${label}</small><b class="part0-tone-${tone}">${value}</b><span>${escape(note)}</span></article>`).join('');
+  const events=[...(p?.events||[])].sort((x,y)=>String(y.at).localeCompare(String(x.at)));
+  const label=e=>e.kind==='dashboard'?'Dashboard日更':e.status==='error'?'模拟策略周期失败':'模拟策略周期完成';
+  const errors=events.filter(e=>e.status==='error');
+  $('#part0ErrorHistory').innerHTML=errors.length?`<details class="part0-past-error"><summary>历史失败 · ${errors.length} 条记录 <small>展开</small></summary>${errors.map(e=>`<p><b>${escape(part0Time(e.at))}</b> ${label(e)}。详细原因保留在VPS私有日志；后来的成功不覆盖这条失败。</p>`).join('')}</details>`:'';
+  $('#part0RunLog').innerHTML=events.length?events.slice(0,4).map(e=>`<div class="unified-log-row ${e.status==='error'?'error':''}"><i></i><time>${escape(part0Time(e.at))}</time><span>${label(e)}</span><small>${viewStatus(e.status)[0]}</small></div>`).join(''):'<p class="muted">尚未接收到运行记录。未接收不代表脚本停止或成功。</p>';
+  renderPart0Trades(p);
+}
+function renderPart0Trades(p=authSession&&validPart0Monitor(part0Monitor)?part0Monitor:null){
+  const day=part0TradeDate||part0Day(),trades=(p?.trades||[]).filter(x=>x.tradeDate===day),shown=trades.filter(x=>part0FillFilter==='all'||x.side===part0FillFilter);
+  $('#part0Trades').innerHTML=`<div class="part0-card-head"><div><h3>买卖记录</h3><p>实际成交 · 最近100条本地已记录委托</p></div><label class="part0-date">成交日<input aria-label="成交日" type="date" id="part0FillDate" value="${escapeHtml(day)}"></label></div><div class="part0-filters">${[['all','全部'],['buy','买入'],['sell','卖出']].map(([key,label])=>`<button type="button" data-part0-filter="${key}" class="${part0FillFilter===key?'active':''}">${label} ${p?(key==='all'?trades.length:trades.filter(x=>x.side===key).length):'—'}</button>`).join('')}</div><div id="part0TradeRows">${shown.length?shown.map(x=>`<div class="part0-fill" data-part0-fill><span class="part0-side ${x.side}">${x.side==='buy'?'买':'卖'}</span><div><b>${escapeHtml(symbolDisplay(x.symbol))}</b><small>${escapeHtml(x.symbol)} · ${escapeHtml(x.tradeDate)}</small></div><div><b>${part0Number(x.quantity,0)} 股 × ${part0Number(x.price,3)}</b><small>成交额 ${part0Number(x.amount)} 元</small></div><div><span class="unified-pill ${x.state==='reconciled'?'good':'warning'}">${x.state==='reconciled'?'成交已核对':'已成交待核对'}</span><small>确认 ${escapeHtml(part0Time(x.confirmedAt))}</small></div></div>`).join(''):`<div class="part0-empty">${p?`该日无${part0FillFilter==='sell'?'卖出':part0FillFilter==='buy'?'买入':''}成交（VPS记录范围）`:'尚未接收成交投影，不能据此判断当日无成交。'}</div>`}</div><div class="part0-card-foot">不把买卖信号、未成交委托或持仓成本当成交价；与Part6手工记录独立。</div>`;
+  $('#part0FillDate').onchange=e=>{part0TradeDate=e.target.value;renderPart0Trades();};
+  document.querySelectorAll('[data-part0-filter]').forEach(button=>button.onclick=()=>{part0FillFilter=button.dataset.part0Filter;renderPart0Trades();});
+}
+async function loadPart0Monitor(sessionAtStart){
+  try{const p=await supabaseRpc('personal_get_part0_monitor');if(authSession!==sessionAtStart)return;if(p!==null&&!validPart0Monitor(p))throw new Error('part0_contract_invalid');part0Monitor=p;part0MonitorState=p?'ready':'not_loaded';}
+  catch(error){if(authSession===sessionAtStart){part0Monitor=null;part0MonitorState='error';}}
 }
 function save(){
   // Private positions and costs are never persisted by the page. They are
@@ -213,13 +221,13 @@ function refreshHealthView(health,logged,now=new Date()){
   if(local.getUTCHours()*60+local.getUTCMinutes()<18*60+5)local.setUTCDate(local.getUTCDate()-1);
   while(local.getUTCDay()===0||local.getUTCDay()===6)local.setUTCDate(local.getUTCDate()-1);
   const expected=local.toISOString().slice(0,10);
-  if(typeof health.targetDate!=='string'||health.targetDate<expected)return {tone:'warning',title:'等待新的运行回执',note:'已到下一更新周期。电脑未开启、离线或上报失败都可能造成未收到回执，仅网页不能进一步区分。'};
-  if(health.status==='ok'&&health.lastSuccessAt)return {tone:'ok',title:'最近一轮全部完成',note:'工作日北京时间18:05；开机或错过计划后补采一次最新数据，不唤醒电脑。'};
+  if(typeof health.targetDate!=='string'||health.targetDate<expected)return {tone:'warning',title:'等待新的运行回执',note:'已到下一更新周期。VPS离线、任务未完成或上报失败都可能造成未收到回执，仅网页不能进一步区分。'};
+  if(health.status==='ok'&&health.lastSuccessAt)return {tone:'ok',title:'最近一轮全部完成',note:'独立VPS日更：工作日北京时间18:05；与交易及Part0三次监控同步分开。'};
   return {tone:'warning',title:'状态待核实',note:'未取得完整成功回执。'};
 }
 function renderRefreshHealth(){
   const box=$('#dashboardRefreshHealth');if(!box)return;
-  const view=refreshHealthReadFailed&&authSession?{tone:'error',title:'运行状态读取失败',note:'当前浏览器未能读取 Supabase；不能据此断言本机采集器已停止。'}:refreshHealthView(refreshHealth,!!authSession);
+  const view=refreshHealthReadFailed&&authSession?{tone:'error',title:'运行状态读取失败',note:'当前浏览器未能读取 Supabase；不能据此断言VPS采集器已停止。'}:refreshHealthView(refreshHealth,!!authSession);
   box.dataset.state=view.tone;$('#dashboardRefreshSummary').textContent=`Part 1—6 自动更新 · ${view.title}`;
   const detail=$('#dashboardRefreshDetails');if(!authSession){detail.textContent=view.note;return;}
   const labels={notices:'分红日历',quotes:'行情价格',technical:'BOLL／位置指标',news:'公告增量',forward:'前瞻／实际分红',recommendations:'历史建议观察'};
@@ -227,7 +235,7 @@ function renderRefreshHealth(){
   const reasons={pending:'尚未开始',running:'处理中',complete:'已写入并核对',fallback_used:'主源失败，备用源已完成',rate_limited:'供应商限流／额度限制',timeout:'请求超时',empty_response:'供应商返回空响应',auth_failed:'凭证或登录失效',provider_failed:'供应商接口／网络异常',invalid_data:'数据缺失、过期或校验不通过',missing_contract:'数据库接口未就绪',write_failed:'私有数据写入未确认',readback_failed:'写入后的读回不一致',unknown_error:'任务异常，需查看本机脱敏日志',dependency_failed:'依赖阶段未通过'};
   const sources={hithink_snapshot:'HiThink',eastmoney_snapshot:'公开行情备用源',hithink_daily:'HiThink日线',eastmoney_public:'公开表／正式公告',legacy_public_daily:'公开历史日线',public_company_notice_index:'公司公告索引'};
   const rows=Object.entries(labels).map(([key,label])=>{const item=refreshHealth?.stages?.[key];return `<div class="refresh-stage" data-status="${escapeHtml(states[item?.status]?item.status:'pending')}"><b>${label}</b><strong>${states[item?.status]||'未取得回执'}</strong><small>${key==='forward'&&item?.category==='fallback_used'?'前瞻待核实，采用已核实的已实施口径':reasons[item?.category]||'状态未上报'}${sources[item?.source]?` · ${sources[item.source]}`:''}</small></div>`;}).join('');
-  detail.innerHTML=`<p>${escapeHtml(view.note)}</p><div class="refresh-times"><span>最近完整成功：<b>${escapeHtml(formatBasisTime(refreshHealth?.lastSuccessAt))}</b></span><span>最近尝试：${escapeHtml(formatBasisTime(refreshHealth?.startedAt))}</span><span>执行版本：${escapeHtml(refreshHealth?.sourceRelease||'未上报')}</span></div><div class="refresh-stages">${rows}</div><p class="refresh-boundary">此处为本机数据更新，不是 Part 0 的 VPS 交易状态。AI 画像／策略学习暂停，不影响上述普通采集。页面可见时每15分钟读回；关闭页面不轮询。离线期间无法上报新的具体错误。</p>`;
+  detail.innerHTML=`<p>${escapeHtml(view.note)}</p><div class="refresh-times"><span>最近完整成功：<b>${escapeHtml(formatBasisTime(refreshHealth?.lastSuccessAt))}</b></span><span>最近尝试：${escapeHtml(formatBasisTime(refreshHealth?.startedAt))}</span><span>执行版本：${escapeHtml(refreshHealth?.sourceRelease||'未上报')}</span></div><div class="refresh-stages">${rows}</div><p class="refresh-boundary">此处为独立VPS数据日更，不是 Part 0 的交易状态。AI 画像／策略学习暂停，不影响上述普通采集。页面可见时每15分钟只读已有回执；关闭页面不轮询。Part0服务器仅工作日三次同步，不会因打开网页增加采集。</p>`;
 }
 function formatBasisTime(value){
   const raw=String(value||'').replace(' ','T').replace(/([+-]\d{2})$/,'$1:00');
@@ -413,9 +421,19 @@ $('#newsStockFilter').onchange=renderNews;
 
 function normalizeTradePayload(value){if(Array.isArray(value))return {version:1,updatedAt:null,records:value};return {version:1,updatedAt:value?.updatedAt||null,records:Array.isArray(value?.records)?value.records:[]};}
 async function loadCloudTradeRecords(){return normalizeTradePayload({records:tradeRecords});}
-async function mutateTradeRecords(mutator){await requireAuth();const before=new Set(tradeRecords.map(record=>String(record.id)));const next=mutator([...tradeRecords]);const additions=next.filter(record=>record&&record.id&&!before.has(String(record.id)));if(additions.length)await supabaseRpc('personal_append_trade_records',{p_records:additions});await loadPersonalPart('strategy',true);return {records:tradeRecords,inserted:additions.length};}
+function personalOperationContext(){return {generation:personalOperationGeneration,userId:authSession?.user?.id||null};}
+function personalOperationCurrent(operation){return !!operation?.userId&&authSession?.user?.id===operation.userId&&operation.generation===personalOperationGeneration;}
+function requirePersonalOperation(operation){if(!personalOperationCurrent(operation))throw Object.assign(new Error('会话已变化；请在原账号重新读取核对，不要重复提交。'),{code:'session_changed'});}
+async function mutateTradeRecords(mutator,operation=personalOperationContext()){
+  await requireAuth();requirePersonalOperation(operation);
+  const before=new Set(tradeRecords.map(record=>String(record.id))),next=mutator([...tradeRecords]);
+  const additions=next.filter(record=>record&&record.id&&!before.has(String(record.id)));
+  if(additions.length)await supabaseRpc('personal_append_trade_records',{p_records:additions});
+  requirePersonalOperation(operation);await loadPersonalPart('strategy',true);requirePersonalOperation(operation);
+  return {records:tradeRecords,inserted:additions.length};
+}
 async function loadStrategyFeedback(){return normalizeTradePayload({records:strategyFeedback});}
-async function mutateStrategyFeedback(record){await requireAuth();await supabaseRpc('personal_append_strategy_feedback_v2',{p_record:record});await loadPersonalPart('strategy',true);return record;}
+async function mutateStrategyFeedback(record,operation=personalOperationContext()){await requireAuth();requirePersonalOperation(operation);await supabaseRpc('personal_append_strategy_feedback_v2',{p_record:record});requirePersonalOperation(operation);await loadPersonalPart('strategy',true);requirePersonalOperation(operation);return record;}
 function watchlistVersion(items){
   const canonical=value=>Array.isArray(value)?value.map(canonical):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])):value;
   return JSON.stringify(canonical(watchlistPayload(items).sort((a,b)=>a.code.localeCompare(b.code))));
@@ -523,7 +541,7 @@ async function deleteWatchlistItem(code){
   }
   renderHoldings();
 }
-async function refreshStrategyCloud(){await requireAuth();await loadPersonalPart('strategy',true);renderStrategy();}
+async function refreshStrategyCloud(operation=personalOperationContext()){await requireAuth();requirePersonalOperation(operation);await loadPersonalPart('strategy',true);requirePersonalOperation(operation);renderStrategy();}
 function compactPositions(positions={}){return {asOf:positions.asOf||null,day:positions.day?{zone:positions.day.zone,percent:Number(positions.day.percent)}:null,week:positions.week?{zone:positions.week.zone,percent:Number(positions.week.percent)}:null,month:positions.month?{zone:positions.month.zone,percent:Number(positions.month.percent)}:null};}
 function tradeLearning(record){const y=Number(record.context?.yield||0),day=record.context?.positions?.day?.zone||'',action=record.action;if(action==='做T卖出'&&day==='上部')return '日线上部做T卖出：强化高位减仓习惯';if(action==='做T买入'&&day==='下部')return '日线下部做T买入：强化回落接回习惯';if(action.includes('买入')&&y>=7)return '7%以上仍买入：强化高股息率高性价比偏好';if(action.includes('买入')&&y>=5)return day==='下部'?'5%以上且日线下部买入：强化回落加仓偏好':'5%以上买入：强化分批建仓规则';if(action.includes('卖出')&&y>0&&y<=4.5)return '4%～4.5%卖出：强化清仓底线';return '已纳入策略画像，等待更多相似操作形成稳定规律';}
 function tradeZonePill(period,item){if(!item)return `<span class="trade-zone">${period}待更新</span>`;return `<span class="trade-zone ${zoneClass(item.zone)}">${period}${escapeHtml(item.zone[0])}</span>`;}
@@ -537,7 +555,7 @@ function renderBriefCommand(advice){let command=strategyAnalysis.briefCommand,an
   document.querySelectorAll('[data-strategy-feedback]').forEach(button=>{button.disabled=true;button.onclick=null;});const status=$('#briefFeedbackStatus');if(status)status.textContent='没有可绑定的真实建议，不能提交反馈。';return;
 }
   const code=String(command.code||''),name=command.name||stock(code).name||'',stockData=code?stock(code):{},yieldRate=Number.isFinite(stockData.totalDividend)&&Number.isFinite(stockData.price)&&stockData.price>0?stockData.totalDividend/stockData.price*100:null,currentFeedback=strategyFeedback.find(x=>x.recommendationId===command.id),action=String(command.action||'当前不买'),researchMatch=researchMatchPercent(command.confidence,analysisForCommand);$('#briefCommandTitle').textContent=(strategyAnalysisIsCurrent()?'':'历史建议 · ')+(code?`${action}：${name}（${code}）`:action);$('#briefCommandBadge').textContent=researchMatchBadge(command.confidence,analysisForCommand);$('#briefCommandBadge').title=researchMatch===null?'旧版结果没有可验证的研究匹配度刻度；页面不会猜测 0.72、1 等数值代表的百分比，等待 v3 升级或新的本机 Worker 结果。':'研究匹配度表示当前建议与已确认规则、当前数据和有限样本的一致性；不是涨跌概率、收益概率或自动下单依据。';$('#briefCommandBadge').className=/买入/.test(action)?'buy':/卖出/.test(action)?'sell':'wait';$('#briefCommandReason').textContent=[command.reason,command.condition].filter(Boolean).map(text=>String(text).replace(/[；;。]+$/,'')).join('；')+'。';$('#briefCommandFacts').innerHTML=code?`<span>现价 <b>${money(stockData.price)}</b></span><span>正式股息率 <b>${yieldRate===null?'—':`${yieldRate.toFixed(2)}%`}</b></span><span>反馈样本 <b>${Number(strategyFeedback.length||strategyAnalysis.feedbackStats?.count||0)}次</b></span>`:'<span>当前没有合格买点</span>';document.querySelectorAll('[data-strategy-feedback]').forEach(button=>{const selected=currentFeedback?.status===button.dataset.strategyFeedback;button.classList.toggle('selected',selected);button.disabled=!!currentFeedback||feedbackPending;button.title=feedbackPending?'正在保存反馈…':currentFeedback?'该建议的反馈已保存，为避免重复记账不可再次提交。':'提交一次真实反馈';button.setAttribute('aria-label',button.title);});const feedbackStatus=$('#briefFeedbackStatus');if(feedbackStatus)feedbackStatus.textContent=feedbackPending?'正在保存反馈…':currentFeedback?`已记录“${({executed:'已执行',not_executed:'没买 / 没执行',deferred:'暂缓观察'})[currentFeedback.status]||'反馈'}”；为避免同一建议重复记账，本条反馈已锁定。`:'';document.querySelectorAll('[data-strategy-feedback]').forEach(button=>{button.onclick=()=>submitStrategyFeedback(button.dataset.strategyFeedback,command);});}
-async function submitStrategyFeedback(status,command){if(feedbackPending)return;feedbackPending=true;document.querySelectorAll('[data-strategy-feedback]').forEach(button=>{button.disabled=true;});const labels={executed:'已执行',not_executed:'没买 / 没执行',deferred:'暂缓观察'};try{await requireAuth();await mutateStrategyFeedback({id:crypto.randomUUID?.()||`${Date.now()}-${Math.random()}`,recommendationId:String(command.id),status,code:String(command.code||''),name:String(command.name||''),action:String(command.action||''),reason:String(command.reason||''),condition:String(command.condition||''),recommendedAt:strategyAnalysis.updatedAt||new Date().toISOString(),createdAt:new Date().toISOString()});renderStrategy();showMessage('反馈已保存',`已记录“${labels[status]}”。画像演进暂缓；保存反馈不会立即生成新分析。`);}catch(error){if(!/请先/.test(error.message))showMessage('反馈未保存',error.message);}finally{feedbackPending=false;renderStrategy();}}
+async function submitStrategyFeedback(status,command){if(feedbackPending)return;if(!authSession)return openLogin();const operation=personalOperationContext();feedbackPending=true;document.querySelectorAll('[data-strategy-feedback]').forEach(button=>{button.disabled=true;});const labels={executed:'已执行',not_executed:'没买 / 没执行',deferred:'暂缓观察'};try{await requireAuth();requirePersonalOperation(operation);await mutateStrategyFeedback({id:crypto.randomUUID?.()||`${Date.now()}-${Math.random()}`,recommendationId:String(command.id),status,code:String(command.code||''),name:String(command.name||''),action:String(command.action||''),reason:String(command.reason||''),condition:String(command.condition||''),recommendedAt:strategyAnalysis.updatedAt||new Date().toISOString(),createdAt:new Date().toISOString()},operation);if(!personalOperationCurrent(operation))return;renderStrategy();showMessage('反馈已保存',`已记录“${labels[status]}”。画像演进暂缓；保存反馈不会立即生成新分析。`);}catch(error){if(personalOperationCurrent(operation)&&!/请先/.test(error.message))showMessage('反馈未保存',error.message);}finally{if(personalOperationCurrent(operation)){feedbackPending=false;renderStrategy();}}}
 function renderStrategyPerformance(){
   const box=$('#strategyPerformance');
   if(!box)return;
@@ -657,17 +675,27 @@ function parseCsv(text){const rows=[],row=[];let value='',quoted=false;for(let i
 function csvPick(row,names){for(const name of names)if(row[name]!==undefined&&row[name]!=='')return row[name];return '';}
 function csvStableId(parts){let hash=2166136261;for(const char of parts.join('|')){hash^=char.charCodeAt(0);hash=Math.imul(hash,16777619);}return `csv-${(hash>>>0).toString(16).padStart(8,'0')}`;}
 function validateTradeCsv(text){const rows=parseCsv(text);if(!rows.length)throw new Error('CSV没有可导入的数据行');if(rows.length>5000)throw new Error('单次最多导入5000条操作');const allowed=new Set(['买入','卖出','做T买入','做T卖出']),occurrences=new Map(),seenIds=new Set(),records=[],errors=[];rows.forEach((row,index)=>{const line=index+2,dateValue=csvPick(row,['日期','date']).trim(),rawCode=csvPick(row,['股票代码','代码','code']).replace(/^['\s]+/,'').trim().toUpperCase().replace(/\.(SH|SZ)$/,'');const code=/^\d+$/.test(rawCode)?rawCode.padStart(6,'0'):rawCode,action=csvPick(row,['操作','action']).replace(/\s+/g,''),price=Number(csvPick(row,['成交价格','价格','price']).replace(/[¥,\s]/g,'')),shares=Number(csvPick(row,['成交股数','股数','shares']).replace(/[,\s]/g,'')),parsedDate=/^\d{4}-\d{2}-\d{2}$/.test(dateValue)?new Date(`${dateValue}T00:00:00Z`):null,validDate=!!parsedDate&&!Number.isNaN(parsedDate.getTime())&&parsedDate.toISOString().slice(0,10)===dateValue;if(!validDate)errors.push(`第${line}行：日期应为YYYY-MM-DD且必须是真实日期`);if(!/^\d{6}$/.test(code))errors.push(`第${line}行：股票代码应为6位数字`);if(!allowed.has(action))errors.push(`第${line}行：操作仅支持买入、卖出、做T买入、做T卖出`);if(!Number.isFinite(price)||price<=0)errors.push(`第${line}行：成交价格必须大于0`);if(!Number.isInteger(shares)||shares<=0)errors.push(`第${line}行：成交股数必须是正整数`);if(!validDate||!/^\d{6}$/.test(code)||!allowed.has(action)||!Number.isFinite(price)||price<=0||!Number.isInteger(shares)||shares<=0)return;const tuple=[dateValue,code,action,String(price),String(shares)],key=tuple.join('|'),occurrence=(occurrences.get(key)||0)+1;occurrences.set(key,occurrence);const suppliedId=csvPick(row,['记录ID','id']).trim(),id=suppliedId||csvStableId([...tuple,String(occurrence)]);if(!/^[A-Za-z0-9._:-]{1,160}$/.test(id)){errors.push(`第${line}行：记录ID格式无效`);return;}if(seenIds.has(id)){errors.push(`第${line}行：记录ID重复`);return;}seenIds.add(id);const candidate=catalog.find(item=>item.code===code),marketStock=market.stocks.find(item=>item.code===code),holding=holdings.find(item=>item.code===code),name=csvPick(row,['股票名称','股票','name'])||candidate?.name||marketStock?.name||holding?.name||code,dividendRaw=csvPick(row,['正式每股分红','每股分红','dividendPerShare']),dividend=dividendRaw===''?NaN:Number(dividendRaw.replace(/[,\s]/g,'')),yieldRaw=csvPick(row,['历史股息率','股息率','yield']),historicalYield=yieldRaw===''?NaN:Number(yieldRaw.replace(/[%\s]/g,'')),positions={day:{zone:csvPick(row,['成交日线位置','日线位置','dayZone'])},week:{zone:csvPick(row,['成交周线位置','周线位置','weekZone'])},month:{zone:csvPick(row,['成交月线位置','月线位置','monthZone'])}},cleanPositions=Object.fromEntries(Object.entries(positions).filter(([,item])=>item.zone)),createdAt=csvPick(row,['创建时间','createdAt']);records.push({id,date:dateValue,code,name,action,price,shares,dividendPerShare:Number.isFinite(dividend)?dividend:(Number.isFinite(stock(code).totalDividend)?stock(code).totalDividend:null),createdAt:createdAt&&!Number.isNaN(Date.parse(createdAt))?createdAt:new Date().toISOString(),source:'csv-import',learning:csvPick(row,['策略学习结果','learning']),context:{status:'pending',requestedDate:dateValue,...(Number.isFinite(historicalYield)?{yield:historicalYield}:{}),...(Object.keys(cleanPositions).length?{positions:cleanPositions}:{} )}});});if(errors.length)throw new Error(errors.slice(0,8).join('；')+(errors.length>8?`；另有${errors.length-8}处错误`:''));return records;}
-async function importTradeCsvFile(file){if(!file)return;await requireAuth();if(file.size>5*1024*1024)throw new Error('CSV文件不能超过5MB');const imported=validateTradeCsv(await file.text()),existingIds=new Set(tradeRecords.map(r=>r.id)),fresh=imported.filter(r=>!existingIds.has(r.id));if(!fresh.length)return showMessage('没有新增记录',`CSV中的${imported.length}条操作均已存在，没有重复导入。`);if(!confirm(`CSV校验通过，共${imported.length}条，其中${fresh.length}条是新记录。确定写入当前账号的私有 Supabase 吗？`))return;await mutateTradeRecords(records=>[...fresh,...records],'private: bulk import trade records from csv');renderStrategy();showMessage('CSV批量导入完成',`已新增${fresh.length}条操作，跳过${imported.length-fresh.length}条重复记录。新记录会在后续私有复盘任务中补全历史行情。`);}
-async function openTradeRecord(){try{await requireAuth();if(!personalLoadedParts.has('holdings'))await loadPersonalPart('holdings');const universe=personalStockUniverse();if(!universe.length)return showMessage('暂无股票','请先在 Part 1 添加私有自选股。');renderStrategy();$('#tradeDate').value=new Date().toISOString().slice(0,10);const code=$('#tradeStock').value||universe[0].code;$('#tradeStock').value=code;$('#tradePrice').value=Number(stock(code).price)>0?stock(code).price:'';$('#tradeShares').value='';$('#tradeRecordDialog').showModal();}catch(error){if(!/请先/.test(error.message))showMessage('暂时不能记录',error?.message||'私有记录未修改。');}}
-async function deleteTradeRecord(id){if(!authSession)return openLogin();const record=tradeRecords.find(item=>String(item.id)===String(id));if(!record)return;if(!confirm(`确定从当前账号的私有操作历史删除 ${record.date||''} ${record.name||record.code||''} 吗？`))return;try{await supabaseRpc('personal_delete_trade_record',{p_source_id:String(id)});await loadPersonalPart('strategy',true);renderStrategy();showMessage('已删除','该条私有操作记录已删除，后续画像会按剩余历史重新计算。');}catch(error){showMessage('删除失败',error?.message||'私有操作记录未修改。');}}
+async function importTradeCsvFile(file,operation=personalOperationContext()){
+  if(!file)return;await requireAuth();requirePersonalOperation(operation);
+  if(file.size>5*1024*1024)throw new Error('CSV文件不能超过5MB');
+  const text=await file.text();requirePersonalOperation(operation);
+  const imported=validateTradeCsv(text),existingIds=new Set(tradeRecords.map(r=>r.id)),fresh=imported.filter(r=>!existingIds.has(r.id));
+  if(!fresh.length)return showMessage('没有新增记录',`CSV中的${imported.length}条操作均已存在，没有重复导入。`);
+  if(!confirm(`CSV校验通过，共${imported.length}条，其中${fresh.length}条是新记录。确定写入当前账号的私有 Supabase 吗？`))return;
+  requirePersonalOperation(operation);await mutateTradeRecords(records=>[...fresh,...records],operation);
+  if(!personalOperationCurrent(operation))return;
+  renderStrategy();showMessage('CSV批量导入完成',`已新增${fresh.length}条操作，跳过${imported.length-fresh.length}条重复记录。新记录会在后续私有复盘任务中补全历史行情。`);
+}
+async function openTradeRecord(){const operation=personalOperationContext();try{await requireAuth();requirePersonalOperation(operation);if(!personalLoadedParts.has('holdings'))await loadPersonalPart('holdings');requirePersonalOperation(operation);const universe=personalStockUniverse();if(!universe.length)return showMessage('暂无股票','请先在 Part 1 添加私有自选股。');renderStrategy();$('#tradeDate').value=new Date().toISOString().slice(0,10);const code=$('#tradeStock').value||universe[0].code;$('#tradeStock').value=code;$('#tradePrice').value=Number(stock(code).price)>0?stock(code).price:'';$('#tradeShares').value='';$('#tradeRecordDialog').showModal();}catch(error){if(personalOperationCurrent(operation)&&!/请先/.test(error.message))showMessage('暂时不能记录',error?.message||'私有记录未修改。');}}
+async function deleteTradeRecord(id){if(!authSession)return openLogin();const operation=personalOperationContext(),record=tradeRecords.find(item=>String(item.id)===String(id));if(!record)return;if(!confirm(`确定从当前账号的私有操作历史删除 ${record.date||''} ${record.name||record.code||''} 吗？`))return;try{requirePersonalOperation(operation);await supabaseRpc('personal_delete_trade_record',{p_source_id:String(id)});requirePersonalOperation(operation);await loadPersonalPart('strategy',true);requirePersonalOperation(operation);renderStrategy();showMessage('已删除','该条私有操作记录已删除，后续画像会按剩余历史重新计算。');}catch(error){if(personalOperationCurrent(operation))showMessage('删除失败',error?.message||'私有操作记录未修改。');}}
 $('#exportTradesCsv').onclick=()=>{if(!authSession)return openLogin();exportTradeCsv();};
-$('#importTradesCsv').onclick=async()=>{try{await requireAuth();$('#tradeCsvFile').click();}catch(error){if(!/请先/.test(error.message))showMessage('暂时不能导入',error?.message||'私有记录未修改。');}};
-$('#tradeCsvFile').onchange=async event=>{const file=event.target.files?.[0];try{await importTradeCsvFile(file);}catch(error){showMessage('CSV导入失败',error?.message||'私有记录未修改。');}finally{event.target.value='';}};
+$('#importTradesCsv').onclick=async()=>{const operation=personalOperationContext();try{await requireAuth();requirePersonalOperation(operation);$('#tradeCsvFile').click();}catch(error){if(personalOperationCurrent(operation)&&!/请先/.test(error.message))showMessage('暂时不能导入',error?.message||'私有记录未修改。');}};
+$('#tradeCsvFile').onchange=async event=>{const operation=personalOperationContext(),file=event.target.files?.[0];try{await importTradeCsvFile(file,operation);}catch(error){if(personalOperationCurrent(operation))showMessage('CSV导入失败',error?.message||'私有记录未修改。');}finally{if(personalOperationCurrent(operation))event.target.value='';}};
 $('#showTradeRecord').onclick=openTradeRecord;
-$('#refreshStrategy').onclick=async()=>{if(!authSession)return openLogin();const button=$('#refreshStrategy');button.disabled=true;try{await refreshStrategyCloud();showMessage('私有策略记录已刷新','仅重新读取当前账号的 Part 6 私有 RPC；未调用模型、行情、VPS 或交易接口。');}catch(error){showMessage('刷新失败',error?.message||'私有记录未更新。');}finally{button.disabled=false;}};
+$('#refreshStrategy').onclick=async()=>{if(!authSession)return openLogin();const operation=personalOperationContext(),button=$('#refreshStrategy');button.disabled=true;try{await refreshStrategyCloud(operation);if(!personalOperationCurrent(operation))return;showMessage('私有策略记录已刷新','仅重新读取当前账号的 Part 6 私有 RPC；未调用模型、行情、VPS 或交易接口。');}catch(error){if(personalOperationCurrent(operation))showMessage('刷新失败',error?.message||'私有记录未更新。');}finally{if(personalOperationCurrent(operation))button.disabled=false;}};
 $('#cancelTradeRecord').onclick=()=>$('#tradeRecordDialog').close();
 $('#tradeStock').onchange=()=>{const code=$('#tradeStock').value;$('#tradePrice').value=Number(stock(code).price)>0?stock(code).price:'';};
-$('#tradeRecordForm').onsubmit=async e=>{e.preventDefault();const code=$('#tradeStock').value,universe=personalStockUniverse(),target=universe.find(item=>item.code===code),s=stock(code),price=Number($('#tradePrice').value),shares=Number($('#tradeShares').value),action=$('#tradeAction').value,dateValue=$('#tradeDate').value;if(!target||!dateValue||!Number.isFinite(price)||price<=0||!Number.isInteger(shares)||shares<=0)return showMessage('记录未保存','请检查日期、股票、成交价格和成交股数。');const position=s.positions||{},yieldRate=Number.isFinite(s.totalDividend)&&Number.isFinite(s.price)&&s.price>0?s.totalDividend/s.price*100:null,record={id:crypto.randomUUID?.()||`${Date.now()}-${Math.random()}`,date:dateValue,code,name:target.name,action,price,shares,dividendPerShare:Number.isFinite(s.totalDividend)?s.totalDividend:null,createdAt:new Date().toISOString(),source:'dashboard-private',context:{status:'pending',requestedDate:dateValue,marketPriceAtRecord:s.price,totalDividend:s.totalDividend,...(yieldRate===null?{}:{yield:yieldRate}),...(position&&Object.keys(position).length?{positions:compactPositions(position)}:{})}};const submit=$('#tradeRecordForm button[type="submit"]');try{submit.disabled=true;submit.textContent='正在写入私有空间…';await mutateTradeRecords(records=>[record,...records],'private: add trade record');$('#tradeRecordDialog').close();renderStrategy();showMessage('操作已保存',`${target.name} ${action} ${shares}股已写入当前账号的私有历史。`);}catch(error){showMessage('记录未保存',error?.message||'私有记录未修改。');}finally{submit.disabled=false;submit.textContent='保存操作';}};
+$('#tradeRecordForm').onsubmit=async e=>{e.preventDefault();const operation=personalOperationContext();if(!personalOperationCurrent(operation))return openLogin();const code=$('#tradeStock').value,universe=personalStockUniverse(),target=universe.find(item=>item.code===code),s=stock(code),price=Number($('#tradePrice').value),shares=Number($('#tradeShares').value),action=$('#tradeAction').value,dateValue=$('#tradeDate').value;if(!target||!dateValue||!Number.isFinite(price)||price<=0||!Number.isInteger(shares)||shares<=0)return showMessage('记录未保存','请检查日期、股票、成交价格和成交股数。');const position=s.positions||{},yieldRate=Number.isFinite(s.totalDividend)&&Number.isFinite(s.price)&&s.price>0?s.totalDividend/s.price*100:null,record={id:crypto.randomUUID?.()||`${Date.now()}-${Math.random()}`,date:dateValue,code,name:target.name,action,price,shares,dividendPerShare:Number.isFinite(s.totalDividend)?s.totalDividend:null,createdAt:new Date().toISOString(),source:'dashboard-private',context:{status:'pending',requestedDate:dateValue,marketPriceAtRecord:s.price,totalDividend:s.totalDividend,...(yieldRate===null?{}:{yield:yieldRate}),...(position&&Object.keys(position).length?{positions:compactPositions(position)}:{})}};const submit=$('#tradeRecordForm button[type="submit"]');try{submit.disabled=true;submit.textContent='正在写入私有空间…';await mutateTradeRecords(records=>[record,...records],operation);if(!personalOperationCurrent(operation))return;$('#tradeRecordDialog').close();renderStrategy();showMessage('操作已保存',`${target.name} ${action} ${shares}股已写入当前账号的私有历史。`);}catch(error){if(personalOperationCurrent(operation))showMessage('记录未保存',error?.message||'私有记录未修改。');}finally{if(personalOperationCurrent(operation)){submit.disabled=false;submit.textContent='保存操作';}}};
 document.querySelectorAll('[data-trade-filter]').forEach(button=>button.onclick=()=>{tradeFilter=button.dataset.tradeFilter;document.querySelectorAll('[data-trade-filter]').forEach(x=>x.classList.toggle('active',x===button));renderStrategy();});
 
 function scoreCandidate(item,q){const name=item.name.toLowerCase(),code=item.code,pinyin=item.pinyin||'',initials=item.initials||'';if(q===code||q===name||q===initials||q===pinyin)return 100;if(code.startsWith(q)||name.startsWith(q)||initials.startsWith(q)||pinyin.startsWith(q))return 80;if(code.includes(q)||name.includes(q)||initials.includes(q)||pinyin.includes(q))return 50;return 0;}
@@ -687,8 +715,9 @@ function initSupabaseClient(){
   try{
     supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,flowType:'pkce'}});
     supabaseClient.auth.onAuthStateChange((event,session)=>{
+      const previousUserId=authSession?.user?.id||null;
       authSession=session||null;
-      if(!authSession){stopPrivateAutoRefresh();currentUsername='';vpsAdmin=false;privatePortfolio=null;runtimeDisplay=null;whitelistControl=null;privateLoadState='not_loaded';privateLoadError='';holdings=[];clearPersonalData();}
+      if(!authSession||previousUserId!==(authSession.user?.id||null)){stopPrivateAutoRefresh();currentUsername='';vpsAdmin=false;privatePortfolio=null;runtimeDisplay=null;whitelistControl=null;privateLoadState='not_loaded';privateLoadError='';holdings=[];clearPersonalData();}
       updateAuthUI();
       render();
       if(authSession&&(event==='SIGNED_IN'||event==='TOKEN_REFRESHED'))setTimeout(()=>{if(!authSession)return;if(document.visibilityState==='visible')void loadPrivateDashboard();startPrivateAutoRefresh();},0);
@@ -704,7 +733,7 @@ function canonicalUsername(value){const username=String(value??'').normalize('NF
 async function callAuthFunction(name,body){if(!SUPABASE_FUNCTIONS_BASE)throw Object.assign(new Error('auth_not_configured'),{code:'auth_not_configured'});let response;try{response=await fetch(`${SUPABASE_FUNCTIONS_BASE}/${name}`,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},cache:'no-store',body:JSON.stringify(body)});}catch(error){throw Object.assign(new Error('temporarily_unavailable'),{code:'temporarily_unavailable'});}let payload=null;try{payload=await response.json();}catch(error){}if(response.ok)return payload||{};const code=payload?.error||response.status===401?'invalid_credentials':response.status===429?'rate_limited':'temporarily_unavailable';throw Object.assign(new Error(code),{code});}
 function rpcFailureText(name,error){const code=String(error?.code||'');if(code==='PGRST202'||code==='PGRST203')return '私有接口目录尚未刷新，请执行最新数据库修复后刷新页面';if(code==='42702')return '私有反馈服务需要执行最新前向修复；完成后请强制刷新并重新登录';if(code==='42501'||Number(error?.status)===403)return '当前账号没有这项私有操作权限';if(code==='23514')return '提交内容未通过私有数据校验';if(Number(error?.status)===401)return '登录会话已失效，请重新登录';return name.startsWith('personal_')?'私有数据接口暂时失败，请稍后重试':'请求暂时失败，请稍后重试';}
 async function supabaseRpc(name,args={}){if(!supabaseClient||!authSession)throw Object.assign(new Error('auth_required'),{code:'auth_required'});const {data,error}=await supabaseClient.rpc(name,args);if(error){const rpcCode=String(error.code||error.status||'rpc_failed');throw Object.assign(new Error(rpcFailureText(name,error)),{code:'rpc_failed',rpcCode});}return data;}
-function clearPersonalData(){for(const id of ['watchlistSaveDialog','messageDialog']){const dialog=document.querySelector('#'+id);if(dialog?.open)dialog.close?.();}for(const id of ['watchlistSaveDetail','suggestions','messageText']){const node=document.querySelector('#'+id);if(node)node.textContent='';}const input=document.querySelector('#stockSearch');if(input)input.value='';const hint=document.querySelector('#selectedStock');if(hint)hint.textContent='支持中文、代码、拼音；选择后加入草稿';watchlistDraft=null;watchlistBase=null;watchlistSaving=false;watchlistOperation=null;watchlistMessage='';watchlistUncertain=false;refreshHealth=null;refreshHealthReadFailed=false;personalMigrationState=null;personalLoadedParts=new Set();personalPartLoads=new Map();personalPartErrors=new Map();trackedStocks=[];part2Config={version:1,groups:[],extraStocks:[]};market={stocks:[],events:[],updatedAt:null};marketLoaded=false;newsMemory={items:[],updatedAt:null,lastScanAt:null};tradeRecords=[];strategyFeedback=[];feedbackPending=false;strategyRecommendations=[];strategyRecommendationMeta={};strategyDataTimes={};strategyAnalysis={status:'waiting',learnedRules:[],advice:[]};strategyProfile={schemaVersion:1,externalLearnedRules:[],personalBehaviorEvidence:{},fixedGuardrails:[],nonExecutablePositionSuggestions:[],conflictsAndGaps:[]};focusedStudy=null;focusedStudyNew=null;strategyApiHealth={status:'unknown',reason:'请登录后读取私有策略记录'};}
+function clearPersonalData(){personalOperationGeneration+=1;part0Monitor=null;part0MonitorState="not_loaded";part0TradeDate="";part0FillFilter="all";for(const id of ['loginDialog','recoveryDialog','watchlistSaveDialog','messageDialog','holdingDialog','bollSettingsDialog','bollManageDialog','tradeRecordDialog']){const dialog=document.querySelector('#'+id);if(dialog?.open)dialog.close?.();dialog?.querySelectorAll('input,textarea').forEach(field=>{field.value='';if(field.type==='checkbox')field.checked=false;});dialog?.querySelectorAll('select').forEach(field=>{field.selectedIndex=0;});}for(const id of ['newsStockFilter','tradeStock','bollGroupSelect']){const field=document.querySelector('#'+id);if(field)field.innerHTML=id==='newsStockFilter'?'<option value="">全部私有自选股</option>':'';}for(const id of ['watchlistSaveDetail','suggestions','messageText','messageTitle','holdingStockName','bollManageList','bollStockOptions','loginError','recoveryMessage']){const node=document.querySelector('#'+id);if(node)node.textContent='';}const input=document.querySelector('#stockSearch');if(input)input.value='';const csv=document.querySelector('#tradeCsvFile');if(csv)csv.value='';const tradeSubmit=document.querySelector('#tradeRecordForm button[type="submit"]');if(tradeSubmit){tradeSubmit.disabled=false;tradeSubmit.textContent='保存操作';}const refreshButton=document.querySelector('#refreshStrategy');if(refreshButton)refreshButton.disabled=false;const hint=document.querySelector('#selectedStock');if(hint)hint.textContent='支持中文、代码、拼音；选择后加入草稿';watchlistDraft=null;watchlistBase=null;watchlistSaving=false;watchlistOperation=null;watchlistMessage='';watchlistUncertain=false;refreshHealth=null;refreshHealthReadFailed=false;personalMigrationState=null;personalLoadedParts=new Set();personalPartLoads=new Map();personalPartErrors=new Map();trackedStocks=[];part2Config={version:1,groups:[],extraStocks:[]};market={stocks:[],events:[],updatedAt:null};marketLoaded=false;newsMemory={items:[],updatedAt:null,lastScanAt:null};tradeRecords=[];strategyFeedback=[];feedbackPending=false;strategyRecommendations=[];strategyRecommendationMeta={};strategyDataTimes={};strategyAnalysis={status:'waiting',learnedRules:[],advice:[]};strategyProfile={schemaVersion:1,externalLearnedRules:[],personalBehaviorEvidence:{},fixedGuardrails:[],nonExecutablePositionSuggestions:[],conflictsAndGaps:[]};focusedStudy=null;focusedStudyNew=null;strategyApiHealth={status:'unknown',reason:'请登录后读取私有策略记录'};}
 function personalRpcForPage(pageId){return {holdings:'personal_get_part1',positions:'personal_get_part2',grid:'personal_get_part4_v4',calendar:'personal_get_part4_v4',news:'personal_get_part5',strategy:'personal_get_part6'}[pageId]||'';}
 function personalCount(value){const number=Number(value);return Number.isFinite(number)&&number>=0?Math.floor(number):0;}
 function privateHistoryStatusHtml(pageId,label){if(!authSession)return `<div class="private-history-gate signed-out"><b>${escapeHtml(label)}已迁入私有空间</b><p>公开链接不会显示个人历史。请点击右上角“登录查看私有历史”，使用你的用户名和密码登录后自动读取。</p></div>`;if(personalLoadedParts.has(pageId))return '';if(personalPartLoads.has(pageId))return `<div class="private-history-gate loading"><b>正在读取${escapeHtml(label)}</b><p>数据仅从当前登录账号的 Supabase 私有 RPC 返回，请稍候。</p></div>`;if(personalPartErrors.has(pageId))return `<div class="private-history-gate error"><b>${escapeHtml(label)}暂未读取成功</b><p>登录会话仍保持；请再次点击本栏目重试。公开页面不会回退到旧 GitHub JSON。</p></div>`;if(personalMigrationState&&personalCount(personalMigrationState.source_files)===0)return `<div class="private-history-gate empty"><b>当前账号没有已迁入的历史数据</b><p>请确认使用的是已绑定历史内容的用户名登录。</p></div>`;return '';}
@@ -760,6 +789,8 @@ async function loadPrivateDashboardOnce(sessionAtStart){
   if(authSession!==sessionAtStart)return;
   try{const health=await supabaseRpc('personal_get_refresh_health');if(authSession===sessionAtStart){refreshHealth=health&&typeof health==='object'?health:null;refreshHealthReadFailed=false;}}catch(error){if(authSession===sessionAtStart)refreshHealthReadFailed=true;}
   if(authSession!==sessionAtStart)return;
+  await loadPart0Monitor(sessionAtStart);
+  if(authSession!==sessionAtStart)return;
   updateAuthUI();render();
   const activePage=document.querySelector('.page.active')?.id||'today';
   if(personalRpcForPage(activePage))await loadPersonalPart(activePage,true);
@@ -770,7 +801,7 @@ if($('#cancelRecovery'))$('#cancelRecovery').onclick=()=>$('#recoveryDialog').cl
 if($('#recoveryForm'))$('#recoveryForm').onsubmit=async e=>{e.preventDefault();const button=$('#recoveryForm button[type="submit"]');try{button.disabled=true;const payload=await requestRecovery($('#recoveryUsername').value);$('#recoveryMessage').textContent=payload.message||'如果用户名存在，恢复邮件已发送。';}catch(error){$('#recoveryMessage').textContent='恢复服务暂时不可用，请稍后再试。';}finally{button.disabled=false;}};
 $('#loginButton').onclick=async()=>{if(authSession){try{await signOut();}catch(error){showMessage('退出失败','会话退出未完成，请稍后重试。');}}else openLogin();};
 $('#loginForm').onsubmit=async e=>{e.preventDefault();$('#loginError').textContent='正在安全验证…';const submit=$('#loginForm button[type="submit"]');try{submit.disabled=true;await loginWithUsername($('#loginUsername').value,$('#loginPassword').value);$('#loginPassword').value='';$('#loginDialog').close();await loadPrivateDashboard();}catch(error){$('#loginError').textContent=authErrorText(error);}finally{submit.disabled=false;}};
-$('#reloadPart0Preview').onclick=async()=>{if(PART0_LOCAL_ONLY_PREVIEW){part0PreviewRenderedAt=new Date();renderTodayBoard();showMessage('本地预览已重新载入','本次只重新渲染浏览器内存中的 Part 0 界面，没有连接 Supabase、VPS、行情、模拟盘或订单接口。');return;}if(!authSession)return openLogin();const button=$('#reloadPart0Preview');button.disabled=true;try{await loadPrivateDashboard();showMessage(privateLoadState==='ready'?'回执已重新读取':'回执读取失败',privateLoadState==='ready'?'仅重新读取已有私有投影；没有有效运行回执时仍显示待接入，不表示VPS已修复。':'当前不能判断VPS实际状态；本次没有触发VPS、行情或交易接口。');}finally{button.disabled=false;}};
+$('#reloadPart0Preview').onclick=async()=>{if(PART0_LOCAL_ONLY_PREVIEW){part0PreviewRenderedAt=new Date();renderTodayBoard();showMessage('本地预览已重新载入','本次只重新渲染浏览器内存中的 Part 0 界面，没有连接 Supabase、VPS、行情、模拟盘或订单接口。');return;}if(!authSession)return openLogin();const button=$('#reloadPart0Preview');button.disabled=true;try{await loadPrivateDashboard();showMessage(part0MonitorState==='ready'?'回执已重新读取':'回执读取失败',part0MonitorState==='ready'?'仅重新读取已有私有投影；没有有效运行回执时仍显示待接入，不表示VPS已修复。':'当前不能判断VPS实际状态；本次没有触发VPS、行情或交易接口。');}finally{button.disabled=false;}};
 $('#openPart1FromPart0').onclick=()=>{if(PART0_LOCAL_ONLY_PREVIEW){showMessage('严格本地预览模式','本地模式只验证 Part 0，不载入 Part 1 数据；返回独立预览地址即可继续验证今日看板。');return;}switchTab('holdings');};
 async function loadTrackedStocks(){return [];}
 async function loadPart2Config(){return {version:1,groups:[],extraStocks:[]};}

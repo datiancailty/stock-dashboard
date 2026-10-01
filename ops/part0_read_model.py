@@ -112,7 +112,7 @@ def read_ledger(path):
                     quoteAsOf=meta.get('last_quote_snapshot_at_cn'))
 
 
-def build_runtime(*, now, expires, units, daily, journal, ledger):
+def build_runtime(*, now, expires, units, daily, journal, ledger, active_unit=None):
     from zoneinfo import ZoneInfo
     current = datetime.fromisoformat(timestamp(now))
     expiry = datetime.fromisoformat(timestamp(expires))
@@ -122,20 +122,24 @@ def build_runtime(*, now, expires, units, daily, journal, ledger):
     stopped = service_stopped and timer.get('LoadState') == 'loaded' and timer.get('UnitFileState') == 'disabled' and timer.get('ActiveState') == 'inactive' and not timer.get('NextElapseUSecRealtime')
     authorization = 'expired' if current >= expiry and stopped else 'paused' if stopped else 'requires_review'
     events = []
+    current_events = []
     for entry in journal:
         try:
             result = json.loads(entry.get('MESSAGE', ''))
-            if not isinstance(result, dict) or type(result.get('ok')) is not bool or result.get('outside_window'):
+            if (not isinstance(result, dict) or type(result.get('ok')) is not bool
+                    or result.get('outside_window') or result.get('duplicate_slot') is True):
                 continue
             at = datetime.fromtimestamp(int(entry['__REALTIME_TIMESTAMP']) / 1000000, ZoneInfo('Asia/Shanghai')).isoformat(timespec='seconds')
             if datetime.fromisoformat(at) > current:
                 continue
-            status = 'ok' if result['ok'] else 'error'
-            events.append(dict(at=at, kind='strategy', status=status, code='cycle_succeeded' if result['ok'] else 'cycle_failed'))
+            status = 'error' if not result['ok'] or result.get('halted') is True else 'ok'
+            events.append(dict(at=at, kind='strategy', status=status, code='cycle_succeeded' if status == 'ok' else 'cycle_failed'))
+            if active_unit is None or entry.get('_SYSTEMD_UNIT') == active_unit:
+                current_events.append(events[-1])
         except (ValueError, TypeError, KeyError, OverflowError):
             continue
     events.sort(key=lambda e: e['at'], reverse=True)
-    latest = events[0] if events else None
+    latest = max(current_events, key=lambda e:e['at']) if current_events else None
     running = units.get('strategy', {}).get('ActiveState') in ('active', 'activating')
     strategy = dict(status='running' if running else latest['status'] if latest else 'unknown',
                     asOf=now if running else latest['at'] if latest else None)
@@ -160,16 +164,26 @@ def collect(config, *, now=None, command=None):
     import subprocess
     from zoneinfo import ZoneInfo
     now = now or datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(timespec='seconds')
-    if set(config) != {'db_path', 'daily_state', 'authority_expires_at'}:
+    historical = 'stock-sim-trial-20260929-30.service'
+    if set(config) == {'db_path', 'daily_state', 'authority_expires_at'}:
+        expires = config['authority_expires_at']
+        names = {'trading':'stock-sim-trial-20260929-30.timer',
+                 'strategy':historical, 'dashboard':'stock-dashboard-daily.service'}
+    elif (set(config) == {'db_path', 'daily_state', 'observation_profile'} and
+          config['observation_profile'] == 'october_202610'):
+        # Explicit observational allowlist, never a discovery/authorization API.
+        expires = '2026-10-30T15:05:00+08:00'
+        names = {'trading':'stock-sim-october-202610.timer',
+                 'strategy':'stock-sim-october-202610.service',
+                 'dashboard':'stock-dashboard-daily.service'}
+    else:
         raise ValueError('part0_config_invalid')
     def run(args):
         return subprocess.run(args, capture_output=True, text=True, check=True, timeout=15).stdout
     command = command or run
     ledger = read_ledger(config['db_path'])
     daily = json.loads(Path(config['daily_state']).read_text())
-    names = {'trading':'stock-sim-trial-20260929-30.timer',
-             'strategy':'stock-sim-trial-20260929-30.service',
-             'dashboard':'stock-dashboard-daily.service'}
+
     properties = ['LoadState', 'ActiveState', 'MainPID', 'UnitFileState', 'Result', 'NextElapseUSecRealtime']
     units = {}
     for key, name in names.items():
@@ -177,10 +191,13 @@ def collect(config, *, now=None, command=None):
         for p in properties:
             args.extend(['-p',p])
         units[key] = dict(line.split('=',1) for line in command(args).splitlines() if '=' in line)
-    lines = command(['journalctl','-u',names['strategy'],'-n','1000','-o','json','--no-pager'])
+    # Keep September failures when observing the new month. Neither unit runs.
+    history = [] if names['strategy'] == historical else ['-u', historical]
+    lines = command(['journalctl','-u',names['strategy'],*history,'-n','1000','-o','json','--no-pager'])
     journal = [json.loads(line) for line in lines.splitlines() if line.strip()]
-    runtime, events = build_runtime(now=now, expires=config['authority_expires_at'],
-                                   units=units, daily=daily, journal=journal, ledger=ledger)
+    runtime, events = build_runtime(now=now, expires=expires,
+                                   units=units, daily=daily, journal=journal, ledger=ledger,
+                                   active_unit=names['strategy'])
     return dict(schemaVersion=1, observedAt=now, account=ledger['account'],
                 trades=ledger['trades'], runtime=runtime, events=events)
 

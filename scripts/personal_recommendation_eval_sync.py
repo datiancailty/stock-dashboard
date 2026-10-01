@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 """Refresh outcomes of EXISTING recommendations only; AI/profile evolution stays paused.
 
-The AST allowlist loads the original evaluator/statistics, not the legacy module:
+The ordinary domain module preserves the original evaluator/statistics:
 no legacy main, environment reads, model, learning, trades or new recommendations.
 Only an explicitly invoked CLI adapter may authenticate/read market data/publish.
 """
 from __future__ import annotations
 
 import argparse
-import ast
 import copy
 import importlib.util
 import json
@@ -18,31 +17,13 @@ import re
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
+from dashboard_recommendation_outcomes import evaluate_recommendations, recommendation_stats
+from dashboard_recommendation_history import history_fetcher as legacy_fetcher
 
 ROOT = Path(__file__).resolve().parents[1]
 BJ = ZoneInfo('Asia/Shanghai')
 SOURCE = 'legacy_eastmoney_tencent_unadjusted_daily'
 METHOD = 'legacy_30d_plus5_v1'
-
-
-def legacy_namespace(cutoff, fetch_rows):
-    """Execute ONLY reviewed pure functions with a fixed observation clock."""
-    names = {'number', 'position_item', 'recommendation_stats', 'evaluate_recommendations'}
-    tree = ast.parse((ROOT / 'scripts/process_trade_records.py').read_text())
-    nodes = [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name in names]
-    if {node.name for node in nodes} != names:
-        raise RuntimeError('recommendation_legacy_contract_changed')
-
-    class ObservationClock:
-        @staticmethod
-        def now(tz=None):
-            return datetime.combine(cutoff, datetime.min.time(), tzinfo=BJ)
-
-    namespace = {'date': date, 'datetime': ObservationClock, 'BJ': BJ, 'kline_rows': fetch_rows}
-    module = ast.Module(body=[], type_ignores=[])
-    module.body.extend(nodes)
-    exec(compile(module, '<legacy-outcome-only>', 'exec'), namespace)
-    return namespace
 
 
 class EvalError(RuntimeError):
@@ -166,8 +147,8 @@ def build_refresh(context, fetch_rows, calendar, *, as_of, data_as_of):
             rows, observed_at = [], None
             if record.get('action') == '分批买入':
                 rows, observed_at = observation_rows(fetch_rows, record, cutoff, calendar)
-            namespace = legacy_namespace(cutoff, lambda *args: rows)
-            namespace['evaluate_recommendations']({'records': [record]})
+            evaluate_recommendations({'records': [record]}, fetch_rows=lambda *args: rows,
+                                     now=lambda: datetime.combine(cutoff, datetime.min.time(), tzinfo=BJ))
             evaluation = record.get('evaluation')
             if not evaluation or evaluation.get('status') == 'no_data':
                 raise EvalError('recommendation_observations_unavailable')
@@ -185,8 +166,7 @@ def build_refresh(context, fetch_rows, calendar, *, as_of, data_as_of):
         patches.append({'sourceId': base['sourceId'], 'previousPayload': base['payload'],
                         'evaluation': record.get('evaluation')})
         evaluated.append(record)
-    namespace = legacy_namespace(cutoff, lambda *args: [])
-    performance = namespace['recommendation_stats'](evaluated)
+    performance = recommendation_stats(evaluated)
     performance.update({'asOf': as_of, 'dataAsOf': data_as_of, 'dataSource': SOURCE, 'method': METHOD,
                         'retainedSettled': retained,
                         'calendarSource': (calendar or {}).get('source', 'provided_exchange_calendar' if calendar else 'retained_only')})
@@ -199,7 +179,6 @@ SAFE_ERRORS = frozenset({
     'recommendation_observations_unavailable', 'recommendation_as_of_invalid',
     'recommendation_context_invalid', 'recommendation_context_stale',
     'recommendation_outcome_regression', 'recommendation_readback_failed',
-    'recommendation_legacy_contract_changed',
 })
 
 
@@ -276,30 +255,6 @@ def run_refresh(rpc, writer_secret, fetch_rows, calendar=None, *, as_of, data_as
         return {'status': 'error', 'category': category,
                 'publishState': 'unconfirmed' if attempted else 'not_attempted',
                 'private_payload_not_emitted': True, 'aiExecuted': False}
-
-
-def legacy_fetcher(http=None):
-    """Opt-in old read-only retrieval; no call occurs while constructing it.
-
-    Eastmoney raw daily bars, falling back to Tencent raw daily bars. The old
-    source does not report WHICH fallback supplied a row. Calendar/coverage gates
-    reject truncation, missing sessions (including suspensions), and stale data.
-    These remain unadjusted price observations, not total returns or PIT prices.
-    """
-    if http is None:
-        import requests
-        http = requests
-    tree = ast.parse((ROOT / 'scripts/process_trade_records.py').read_text())
-    names = {'number', 'kline_rows'}
-    nodes = [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name in names]
-    if {node.name for node in nodes} != names:
-        raise EvalError('recommendation_legacy_contract_changed')
-    namespace = {'date': date, 'timedelta': timedelta, 'requests': http, 'KLINE_CACHE': {},
-                 'HEADERS': {'User-Agent': 'Mozilla/5.0', 'Referer': 'https://quote.eastmoney.com/'}}
-    module = ast.Module(body=[], type_ignores=[])
-    module.body.extend(nodes)
-    exec(compile(module, '<legacy-history-only>', 'exec'), namespace)
-    return namespace['kline_rows']
 
 
 def parse_args(argv=None):

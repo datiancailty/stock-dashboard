@@ -13,8 +13,12 @@ import os
 import re
 import requests
 from datetime import datetime, timedelta
-import update_news as legacy
+import dashboard_news_normalization as news
 import part4_official_announcement_sync as part4
+from zoneinfo import ZoneInfo
+
+BJ = ZoneInfo("Asia/Shanghai")
+NEWS_SEARCH_API = "https://mkapi2.dfcfs.com/finskillshub/api/claw/news-search"
 
 
 class NewsSyncError(RuntimeError):
@@ -55,8 +59,8 @@ def plan_batches(stocks: list[dict], old: dict, now: datetime) -> list[dict]:
     last = timestamp(old['lastScanAt']) if 'lastScanAt' in old else None
     if last and (last >= now or last.year < 2000):
         raise NewsSyncError('news_scan_not_monotonic')
-    history = f'{now.astimezone(legacy.BJ).year - 1}-01-01'
-    incremental = (last.astimezone(legacy.BJ) - timedelta(days=2)).date().isoformat() if last else history
+    history = f'{now.astimezone(BJ).year - 1}-01-01'
+    incremental = (last.astimezone(BJ) - timedelta(days=2)).date().isoformat() if last else history
     groups = {'incremental': [], 'history': []}
     for stock in stocks:
         groups['incremental' if last and stock['code'] in tracked else 'history'].append(stock['code'])
@@ -80,7 +84,7 @@ def validate_item(item: dict, now: datetime) -> None:
     try:
         parsed = datetime.fromisoformat(published.replace('Z', '+00:00'))
         if parsed.tzinfo is None:
-            parsed = parsed.replace(tzinfo=legacy.BJ)
+            parsed = parsed.replace(tzinfo=BJ)
         if parsed.year < 2000 or parsed > now + timedelta(minutes=5):
             raise ValueError('range')
     except ValueError:
@@ -101,22 +105,22 @@ def map_items(raw_items: list[dict], stocks: list[dict], old_items: list[dict], 
     known = {item['id'] for item in old_items}
     additions = []
     for raw in raw_items:
-        stock = legacy.identify_stock(raw, stocks)
+        stock = news.identify_stock(raw, stocks)
         if not stock:
             continue
-        uid = legacy.item_id(stock, raw)
+        uid = news.item_id(stock, raw)
         if uid in known:
             continue
-        title, content = legacy.clean_text(raw.get('title')), legacy.clean_text(raw.get('content'))
+        title, content = news.clean_text(raw.get('title')), news.clean_text(raw.get('content'))
         url = str(raw.get('jumpUrl') or '').strip()
         additions.append({
             'id': uid, 'code': stock['code'], 'name': stock['name'], 'title': title,
             'publishedAt': str(raw.get('date') or ''), 'type': str(raw.get('informationType') or 'NEWS'),
-            'source': legacy.clean_text(raw.get('source') or raw.get('insName') or '东方财富资讯'),
+            'source': news.clean_text(raw.get('source') or raw.get('insName') or '东方财富资讯'),
             'url': url if url.startswith(('http://', 'https://')) else '',
             'summary': content[:420] + ('…' if len(content) > 420 else ''),
             'firstSeenAt': now.isoformat(timespec='seconds'),
-            **legacy.extract_estimate(content, title),
+            **news.extract_estimate(content, title),
             'sourceClass': 'news_search', 'officialVerified': False,
         })
         validate_item(additions[-1], now)
@@ -127,7 +131,7 @@ def map_items(raw_items: list[dict], stocks: list[dict], old_items: list[dict], 
 def query_news(stocks: list[dict], since: str) -> list[dict]:
     """Legacy endpoint, query text and auth; malformed success is NOT zero hits.
 
-    Unlike legacy.query_news's permissive .get(..., []) fallback, every nesting
+    Unlike the historical public writer's permissive .get(..., []) fallback, every nesting
     level and the final array must actually exist before scan success advances.
     MX_APIKEY must be provisioned by the authorized caller; no auth setup here.
     """
@@ -138,7 +142,7 @@ def query_news(stocks: list[dict], since: str) -> list[dict]:
         key = os.environ['MX_APIKEY']
         if not key:
             raise ValueError('missing key')
-        response = requests.post(legacy.API, headers={'apikey': key, 'Content-Type': 'application/json'},
+        response = requests.post(NEWS_SEARCH_API, headers={'apikey': key, 'Content-Type': 'application/json'},
                                  json={'query': query}, timeout=45)
         response.raise_for_status()
         payload = response.json()
@@ -163,10 +167,10 @@ def query_public_notices(stocks, since, *, now=None):
     independently verified amounts. Missing full text remains empty/unknown.
     Do not update the scan watermark if pagination/identity fails.
     """
-    now = now or datetime.now(legacy.BJ)
+    now = now or datetime.now(BJ)
     try:
         start = datetime.strptime(since, '%Y-%m-%d').date().isoformat()
-        end = now.astimezone(legacy.BJ).date().isoformat()
+        end = now.astimezone(BJ).date().isoformat()
         if start > end: raise ValueError()
         result=[]
         for stock in stocks:
@@ -212,7 +216,7 @@ def sync(*, publish: bool = False, query_fn=None, clock=None) -> dict:
     loads the writer secret, changes metadata or writes files. CLI summaries
     deliberately exclude symbols, articles, RPC bodies and exception details.
     """
-    clock = clock or (lambda: datetime.now(legacy.BJ))
+    clock = clock or (lambda: datetime.now(BJ))
     query_fn = query_fn or query_public_notices
     try:
         worker, config, token = part4.load_private_session()

@@ -22,7 +22,7 @@ class SecretStoreTests(unittest.TestCase):
         return importlib.import_module('dashboard_secret_store')
 
     def test_explicit_worker_dispatch(self):
-        import plus_strategy_worker as worker
+        import dashboard_private_session as worker
         with patch.object(worker.subprocess, 'run', side_effect=AssertionError('must not invoke Keychain')), patch.object(worker.pty, 'fork', side_effect=AssertionError('must not invoke PTY')):
             worker.keychain_write('service', 'account', 'synthetic')
             self.assertEqual(worker.keychain_read('service', 'account'), 'synthetic')
@@ -127,7 +127,7 @@ class SecretStoreTests(unittest.TestCase):
         self.assertEqual(len(list(self.root.iterdir())), 2)
 
     def test_default_mac_path_unchanged(self):
-        import plus_strategy_worker as worker
+        import dashboard_private_session as worker
         from types import SimpleNamespace
         with patch.dict(os.environ):
             os.environ.pop('DASHBOARD_SECRET_DIR', None)
@@ -142,7 +142,7 @@ class SecretStoreTests(unittest.TestCase):
                 fork.assert_called_once()
 
     def test_refresh_rotation_persists_before_access_return(self):
-        import plus_strategy_worker as worker
+        import dashboard_private_session as worker
         from types import SimpleNamespace
         worker.keychain_write('s', 'a', 'old')
         config = {'keychainService': 's', 'keychainAccount': 'a', 'supabaseUrl': 'https://invalid.example', 'supabaseAnonKey': 'synthetic'}
@@ -188,7 +188,7 @@ class SecretStoreTests(unittest.TestCase):
             s.read('s', 'a')
 
     def test_refresh_failures_never_replace_token(self):
-        import plus_strategy_worker as worker
+        import dashboard_private_session as worker
         from types import SimpleNamespace
         worker.keychain_write('s', 'a', 'old')
         config = {'keychainService': 's', 'keychainAccount': 'a', 'supabaseUrl': 'https://invalid.example', 'supabaseAnonKey': 'synthetic'}

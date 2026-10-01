@@ -117,3 +117,13 @@ def compute_boll(rows, *, timeframe, as_of, adjustment, include_current_period,
     sigma = statistics.stdev(values)
     result.update(middle=round(middle, 3), upper=round(middle + 2 * sigma, 3), lower=round(middle - 2 * sigma, 3))
     return result
+
+
+def position_item(current, rows):
+    """计算当前价在给定K线集合最高/最低价中的百分位与上中下分区。"""
+    if not rows: return None
+    low=min(row['low'] for row in rows); high=max(row['high'] for row in rows)
+    if high<=low: percent=50.0
+    else: percent=max(0.0,min(100.0,(current-low)/(high-low)*100))
+    zone='下部' if percent<100/3 else ('中部' if percent<200/3 else '上部')
+    return {'zone':zone,'percent':round(percent,1),'low':round(low,3),'high':round(high,3)}

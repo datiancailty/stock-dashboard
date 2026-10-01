@@ -15,53 +15,20 @@ FEEDBACK=ROOT/'data/strategy-feedback.json'
 RECOMMENDATIONS=ROOT/'data/strategy-recommendations.json'
 MODEL=os.getenv('OPENAI_MODEL','gpt-5.6-luna')
 MODEL_URL=os.getenv('OPENAI_CHAT_COMPLETIONS_URL','https://api.openai.com/v1/chat/completions')
-HEADERS={'User-Agent':'Mozilla/5.0','Referer':'https://quote.eastmoney.com/'}
-KLINE_CACHE={}
 
-def number(value):
-    try:return float(value)
-    except (TypeError,ValueError):return 0.0
+from dashboard_recommendation_outcomes import number
+from dashboard_recommendation_history import history_fetcher
 
 def confidence_percent(value):
     value=number(value)
     if 0<value<=1:value*=100
     return round(max(0,min(100,value)),1)
 
-def position_item(current,rows):
-    if not rows:return None
-    low=min(x['low'] for x in rows);high=max(x['high'] for x in rows)
-    percent=50.0 if high<=low else max(0,min(100,(current-low)/(high-low)*100))
-    zone='下部' if percent<100/3 else ('中部' if percent<200/3 else '上部')
-    return {'zone':zone,'percent':round(percent,1),'low':round(low,3),'high':round(high,3)}
+from dashboard_recommendation_outcomes import (
+    position_item, recommendation_stats, evaluate_recommendations as evaluate_outcomes,
+)
 
-def kline_rows(code,target,end_target=None):
-    end_target=end_target or target
-    cache_key=(code,target.isoformat(),end_target.isoformat())
-    if cache_key in KLINE_CACHE:return KLINE_CACHE[cache_key]
-    # 沪市可转债以 11 开头；其余现有记录按股票/基金常用代码前缀判断。
-    market='sh' if code.startswith(('5','6','9','11')) else 'sz';secid=('1.' if market=='sh' else '0.')+code
-    start=(target.replace(day=1)-timedelta(days=10)).strftime('%Y%m%d')
-    end=(end_target+timedelta(days=3)).strftime('%Y%m%d')
-    rows=[]
-    try:
-        params={'secid':secid,'klt':'101','fqt':'0','lmt':'1000','beg':start,'end':end,'fields1':'f1,f2,f3,f4,f5,f6','fields2':'f51,f52,f53,f54,f55,f56','ut':'fa5fd1943c7b386f172d6893dbfba10b'}
-        response=requests.get('https://push2his.eastmoney.com/api/qt/stock/kline/get',params=params,headers=HEADERS,timeout=20)
-        response.raise_for_status();lines=(response.json().get('data') or {}).get('klines') or []
-        for line in lines:
-            cells=line.split(',')
-            if len(cells)>=5:rows.append({'date':date.fromisoformat(cells[0]),'close':number(cells[2]),'high':number(cells[3]),'low':number(cells[4])})
-    except (requests.RequestException,ValueError,TypeError):pass
-    if rows:
-        result=[x for x in rows if x['high']>0 and x['low']>0];KLINE_CACHE[cache_key]=result;return result
-    try:
-        symbol=market+code
-        param=f'{symbol},day,{start[:4]}-{start[4:6]}-{start[6:]},{end[:4]}-{end[4:6]}-{end[6:]},80,'
-        response=requests.get('https://web.ifzq.gtimg.cn/appstock/app/fqkline/get',params={'param':param},headers=HEADERS,timeout=20)
-        response.raise_for_status();data=(response.json().get('data') or {}).get(symbol) or {};raw=data.get('day') or []
-        for cells in raw:
-            if len(cells)>=5:rows.append({'date':date.fromisoformat(cells[0]),'close':number(cells[2]),'high':number(cells[3]),'low':number(cells[4])})
-    except (requests.RequestException,ValueError,TypeError):pass
-    result=[x for x in rows if x['high']>0 and x['low']>0];KLINE_CACHE[cache_key]=result;return result
+kline_rows = history_fetcher()
 
 def historical_context(record,market_by_code):
     target=date.fromisoformat(record['date']);rows=[x for x in kline_rows(record['code'],target) if x['date']<=target]
@@ -133,45 +100,9 @@ def deterministic_brief(stocks):
     _,stock,yield_rate,day,week=max(candidates,key=lambda x:x[0]);action='分批买入' if day=='下部' else '暂不买入';condition='仅在你确认仓位后小批执行，不一次买满。' if action=='分批买入' else '等待日线回到下部后再分批。'
     return {'id':f"brief-{datetime.now(BJ).date().isoformat()}-{stock.get('code')}",'code':str(stock.get('code')),'name':str(stock.get('name')),'action':action,'reason':f'正式股息率{yield_rate:.2f}%，日线{day}、周线{week}。','condition':condition,'confidence':72}
 
-def recommendation_stats(records):
-    buys=[r for r in records if r.get('action')=='分批买入']
-    successes=[r for r in buys if (r.get('evaluation') or {}).get('status')=='success']
-    failures=[r for r in buys if (r.get('evaluation') or {}).get('status')=='failed']
-    pending=[r for r in buys if (r.get('evaluation') or {}).get('status') in ('pending','no_data',None)]
-    resolved=len(successes)+len(failures)
-    hit_days=[number((r.get('evaluation') or {}).get('tradingDaysToHit')) for r in successes]
-    calendar_days=[number((r.get('evaluation') or {}).get('calendarDaysToHit')) for r in successes]
-    weekly_hits=[r for r in buys if (r.get('evaluation') or {}).get('weeklyUpperFirstAt')]
-    weekly_days=[number((r.get('evaluation') or {}).get('tradingDaysToWeeklyUpper')) for r in weekly_hits]
-    return {'criterion':'分批买入后30个交易日内，盘中最高价达到指令价+5%','targetGainPct':5,'windowTradingDays':30,'totalCommands':len(records),'buyCommands':len(buys),'resolved':resolved,'successes':len(successes),'failures':len(failures),'pending':len(pending),'successRate':round(len(successes)/resolved*100,1) if resolved else None,'avgTradingDaysToHit':round(sum(hit_days)/len(hit_days),1) if hit_days else None,'avgCalendarDaysToHit':round(sum(calendar_days)/len(calendar_days),1) if calendar_days else None,'weeklyUpperHits':len(weekly_hits),'weeklyUpperRate':round(len(weekly_hits)/len(buys)*100,1) if buys else None,'avgTradingDaysToWeeklyUpper':round(sum(weekly_days)/len(weekly_days),1) if weekly_days else None}
 
 def evaluate_recommendations(payload):
-    today=datetime.now(BJ).date();changed=False
-    for record in payload.get('records') or []:
-        if record.get('action')!='分批买入':
-            evaluation=record.get('evaluation') or {}
-            if evaluation.get('status')!='not_scored':
-                record['evaluation']={'status':'not_scored','reason':'非明确买入指令，不计入买入命中率'};changed=True
-            continue
-        try:start=date.fromisoformat(str(record.get('recommendedAt') or record.get('date'))[:10])
-        except ValueError:continue
-        entry=number((record.get('snapshot') or {}).get('price'))
-        if not entry:continue
-        all_rows=kline_rows(str(record.get('code') or ''),start,today)
-        rows=[x for x in all_rows if start<x['date']<=today][:30]
-        target=entry*1.05;hit=next((x for x in rows if x['high']>=target),None);weekly_hit=None
-        for index,bar in enumerate(rows):
-            iso=bar['date'].isocalendar();week=[x for x in all_rows if x['date']<=bar['date'] and x['date'].isocalendar()[:2]==iso[:2]]
-            item=position_item(bar['close'],week)
-            if item and item['zone']=='上部' and bar['close']>entry:weekly_hit=bar;break
-        max_high=max((x['high'] for x in rows),default=entry);latest_close=rows[-1]['close'] if rows else entry
-        evaluation={'status':'success' if hit else ('failed' if len(rows)>=30 else ('pending' if rows else 'no_data')),'criterion':'30个交易日内最高价达到指令价+5%','entryPrice':round(entry,3),'targetPrice':round(target,3),'observedTradingDays':len(rows),'maxGainPct':round((max_high/entry-1)*100,3),'latestReturnPct':round((latest_close/entry-1)*100,3)}
-        if hit:evaluation.update({'firstHitAt':hit['date'].isoformat(),'tradingDaysToHit':rows.index(hit)+1,'calendarDaysToHit':(hit['date']-start).days})
-        if weekly_hit:evaluation.update({'weeklyUpperFirstAt':weekly_hit['date'].isoformat(),'tradingDaysToWeeklyUpper':rows.index(weekly_hit)+1,'calendarDaysToWeeklyUpper':(weekly_hit['date']-start).days})
-        previous=record.get('evaluation') or {};previous_core={k:v for k,v in previous.items() if k!='evaluatedAt'}
-        if previous_core!=evaluation:
-            evaluation['evaluatedAt']=datetime.now(BJ).isoformat(timespec='seconds');record['evaluation']=evaluation;changed=True
-    return changed,recommendation_stats(payload.get('records') or [])
+    return evaluate_outcomes(payload, fetch_rows=kline_rows, now=lambda: datetime.now(BJ))
 
 def append_recommendation(payload,brief,stocks,now):
     recommendation_id=str(brief.get('id') or '')

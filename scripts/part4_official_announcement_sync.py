@@ -26,7 +26,7 @@ from __future__ import annotations
 import argparse
 import concurrent.futures
 import hashlib
-import importlib.util
+import dashboard_private_session
 import json
 import os
 import re
@@ -44,7 +44,6 @@ from zoneinfo import ZoneInfo
 import requests
 
 ROOT = Path(__file__).resolve().parents[1]
-PRIVATE_WORKER_PATH = ROOT / "scripts" / "plus_strategy_worker.py"
 NOTICE_API = "https://np-anotice-stock.eastmoney.com/api/security/ann"
 MX_DATA_API = "https://mkapi2.dfcfs.com/finskillshub/api/claw/query"
 BEIJING = ZoneInfo("Asia/Shanghai")
@@ -128,12 +127,8 @@ def parse_iso_date(value: str, label: str) -> date:
 
 
 def load_private_worker_module() -> Any:
-    spec = importlib.util.spec_from_file_location("part4_private_worker_adapter", PRIVATE_WORKER_PATH)
-    if spec is None or spec.loader is None:
-        raise SyncError("private_worker_adapter_unavailable")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+    """Compatibility adapter for existing Part0/Part3/health consumers."""
+    return dashboard_private_session
 
 
 def load_private_session() -> tuple[Any, dict[str, str], str]:
@@ -141,7 +136,7 @@ def load_private_session() -> tuple[Any, dict[str, str], str]:
     try:
         from dashboard_private_session import session_lock
         with session_lock():
-            config = worker.load_config(worker.DEFAULT_WORKER_DIR)
+            config = worker.load_config(worker.configured_worker_dir())
             access_token = worker.refresh_session(config)
     except Exception as error:
         category = getattr(error, "category", "private_session_unavailable")
@@ -784,7 +779,7 @@ def main() -> int:
                 raise SyncError("part4_writer_init_arguments_invalid")
             worker = load_private_worker_module()
             try:
-                config = worker.load_config(worker.DEFAULT_WORKER_DIR)
+                config = worker.load_config(worker.configured_worker_dir())
             except Exception as error:
                 raise SyncError("private_worker_config_unavailable") from error
             digest = initialize_part4_writer(worker, config, rotate=bool(args.rotate_writer))

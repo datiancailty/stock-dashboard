@@ -62,7 +62,31 @@ def verify_release():
  files=manifest.get('files');version=manifest.get('version')
  if not isinstance(files,dict) or not files or not isinstance(version,str) or not re.fullmatch(r'[A-Za-z0-9._-]{1,100}',version):
   raise ValueError('daily_release_manifest_invalid')
- expected_scripts={f'scripts/{name}' for name in ('dashboard_refresh_daily.py','dashboard_refresh_sync.py','dashboard_refresh_health.py','dashboard_private_session.py','confirmed_dividend_basis.py','part4_daily_sync.py','part4_official_announcement_sync.py','part4_date_sync.py','part4_dividend_date_materializer.py','personal_market_snapshot_sync.py','dashboard_data_sources.py','dashboard_technical_indicators.py','personal_technical_snapshot_sync.py','personal_public_forward_sync.py','personal_dividend_refresh_sync.py','public_forward_basis.py','forward_dividend_basis.py','personal_news_sync.py','personal_recommendation_eval_sync.py','plus_strategy_worker.py','update_market.py','update_news.py','process_trade_records.py')}
+ expected_scripts={f'scripts/{name}' for name in (
+  'confirmed_dividend_basis.py',
+  'dashboard_data_sources.py',
+  'dashboard_diagnostics.py',
+  'dashboard_news_normalization.py',
+  'dashboard_private_session.py',
+  'dashboard_recommendation_history.py',
+  'dashboard_recommendation_outcomes.py',
+  'dashboard_refresh_daily.py',
+  'dashboard_refresh_health.py',
+  'dashboard_refresh_sync.py',
+  'dashboard_secret_store.py',
+  'dashboard_technical_indicators.py',
+  'forward_dividend_basis.py',
+  'part4_date_sync.py',
+  'part4_dividend_date_materializer.py',
+  'part4_official_announcement_sync.py',
+  'personal_dividend_refresh_sync.py',
+  'personal_market_snapshot_sync.py',
+  'personal_news_sync.py',
+  'personal_public_forward_sync.py',
+  'personal_recommendation_eval_sync.py',
+  'personal_technical_snapshot_sync.py',
+  'public_forward_basis.py',
+ )}
  if not expected_scripts<=set(files):raise ValueError('daily_release_coverage_incomplete')
  for relative,digest in files.items():
   path=Path(relative)

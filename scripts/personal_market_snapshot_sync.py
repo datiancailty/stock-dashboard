@@ -19,7 +19,6 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 PART4_SYNC_PATH = ROOT / "scripts" / "part4_official_announcement_sync.py"
-MARKET_PATH = ROOT / "scripts" / "update_market.py"
 BEIJING = ZoneInfo("Asia/Shanghai")
 
 

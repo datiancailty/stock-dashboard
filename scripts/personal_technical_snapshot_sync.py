@@ -7,8 +7,7 @@ A new trusted RPC migration and separate authorization are required to publish.
 from __future__ import annotations
 from datetime import datetime, date
 import dashboard_data_sources as source
-from dashboard_technical_indicators import compute_boll
-from update_market import position_item
+from dashboard_technical_indicators import compute_boll, position_item
 
 def parse_args(argv=None):
     import argparse

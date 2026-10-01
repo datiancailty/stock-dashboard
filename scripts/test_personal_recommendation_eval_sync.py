@@ -57,13 +57,13 @@ class RefreshTests(unittest.TestCase):
         cal, cutoff = mod.proxy_calendar(context, fetch, '2026-09-04T12:00:00+08:00', None)
         self.assertEqual(cutoff, '2026-09-03')
 
-    def test_cli_is_dryrun_by_default_and_legacy_loader_has_no_ai_symbols(self):
+    def test_cli_is_dryrun_by_default_and_outcome_domain_has_no_ai_symbols(self):
         mod = worker()
         self.assertTrue(hasattr(mod, 'parse_args'), 'missing usable CLI')
         args = mod.parse_args(['--data-as-of', '2026-09-04'])
         self.assertFalse(args.publish)
         self.assertTrue(mod.parse_args(['--data-as-of', '2026-09-04', '--publish']).publish)
-        ns = mod.legacy_namespace(date(2026, 9, 4), lambda *args: [])
+        ns = mod.evaluate_recommendations.__globals__
         for forbidden in ('main', 'model_analysis', 'deterministic_learning', 'deterministic_brief',
                           'append_recommendation', 'historical_context', 'requests', 'os'):
             self.assertNotIn(forbidden, ns)

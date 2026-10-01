@@ -117,14 +117,7 @@ def weekly_boll_from_daily(rows, sample_count=20):
     middle=statistics.mean(closes); stddev=statistics.stdev(closes)
     return {'asOf':sample[-1]['date'].isoformat(),'basis':'前复权周K','period':20,'multiplier':2,'stddev':'sample','sampleCount':sample_count,'upper':round(middle+2*stddev,3),'middle':round(middle,3),'lower':round(middle-2*stddev,3)}
 
-def position_item(current, rows):
-    """计算当前价在给定K线集合最高/最低价中的百分位与上中下分区。"""
-    if not rows: return None
-    low=min(row['low'] for row in rows); high=max(row['high'] for row in rows)
-    if high<=low: percent=50.0
-    else: percent=max(0.0,min(100.0,(current-low)/(high-low)*100))
-    zone='下部' if percent<100/3 else ('中部' if percent<200/3 else '上部')
-    return {'zone':zone,'percent':round(percent,1),'low':round(low,3),'high':round(high,3)}
+from dashboard_technical_indicators import position_item
 
 def fetch_positions(stocks, prices, previous):
     """并发读取日K，计算最近交易日、当前交易周、当前交易月的位置。"""

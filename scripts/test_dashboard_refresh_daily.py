@@ -134,7 +134,8 @@ daily.run_once(state_dir=STATE,publish=True,now=datetime.fromisoformat('2026-09-
  def test_release_requires_date_pipeline_dependencies(self):
   import hashlib
   from unittest.mock import patch
-  names=set(json.loads((self.m.ROOT/'dashboard-refresh-release.json').read_text())['files'])
+  from test_shared_runtime_release import RUNTIME_SCRIPTS
+  names={'scripts/'+name for name in RUNTIME_SCRIPTS}
   required={'scripts/part4_date_sync.py','scripts/part4_dividend_date_materializer.py'}
   for missing in required:
    with self.subTest(missing=missing),tempfile.TemporaryDirectory() as d:

@@ -2,7 +2,7 @@
 
 GitHub Pages只承载静态界面；业务登录和私有数据由Supabase Auth/RLS/窄RPC保护，不依赖GitHub日常登录。
 
-**当前唯一公共入口：[STOCK-CURRENT-PUBLIC.md](STOCK-CURRENT-PUBLIC.md)。** 完整运维交接在私有维护归档；每次变更必须同步当前MD，每个Release保存对应版本MD。历史Git说明中的旧股票数量、待执行SQL、AI安装步骤不是当前任务清单。
+**当前维护入口：[MAINTENANCE-ENTRY.md](docs/MAINTENANCE-ENTRY.md)；版本状态：[STOCK-CURRENT-PUBLIC.md](STOCK-CURRENT-PUBLIC.md)。** 完整运维交接在私有维护归档；每次变更必须同步当前MD，每个Release保存对应版本MD。历史Git说明中的旧股票数量、待执行SQL、AI安装步骤不是当前任务清单。
 
 ## 页面
 
@@ -16,7 +16,7 @@ GitHub Pages只承载静态界面；业务登录和私有数据由Supabase Auth/
 
 ## 运行边界
 
-本机确定性日更按工作日北京时间18:05执行，不强制唤醒。网页可见时每15分钟读取私有结果，不是重新采集。独立VPS状态计划为工作日10:05、11:55、15:20；正常策略与交易保持暂停。前端目前仍用30分钟提示回执较旧，低频/周末提示不代表服务故障。
+确定性日更由独立VPS按工作日北京时间18:05执行；Mac自动日更暂停。Part0只读监控按工作日09:40、11:30、15:10执行，网页已登录且可见时每15分钟读私有结果。新鲜度按最近应到监控时点及宽限判断，不把午间、夜间和周末正常间隔当故障。交易授权与运行结果另以私有版本MD及现场回执确认，Dashboard成功不等于交易成功。
 
 认证链：用户名密码 → username-login Edge → Supabase Auth → auth.uid/RLS/窄RPC。公开配置只放Supabase地址和publishable/anon key。凭据、个人记录、账户/订单、数据库和原始日志不得进入公开Git或Release。
 

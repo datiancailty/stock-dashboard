@@ -74,9 +74,10 @@ def report_evidence(doc,expected,current_year,asof):
      or not all(isinstance(p,str) and p for p in doc['pages'])):
   raise ValueError('forward_basis_public_notice_invalid')
  published=iso_day(doc.get('date'))
- if published>asof:raise ValueError('forward_basis_public_notice_future')
  fiscal=re.search(r'(?<!\d)(\d{4})年?(?:半年度|中期)报告摘要',compact(title))
- if not fiscal:return None
+ if not fiscal:
+  if published>asof:raise ValueError('forward_basis_public_notice_future')
+  return None
  current_year=int(fiscal[1])
  if not 1900<=current_year<=9999 or f'{current_year}-06-30'>published:
   raise ValueError('forward_basis_public_notice_period_invalid')
@@ -85,8 +86,6 @@ def report_evidence(doc,expected,current_year,asof):
  # bound index/content responses establish the I/O provenance boundary.
  body_codes=body_stock_codes(text)
  body_years=re.findall(r'(?<!\d)(\d{4})年?(?:半年度|中期)报告摘要',text)
- if any(c!=code for c in body_codes) or any(int(y)!=current_year for y in body_years):
-  raise ValueError('forward_basis_public_notice_body_identity_conflict')
  # Printed PDF folios can span several pages inside ONE API text chunk.
  # Never compare PDF page totals to the API page_size/chunk count.
  folios=[(int(n),int(total)) for n,total in re.findall(r'第(\d+)页[,，、/]?共(\d+)页',text)]
@@ -156,6 +155,10 @@ def report_evidence(doc,expected,current_year,asof):
   status,amount,reason='cancelled',None,'current_interim_plan_cancelled';claims=[]
  elif re.search(r'更正|修订|调整','。'.join(revision_parts)):
   status,amount,reason='unknown',None,'current_interim_revision_unresolved';claims=[]
+ # Neither isolatable error may conceal incomplete pages or invalid amounts.
+ if published>asof:raise ValueError('forward_basis_public_notice_future')
+ if any(c!=code for c in body_codes) or any(int(y)!=current_year for y in body_years):
+  raise ValueError('forward_basis_public_notice_body_identity_conflict')
  src=source(code,'interim',current_year,section,status,str(amount) if amount is not None else None,published,0,
             field={'provider':'eastmoney_official_report','distributionNature':'special' if re.search(r'(?:特别|非经常性)(?:现金)?(?:分红|股息|股利|红利)',current_text) else 'unknown',
                    'currentPeriodEvidence':current_text},notice=notice,reason=reason)
@@ -182,7 +185,6 @@ def build_records(rows,reports,stocks,as_of):
   if (pd.month,pd.day) not in ((12,31),(6,30)):continue
   kind='annual' if pd.month==12 else 'interim'
   published=iso_day(row.get('NOTICE_DATE'))
-  if published>today.isoformat():raise ValueError('forward_basis_public_notice_future')
   dates={'registration':iso_day(row.get('EQUITY_RECORD_DATE'),optional=True),
          'ex_dividend':iso_day(row.get('EX_DIVIDEND_DATE'),optional=True),'payment':None}
   if dates['registration'] and dates['ex_dividend'] and dates['registration']>dates['ex_dividend']:
@@ -209,6 +211,8 @@ def build_records(rows,reports,stocks,as_of):
   events.append(event)
   if reason=='public_plan_amount_conflict':
    alt=deepcopy(event);alt['amount']=per_share(matched[1]);events.append(alt)
+  # Quarantine is permitted only after this item's other strict checks.
+  if published>today.isoformat():raise ValueError('forward_basis_public_notice_future')
   if kind=='interim':current_table.setdefault((code,pd.year),[]).append(event)
  report_events=[]
  for doc in reports:

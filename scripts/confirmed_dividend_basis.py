@@ -205,10 +205,12 @@ def build_confirmed_records(rows, stocks, as_of, *, coverage=None, notices=(), p
             docs = [d for d in notices if d.get('code') == stock['code'] and d.get('date') == iso_day(row['NOTICE_DATE'])]
             try:
                 if (not re.fullmatch(re.escape(stock['code']) + r'\.(SH|SZ|BJ)', row.get('SECUCODE', ''))
-                        or iso_day(row['REPORT_DATE']) > iso_day(row['NOTICE_DATE'])
-                        or iso_day(row['NOTICE_DATE']) > end.isoformat()):
+                        or iso_day(row['REPORT_DATE']) > iso_day(row['NOTICE_DATE'])):
                     raise ValueError('confirmed_table_identity_or_date_conflict')
+                future_notice = iso_day(row['NOTICE_DATE']) > end.isoformat()
                 if _stock_only_plan(row.get('IMPL_PLAN_PROFILE')) and row.get('PRETAX_BONUS_RMB') in (None, '', 0, '0'):
+                    if future_notice:
+                        raise ValueError('confirmed_table_identity_or_date_conflict')
                     used_payments.update(i for i, p in enumerate(payment_rows) if p.get('SECURITY_CODE') == stock['code'] and p.get('NOTICE_DATE') == row.get('NOTICE_DATE') and _stock_only_plan(p.get('IMPL_PLAN_PROFILE')))
                     continue
                 matched = [(i, p) for i, p in enumerate(payment_rows) if p.get('SECURITY_CODE') == stock['code']
@@ -236,6 +238,11 @@ def build_confirmed_records(rows, stocks, as_of, *, coverage=None, notices=(), p
                     # old full-text notice or historical amount normalization.
                     if paid <= start.isoformat() or paid > end.isoformat():
                         continue
+                # A pending distribution with a corroborated future payment is
+                # outside paid cash, not a malformed historical cash amount.
+                # Without that proof, future-dated evidence still fails closed.
+                if future_notice:
+                    raise ValueError('confirmed_table_identity_or_date_conflict')
                 claims = set()
                 for d in docs:
                     try:

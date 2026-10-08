@@ -45,6 +45,38 @@ class ConfirmedBasisTests(unittest.TestCase):
                     coverage=coverage(rows, asof) if proof else None, notices=docs,
                     **({'payment_rows': payments} if payments is not None else {}))[0]
 
+    def test_future_implementation_with_explicit_later_payment_is_not_paid_cash(self):
+        future=row(report='2026-06-30',payment='2026-10-16',notice='2026-10-09',amount='5')
+        future['EQUITY_RECORD_DATE']='2026-10-15'
+        payment={**future,'ASSIGN_PROGRESS':'实施方案','PAY_CASH_DATE':'2026-10-16',
+                 'sourceUrl':'https://emweb.securities.eastmoney.com/PC_HSF10/BonusFinancing/Index?type=web&code=SH600000'}
+        rows=[row(),future];before=copy.deepcopy(rows)
+        result=self.build(rows,[notice()],asof='2026-10-08T18:05:00+08:00',payments=[payment])
+        self.assertEqual((result['status'],result['amount']),('ready',.47881))
+        self.assertEqual(len(result['components']),1)
+        self.assertEqual(rows,before)
+        self.assertEqual(result['components'][0]['paymentDate'],'2026-07-10')
+
+    def test_pending_payment_date_boundary_and_missing_evidence_remain_strict(self):
+        from decimal import Decimal
+        future=row(report='2026-06-30',payment='2026-10-16',notice='2026-10-09',amount='5')
+        future['EQUITY_RECORD_DATE']='2026-10-15'
+        payment={**future,'ASSIGN_PROGRESS':'实施方案','PAY_CASH_DATE':'2026-10-16',
+                 'sourceUrl':'https://emweb.securities.eastmoney.com/PC_HSF10/BonusFinancing/Index?type=web&code=SH600000'}
+        for day in ['2026-10-08','2026-10-09','2026-10-15','2026-10-16','2026-10-30']:
+            with self.subTest(day=day):
+                r=self.build([row(),future],[notice()],asof=day+'T18:05:00+08:00',payments=[payment])
+                expected=Decimal('.47881')+(Decimal('.5') if day>='2026-10-16' else Decimal('0'))
+                self.assertEqual((r['status'],r['amount']),('ready',float(expected)))
+        for change in [{'PAY_CASH_DATE':None},{'PAY_CASH_DATE':'2026-10-08'},
+                       {'SECUCODE':'600099.SH'},{'EQUITY_RECORD_DATE':'2026-10-17'},
+                       {'EX_DIVIDEND_DATE':'2026-10-18'},{'sourceUrl':'https://invalid.example/'}]:
+            with self.subTest(change=change):
+                result=self.build([row(),future],[notice()],asof='2026-10-08T18:05:00+08:00',payments=[{**payment,**change}])
+                self.assertIsNone(result['amount'])
+                self.assertNotEqual(result['status'],'ready')
+        self.assertIsNone(self.build([row(),future],[notice()],asof='2026-10-08T18:05:00+08:00')['amount'])
+
     def test_unproven_coverage_is_unknown_not_zero_or_partial_total(self):
         for rows, docs in [([], []), ([row()], [notice()])]:
             with self.subTest(rows=len(rows)):

@@ -66,9 +66,9 @@ class DividendWriterTests(unittest.TestCase):
   self.assertEqual(quarantined,['600000'])
   self.assertEqual(next(x for x in records if x['code']=='600001'),next(x for x in baseline if x['code']=='600001'))
 
- def test_non_identity_validation_failure_still_aborts_before_writes(self):
+ def test_unreviewed_validation_failure_still_aborts_before_writes(self):
   m,a,n,f,c,fc,ac=self.fixture()
-  with tempfile.TemporaryDirectory() as d,patch.object(m.forward_basis,'build_records',side_effect=ValueError('forward_basis_public_notice_future')),patch.object(m.confirmed_basis,'build_confirmed_records',return_value=c),self.assertRaisesRegex(ValueError,'forward_basis_public_notice_future'):
+  with tempfile.TemporaryDirectory() as d,patch.object(m.forward_basis,'build_records',side_effect=ValueError('forward_basis_public_future_period')),patch.object(m.confirmed_basis,'build_confirmed_records',return_value=c),self.assertRaisesRegex(ValueError,'forward_basis_public_future_period'):
    m.sync(adapter=a,now=n,publish=True,collect_forward=fc,collect_actual=ac,evidence_root=Path(d).resolve())
   a.part4_writer_secret.assert_not_called();a.private_rpc.assert_not_called()
 

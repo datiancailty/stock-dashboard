@@ -1,6 +1,6 @@
 {
-  "version": "v2026.10.01.1",
-  "sourceBase": "7e378a41d3ad1de514a2f2a3bd846f648501bd0c",
+  "version": "v2026.10.08.1",
+  "sourceBase": "c0ebc3a9d0552398ad5b2a6974f6d204e6d75dfa",
   "scope": "public_worker_and_wrapper_private_bridge_pack_separate",
   "dataPlane": "authenticated_supabase",
   "aiInvoked": false,
@@ -15,7 +15,7 @@
     "ops/systemd/stock-dashboard-daily.service": "f8ff88ba867a238771089b9f119b90e59a42ad9e7c190e7b784e79bfe29d5cad",
     "ops/systemd/stock-dashboard-daily.timer": "57671bfc89a2e6cf11acdc9c54d5316efd661784a4ca9199dc5c659e34f70a42",
     "ops/systemd/stock-dashboard-part3.service": "1097e04cc66fc110947b99976bfc6dd864b2148a6ea54f15c6a37f8951627ce1",
-    "scripts/confirmed_dividend_basis.py": "cd9374154ccd1006303022a347df729ffff8d7c234ec7f10463705a6e0e4b641",
+    "scripts/confirmed_dividend_basis.py": "1dd9b354314db5c0a829c17b1d2943143385bdc4272692b37c3227c0b7cc6e0f",
     "scripts/dashboard_data_sources.py": "69ec9ea4cd9f46f92d975e8c247ba364125f821d1250a9167b8db3513c03fd39",
     "scripts/dashboard_diagnostics.py": "9360698e6558db12c67ce22093a152b3cf2b74b04499863fbe1a6dd424dbab63",
     "scripts/dashboard_news_normalization.py": "c04c9e405e6f98ac53b00d85cf39c4e8849767bf21844f72e053b373649902be",
@@ -31,13 +31,13 @@
     "scripts/part4_date_sync.py": "5f305f4ccfac4577fdc06c02addef3c7c6bfc1e7c861ae877aecab276ac20cac",
     "scripts/part4_dividend_date_materializer.py": "fa55537556f13e90e658d88b590d919f195ee06bad55526253a403ef0b831fb0",
     "scripts/part4_official_announcement_sync.py": "fbe45138cb43a128529d2c33583e1037fbe424531ef970592ba1a3c28212094f",
-    "scripts/personal_dividend_refresh_sync.py": "0c523ed72033ea9a460efe185d4008c081ee22186ea85af3bd4245fba49e6cbb",
+    "scripts/personal_dividend_refresh_sync.py": "8f1d2af760ce5a981318504ccb2af559942c54bf6e838750b29e34b5aa7b2659",
     "scripts/personal_market_snapshot_sync.py": "dc42906fa305b45df50ee42506c652490a5bcf1128fac964c56e8f121d1e930d",
     "scripts/personal_news_sync.py": "fdb4ab253c6f2633f83bbf7cf5f043a357ed81b5c2894ed416c558090eb4d767",
     "scripts/personal_public_forward_sync.py": "ed1c4c705579f9f4da5777722703c743a3b6cf4cf9fd146dcd5f48cd8f08e632",
     "scripts/personal_recommendation_eval_sync.py": "36d9a46b777963c79e85a7de1daaebf34e8fc0e016f2ae6a1c8d0d4de95de3dd",
     "scripts/personal_technical_snapshot_sync.py": "2bd4453451b9124db36f4e2b573bdf8931e8c3dd9d9ba9cffca7a951a9e7faba",
-    "scripts/public_forward_basis.py": "3345f0fa76e1ddd975999f5a21f6bacbb99e92b0e5ad8cfd3138ea85ccf207fe"
+    "scripts/public_forward_basis.py": "e634fa9a8cac855f007ea55de69987089b96a4f59d0fb59b5af28a42d51df249"
   },
   "privateBridgeRequiredForVps": true
 }

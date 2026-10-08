@@ -16,14 +16,37 @@ import confirmed_dividend_basis as confirmed_basis
 BJ=ZoneInfo('Asia/Shanghai')
 
 def isolated_forward_records(rows,docs,stocks,as_of):
-    """Never weaken report identity validation or retain a disputed numerator."""
+    """Keep strict parsing; isolate only reviewed unusable evidence per issuer.
+
+    A future-dated notice is not available at this as-of. Never change its
+    date or reuse any of that issuer's forward numerator. The caller still
+    requires independently verified cash before publishing the null marker.
+    """
+    reasons={'forward_basis_public_notice_body_identity_conflict':'public_report_identity_quarantined',
+             'forward_basis_public_notice_future':'public_notice_after_asof'}
     codes={s['code'] for s in stocks}
     if any(r.get('SECURITY_CODE') not in codes for r in rows) or any(d.get('code') not in codes for d in docs):
         raise ValueError('forward_basis_public_identity_invalid')
     try:
         return forward_basis.build_records(rows,docs,stocks,as_of),[]
     except ValueError as error:
-        if str(error)!='forward_basis_public_notice_body_identity_conflict':raise
+        if str(error) not in reasons:raise
+    # A first quarantinable error must not hide later rows or reports.
+    # Validate original items independently; discard these partial results.
+    by_code={s['code']:s for s in stocks}
+    for row in rows:
+        try:
+            forward_basis.build_records([row],[],[by_code[row['SECURITY_CODE']]],as_of)
+        except ValueError as error:
+            if str(error) not in reasons:raise
+    # The full builder already validated as_of. Inspect reports directly so
+    # a future table row cannot short-circuit the report's strict checks.
+    today=datetime.fromisoformat(as_of.replace('Z','+00:00')).astimezone(BJ).date()
+    for doc in docs:
+        try:
+            forward_basis.report_evidence(doc,codes,today.year,today.isoformat())
+        except ValueError as error:
+            if str(error) not in reasons:raise
     records=[];quarantined=[]
     for stock in stocks:
         code=stock['code'];indexes=[i for i,r in enumerate(rows) if r.get('SECURITY_CODE')==code]
@@ -31,10 +54,10 @@ def isolated_forward_records(rows,docs,stocks,as_of):
             batch=forward_basis.build_records([rows[i] for i in indexes],
                     [d for d in docs if d.get('code')==code],[stock],as_of)
         except ValueError as error:
-            if str(error)!='forward_basis_public_notice_body_identity_conflict':raise
+            if str(error) not in reasons:raise
             # An explicit negative marker, using the Hosted nullable DTO contract.
             # No amounts, periods or source evidence from the disputed report survive.
-            reason='public_report_identity_quarantined'
+            reason=reasons[str(error)]
             batch=[{'code':code,'asOf':as_of,'amount':None,'status':'missing','reason':reason,
                     'components':{kind:{'year':None,'kind':kind,'amount':None,'status':'missing',
                       'reason':reason,'amount_scope':'unknown','published_at':None,'source':None,'evidence':[]}
@@ -63,10 +86,11 @@ def sync(*,adapter=None,publish=False,now=None,collect_forward=None,collect_actu
     moment=now or datetime.now(BJ)
     rows,docs,meta=(collect_forward or collector.collect)(stocks,moment)
     if not isinstance(meta,dict) or meta.get('coverageComplete') is not True:raise ValueError('dividend_forward_scan_incomplete')
-    actual_rows,actual_docs,actual_meta=(collect_actual or collector.collect_confirmed)(stocks,now or datetime.now(BJ))
+    actual_rows,actual_docs,actual_meta=(collect_actual or collector.collect_confirmed)(stocks,moment)
     if not isinstance(actual_meta,dict) or not isinstance(actual_meta.get('confirmedCoverage'),dict) or actual_meta['confirmedCoverage'].get('complete') is not True:
         raise ValueError('dividend_actual_scan_incomplete')
-    as_of=(now or datetime.now(BJ)).isoformat(timespec='seconds')
+    # One observation boundary for both scans, even if collection crosses midnight.
+    as_of=moment.isoformat(timespec='seconds')
     records,quarantined=isolated_forward_records(rows,docs,stocks,as_of)
     actual_asof=actual_meta['asOf']
     actual=confirmed_basis.build_confirmed_records(actual_rows,stocks,actual_asof,

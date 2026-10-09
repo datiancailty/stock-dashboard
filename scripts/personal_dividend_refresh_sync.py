@@ -78,17 +78,181 @@ def isolated_forward_records(rows,docs,stocks,as_of):
         records.extend(batch)
     return records,quarantined
 
-def sync(*,adapter=None,publish=False,now=None,collect_forward=None,collect_actual=None,evidence_root=None):
+def source_failure(error):
+    """Only acquisition/response failures qualify; never local I/O/auth/writes."""
+    import subprocess
+    from dashboard_refresh_health import error_category
+    if isinstance(error,(TimeoutError,subprocess.TimeoutExpired)):return 'timeout'
+    if isinstance(error,json.JSONDecodeError):return 'invalid_data'
+    raw=getattr(error,'category',str(error) if isinstance(error,ValueError) else None)
+    if not isinstance(raw,str) or not re.fullmatch('[a-z_]{1,119}',raw):return None
+    if raw in {'official_notice_transport_failed','official_notice_response_failed','official_notice_response_shape_invalid'}:
+        return 'provider_failed'
+    # Exact reviewed availability/response/coverage failures only. Categories
+    # that also encode identity/date/title conflicts (e.g. notice_incomplete,
+    # notice_pages_invalid, index_invalid, coverage_incomplete) stay strict.
+    if raw in {
+        'dividend_forward_scan_incomplete','dividend_actual_scan_incomplete',
+        'forward_basis_public_provider_failed','forward_basis_public_pagination_invalid',
+        'forward_basis_public_page_incomplete','forward_basis_public_index_metadata_invalid',
+        'forward_basis_public_index_page_incomplete','forward_basis_public_report_coverage_incomplete',
+        'forward_basis_public_annual_coverage_incomplete','confirmed_public_provider_failed',
+        'confirmed_public_pagination_incomplete','confirmed_public_payment_source_invalid',
+        'confirmed_public_payment_pagination_incomplete','confirmed_public_index_incomplete',
+        'confirmed_public_index_window_incomplete',
+    }:
+        return error_category(raw)
+    return None
+
+
+def retained_publication(value, as_of):
+    """Hosted source dates may be null, a date, or an aware publication time."""
+    if value is None:return
+    try:
+        if not isinstance(value,str):raise ValueError()
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}',value):
+            if forward_basis.iso_day(value)>as_of.astimezone(BJ).date().isoformat():raise ValueError()
+        else:
+            if not re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,6})?(Z|[+-]\d{2}:\d{2})',value):raise ValueError()
+            stamp=datetime.fromisoformat(value.replace('Z','+00:00'))
+            if stamp>as_of:raise ValueError()
+    except (TypeError,ValueError):raise ValueError('dividend_retained_time_invalid') from None
+
+
+def retained_source(source, stock, as_of):
+    """Validate saved source DTOs, including evidence copies; no source refetch."""
+    keys={'dto_title','header','raw_plan','raw_progress','raw_pretax','dto_code','field','name_map',
+          'published_at','normalization_reason','official_notice','scope_evidence','row_index','distribution_dates'}
+    if (not isinstance(source,dict) or set(source)!=keys or
+        any(not isinstance(source[k],str) for k in ('header','raw_plan','raw_progress','scope_evidence')) or
+        type(source['row_index']) is not int or source['row_index']<0 or
+        not isinstance(source['field'],dict) or not isinstance(source['name_map'],dict) or
+        not isinstance(source['distribution_dates'],dict) or
+        set(source['distribution_dates'])!={'registration','ex_dividend','payment'}):
+        raise ValueError('dividend_retained_basis_invalid')
+    # Legacy DTOs may identify by title/name instead of dto_code (or use .SH).
+    labels=str(source['dto_title'] or '')+' '+str(source['dto_code'] or '')
+    codes=set(re.findall(r'(?<!\d)\d{6}(?!\d)',labels))
+    if codes-{stock['code']} or (stock['code'] not in codes and not (stock.get('name') and stock['name'] in labels)):
+        raise ValueError('dividend_retained_basis_invalid')
+    # Evidence may preserve other dated/undated versions and source annotations.
+    # Validate each source against the saved as-of, not the selected version.
+    retained_publication(source['published_at'],as_of)
+    for value in source['distribution_dates'].values():
+        if value is not None:
+            try:
+                if forward_basis.iso_day(value)!=value:raise ValueError()
+            except ValueError:raise ValueError('dividend_retained_basis_invalid') from None
+
+
+def retained_basis(adapter,session,stocks,moment,category):
+    """Verify existing authenticated values without loading a writer or retimestamping.
+
+    This is degraded acquisition, NOT a successful publication. The existing
+    Part3 projector and trading freshness gates still decide downstream use.
+    """
+    import math
+    back=adapter.private_rpc(*session,'personal_get_part4_v4',{})
+    codes={s['code'] for s in stocks}
+    saved=back.get('stocks') if isinstance(back,dict) else None
+    if (not isinstance(saved,list) or len(saved)!=len(codes) or
+        any(not isinstance(s,dict) for s in saved) or {s.get('code') for s in saved}!=codes):
+        raise ValueError('dividend_retained_coverage_invalid')
+    stamps=[]
+    for stock in saved:
+        manual=stock.get('forwardBasisOverride')
+        forward=stock.get('forwardBasis') or {}
+        actual=stock.get('confirmedBasis') or {}
+        basis=({'amount':manual,'asOf':stock.get('forwardOverrideAsOf')} if manual is not None else
+               forward if isinstance(forward,dict) and forward.get('status')=='ready' else
+               actual if isinstance(actual,dict) and actual.get('status')=='ready' else {})
+        amount=basis.get('amount')
+        if isinstance(amount,bool) or not isinstance(amount,(int,float)) or not math.isfinite(amount) or not 0<=amount<1000000:
+            raise ValueError('dividend_retained_basis_invalid')
+        stamp=basis.get('asOf')
+        try:
+            if not isinstance(stamp,str):raise ValueError()
+            parsed=datetime.fromisoformat(stamp.replace('Z','+00:00'))
+            if parsed.tzinfo is None or parsed>moment:raise ValueError()
+        except (AttributeError,TypeError,ValueError):raise ValueError('dividend_retained_time_invalid') from None
+        # The getter is backed by strict narrow writers; also reject corrupt
+        # ready totals/components rather than accepting a bare numeric value.
+        if manual is None:
+            from decimal import Decimal
+            parts=basis.get('components')
+            if basis.get('reason') is not None or 'reason' not in basis:
+                raise ValueError('dividend_retained_basis_invalid')
+            if basis is forward:
+                if not isinstance(parts,dict) or set(parts)!={'annual','interim'}:
+                    raise ValueError('dividend_retained_basis_invalid')
+                fields={'year','kind','amount','status','reason','amount_scope','published_at','source','evidence'}
+                identity=next(s for s in stocks if s['code']==stock['code'])
+                for kind,part in parts.items():
+                    if (not isinstance(part,dict) or set(part)!=fields or part['kind']!=kind or
+                        type(part['year']) is not int or not 1900<=part['year']<=parsed.astimezone(BJ).year or
+                        part['status'] not in {'implemented','announced','no_distribution'} or
+                        part['reason'] is not None or part['amount_scope']!='distribution' or
+                        type(part['amount']) not in (int,float) or forward_basis.finite(part['amount']) is None or
+                        (part['amount']!=0 if part['status']=='no_distribution' else part['amount']<=0) or
+                        not isinstance(part['evidence'],list) or not 1<=len(part['evidence'])<=200):
+                        raise ValueError('dividend_retained_basis_invalid')
+                    retained_publication(part['published_at'],parsed)
+                    for source in [part['source'],*part['evidence']]:
+                        retained_source(source,identity,parsed)
+                parts=list(parts.values())
+            else:
+                from calendar import monthrange
+                end=parsed.astimezone(BJ).date()
+                if (not isinstance(parts,list) or len(parts)>100 or basis.get('source')!=confirmed_basis.SOURCE or end.year<2):
+                    raise ValueError('dividend_retained_basis_invalid')
+                start=end.replace(year=end.year-1,day=min(end.day,monthrange(end.year-1,end.month)[1]))
+                # Check the ORIGINAL paid-cash window, never roll old cash to now.
+                if basis.get('windowStart')!=start.isoformat() or basis.get('windowEnd')!=end.isoformat():
+                    raise ValueError('dividend_retained_basis_invalid')
+                seen=set();code=re.escape(stock['code'])
+                for part in parts:
+                    if (not isinstance(part,dict) or set(part)!={'reportDate','paymentDate','amount','sourceUrl','plan'} or
+                        type(part['amount']) not in (int,float) or forward_basis.finite(part['amount']) is None or part['amount']<=0 or
+                        not isinstance(part['plan'],str) or not 1<=len(part['plan'])<=1200 or
+                        not isinstance(part['sourceUrl'],str) or len(part['sourceUrl'])>300 or
+                        not re.fullmatch(r'https://data\.eastmoney\.com/(?:notices/detail/'+code+r'/AN\d+|yjfp/detail/'+code+r')\.html',part['sourceUrl'])):
+                        raise ValueError('dividend_retained_basis_invalid')
+                    try:
+                        report=forward_basis.iso_day(part['reportDate']);paid=forward_basis.iso_day(part['paymentDate'])
+                    except ValueError:raise ValueError('dividend_retained_basis_invalid') from None
+                    if (report is None or paid is None or report!=part['reportDate'] or paid!=part['paymentDate'] or
+                        not '1900-01-01'<=report<=paid or not start.isoformat()<paid<=end.isoformat() or
+                        (report,paid) in seen):
+                        raise ValueError('dividend_retained_basis_invalid')
+                    seen.add((report,paid))
+            if any(not isinstance(p,dict) or type(p.get('amount')) not in (int,float) or
+                   not math.isfinite(p['amount']) or not 0<=p['amount']<1000000 for p in parts):
+                raise ValueError('dividend_retained_basis_invalid')
+            if sum((Decimal(str(p['amount'])) for p in parts),Decimal(0))!=Decimal(str(amount)):
+                raise ValueError('dividend_retained_basis_invalid')
+        stamps.append((parsed,stamp))
+    return {'status':'skipped','category':category,
+            'published':False,'retainedPrevious':True,'readbackVerified':True,
+            'watchlistCount':len(codes),'usableCount':len(codes),'retainedAsOf':min(stamps)[1],
+            'source':'eastmoney_public','mxInvoked':False,'aiInvoked':False,'private_payload_not_emitted':True}
+
+
+def sync(*,adapter=None,publish=False,now=None,collect_forward=None,collect_actual=None,evidence_root=None,retain_previous=False):
     if adapter is None:
         import part4_official_announcement_sync as adapter
     worker,config,token=adapter.load_private_session()
     stocks=[{'code':s.code,'name':s.name} for s in adapter.private_watchlist(worker,config,token)]
     moment=now or datetime.now(BJ)
-    rows,docs,meta=(collect_forward or collector.collect)(stocks,moment)
-    if not isinstance(meta,dict) or meta.get('coverageComplete') is not True:raise ValueError('dividend_forward_scan_incomplete')
-    actual_rows,actual_docs,actual_meta=(collect_actual or collector.collect_confirmed)(stocks,moment)
-    if not isinstance(actual_meta,dict) or not isinstance(actual_meta.get('confirmedCoverage'),dict) or actual_meta['confirmedCoverage'].get('complete') is not True:
-        raise ValueError('dividend_actual_scan_incomplete')
+    try:
+        rows,docs,meta=(collect_forward or collector.collect)(stocks,moment)
+        if not isinstance(meta,dict) or meta.get('coverageComplete') is not True:raise ValueError('dividend_forward_scan_incomplete')
+        actual_rows,actual_docs,actual_meta=(collect_actual or collector.collect_confirmed)(stocks,moment)
+        if not isinstance(actual_meta,dict) or not isinstance(actual_meta.get('confirmedCoverage'),dict) or actual_meta['confirmedCoverage'].get('complete') is not True:
+            raise ValueError('dividend_actual_scan_incomplete')
+    except Exception as error:
+        category=source_failure(error)
+        if not retain_previous or category is None:raise
+        return retained_basis(adapter,(worker,config,token),stocks,moment,category)
     # One observation boundary for both scans, even if collection crosses midnight.
     as_of=moment.isoformat(timespec='seconds')
     records,quarantined=isolated_forward_records(rows,docs,stocks,as_of)
@@ -119,7 +283,9 @@ def sync(*,adapter=None,publish=False,now=None,collect_forward=None,collect_actu
             raise ValueError('dividend_readback_mismatch')
         for field,batch in [('forwardBasis',records),('confirmedBasis',actual)]:
             expected={r['code']:{k:v for k,v in r.items() if k!='code'} for r in batch}
-            if {s.get('code'):s.get(field) for s in back['stocks']}!=expected:raise ValueError('dividend_readback_mismatch')
+            observed={s.get('code'):s.get(field) for s in back['stocks']}
+            canonical=lambda value:json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False)
+            if canonical(observed)!=canonical(expected):raise ValueError('dividend_readback_mismatch')
     fc=dict(Counter(r['status'] for r in records));ac=dict(Counter(r['status'] for r in actual))
     usable={r['code'] for r in [*records,*actual] if r.get('status')=='ready'}
     return {'status':'ok','category':'fallback_used' if quarantined else 'complete','quarantinedCount':len(quarantined),'published':publish,'readbackVerified':publish,'coverageComplete':True,'watchlistCount':len(codes),
@@ -130,7 +296,9 @@ def sync(*,adapter=None,publish=False,now=None,collect_forward=None,collect_actu
 def main():
     p=argparse.ArgumentParser(description=__doc__);g=p.add_mutually_exclusive_group()
     g.add_argument('--publish',action='store_true');g.add_argument('--dry-run',action='store_true');args=p.parse_args()
-    try:print(json.dumps(sync(publish=args.publish),ensure_ascii=False));return 0
+    try:
+        result=sync(publish=args.publish,retain_previous=True)
+        print(json.dumps(result,ensure_ascii=False));return 0
     except Exception as error:
         raw=getattr(error,'category',str(error) if isinstance(error,ValueError) else '')
         category=raw if isinstance(raw,str) and re.fullmatch(r'(?:dividend|confirmed|forward_basis|data|hithink|worker|private|auth|hosted)_[a-z_]{1,100}',raw) else 'dividend_refresh_failed'

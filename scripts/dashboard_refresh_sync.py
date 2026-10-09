@@ -49,7 +49,20 @@ def run_stage(name,args,publish):
   if not isinstance(category,str) or not re.fullmatch('[a-z][a-z0-9_]{0,119}',category) or (env.get('MX_APIKEY') and env['MX_APIKEY'] in category):category='stage_failed'
   if publish and not published:ok=False
   if ok and payload.get('fallbackReasons'):category='fallback_used'
-  out={'status':'ok' if ok else 'error','category':category,'published':published}
+  # Only the dividend producer may attest to a read-only last-good retention.
+  # It remains skipped/not-published: never advances daily/Hosted success time.
+  retained=(name=='forward' and result.returncode==0 and payload.get('status')=='skipped'
+            and payload.get('published') is False and payload.get('retainedPrevious') is True
+            and payload.get('readbackVerified') is True and type(payload.get('watchlistCount')) is int
+            and 1<=payload['watchlistCount']<=50 and type(payload.get('usableCount')) is int
+            and payload['usableCount']==payload['watchlistCount'])
+  stamp=payload.get('retainedAsOf')
+  if retained:
+   if not isinstance(stamp,str) or not re.fullmatch(r'[0-9T:.+Z-]{20,40}',stamp):raise ValueError()
+   old=datetime.fromisoformat(stamp.replace('Z','+00:00'))
+   if old.tzinfo is None or old>datetime.now(BJ):raise ValueError()
+  out={'status':'skipped' if retained else 'ok' if ok else 'error','category':category,'published':published}
+  if retained:out.update(retainedPrevious=True,retainedAsOf=stamp)
   if 'readbackVerified' in payload or 'verified' in payload:
    out['readbackVerified']=payload.get('readbackVerified') is True or payload.get('verified') is True
   source=payload.get('source')

@@ -256,9 +256,14 @@ def safe_curl_json(url: str) -> dict[str, Any]:
                     if isinstance(payload, dict):
                         return payload
                     last_error = "json_shape"
+                elif completed.returncode in (23, 26, 77):
+                    # Local input/output or CA-file reads are not provider outages.
+                    raise SyncError("official_notice_local_io_failed")
                 else:
                     last_error = f"curl_{completed.returncode}"
-            except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+            # Local launch/read/cleanup OSError must propagate without retry or
+            # retention. Only the network timeout / malformed JSON path retries.
+            except (subprocess.TimeoutExpired, json.JSONDecodeError):
                 emit('http_error', **diagnostic, elapsed_ms=int((time.monotonic()-started)*1000))
                 last_error = "transport_or_json"
             if attempt < 3:

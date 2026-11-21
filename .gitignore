@@ -3,3 +3,6 @@ __pycache__/
 .DS_Store
 # Frozen strategy bridge dependency belongs only to the private VPS bundle.
 bridge/
+# Private personal data must never be committed; only the public search catalog belongs in data/.
+data/*
+!data/stock-catalog.json

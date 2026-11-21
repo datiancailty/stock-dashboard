@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install requests pypinyin
+      - run: pip install requests pypinyin openpyxl
       - run: python scripts/update_catalog.py
       - name: 有变化时提交
         run: |

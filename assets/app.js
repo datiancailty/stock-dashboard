@@ -191,7 +191,6 @@ function save(){
 function importPortfolioFromHash(){
   if(location.hash.startsWith('#portfolio='))history.replaceState(null,'',location.pathname+location.search);
 }
-function syncTradeRecordsToHoldings(){return;}
 function stock(code){const auto=market.stocks.find(s=>s.code===code)||{};const o=overrides[code]||{};const annual=o.annual??auto.annualDividend??0,interim=o.interim??auto.interimDividend??0,future=o.future??auto.futureDividend??0,price=o.price??auto.price??0;return {...auto,...o,code,name:auto.name||trackedStocks.find(h=>h.code===code)?.name||holdings.find(h=>h.code===code)?.name||(part2Config.extraStocks||[]).find(h=>h.code===code)?.name||code,annualDividend:+annual,interimDividend:+interim,futureDividend:+future,price:+price,totalDividend:(o.annual!==undefined||o.interim!==undefined)?(+annual+ +interim):(auto.confirmedBasis?.status==='ready'&&typeof auto.confirmedBasis.amount==='number'&&Number.isFinite(auto.confirmedBasis.amount)?auto.confirmedBasis.amount:null),forwardBasisOverride:o.future??null,manual:!!overrides[code]};}
 function forwardGridDividend(s){
   const manual=s?.forwardBasisOverride;
@@ -803,9 +802,7 @@ $('#loginButton').onclick=async()=>{if(authSession){try{await signOut();}catch(e
 $('#loginForm').onsubmit=async e=>{e.preventDefault();$('#loginError').textContent='正在安全验证…';const submit=$('#loginForm button[type="submit"]');try{submit.disabled=true;await loginWithUsername($('#loginUsername').value,$('#loginPassword').value);$('#loginPassword').value='';$('#loginDialog').close();await loadPrivateDashboard();}catch(error){$('#loginError').textContent=authErrorText(error);}finally{submit.disabled=false;}};
 $('#reloadPart0Preview').onclick=async()=>{if(PART0_LOCAL_ONLY_PREVIEW){part0PreviewRenderedAt=new Date();renderTodayBoard();showMessage('本地预览已重新载入','本次只重新渲染浏览器内存中的 Part 0 界面，没有连接 Supabase、VPS、行情、模拟盘或订单接口。');return;}if(!authSession)return openLogin();const button=$('#reloadPart0Preview');button.disabled=true;try{await loadPrivateDashboard();showMessage(part0MonitorState==='ready'?'回执已重新读取':'回执读取失败',part0MonitorState==='ready'?'仅重新读取已有私有投影；没有有效运行回执时仍显示待接入，不表示VPS已修复。':'当前不能判断VPS实际状态；本次没有触发VPS、行情或交易接口。');}finally{button.disabled=false;}};
 $('#openPart1FromPart0').onclick=()=>{if(PART0_LOCAL_ONLY_PREVIEW){showMessage('严格本地预览模式','本地模式只验证 Part 0，不载入 Part 1 数据；返回独立预览地址即可继续验证今日看板。');return;}switchTab('holdings');};
-async function loadTrackedStocks(){return [];}
 async function loadPart2Config(){return {version:1,groups:[],extraStocks:[]};}
-function syncHoldingsWithCloud(){return;}
 async function mutateTrackedStocks(){await requireAdmin();throw new Error('股票池请在 Part 0 白名单控制中提交 immutable revision。');}
 async function mutatePart2Config(){await requireAuth();throw new Error('Part 2 配置尚未迁移到私有 RPC，当前不写入公开数据。');}
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));

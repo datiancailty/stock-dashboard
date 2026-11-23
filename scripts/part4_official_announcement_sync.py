@@ -218,7 +218,7 @@ def safe_curl_json(url: str) -> dict[str, Any]:
     target = Path(temporary.name)
     try:
         last_error: str | None = None
-        for attempt in range(1, 4):
+        for attempt in range(1, 6):
             from dashboard_diagnostics import emit
             from urllib.parse import urlsplit
             import uuid
@@ -266,8 +266,8 @@ def safe_curl_json(url: str) -> dict[str, Any]:
             except (subprocess.TimeoutExpired, json.JSONDecodeError):
                 emit('http_error', **diagnostic, elapsed_ms=int((time.monotonic()-started)*1000))
                 last_error = "transport_or_json"
-            if attempt < 3:
-                time.sleep(attempt)
+            if attempt < 5:
+                time.sleep(2 ** attempt)
         raise SyncError("official_notice_transport_failed") from RuntimeError(last_error or "unknown")
     finally:
         target.unlink(missing_ok=True)

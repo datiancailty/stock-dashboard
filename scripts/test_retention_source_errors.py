@@ -139,6 +139,20 @@ class TransportBoundaryTests(unittest.TestCase):
                 self.assertEqual(run.call_count, 1); sleep.assert_not_called()
                 a.private_rpc.assert_not_called(); a.part4_writer_secret.assert_not_called()
 
+    def test_curl_92_retries_five_times_with_exponential_backoff_then_retains(self):
+        from unittest.mock import patch, call
+        a = retention.RetentionTests().adapter()
+        with patch.object(transport.subprocess, 'run',
+                          return_value=subprocess.CompletedProcess([], 92, '', '')) as run, \
+             patch.object(transport.time, 'sleep') as sleep:
+            out = m.sync(adapter=a, now=NOW, publish=True, retain_previous=True,
+                         collect_forward=lambda *args: transport.safe_curl_json('https://synthetic.invalid/response'))
+        self.assertTrue(out['retainedPrevious']); self.assertEqual(out['retainedAsOf'], OLD)
+        self.assertFalse(out['published'])
+        self.assertEqual(run.call_count, 5)
+        sleep.assert_has_calls([call(2), call(4), call(8), call(16)])
+        a.part4_writer_secret.assert_not_called()
+
     def test_real_transport_json_network_and_timeout_still_retain(self):
         from pathlib import Path
         from unittest.mock import patch
@@ -153,7 +167,7 @@ class TransportBoundaryTests(unittest.TestCase):
                     out = m.sync(adapter=a, now=NOW, publish=True, retain_previous=True,
                                  collect_forward=lambda *args: transport.safe_curl_json('https://synthetic.invalid/response'))
                 self.assertTrue(out['retainedPrevious']); self.assertEqual(out['retainedAsOf'], OLD)
-                self.assertFalse(out['published']); self.assertEqual(run.call_count, 3)
+                self.assertFalse(out['published']); self.assertEqual(run.call_count, 5)
                 a.part4_writer_secret.assert_not_called()
                 args = run.call_args.args[0]
                 self.assertIn('--fail', args); self.assertNotIn('-k', args); self.assertNotIn('--insecure', args)

@@ -71,6 +71,11 @@ class CompletionTests(unittest.TestCase):
   now=datetime.fromisoformat('2026-09-13T09:00:00+08:00')
   self.assertEqual(daily.target_slot(now),'2026-09-11')
   self.assertIsNone(daily.due_reason(now,{}))
+ def test_weekday_slot_boundary_moves_to_16_00(self):
+  self.assertEqual(daily.target_slot(datetime.fromisoformat('2026-09-10T15:59:59+08:00')),'2026-09-09')
+  self.assertEqual(daily.target_slot(datetime.fromisoformat('2026-09-10T16:00:00+08:00')),'2026-09-10')
+  self.assertEqual(daily.target_slot(datetime.fromisoformat('2026-09-10T16:30:00+08:00')),'2026-09-10')
+  self.assertEqual(daily.target_slot(datetime.fromisoformat('2026-09-10T18:30:00+08:00')),'2026-09-10')
 class HealthTests(unittest.TestCase):
  def test_exhausted_provider_limit_retains_precise_reason(self):
   from types import SimpleNamespace

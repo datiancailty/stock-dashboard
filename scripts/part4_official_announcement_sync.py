@@ -233,6 +233,7 @@ def safe_curl_json(url: str) -> dict[str, Any]:
                         "--silent",
                         "--show-error",
                         "--location",
+                        "--http1.1",
                         "--connect-timeout",
                         "15",
                         "--max-time",

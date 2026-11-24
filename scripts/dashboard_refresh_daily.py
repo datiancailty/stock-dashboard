@@ -18,7 +18,7 @@ LABEL='com.datiancailty.stock-dashboard.refresh-daily'
 
 def target_slot(now):
  now=now.astimezone(BJ);day=now.date()
- if (now.hour,now.minute)<(18,5):day-=timedelta(days=1)
+ if (now.hour,now.minute)<(16,0):day-=timedelta(days=1)
  while day.weekday()>=5:day-=timedelta(days=1)
  return day.isoformat()
 

@@ -1,7 +1,7 @@
 [Unit]
-Description=Dashboard weekdays 18:05 Asia/Shanghai
+Description=Dashboard weekdays 16:00 Asia/Shanghai
 [Timer]
-OnCalendar=Mon..Fri *-*-* 18:05:00 Asia/Shanghai
+OnCalendar=Mon..Fri *-*-* 16:00:00 Asia/Shanghai
 Persistent=true
 AccuracySec=1min
 Unit=stock-dashboard-daily.service

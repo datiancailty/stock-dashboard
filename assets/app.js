@@ -221,7 +221,7 @@ function refreshHealthView(health,logged,now=new Date()){
   while(local.getUTCDay()===0||local.getUTCDay()===6)local.setUTCDate(local.getUTCDate()-1);
   const expected=local.toISOString().slice(0,10);
   if(typeof health.targetDate!=='string'||health.targetDate<expected)return {tone:'warning',title:'等待新的运行回执',note:'已到下一更新周期。VPS离线、任务未完成或上报失败都可能造成未收到回执，仅网页不能进一步区分。'};
-  if(health.status==='ok'&&health.lastSuccessAt)return {tone:'ok',title:'最近一轮全部完成',note:'独立VPS日更：工作日北京时间18:05；与交易及Part0三次监控同步分开。'};
+  if(health.status==='ok'&&health.lastSuccessAt)return {tone:'ok',title:'最近一轮全部完成',note:'独立VPS日更：工作日北京时间16:00；与交易及Part0三次监控同步分开。'};
   return {tone:'warning',title:'状态待核实',note:'未取得完整成功回执。'};
 }
 function renderRefreshHealth(){

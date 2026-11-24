@@ -170,7 +170,7 @@ class TransportBoundaryTests(unittest.TestCase):
                 self.assertFalse(out['published']); self.assertEqual(run.call_count, 5)
                 a.part4_writer_secret.assert_not_called()
                 args = run.call_args.args[0]
-                self.assertIn('--fail', args); self.assertNotIn('-k', args); self.assertNotIn('--insecure', args)
+                self.assertIn('--fail', args); self.assertIn('--http1.1', args); self.assertNotIn('-k', args); self.assertNotIn('--insecure', args)
 
     def test_unexpected_transport_exception_stays_strict(self):
         from unittest.mock import patch
